@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, useEffect, useMemo, useState } from 'react'
 import { MDXProvider } from '@mdx-js/react'
 import { Link, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { ArrowRight, BookOpen, ChevronDown, ChevronLeft, ChevronRight, Command as CommandIcon, Menu, Moon, Search, Sun, UserRound } from 'lucide-react'
@@ -581,44 +581,10 @@ function HomeSearch() {
   )
 }
 
-const HOME_BACKGROUND_VIDEO_ID = 'dQw4w9WgXcQ'
-const HOME_BACKGROUND_VIDEO_POSTER = `https://i.ytimg.com/vi/${HOME_BACKGROUND_VIDEO_ID}/maxresdefault.jpg`
-
-type YouTubePlayer = {
-  destroy: () => void
-}
-
-type YouTubePlayerEvent = {
-  data: number
-  target: {
-    mute: () => void
-    playVideo: () => void
-  }
-}
-
-type YouTubeApi = {
-  Player: new (
-    elementId: string,
-    options: {
-      events: {
-        onReady: (event: YouTubePlayerEvent) => void
-        onStateChange: (event: YouTubePlayerEvent) => void
-        onError: () => void
-      }
-    },
-  ) => YouTubePlayer
-}
-
-declare global {
-  interface Window {
-    YT?: YouTubeApi
-    onYouTubeIframeAPIReady?: () => void
-  }
-}
+const HOME_BACKGROUND_VIDEO_URL = 'https://player.vimeo.com/video/1212838611?background=1&autoplay=1&muted=1&loop=1&autopause=0&dnt=1'
 
 function Home() {
-  const playerRef = useRef<YouTubePlayer | null>(null)
-  const [videoPlaying, setVideoPlaying] = useState(false)
+  const [videoLoaded, setVideoLoaded] = useState(false)
   const [videoEnabled, setVideoEnabled] = useState(() => {
     const savedPreference = window.localStorage.getItem('home-background-video')
     if (savedPreference !== null) return savedPreference === 'true'
@@ -635,49 +601,7 @@ function Home() {
   }, [videoEnabled])
 
   useEffect(() => {
-    setVideoPlaying(false)
-    if (!videoEnabled) return
-
-    let cancelled = false
-    const createPlayer = () => {
-      if (cancelled || !window.YT?.Player || !document.getElementById('home-background-video')) return
-      playerRef.current = new window.YT.Player('home-background-video', {
-        events: {
-          onReady: (event) => {
-            event.target.mute()
-            event.target.playVideo()
-          },
-          onStateChange: (event) => {
-            setVideoPlaying(event.data === 1)
-          },
-          onError: () => {
-            setVideoPlaying(false)
-          },
-        },
-      })
-    }
-
-    if (window.YT?.Player) {
-      createPlayer()
-    } else {
-      const previousReady = window.onYouTubeIframeAPIReady
-      window.onYouTubeIframeAPIReady = () => {
-        previousReady?.()
-        createPlayer()
-      }
-      if (!document.querySelector('script[data-youtube-iframe-api]')) {
-        const script = document.createElement('script')
-        script.src = 'https://www.youtube.com/iframe_api'
-        script.dataset.youtubeIframeApi = 'true'
-        document.head.append(script)
-      }
-    }
-
-    return () => {
-      cancelled = true
-      playerRef.current?.destroy()
-      playerRef.current = null
-    }
+    if (!videoEnabled) setVideoLoaded(false)
   }, [videoEnabled])
 
   return (
@@ -686,17 +610,17 @@ function Home() {
         <>
           <div
             className="home-video-background"
-            data-video-playing={videoPlaying}
-            style={{ backgroundImage: `url(${HOME_BACKGROUND_VIDEO_POSTER})` }}
+            data-video-playing={videoLoaded}
             aria-hidden="true"
           >
             <iframe
               id="home-background-video"
-              src={`https://www.youtube.com/embed/${HOME_BACKGROUND_VIDEO_ID}?enablejsapi=1&autoplay=1&mute=1&controls=0&loop=1&playlist=${HOME_BACKGROUND_VIDEO_ID}&playsinline=1&rel=0&disablekb=1&origin=${encodeURIComponent(window.location.origin)}`}
+              src={HOME_BACKGROUND_VIDEO_URL}
               title="Homepage background video"
               tabIndex={-1}
-              allow="autoplay; encrypted-media"
+              allow="autoplay; fullscreen; picture-in-picture"
               loading="eager"
+              onLoad={() => setVideoLoaded(true)}
               referrerPolicy="strict-origin-when-cross-origin"
             />
           </div>

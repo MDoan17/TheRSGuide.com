@@ -27,7 +27,7 @@
 ## Components
 - Use ShadCN source components for controls and overlays.
 - The homepage preserves the original centered navigation composition: large `The RS Guide` title, the combined guide and future player search directly beneath it, four primary section buttons, and combat-style shortcuts.
-- The homepage may use a muted, cover-fit YouTube video as a full-bleed background. Always place a dark readability scrim over it, remove the player from keyboard and pointer interaction, persist the user’s on/off preference, and default it off when reduced motion is requested.
+- The homepage may use a muted, cover-fit hosted video as a full-bleed background. Always place a dark readability scrim over it, remove the player from keyboard and pointer interaction, persist the user’s on/off preference, and default it off when reduced motion is requested.
 - Homepage search autocompletes against titles, descriptions, and page content while debouncing valid RuneScape display-name input against the local RuneMetrics proxy. A matched player result shows the account name and total level and links to `/extras/player`.
 - Hide the entire global header on the homepage because its central navigation already covers the same destinations. `Cmd/Ctrl+K` focuses the homepage field and opens the search dialog elsewhere.
 - Do not use AI-generated artwork anywhere on the site. Prefer existing first-party assets or functional UI without imagery.
