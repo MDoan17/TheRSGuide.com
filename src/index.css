@@ -261,6 +261,8 @@ a { color: inherit; text-decoration: none; }
 .home-audio-control { color: inherit; }
 .home-audio-control:hover { background: rgb(20 18 16 / 56%); color: inherit; }
 .home-volume-slider { flex: 1; }
+.home-volume-slider [data-slot="slider-track"] { height: .25rem; background: color-mix(in srgb, var(--foreground) 38%, transparent); }
+.home-volume-slider [data-slot="slider-range"] { background: var(--primary); }
 .home-video-control { display: flex; align-items: center; gap: .7rem; color: inherit; cursor: pointer; }
 .home-video-control > span { font-size: .76rem; font-weight: 800; }
 .home-search-intro { display: flex; flex-direction: column; align-items: center; }

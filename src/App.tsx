@@ -677,16 +677,6 @@ function Home() {
       <div className="home-media-controls">
         {videoEnabled && (
           <div className="home-audio-controls">
-            <Button
-              className="home-audio-control"
-              variant="ghost"
-              size="icon"
-              onClick={() => setBackgroundVideoMuted(!videoMuted)}
-              aria-label={videoMuted ? 'Unmute background video' : 'Mute background video'}
-              title={videoMuted ? 'Unmute background video' : 'Mute background video'}
-            >
-              {videoMuted ? <VolumeX /> : <Volume2 />}
-            </Button>
             <Slider
               className="home-volume-slider"
               value={[videoVolume]}
@@ -697,6 +687,16 @@ function Home() {
               aria-label="Background video volume"
               aria-valuetext={`${videoVolume}%`}
             />
+            <Button
+              className="home-audio-control"
+              variant="ghost"
+              size="icon"
+              onClick={() => setBackgroundVideoMuted(!videoMuted)}
+              aria-label={videoMuted ? 'Unmute background video' : 'Mute background video'}
+              title={videoMuted ? 'Unmute background video' : 'Mute background video'}
+            >
+              {videoMuted ? <VolumeX /> : <Volume2 />}
+            </Button>
           </div>
         )}
         <label className="home-video-control" htmlFor="home-background-video-toggle">
