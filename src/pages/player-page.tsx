@@ -205,7 +205,7 @@ export function PlayerPage() {
           <>
             <header className="player-profile-header">
               <div className="player-title-line">
-                <h1>{playerData.username}</h1>
+                <h1 data-rybbit-mask>{playerData.username}</h1>
                 <span>Total level {playerData.totalLevel.toLocaleString()}</span>
               </div>
               <PlayerSearchForm initialValue={playerData.username} />

@@ -44,6 +44,7 @@
 - The header search dialog uses a 36rem desktop width and keeps its result list inside a bounded ShadCN ScrollArea; never allow result overflow to create a native page scrollbar.
 - Player progression is a wide, standalone React route under Extras. Keep it flat and list-first: a compact username/search header followed immediately by open, rule-separated early, mid, and late recommendation columns. Avoid eyebrow labels, summary cards, repeated descriptions, and dashboard statistics. RuneMetrics confirms quest completion; non-quest recommendations use account-specific, locally persisted ShadCN checkboxes.
 - The player progression advisor uses a fixed bottom-right ShadCN Dialog trigger, one featured recommendation, and rule-separated alternatives. Suggestions prioritize ready early-game work and high-impact unlocks, then the nearest locked goal. Keep the character as a functional solid-square placeholder until first-party artwork exists; never replace it with generated art.
+- Privacy consent uses a compact, theme-aware bottom banner with equally accessible accept, reject, and customize paths. Optional analytics and session replay remain off until explicit consent; a persistent low-emphasis `Privacy settings` control lets visitors reopen the ShadCN preferences dialog and withdraw consent.
 
 ## Avoid
 - Dashboard card mosaics, bright game-UI chrome, or decorative gradients behind prose.

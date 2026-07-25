@@ -37,6 +37,7 @@ import { docs, docsBySection, getDoc, searchableText, sectionLabels, sectionOrde
 import { mdxComponents } from '@/mdx_components/mdx-components'
 import { PlayerDataProvider, usePlayerData } from '@/mdx_components/components/player-data-context'
 import { PlayerPage } from '@/pages/player-page'
+import { CookieConsent } from '@/components/cookie-consent'
 import { cn } from '@/lib/utils'
 
 function Logo() {
@@ -546,7 +547,7 @@ function HomeSearch() {
                 className="home-player-result"
                 onSelect={() => navigate(`/extras/player?username=${encodeURIComponent(matchingPlayer.username)}`)}
               >
-                <Card size="sm">
+                <Card size="sm" data-rybbit-mask>
                   <CardContent>
                     <span className="home-player-icon"><UserRound /></span>
                     <span className="home-player-copy"><strong>{matchingPlayer.username}</strong><span>Total level {matchingPlayer.totalLevel.toLocaleString()}</span></span>
@@ -775,6 +776,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <SearchDialog open={searchOpen} setOpen={setSearchOpen} />
+        <CookieConsent />
       </PlayerDataProvider>
     </TooltipProvider>
   )
