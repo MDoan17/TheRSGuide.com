@@ -166,7 +166,7 @@ a { color: inherit; text-decoration: none; }
 .search-button kbd svg { width: .75rem; }
 .mobile-menu { display: none; }
 
-.docs-layout { width: 100%; max-width: 80rem; margin: auto; display: grid; grid-template-columns: minmax(0, 1fr) 13rem; gap: 3rem; padding: 0 1.5rem; }
+.docs-layout { width: 100%; max-width: 80rem; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 13rem; gap: 3rem; padding: 0 1.5rem; }
 .docs-layout:not(:has(> .toc)) { max-width: none; grid-template-columns: minmax(0, 1fr); }
 .docs-layout:not(:has(> .toc)) .guide-main { max-width: none; }
 @media (min-width: 1101px) { .docs-layout:not(:has(> .toc)) { padding-inline: 4rem; } }
@@ -212,6 +212,9 @@ a { color: inherit; text-decoration: none; }
 .article-header h1 { font-family: var(--font-display); font-size: clamp(2.1rem, 4vw, 3.3rem); line-height: 1.05; margin: .65rem 0 1rem; text-wrap: balance; }
 .article-header > div { color: var(--muted-foreground); font-size: 1.05rem; line-height: 1.65; }
 .guide-prose { font-size: 1rem; line-height: 1.75; }
+.guide-loading { min-height: min(20rem, 40svh); display: grid; place-items: center; color: var(--primary); }
+.guide-loading svg { width: 1.75rem; height: 1.75rem; animation: guide-loading-spin .8s linear infinite; }
+@keyframes guide-loading-spin { to { transform: rotate(360deg); } }
 .guide-prose > :not(.article-header) { margin-block: 1.15rem; }
 .guide-prose h2, .guide-prose h3, .guide-prose h4 { font-family: var(--font-display); line-height: 1.25; scroll-margin-top: 5.5rem; }
 .guide-prose h2 { font-size: 1.75rem; margin-top: 3.3rem; }
@@ -236,11 +239,13 @@ a { color: inherit; text-decoration: none; }
 .doc-card-title { font-family: var(--font-display); font-weight: 700; }
 .toc { position: sticky; top: 6rem; align-self: start; height: calc(100svh - 8rem); margin-top: 6.8rem; }
 .toc-scroll { height: 100%; }
-.toc-content { padding: 0 .75rem 2rem 1rem; border-left: 1px solid var(--border); }
+.toc-content { position: relative; padding: 0 .75rem 0 1rem; border-left: 1px solid var(--border); }
+.toc-progress { width: 2px; height: 100%; position: absolute; top: 0; left: -1px; background: var(--primary); pointer-events: none; transform: scaleY(0); transform-origin: top; transition: transform 100ms linear; }
 .toc p { margin: 0 0 .8rem; color: var(--foreground); font-family: var(--font-display); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; }
 .toc ul { display: flex; flex-direction: column; gap: .18rem; margin: 0; padding: 0; list-style: none; }
 .toc a { display: block; padding: .38rem .5rem; border-radius: var(--radius-sm); color: var(--muted-foreground); font-size: .875rem; font-weight: 600; line-height: 1.4; transition: color .16s ease, background-color .16s ease; }
 .toc a:hover { color: var(--foreground); background: color-mix(in oklch, var(--accent) 65%, transparent); }
+.toc a.toc-active { color: var(--foreground); background: color-mix(in oklch, var(--accent) 45%, transparent); }
 .toc a:focus-visible { outline: 2px solid var(--ring); outline-offset: 1px; }
 .toc .toc-nested { padding-left: 1.15rem; font-size: .825rem; font-weight: 500; }
 .prev-next { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-top: 1.5rem; }

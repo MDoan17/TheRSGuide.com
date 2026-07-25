@@ -1,4 +1,8 @@
-import type { PlayerData } from '@/mdx_components/components/player-data-context'
+import {
+  playerQuestCompleted,
+  playerSkillLevel,
+  type PlayerProfile,
+} from '@/lib/player-profile'
 import { findQuest, resolveAllRequirements } from '@/utils/quest-requirements'
 
 export type ProgressionStage = 'early' | 'mid' | 'late'
@@ -76,17 +80,6 @@ const late: ProgressionRecommendation[] = [
 
 export const progressionRecommendations = [...early, ...mid, ...late]
 
-function questIsComplete(player: PlayerData, questName: string) {
-  return player.quests?.quests.some((quest) => {
-    const name = quest.title || quest.name
-    return name?.toLowerCase() === questName.toLowerCase() && quest.status === 'Completed'
-  }) ?? false
-}
-
-function skillLevel(player: PlayerData, skillName: string) {
-  return player.levels?.skills.find((skill) => skill.name.toLowerCase() === skillName.toLowerCase())?.level ?? 0
-}
-
 function resolvedRequirements(recommendation: ProgressionRecommendation) {
   if (recommendation.requirements) {
     const { quests = [], skills = [], manual = [], anySkills = [] } = recommendation.requirements
@@ -111,22 +104,23 @@ function resolvedRequirements(recommendation: ProgressionRecommendation) {
 
 export function evaluateRecommendation(
   recommendation: ProgressionRecommendation,
-  player: PlayerData,
+  player: PlayerProfile,
   manuallyCompleted: ReadonlySet<string> = new Set(),
 ): EvaluatedRecommendation {
   const requirements = resolvedRequirements(recommendation)
   const missingSkills = requirements.skills
-    .filter(({ skill, level }) => skillLevel(player, skill) < level)
+    .filter(({ skill, level }) => (playerSkillLevel(player, skill) ?? 0) < level)
     .map(({ skill, level }) => `${level} ${skill}`)
   const missingQuests = requirements.quests
-    .filter((quest) => !questIsComplete(player, quest))
+    .filter((quest) => playerQuestCompleted(player, quest) !== true)
     .map((quest) => quest)
-  const anySkillMet = !requirements.anySkills.length || requirements.anySkills.some(({ skill, level }) => skillLevel(player, skill) >= level)
+  const anySkillMet = !requirements.anySkills.length
+    || requirements.anySkills.some(({ skill, level }) => (playerSkillLevel(player, skill) ?? 0) >= level)
   const missingAnySkill = anySkillMet
     ? []
     : [`One of ${requirements.anySkills.map(({ skill, level }) => `${level} ${skill}`).join(', ')}`]
   const completed = recommendation.completionQuest
-    ? questIsComplete(player, recommendation.completionQuest)
+    ? playerQuestCompleted(player, recommendation.completionQuest) === true
     : manuallyCompleted.has(recommendation.path)
   const missing = [...missingSkills, ...missingQuests, ...missingAnySkill]
 
@@ -139,6 +133,6 @@ export function evaluateRecommendation(
   }
 }
 
-export function evaluateProgression(player: PlayerData, manuallyCompleted: ReadonlySet<string> = new Set()) {
+export function evaluateProgression(player: PlayerProfile, manuallyCompleted: ReadonlySet<string> = new Set()) {
   return progressionRecommendations.map((recommendation) => evaluateRecommendation(recommendation, player, manuallyCompleted))
 }

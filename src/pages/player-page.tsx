@@ -13,6 +13,7 @@ import {
   type ProgressionStage,
   type ProgressionStatus,
 } from '@/lib/player-progression'
+import { browserPlayerStorage } from '@/lib/player-storage'
 
 const stages: { key: ProgressionStage; title: string }[] = [
   { key: 'early', title: 'Early game' },
@@ -21,7 +22,6 @@ const stages: { key: ProgressionStage; title: string }[] = [
 ]
 
 const EMPTY_MANUAL_COMPLETIONS = new Set<string>()
-const MANUAL_COMPLETION_PREFIX = 'rs3-manual-progression:v1:'
 
 const statusLabels: Record<ProgressionStatus, string> = {
   completed: 'Completed',
@@ -160,15 +160,10 @@ export function PlayerPage() {
   useEffect(() => {
     if (!visiblePlayerData) return
     const username = visiblePlayerData.username.toLowerCase()
-    let paths: string[] = []
-    try {
-      const saved = localStorage.getItem(`${MANUAL_COMPLETION_PREFIX}${username}`)
-      const parsed = saved ? JSON.parse(saved) : []
-      if (Array.isArray(parsed)) paths = parsed.filter((path): path is string => typeof path === 'string')
-    } catch {
-      paths = []
-    }
-    setManualCompletions({ username, paths: new Set(paths) })
+    setManualCompletions({
+      username,
+      paths: new Set(browserPlayerStorage.loadManualCompletions(username)),
+    })
   }, [visiblePlayerData])
 
   const activeManualCompletions = visiblePlayerData && manualCompletions.username === visiblePlayerData.username.toLowerCase()
@@ -186,7 +181,7 @@ export function PlayerPage() {
       const paths = new Set(current.username === username ? current.paths : [])
       if (completed) paths.add(path)
       else paths.delete(path)
-      localStorage.setItem(`${MANUAL_COMPLETION_PREFIX}${username}`, JSON.stringify([...paths]))
+      browserPlayerStorage.saveManualCompletions(username, paths)
       return { username, paths }
     })
   }
