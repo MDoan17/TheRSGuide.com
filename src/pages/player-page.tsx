@@ -109,10 +109,22 @@ function PlayerSearchForm({ initialValue = '' }: { initialValue?: string }) {
 function PlayerPageSkeleton() {
   return (
     <div className="player-page-loading" aria-label="Loading player progression">
-      <Skeleton className="h-10 w-64" />
-      <Skeleton className="h-12 w-full" />
+      <header className="player-profile-header">
+        <div className="player-loading-identity">
+          <Skeleton className="h-10 w-56 max-w-full" />
+        </div>
+        <Skeleton className="player-loading-search h-11 w-full" />
+      </header>
+      <Skeleton className="h-3 w-80 max-w-full" />
       <div className="progression-columns">
-        {stages.map((stage) => <Skeleton key={stage.key} className="h-96 w-full" />)}
+        {stages.map((stage) => (
+          <section className="player-loading-stage" key={stage.key}>
+            <Skeleton className="h-8 w-36" />
+            {Array.from({ length: 6 }, (_, index) => (
+              <Skeleton className="h-14 w-full" key={index} />
+            ))}
+          </section>
+        ))}
       </div>
     </div>
   )
@@ -123,28 +135,31 @@ export function PlayerPage() {
   const requestedUsername = searchParams.get('username')?.trim() ?? ''
   const { playerData, loading, error, searchPlayer } = usePlayerData()
   const requestedRef = useRef('')
+  const visiblePlayerData = playerData && (
+    !requestedUsername
+    || playerData.username.toLowerCase() === requestedUsername.toLowerCase()
+  ) ? playerData : null
   const [manualCompletions, setManualCompletions] = useState<{ username: string; paths: Set<string> }>({
     username: '',
     paths: new Set(),
   })
 
   useEffect(() => {
-    document.title = playerData ? `${playerData.username} Progression | The RS Guide` : 'Player Progression | The RS Guide'
+    document.title = visiblePlayerData ? `${visiblePlayerData.username} Progression | The RS Guide` : 'Player Progression | The RS Guide'
     window.scrollTo(0, 0)
-  }, [playerData])
+  }, [visiblePlayerData])
 
   useEffect(() => {
     if (!requestedUsername) return
-    if (loading) return
-    if (playerData?.username.toLowerCase() === requestedUsername.toLowerCase()) return
+    if (visiblePlayerData) return
     if (requestedRef.current.toLowerCase() === requestedUsername.toLowerCase()) return
     requestedRef.current = requestedUsername
     void searchPlayer(requestedUsername)
-  }, [loading, playerData, requestedUsername, searchPlayer])
+  }, [requestedUsername, searchPlayer, visiblePlayerData])
 
   useEffect(() => {
-    if (!playerData) return
-    const username = playerData.username.toLowerCase()
+    if (!visiblePlayerData) return
+    const username = visiblePlayerData.username.toLowerCase()
     let paths: string[] = []
     try {
       const saved = localStorage.getItem(`${MANUAL_COMPLETION_PREFIX}${username}`)
@@ -154,19 +169,19 @@ export function PlayerPage() {
       paths = []
     }
     setManualCompletions({ username, paths: new Set(paths) })
-  }, [playerData])
+  }, [visiblePlayerData])
 
-  const activeManualCompletions = playerData && manualCompletions.username === playerData.username.toLowerCase()
+  const activeManualCompletions = visiblePlayerData && manualCompletions.username === visiblePlayerData.username.toLowerCase()
     ? manualCompletions.paths
     : EMPTY_MANUAL_COMPLETIONS
   const recommendations = useMemo(
-    () => playerData ? evaluateProgression(playerData, activeManualCompletions) : [],
-    [activeManualCompletions, playerData],
+    () => visiblePlayerData ? evaluateProgression(visiblePlayerData, activeManualCompletions) : [],
+    [activeManualCompletions, visiblePlayerData],
   )
 
   function setManualCompletion(path: string, completed: boolean) {
-    if (!playerData) return
-    const username = playerData.username.toLowerCase()
+    if (!visiblePlayerData) return
+    const username = visiblePlayerData.username.toLowerCase()
     setManualCompletions((current) => {
       const paths = new Set(current.username === username ? current.paths : [])
       if (completed) paths.add(path)
@@ -183,7 +198,7 @@ export function PlayerPage() {
           <Link to="/">Home</Link><span>/</span><Link to="/extras">Extras</Link><span>/</span><b>Player</b>
         </nav>
 
-        {!requestedUsername && !playerData && (
+        {!requestedUsername && !visiblePlayerData && (
           <section className="player-empty-state">
             <h1>Find your next unlock.</h1>
             <p>Enter a RuneScape username to compare its levels and completed quests against every early, mid, and late game recommendation in the guide.</p>
@@ -191,9 +206,9 @@ export function PlayerPage() {
           </section>
         )}
 
-        {loading && !playerData && <PlayerPageSkeleton />}
+        {loading && !visiblePlayerData && <PlayerPageSkeleton />}
 
-        {error && !loading && !playerData && (
+        {error && !loading && !visiblePlayerData && (
           <section className="player-empty-state player-error-state">
             <h1>We couldn’t load that profile.</h1>
             <p>{error}. Check the spelling and make sure the RuneMetrics profile is public.</p>
@@ -201,14 +216,13 @@ export function PlayerPage() {
           </section>
         )}
 
-        {playerData && (
+        {visiblePlayerData && (
           <>
             <header className="player-profile-header">
               <div className="player-title-line">
-                <h1>{playerData.username}</h1>
-                <span>Total level {playerData.totalLevel.toLocaleString()}</span>
+                <h1>{visiblePlayerData.username}</h1>
               </div>
-              <PlayerSearchForm initialValue={playerData.username} />
+              <PlayerSearchForm initialValue={visiblePlayerData.username} />
             </header>
 
             <p className="player-progress-note">Quest completion comes from RuneMetrics. Check off other unlocks yourself.</p>
@@ -235,7 +249,7 @@ export function PlayerPage() {
               })}
             </div>
             {/* Temporarily disabled until the progression advisor is ready to return.
-            <ProgressionAdvisor username={playerData.username} recommendations={recommendations} />
+            <ProgressionAdvisor username={visiblePlayerData.username} recommendations={recommendations} />
             */}
           </>
         )}

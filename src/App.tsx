@@ -35,7 +35,7 @@ import {
 } from '@/components/ui/sidebar'
 import { docs, docsBySection, getDoc, searchableText, sectionLabels, sectionOrder, type Doc } from '@/lib/content'
 import { mdxComponents } from '@/mdx_components/mdx-components'
-import { PlayerDataProvider, usePlayerData } from '@/mdx_components/components/player-data-context'
+import { PlayerDataProvider } from '@/mdx_components/components/player-data-context'
 import { PlayerPage } from '@/pages/player-page'
 import { CookieConsent } from '@/components/cookie-consent'
 import { cn } from '@/lib/utils'
@@ -473,7 +473,6 @@ function searchExcerpt(doc: Doc, query: string) {
 
 function HomeSearch() {
   const navigate = useNavigate()
-  const { playerData, loading: playerLoading, error: playerError, searchPlayer } = usePlayerData()
   const [query, setQuery] = useState('')
   const [resultsOpen, setResultsOpen] = useState(false)
   const needle = query.toLowerCase().trim()
@@ -496,18 +495,6 @@ function HomeSearch() {
   const canLookupPlayer = usernameCandidate.length > 0
     && usernameCandidate.length <= 12
     && /^[a-z0-9 _-]+$/i.test(usernameCandidate)
-  const matchingPlayer = canLookupPlayer
-    && playerData?.username.toLowerCase() === usernameCandidate.toLowerCase()
-      ? playerData
-      : null
-
-  useEffect(() => {
-    if (!canLookupPlayer || matchingPlayer) return
-    const timer = window.setTimeout(() => {
-      void searchPlayer(usernameCandidate)
-    }, 650)
-    return () => window.clearTimeout(timer)
-  }, [canLookupPlayer, matchingPlayer, searchPlayer, usernameCandidate])
 
   return (
     <Command
@@ -535,22 +522,17 @@ function HomeSearch() {
       />
       {needle && resultsOpen && (
         <CommandList className="home-search-results">
-          {canLookupPlayer && playerLoading && !matchingPlayer && (
-            <CommandGroup heading="Player lookup">
-              <CommandItem disabled className="home-player-loading"><UserRound /><span>Looking up {usernameCandidate}…</span></CommandItem>
-            </CommandGroup>
-          )}
-          {matchingPlayer && (
-            <CommandGroup heading="Player">
+          {canLookupPlayer && (
+            <CommandGroup heading="Player results">
               <CommandItem
-                value={`player-${matchingPlayer.username}`}
+                value={`player-${usernameCandidate}`}
                 className="home-player-result"
-                onSelect={() => navigate(`/extras/player?username=${encodeURIComponent(matchingPlayer.username)}`)}
+                onSelect={() => navigate(`/extras/player?username=${encodeURIComponent(usernameCandidate)}`)}
               >
                 <Card size="sm">
                   <CardContent>
                     <span className="home-player-icon"><UserRound /></span>
-                    <span className="home-player-copy"><strong>{matchingPlayer.username}</strong><span>Total level {matchingPlayer.totalLevel.toLocaleString()}</span></span>
+                    <span className="home-player-copy"><strong>{usernameCandidate}</strong><span>View player progression</span></span>
                     <ArrowRight />
                   </CardContent>
                 </Card>
@@ -573,7 +555,7 @@ function HomeSearch() {
           ) : (
             <CommandEmpty>
               <strong>No guide found for “{query.trim()}”</strong>
-              <span>{canLookupPlayer && playerError ? `${playerError}. RuneMetrics profiles must be public.` : 'Try another topic or a RuneScape username.'}</span>
+              <span>Try another topic or a RuneScape username.</span>
             </CommandEmpty>
           )}
         </CommandList>
