@@ -1,5 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { MDXProvider } from '@mdx-js/react'
+import Player from '@vimeo/player'
 import { Link, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { ArrowRight, BookOpen, ChevronDown, ChevronLeft, ChevronRight, Command as CommandIcon, Menu, Moon, Search, Sun, UserRound, Volume2, VolumeX } from 'lucide-react'
 import { useTheme } from 'next-themes'
@@ -568,6 +569,7 @@ const HOME_BACKGROUND_VIDEO_URL = 'https://player.vimeo.com/video/1212838611?bac
 
 function Home() {
   const videoRef = useRef<HTMLIFrameElement>(null)
+  const videoPlayerRef = useRef<Player | null>(null)
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [videoMuted, setVideoMuted] = useState(true)
   const [videoVolume, setVideoVolume] = useState(10)
@@ -580,6 +582,8 @@ function Home() {
   useEffect(() => {
     document.title = 'The RS Guide | Practical RuneScape Guides'
     window.scrollTo(0, 0)
+    document.documentElement.classList.add('home-page')
+    return () => document.documentElement.classList.remove('home-page')
   }, [])
 
   useEffect(() => {
@@ -596,37 +600,41 @@ function Home() {
   useEffect(() => {
     if (!videoEnabled) return
 
-    const handleVimeoMessage = (event: MessageEvent) => {
-      if (
-        event.origin !== 'https://player.vimeo.com'
-        || event.source !== videoRef.current?.contentWindow
-      ) return
+    const iframe = videoRef.current
+    if (!iframe) return
 
-      let payload: unknown = event.data
-      if (typeof payload === 'string') {
-        try {
-          payload = JSON.parse(payload)
-        } catch {
-          return
-        }
-      }
-
-      if (
-        typeof payload === 'object'
-        && payload !== null
-        && (payload as { event?: string }).event === 'playing'
-      ) setVideoLoaded(true)
+    let cancelled = false
+    const player = new Player(iframe)
+    const revealVideo = () => {
+      if (!cancelled) setVideoLoaded(true)
     }
 
-    window.addEventListener('message', handleVimeoMessage)
-    return () => window.removeEventListener('message', handleVimeoMessage)
+    videoPlayerRef.current = player
+    setVideoLoaded(false)
+    player.on('play', revealVideo)
+    player.on('playing', revealVideo)
+    player.on('timeupdate', revealVideo)
+
+    void player.ready()
+      .then(async () => {
+        await player.setVolume(0)
+        if (!await player.getPaused()) revealVideo()
+      })
+      .catch(() => {
+        if (!cancelled) setVideoLoaded(false)
+      })
+
+    return () => {
+      cancelled = true
+      player.off('play', revealVideo)
+      player.off('playing', revealVideo)
+      player.off('timeupdate', revealVideo)
+      if (videoPlayerRef.current === player) videoPlayerRef.current = null
+    }
   }, [videoEnabled])
 
   const sendBackgroundVideoVolume = (volume: number) => {
-    videoRef.current?.contentWindow?.postMessage(
-      { method: 'setVolume', value: volume / 100 },
-      'https://player.vimeo.com',
-    )
+    void videoPlayerRef.current?.setVolume(volume / 100).catch(() => undefined)
   }
 
   const setBackgroundVideoMuted = (muted: boolean) => {
@@ -657,14 +665,6 @@ function Home() {
               tabIndex={-1}
               allow="autoplay; fullscreen; picture-in-picture"
               loading="eager"
-              onLoad={() => {
-                setVideoLoaded(false)
-                setBackgroundVideoMuted(true)
-                videoRef.current?.contentWindow?.postMessage(
-                  { method: 'addEventListener', value: 'playing' },
-                  'https://player.vimeo.com',
-                )
-              }}
               referrerPolicy="strict-origin-when-cross-origin"
             />
           </div>
