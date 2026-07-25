@@ -1,6 +1,8 @@
-// Stub for fumadocs-mdx generated files that incorrectly reference Vite
-// This is a Next.js project, not Vite, but the generated file references Vite types
-declare module 'vite/client' {
-  // Empty stub - we don't use Vite in Next.js
-}
+/// <reference types="vite/client" />
 
+declare module '*.mdx' {
+  import type { ComponentType } from 'react'
+  export const frontmatter: { title?: string; description?: string }
+  const Component: ComponentType
+  export default Component
+}

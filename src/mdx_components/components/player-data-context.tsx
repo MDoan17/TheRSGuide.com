@@ -11,7 +11,7 @@ import React, {
 } from "react";
 
 // Types for API responses
-interface SkillLevel {
+export interface SkillLevel {
   name: string;
   level: number;
   xp: number;
@@ -27,6 +27,7 @@ interface ApiSkillValue {
 
 interface DirectPlayerDataResponse {
   name?: string;
+  totalskill?: number | string;
   skillvalues?: ApiSkillValue[];
   quests?: QuestStatus[];
   error?: string;
@@ -38,7 +39,7 @@ interface PlayerLevels {
   skills: SkillLevel[];
 }
 
-interface QuestStatus {
+export interface QuestStatus {
   id?: string;
   title?: string;
   name?: string;
@@ -54,8 +55,9 @@ interface QuestsResponse {
   quests: QuestStatus[];
 }
 
-interface PlayerData {
+export interface PlayerData {
   username: string;
+  totalLevel: number;
   levels: PlayerLevels | null;
   quests: QuestsResponse | null;
 }
@@ -238,11 +240,17 @@ export function PlayerDataProvider({ children }: { children: ReactNode }) {
 
       const resolvedUsername = data.name || normalizedUsername;
 
+      const skills = mapDirectApiSkills(data.skillvalues);
+      const apiTotalLevel = Number(data.totalskill);
+
       setPlayerData({
         username: resolvedUsername,
+        totalLevel: Number.isFinite(apiTotalLevel)
+          ? apiTotalLevel
+          : skills.reduce((total, skill) => total + skill.level, 0),
         levels: {
           username: resolvedUsername,
-          skills: mapDirectApiSkills(data.skillvalues),
+          skills,
         },
         quests: data.quests
           ? {
