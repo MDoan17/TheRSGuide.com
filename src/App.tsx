@@ -707,6 +707,14 @@ function Home() {
         </nav>
       </section>
       <div className="home-media-controls">
+        <label className="home-video-control" htmlFor="home-background-video-toggle">
+          <span>Background video</span>
+          <Switch
+            id="home-background-video-toggle"
+            checked={videoEnabled}
+            onCheckedChange={setVideoEnabled}
+          />
+        </label>
         {videoEnabled && (
           <div className="home-audio-controls" data-muted={videoMuted}>
             {!videoMuted && (
@@ -733,14 +741,6 @@ function Home() {
             </Button>
           </div>
         )}
-        <label className="home-video-control" htmlFor="home-background-video-toggle">
-          <span>Background video</span>
-          <Switch
-            id="home-background-video-toggle"
-            checked={videoEnabled}
-            onCheckedChange={setVideoEnabled}
-          />
-        </label>
       </div>
     </main>
   )
