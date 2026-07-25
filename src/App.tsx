@@ -4,6 +4,7 @@ import { Link, NavLink, Route, Routes, useLocation, useNavigate } from 'react-ro
 import { ArrowRight, BookOpen, ChevronDown, ChevronLeft, ChevronRight, Command as CommandIcon, Menu, Moon, Search, Sun, UserRound, Volume2, VolumeX } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
+import { Slider } from '@/components/ui/slider'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
@@ -587,6 +588,7 @@ function Home() {
   const videoRef = useRef<HTMLIFrameElement>(null)
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [videoMuted, setVideoMuted] = useState(true)
+  const [videoVolume, setVideoVolume] = useState(25)
   const [videoEnabled, setVideoEnabled] = useState(() => {
     const savedPreference = window.localStorage.getItem('home-background-video')
     if (savedPreference !== null) return savedPreference === 'true'
@@ -609,12 +611,22 @@ function Home() {
     }
   }, [videoEnabled])
 
-  const setBackgroundVideoMuted = (muted: boolean) => {
+  const sendBackgroundVideoVolume = (volume: number) => {
     videoRef.current?.contentWindow?.postMessage(
-      { method: 'setVolume', value: muted ? 0 : 1 },
+      { method: 'setVolume', value: volume / 100 },
       'https://player.vimeo.com',
     )
+  }
+
+  const setBackgroundVideoMuted = (muted: boolean) => {
+    sendBackgroundVideoVolume(muted ? 0 : videoVolume)
     setVideoMuted(muted)
+  }
+
+  const setBackgroundVideoVolume = ([volume]: number[]) => {
+    setVideoVolume(volume)
+    setVideoMuted(volume === 0)
+    sendBackgroundVideoVolume(volume)
   }
 
   return (
@@ -664,16 +676,28 @@ function Home() {
       </section>
       <div className="home-media-controls">
         {videoEnabled && (
-          <Button
-            className="home-audio-control"
-            variant="ghost"
-            size="icon"
-            onClick={() => setBackgroundVideoMuted(!videoMuted)}
-            aria-label={videoMuted ? 'Unmute background video' : 'Mute background video'}
-            title={videoMuted ? 'Unmute background video' : 'Mute background video'}
-          >
-            {videoMuted ? <VolumeX /> : <Volume2 />}
-          </Button>
+          <div className="home-audio-controls">
+            <Button
+              className="home-audio-control"
+              variant="ghost"
+              size="icon"
+              onClick={() => setBackgroundVideoMuted(!videoMuted)}
+              aria-label={videoMuted ? 'Unmute background video' : 'Mute background video'}
+              title={videoMuted ? 'Unmute background video' : 'Mute background video'}
+            >
+              {videoMuted ? <VolumeX /> : <Volume2 />}
+            </Button>
+            <Slider
+              className="home-volume-slider"
+              value={[videoVolume]}
+              min={0}
+              max={100}
+              step={1}
+              onValueChange={setBackgroundVideoVolume}
+              aria-label="Background video volume"
+              aria-valuetext={`${videoVolume}%`}
+            />
+          </div>
         )}
         <label className="home-video-control" htmlFor="home-background-video-toggle">
           <span>Background video</span>

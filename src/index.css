@@ -257,8 +257,10 @@ a { color: inherit; text-decoration: none; }
 .home-video-scrim { background: rgb(10 9 8 / 62%); }
 .home-search-landing { min-height: 100svh; padding: 4rem 1.5rem; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
 .home-media-controls { position: absolute; right: 1.5rem; bottom: 1.5rem; display: flex; flex-direction: column; align-items: flex-end; gap: .35rem; color: var(--foreground); }
+.home-audio-controls { display: flex; width: 10rem; align-items: center; gap: .5rem; }
 .home-audio-control { color: inherit; }
 .home-audio-control:hover { background: rgb(20 18 16 / 56%); color: inherit; }
+.home-volume-slider { flex: 1; }
 .home-video-control { display: flex; align-items: center; gap: .7rem; color: inherit; cursor: pointer; }
 .home-video-control > span { font-size: .76rem; font-weight: 800; }
 .home-search-intro { display: flex; flex-direction: column; align-items: center; }
