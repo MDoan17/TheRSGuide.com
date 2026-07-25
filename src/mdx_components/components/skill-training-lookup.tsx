@@ -12,12 +12,16 @@ const allSkills = [
   "divination", "invention", "archaeology", "necromancy"
 ];
 
+const skillSlots: Array<string | null> = allSkills.length % 2
+  ? [...allSkills, null]
+  : allSkills;
+
 const SkillButton: React.FC<{
   skill: string;
   isSelected: boolean;
   onClick: () => void;
 }> = ({ skill, isSelected, onClick }) => {
-  const { playerData, getSkillLevel } = usePlayerData();
+  const { getSkillLevel } = usePlayerData();
   const playerLevel = getSkillLevel(skill);
   const capitalizedSkill = skill.charAt(0).toUpperCase() + skill.slice(1);
 
@@ -25,7 +29,7 @@ const SkillButton: React.FC<{
     <button
       onClick={onClick}
       title={`${capitalizedSkill}${playerLevel ? ` (${playerLevel})` : ""}`}
-      className={`w-9 h-9 flex items-center justify-center rounded border transition-all ${
+      className={`size-9 flex items-center justify-center rounded border transition-all ${
         isSelected
           ? "border-fd-primary bg-fd-primary/20"
           : "border-transparent hover:border-fd-border hover:bg-fd-muted/50"
@@ -34,7 +38,7 @@ const SkillButton: React.FC<{
       <img
         src={`/skills/${skill.toLowerCase()}.png`}
         alt={capitalizedSkill}
-        className="w-7 h-7 block"
+        className="size-7 block"
       />
     </button>
   );
@@ -46,21 +50,25 @@ export const SkillTrainingLookup: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Skill Icon Grid */}
-      <div className="flex flex-wrap justify-between items-start gap-y-1 p-2 border border-fd-border rounded-lg bg-fd-card h-fit">
-        {allSkills.map((skill) => (
-          <SkillButton
-            key={skill}
-            skill={skill}
-            isSelected={selectedSkill === skill}
-            onClick={() => setSelectedSkill(selectedSkill === skill ? null : skill)}
-          />
+      <div className="grid grid-cols-5 place-items-center gap-1 p-2 border border-fd-border rounded-lg bg-fd-card sm:grid-cols-10 md:grid-cols-[repeat(15,minmax(0,1fr))]">
+        {skillSlots.map((skill, index) => (
+          skill
+            ? (
+              <SkillButton
+                key={skill}
+                skill={skill}
+                isSelected={selectedSkill === skill}
+                onClick={() => setSelectedSkill(selectedSkill === skill ? null : skill)}
+              />
+            )
+            : <span key={`empty-skill-${index}`} className="size-9" aria-hidden="true" />
         ))}
       </div>
 
       {/* Selected Skill Content */}
       {selectedSkill && (
         <div className="p-4 border border-fd-border rounded-lg bg-fd-card">
-          <SkillContent skill={selectedSkill} />
+          <SkillContent skill={selectedSkill} linkRanges />
         </div>
       )}
 

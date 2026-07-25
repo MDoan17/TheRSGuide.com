@@ -148,6 +148,7 @@
 html { scroll-behavior: smooth; scrollbar-gutter: stable; }
 body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-sans); }
 button, a { -webkit-tap-highlight-color: transparent; }
+button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
 a { color: inherit; text-decoration: none; }
 ::selection { background: color-mix(in oklch, var(--primary) 35%, transparent); }
 
@@ -214,9 +215,10 @@ a { color: inherit; text-decoration: none; }
 .guide-prose h2, .guide-prose h3, .guide-prose h4 { font-family: var(--font-display); line-height: 1.25; scroll-margin-top: 5.5rem; }
 .guide-prose h2 { font-size: 1.75rem; margin-top: 3.3rem; }
 .guide-prose h3 { font-size: 1.25rem; margin-top: 2.4rem; }
+.guide-prose h3.skill-range-heading { margin: 0; font-family: inherit; font-size: .875rem; line-height: 1.25rem; }
 .guide-prose a { color: var(--primary); text-decoration: underline; text-decoration-color: color-mix(in oklch, var(--primary) 35%, transparent); text-underline-offset: 3px; }
 .guide-prose a:hover { text-decoration-color: var(--primary); }
-.guide-prose img { max-width: 100%; height: auto; border: 1px solid var(--border); }
+.guide-prose img { max-width: 100%; height: auto; }
 .guide-prose code { padding: .15rem .35rem; border-radius: var(--radius-sm); background: var(--muted); font-size: .875em; }
 .guide-prose pre { overflow-x: auto; padding: 1rem; background: var(--card); border: 1px solid var(--border); }
 .guide-prose blockquote { margin-left: 0; padding: .8rem 1.2rem; border-left: 3px solid var(--primary); background: color-mix(in oklch, var(--primary) 7%, transparent); color: var(--muted-foreground); }
