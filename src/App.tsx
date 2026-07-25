@@ -1,7 +1,7 @@
-import { Suspense, useEffect, useMemo, useState } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { MDXProvider } from '@mdx-js/react'
 import { Link, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import { ArrowRight, BookOpen, ChevronDown, ChevronLeft, ChevronRight, Command as CommandIcon, Menu, Moon, Search, Sun, UserRound } from 'lucide-react'
+import { ArrowRight, BookOpen, ChevronDown, ChevronLeft, ChevronRight, Command as CommandIcon, Menu, Moon, Search, Sun, UserRound, Volume2, VolumeX } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
@@ -584,7 +584,9 @@ function HomeSearch() {
 const HOME_BACKGROUND_VIDEO_URL = 'https://player.vimeo.com/video/1212838611?background=1&autoplay=1&muted=1&loop=1&autopause=0&dnt=1'
 
 function Home() {
+  const videoRef = useRef<HTMLIFrameElement>(null)
   const [videoLoaded, setVideoLoaded] = useState(false)
+  const [videoMuted, setVideoMuted] = useState(true)
   const [videoEnabled, setVideoEnabled] = useState(() => {
     const savedPreference = window.localStorage.getItem('home-background-video')
     if (savedPreference !== null) return savedPreference === 'true'
@@ -601,8 +603,19 @@ function Home() {
   }, [videoEnabled])
 
   useEffect(() => {
-    if (!videoEnabled) setVideoLoaded(false)
+    if (!videoEnabled) {
+      setVideoLoaded(false)
+      setVideoMuted(true)
+    }
   }, [videoEnabled])
+
+  const setBackgroundVideoMuted = (muted: boolean) => {
+    videoRef.current?.contentWindow?.postMessage(
+      { method: 'setVolume', value: muted ? 0 : 1 },
+      'https://player.vimeo.com',
+    )
+    setVideoMuted(muted)
+  }
 
   return (
     <main className="home home-search-page" data-video-enabled={videoEnabled}>
@@ -614,13 +627,17 @@ function Home() {
             aria-hidden="true"
           >
             <iframe
+              ref={videoRef}
               id="home-background-video"
               src={HOME_BACKGROUND_VIDEO_URL}
               title="Homepage background video"
               tabIndex={-1}
               allow="autoplay; fullscreen; picture-in-picture"
               loading="eager"
-              onLoad={() => setVideoLoaded(true)}
+              onLoad={() => {
+                setBackgroundVideoMuted(true)
+                setVideoLoaded(true)
+              }}
               referrerPolicy="strict-origin-when-cross-origin"
             />
           </div>
@@ -645,14 +662,28 @@ function Home() {
           <Link to="/guides/necromancy">Necromancy</Link>
         </nav>
       </section>
-      <label className="home-video-control" htmlFor="home-background-video-toggle">
-        <span>Background video</span>
-        <Switch
-          id="home-background-video-toggle"
-          checked={videoEnabled}
-          onCheckedChange={setVideoEnabled}
-        />
-      </label>
+      <div className="home-media-controls">
+        {videoEnabled && (
+          <Button
+            className="home-audio-control"
+            variant="ghost"
+            size="icon"
+            onClick={() => setBackgroundVideoMuted(!videoMuted)}
+            aria-label={videoMuted ? 'Unmute background video' : 'Mute background video'}
+            title={videoMuted ? 'Unmute background video' : 'Mute background video'}
+          >
+            {videoMuted ? <VolumeX /> : <Volume2 />}
+          </Button>
+        )}
+        <label className="home-video-control" htmlFor="home-background-video-toggle">
+          <span>Background video</span>
+          <Switch
+            id="home-background-video-toggle"
+            checked={videoEnabled}
+            onCheckedChange={setVideoEnabled}
+          />
+        </label>
+      </div>
     </main>
   )
 }
