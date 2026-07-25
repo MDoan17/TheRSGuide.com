@@ -39,15 +39,6 @@ import { PlayerDataProvider, usePlayerData } from '@/mdx_components/components/p
 import { PlayerPage } from '@/pages/player-page'
 import { cn } from '@/lib/utils'
 
-function Logo() {
-  return (
-    <Link to="/" className="brand-mark" aria-label="The RS Guide home">
-      <img src="/images/logos/thersguide.png" alt="" />
-      <span>The RS Guide</span>
-    </Link>
-  )
-}
-
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
   return (
@@ -350,7 +341,6 @@ function Header({ openSearch }: { openSearch: () => void }) {
   return (
     <header className="site-header">
       <div className="header-inner">
-        <Logo />
         <nav className="top-nav" aria-label="Primary navigation">
           {sectionOrder.map((section) => <NavLink key={section} to={`/${section}`}>{sectionLabels[section]}</NavLink>)}
         </nav>
@@ -360,7 +350,7 @@ function Header({ openSearch }: { openSearch: () => void }) {
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild><Button variant="ghost" size="icon" className="mobile-menu"><Menu /><span className="sr-only">Open menu</span></Button></SheetTrigger>
             <SheetContent side="left" className="mobile-sheet">
-              <SheetHeader><SheetTitle><Logo /></SheetTitle></SheetHeader>
+              <SheetHeader><SheetTitle className="sr-only">Navigation</SheetTitle></SheetHeader>
               <ScrollArea className="mobile-sidebar-scroll">
                 <SidebarNav close={() => setMobileOpen(false)} />
               </ScrollArea>
@@ -588,7 +578,7 @@ function Home() {
   const videoRef = useRef<HTMLIFrameElement>(null)
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [videoMuted, setVideoMuted] = useState(true)
-  const [videoVolume, setVideoVolume] = useState(25)
+  const [videoVolume, setVideoVolume] = useState(10)
   const [videoEnabled, setVideoEnabled] = useState(() => {
     const savedPreference = window.localStorage.getItem('home-background-video')
     if (savedPreference !== null) return savedPreference === 'true'
@@ -609,6 +599,35 @@ function Home() {
       setVideoLoaded(false)
       setVideoMuted(true)
     }
+  }, [videoEnabled])
+
+  useEffect(() => {
+    if (!videoEnabled) return
+
+    const handleVimeoMessage = (event: MessageEvent) => {
+      if (
+        event.origin !== 'https://player.vimeo.com'
+        || event.source !== videoRef.current?.contentWindow
+      ) return
+
+      let payload: unknown = event.data
+      if (typeof payload === 'string') {
+        try {
+          payload = JSON.parse(payload)
+        } catch {
+          return
+        }
+      }
+
+      if (
+        typeof payload === 'object'
+        && payload !== null
+        && (payload as { event?: string }).event === 'playing'
+      ) setVideoLoaded(true)
+    }
+
+    window.addEventListener('message', handleVimeoMessage)
+    return () => window.removeEventListener('message', handleVimeoMessage)
   }, [videoEnabled])
 
   const sendBackgroundVideoVolume = (volume: number) => {
@@ -647,8 +666,12 @@ function Home() {
               allow="autoplay; fullscreen; picture-in-picture"
               loading="eager"
               onLoad={() => {
+                setVideoLoaded(false)
                 setBackgroundVideoMuted(true)
-                setVideoLoaded(true)
+                videoRef.current?.contentWindow?.postMessage(
+                  { method: 'addEventListener', value: 'playing' },
+                  'https://player.vimeo.com',
+                )
               }}
               referrerPolicy="strict-origin-when-cross-origin"
             />
@@ -676,17 +699,19 @@ function Home() {
       </section>
       <div className="home-media-controls">
         {videoEnabled && (
-          <div className="home-audio-controls">
-            <Slider
-              className="home-volume-slider"
-              value={[videoVolume]}
-              min={0}
-              max={100}
-              step={1}
-              onValueChange={setBackgroundVideoVolume}
-              aria-label="Background video volume"
-              aria-valuetext={`${videoVolume}%`}
-            />
+          <div className="home-audio-controls" data-muted={videoMuted}>
+            {!videoMuted && (
+              <Slider
+                className="home-volume-slider"
+                value={[videoVolume]}
+                min={1}
+                max={100}
+                step={1}
+                onValueChange={setBackgroundVideoVolume}
+                aria-label="Background video volume"
+                aria-valuetext={`${videoVolume}%`}
+              />
+            )}
             <Button
               className="home-audio-control"
               variant="ghost"
