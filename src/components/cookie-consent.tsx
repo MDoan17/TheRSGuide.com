@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { XIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -110,6 +111,16 @@ export function CookieConsent() {
           aria-labelledby="cookie-banner-title"
           aria-describedby="cookie-banner-description"
         >
+          <Button
+            className="cookie-banner-close"
+            variant="ghost"
+            size="icon-xs"
+            onClick={() => saveConsent(false)}
+            aria-label="Close and continue without optional analytics"
+            title="Continue without optional analytics"
+          >
+            <XIcon />
+          </Button>
           <div className="cookie-banner-copy">
             <h2 id="cookie-banner-title">Your privacy choices</h2>
             <p id="cookie-banner-description">
@@ -118,9 +129,9 @@ export function CookieConsent() {
             </p>
           </div>
           <div className="cookie-banner-actions">
-            <Button variant="outline" onClick={() => saveConsent(false)}>Reject optional</Button>
-            <Button variant="secondary" onClick={openPreferences}>Customize</Button>
-            <Button onClick={() => saveConsent(true)}>Accept all</Button>
+            <Button variant="ghost" size="sm" onClick={openPreferences}>Customize</Button>
+            <Button variant="outline" size="sm" onClick={() => saveConsent(false)}>Reject optional</Button>
+            <Button size="sm" onClick={() => saveConsent(true)}>Accept all</Button>
           </div>
         </section>
       )}
