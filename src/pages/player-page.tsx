@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
-import { ProgressionAdvisor } from '@/components/progression-advisor'
+// import { ProgressionAdvisor } from '@/components/progression-advisor'
 import { usePlayerData } from '@/mdx_components/components/player-data-context'
 import {
   evaluateProgression,
@@ -234,7 +234,9 @@ export function PlayerPage() {
                 )
               })}
             </div>
+            {/* Temporarily disabled until the progression advisor is ready to return.
             <ProgressionAdvisor username={playerData.username} recommendations={recommendations} />
+            */}
           </>
         )}
       </div>
