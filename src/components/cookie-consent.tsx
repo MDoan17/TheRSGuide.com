@@ -65,9 +65,6 @@ function enableRybbit() {
   script.src = 'https://analytics.distortion.me/api/script.js'
   script.async = true
   script.dataset.siteId = 'd8c35c481bf4'
-  script.dataset.replayMaskAllInputs = 'true'
-  script.dataset.replayMaskTextSelectors = '["[data-rybbit-mask]"]'
-  script.dataset.replayIgnoreSelector = '[data-rybbit-ignore]'
   document.head.append(script)
 }
 
@@ -116,8 +113,8 @@ export function CookieConsent() {
           <div className="cookie-banner-copy">
             <h2 id="cookie-banner-title">Your privacy choices</h2>
             <p id="cookie-banner-description">
-              We use optional analytics and session recordings to understand how the guide is used.
-              Form entries are masked, and tracking stays off unless you allow it.
+              We use optional analytics to understand how the guide is used and where it can be
+              improved. Tracking stays off unless you allow it.
             </p>
           </div>
           <div className="cookie-banner-actions">
@@ -144,8 +141,8 @@ export function CookieConsent() {
           <DialogHeader>
             <DialogTitle>Privacy settings</DialogTitle>
             <DialogDescription>
-              Choose whether optional analytics and session recording may run. You can return here
-              and change this choice at any time.
+              Choose whether optional analytics may run. You can return here and change this choice
+              at any time.
             </DialogDescription>
           </DialogHeader>
 
@@ -159,16 +156,16 @@ export function CookieConsent() {
             </div>
             <div className="cookie-preference">
               <div>
-                <strong>Analytics and session recordings</strong>
+                <strong>Analytics</strong>
                 <p>
-                  Rybbit measures visits and records masked clicks, scrolling, navigation, and page
-                  interactions so we can improve the guide.
+                  Rybbit measures visits, navigation, device types, and general usage patterns so we
+                  can improve the guide. Session recordings are not collected.
                 </p>
               </div>
               <Switch
                 checked={draftAnalytics}
                 onCheckedChange={setDraftAnalytics}
-                aria-label="Allow analytics and session recordings"
+                aria-label="Allow analytics"
               />
             </div>
           </div>

@@ -547,7 +547,7 @@ function HomeSearch() {
                 className="home-player-result"
                 onSelect={() => navigate(`/extras/player?username=${encodeURIComponent(matchingPlayer.username)}`)}
               >
-                <Card size="sm" data-rybbit-mask>
+                <Card size="sm">
                   <CardContent>
                     <span className="home-player-icon"><UserRound /></span>
                     <span className="home-player-copy"><strong>{matchingPlayer.username}</strong><span>Total level {matchingPlayer.totalLevel.toLocaleString()}</span></span>
