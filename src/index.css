@@ -153,6 +153,7 @@ a { color: inherit; text-decoration: none; }
 
 .site-header { position: sticky; top: 0; height: 4rem; border-bottom: 1px solid var(--border); background: color-mix(in oklch, var(--background) 88%, transparent); backdrop-filter: blur(18px); z-index: 20; }
 .header-inner { height: 100%; max-width: 96rem; margin: auto; padding: 0 1.25rem; display: flex; align-items: center; gap: 2rem; }
+.brand-mark { display: inline-flex; align-items: center; font-family: var(--font-display); font-weight: 700; letter-spacing: .02em; white-space: nowrap; }
 .top-nav { display: flex; align-items: stretch; gap: 1.5rem; height: 100%; }
 .top-nav a { display: grid; place-items: center; position: relative; color: var(--muted-foreground); font-size: .875rem; font-weight: 700; }
 .top-nav a.active, .top-nav a:hover { color: var(--foreground); }

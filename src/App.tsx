@@ -39,6 +39,14 @@ import { PlayerDataProvider, usePlayerData } from '@/mdx_components/components/p
 import { PlayerPage } from '@/pages/player-page'
 import { cn } from '@/lib/utils'
 
+function Logo() {
+  return (
+    <Link to="/" className="brand-mark" aria-label="The RS Guide home">
+      The RS Guide
+    </Link>
+  )
+}
+
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
   return (
@@ -341,6 +349,7 @@ function Header({ openSearch }: { openSearch: () => void }) {
   return (
     <header className="site-header">
       <div className="header-inner">
+        <Logo />
         <nav className="top-nav" aria-label="Primary navigation">
           {sectionOrder.map((section) => <NavLink key={section} to={`/${section}`}>{sectionLabels[section]}</NavLink>)}
         </nav>
@@ -350,7 +359,7 @@ function Header({ openSearch }: { openSearch: () => void }) {
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild><Button variant="ghost" size="icon" className="mobile-menu"><Menu /><span className="sr-only">Open menu</span></Button></SheetTrigger>
             <SheetContent side="left" className="mobile-sheet">
-              <SheetHeader><SheetTitle className="sr-only">Navigation</SheetTitle></SheetHeader>
+              <SheetHeader><SheetTitle><Logo /></SheetTitle></SheetHeader>
               <ScrollArea className="mobile-sidebar-scroll">
                 <SidebarNav close={() => setMobileOpen(false)} />
               </ScrollArea>
