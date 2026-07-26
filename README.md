@@ -24,7 +24,10 @@ npm start
 
 - Add `.mdx` files anywhere beneath `content/`.
 - Use frontmatter `title` and `description` fields.
-- Optionally set `ogImage` to a public image path for page-specific social previews.
+- A branded 1200×630 social preview is generated from each page's `title`,
+  `description`, and guide location.
+- Optionally set `ogImage` to a public 1200×630 PNG path to replace the generated
+  preview, and use `ogImageAlt` to describe it.
 - Player-aware MDX components are detected at build time. Use `playerData: true` or
   `playerData: false` only when a page needs to override that detection.
 - Use each directory's `meta.json` `pages` array to control navigation order.
@@ -35,5 +38,6 @@ Reusable MDX components are registered in `src/mdx_components/mdx-components.tsx
 The Vite content plugin validates navigation references and generates lightweight
 route metadata before the app loads. Production builds also include a route-specific
 HTML entry for each guide so crawlers receive the correct canonical, Open Graph, and
-Twitter metadata without executing JavaScript. Full guide text used by search is
+Twitter metadata—including image dimensions, accessible image text, content section,
+and guide topics—without executing JavaScript. Full guide text used by search is
 loaded only after a visitor begins searching.

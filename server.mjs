@@ -23,9 +23,14 @@ createServer((req, res) => {
       : null
     const file = directFile ?? directoryIndex ?? join(root, 'index.html')
     const immutableAsset = file.includes(`${sep}assets${sep}`)
+    const socialImage = file.includes(`${sep}og${sep}`)
     res.writeHead(200, {
       'content-type': mime[extname(file)] ?? 'application/octet-stream',
-      'cache-control': immutableAsset ? 'public, max-age=31536000, immutable' : 'no-cache',
+      'cache-control': immutableAsset
+        ? 'public, max-age=31536000, immutable'
+        : socialImage
+          ? 'public, max-age=86400, stale-while-revalidate=604800'
+          : 'no-cache',
     })
     createReadStream(file).pipe(res)
   } catch {

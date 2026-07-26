@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildGuideContent } from './guide-content-plugin.mjs'
+import { buildGuideContent, metadataHtml } from './guide-content-plugin.mjs'
 
 describe('guide content build manifest', () => {
   it('builds a unique, fully described guide manifest', async () => {
@@ -19,6 +19,9 @@ describe('guide content build manifest', () => {
       title: 'The Tick System',
       requiresPlayerData: false,
       hasTableOfContents: true,
+      ogImage: '/og/getting-started-tick-system.png',
+      ogImageAlt: 'The Tick System guide preview',
+      socialSection: 'Getting Started',
     })
     expect(byRoute.get('/guides/skill-training')).toMatchObject({
       requiresPlayerData: true,
@@ -37,5 +40,25 @@ describe('guide content build manifest', () => {
 
     expect(tickSystem?.searchText).toContain('0.6')
     expect(tickSystem?.tableOfContents.length).toBeGreaterThan(0)
+  })
+
+  it('renders complete social metadata for guide links', () => {
+    const html = metadataHtml({
+      path: '/guides/mid-game/invention',
+      title: 'Invention | The RS Guide',
+      description: 'The elite skill that enhances your gear with powerful perks',
+      ogImage: '/og/guides-mid-game-invention.png',
+      ogImageAlt: 'Invention guide preview',
+      generatedOgImage: true,
+      section: 'Mid Game',
+      type: 'article',
+      tags: ['RuneScape', 'Mid Game', 'Guide'],
+    }, 'https://thersguide.com')
+
+    expect(html).toContain('property="og:image:width" content="1200"')
+    expect(html).toContain('property="og:image:alt" content="Invention guide preview"')
+    expect(html).toContain('property="article:section" content="Mid Game"')
+    expect(html).toContain('property="article:tag" content="RuneScape"')
+    expect(html).toContain('name="twitter:card" content="summary_large_image"')
   })
 })

@@ -1,13 +1,19 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import matter from 'gray-matter'
+import {
+  generateOpenGraphImage,
+  OPEN_GRAPH_IMAGE_HEIGHT,
+  openGraphImagePath,
+  OPEN_GRAPH_IMAGE_WIDTH,
+} from './open-graph-image.mjs'
 
 const MANIFEST_ID = 'virtual:guide-manifest'
 const SEARCH_ID = 'virtual:guide-search-corpus'
 const RESOLVED_MANIFEST_ID = `\0${MANIFEST_ID}`
 const RESOLVED_SEARCH_ID = `\0${SEARCH_ID}`
 const DEFAULT_SITE_URL = 'https://thersguide.com'
-const DEFAULT_OG_IMAGE = '/images/logos/thersguide.png'
+const DEFAULT_OG_IMAGE = openGraphImagePath('/')
 const PLAYER_DATA_COMPONENTS = [
   'PlayerSearch',
   'QuestRequirements',
@@ -19,6 +25,14 @@ const normalizeSlashes = (value) => value.replaceAll('\\', '/')
 
 const titleFromSlug = (value) =>
   value.replaceAll('-', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase())
+
+const socialSection = (parts) => {
+  if (parts[0] === 'getting-started') return 'Getting Started'
+  if (parts[0] === 'setup') return 'Setup Guide'
+  if (parts[0] === 'extras') return 'Extras'
+  if (parts[0] === 'guides' && parts[1]) return titleFromSlug(parts[1])
+  return 'RuneScape Guides'
+}
 
 const normalizeRoute = (route) => {
   const withLeadingSlash = route.startsWith('/') ? route : `/${route}`
@@ -97,6 +111,11 @@ export async function buildGuideContent(root) {
     const fallback = parts.at(-1) ?? 'The RS Guide'
     const toc = tableOfContents(parsed.content)
     const tocOverride = typeof parsed.data.toc === 'boolean' ? parsed.data.toc : undefined
+    const customOgImage = typeof parsed.data.ogImage === 'string'
+      ? parsed.data.ogImage
+      : typeof parsed.data.image === 'string'
+        ? parsed.data.image
+        : ''
 
     return {
       sourcePath,
@@ -111,11 +130,15 @@ export async function buildGuideContent(root) {
       tableOfContents: toc,
       hasTableOfContents: tocOverride ?? toc.length > 0,
       requiresPlayerData: requiresPlayerData(parsed.content, parsed.data.playerData),
-      ogImage: typeof parsed.data.ogImage === 'string'
-        ? parsed.data.ogImage
-        : typeof parsed.data.image === 'string'
-          ? parsed.data.image
-          : '',
+      ogImage: customOgImage || openGraphImagePath(route),
+      ogImageAlt: typeof parsed.data.ogImageAlt === 'string'
+        ? parsed.data.ogImageAlt.trim()
+        : `${typeof parsed.data.title === 'string' ? parsed.data.title.trim() : titleFromSlug(fallback)} guide preview`,
+      generatedOgImage: !customOgImage,
+      socialSection: socialSection(parts),
+      socialDetail: toc.length
+        ? `RuneScape guide · ${toc.length} section${toc.length === 1 ? '' : 's'}`
+        : 'RuneScape guide · Practical account progression',
       searchText: searchableText(parsed.content),
     }
   }))
@@ -168,27 +191,49 @@ const escapeHtml = (value) =>
 
 const absoluteUrl = (value, siteUrl) => new URL(value, `${siteUrl}/`).href
 
-const metadataHtml = (metadata, siteUrl) => {
+export const metadataHtml = (metadata, siteUrl) => {
   const title = escapeHtml(metadata.title)
   const description = escapeHtml(metadata.description)
   const canonical = escapeHtml(absoluteUrl(metadata.path, siteUrl))
   const image = escapeHtml(absoluteUrl(metadata.ogImage || DEFAULT_OG_IMAGE, siteUrl))
+  const imageAlt = escapeHtml(metadata.ogImageAlt || `${metadata.title} preview`)
   const type = metadata.type || 'website'
+  const imageDimensions = metadata.generatedOgImage !== false
+    ? `
+    <meta property="og:image:width" content="${OPEN_GRAPH_IMAGE_WIDTH}" />
+    <meta property="og:image:height" content="${OPEN_GRAPH_IMAGE_HEIGHT}" />`
+    : ''
+  const articleMetadata = type === 'article'
+    ? `
+    <meta property="article:section" content="${escapeHtml(metadata.section || 'RuneScape Guides')}" />
+    ${(metadata.tags || []).map((tag) =>
+      `<meta property="article:tag" content="${escapeHtml(tag)}" />`
+    ).join('\n    ')}`
+    : ''
 
   return `<!-- page-metadata:start -->
     <title>${title}</title>
     <meta name="description" content="${description}" />
+    <meta name="author" content="The RS Guide" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href="${canonical}" />
     <meta property="og:site_name" content="The RS Guide" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="${escapeHtml(type)}" />
     <meta property="og:title" content="${title}" />
     <meta property="og:description" content="${description}" />
     <meta property="og:url" content="${canonical}" />
     <meta property="og:image" content="${image}" />
+    <meta property="og:image:secure_url" content="${image}" />
+    <meta property="og:image:type" content="image/png" />${imageDimensions}
+    <meta property="og:image:alt" content="${imageAlt}" />${articleMetadata}
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:domain" content="thersguide.com" />
+    <meta name="twitter:url" content="${canonical}" />
     <meta name="twitter:title" content="${title}" />
     <meta name="twitter:description" content="${description}" />
     <meta name="twitter:image" content="${image}" />
+    <meta name="twitter:image:alt" content="${imageAlt}" />
     <!-- page-metadata:end -->`
 }
 
@@ -226,9 +271,13 @@ export function guideContentPlugin({ siteUrl = DEFAULT_SITE_URL } = {}) {
         ]))
         return `export const guideSearchCorpus = ${JSON.stringify(corpus)}`
       }
-      const manifest = documents.map((document) =>
-        Object.fromEntries(Object.entries(document).filter(([key]) => key !== 'searchText'))
-      )
+      const manifest = documents.map((document) => {
+        const browserDocument = Object.fromEntries(Object.entries(document).filter(([key]) =>
+          !['generatedOgImage', 'ogImageAlt', 'searchText', 'socialDetail', 'socialSection'].includes(key)
+        ))
+        browserDocument.ogImage = document.generatedOgImage ? '' : document.ogImage
+        return browserDocument
+      })
       return `export const guideManifest = ${JSON.stringify(manifest)}
 export const guideMetadata = ${JSON.stringify(metadata)}`
     },
@@ -238,27 +287,68 @@ export const guideMetadata = ${JSON.stringify(metadata)}`
         const baseHtml = await fs.readFile(indexPath, 'utf8')
         const { documents } = await buildGuideContent(root)
         const pages = [
+          {
+            path: '/',
+            title: 'The RS Guide | Practical RuneScape Guides',
+            cardTitle: 'The RS Guide',
+            description: 'Practical RuneScape guides for combat, progression, setup, and account planning.',
+            ogImage: openGraphImagePath('/'),
+            ogImageAlt: 'The RS Guide homepage preview',
+            generatedOgImage: true,
+            section: 'The RS Guide',
+            detail: 'Combat · Progression · Setup · Account planning',
+            type: 'website',
+            tags: ['RuneScape', 'RuneScape 3', 'Guides'],
+          },
           ...documents.map((document) => ({
             path: document.path,
             title: `${document.title} | The RS Guide`,
+            cardTitle: document.title,
             description: document.description || `Read ${document.title} on The RS Guide.`,
             ogImage: document.ogImage,
+            ogImageAlt: document.ogImageAlt,
+            generatedOgImage: document.generatedOgImage,
+            section: document.socialSection,
+            detail: document.socialDetail,
             type: 'article',
+            tags: ['RuneScape', document.socialSection, 'Guide'],
           })),
           {
             path: '/extras/player',
             title: 'Player Progression | The RS Guide',
+            cardTitle: 'Player Progression',
             description: 'Compare a RuneScape profile with early, mid, and late game progression recommendations.',
-            ogImage: '',
+            ogImage: openGraphImagePath('/extras/player'),
+            ogImageAlt: 'RuneScape player progression preview',
+            generatedOgImage: true,
+            section: 'Player Tools',
+            detail: 'Personalized early · mid · late game recommendations',
             type: 'website',
+            tags: ['RuneScape', 'Player Progression'],
           },
         ]
 
         await Promise.all(pages.map(async (page) => {
+          if (page.generatedOgImage) {
+            await generateOpenGraphImage({
+              root,
+              outputDirectory: path.join(
+                outputDirectory,
+                page.ogImage.replace(/^\/+/, ''),
+              ),
+              title: page.cardTitle,
+              description: page.description,
+              section: page.section,
+              detail: page.detail,
+            })
+          }
           const routeDirectory = path.join(outputDirectory, ...page.path.split('/').filter(Boolean))
           await fs.mkdir(routeDirectory, { recursive: true })
+          const routeIndex = page.path === '/'
+            ? indexPath
+            : path.join(routeDirectory, 'index.html')
           await fs.writeFile(
-            path.join(routeDirectory, 'index.html'),
+            routeIndex,
             replaceMetadata(baseHtml, page, siteUrl),
           )
         }))

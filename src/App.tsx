@@ -26,7 +26,7 @@ import {
 } from '@/components/guide-navigation'
 import { cn } from '@/lib/utils'
 import { useGuideSearch } from '@/hooks/use-guide-search'
-import { usePageMetadata } from '@/lib/page-metadata'
+import { openGraphImagePath, usePageMetadata } from '@/lib/page-metadata'
 
 const PlayerPage = lazy(() => import('@/pages/player-page').then((module) => ({
   default: module.PlayerPage,
@@ -270,12 +270,19 @@ function PrevNext({ doc }: { doc: Doc }) {
 }
 
 function DocPage({ doc }: { doc: Doc }) {
+  const socialSection = guideCatalog
+    .breadcrumbs(doc.path)
+    .slice(0, -1)
+    .at(-1)?.label ?? guideCatalog.sectionLabel(doc.section)
   usePageMetadata({
     path: doc.path,
     title: `${doc.title} | The RS Guide`,
     description: doc.description || `Read ${doc.title} on The RS Guide.`,
-    image: doc.ogImage || undefined,
+    image: doc.ogImage || openGraphImagePath(doc.path),
+    imageAlt: `${doc.title} guide preview`,
     type: 'article',
+    section: socialSection,
+    tags: ['RuneScape', socialSection, 'Guide'],
   })
   useEffect(() => { window.scrollTo(0, 0) }, [doc])
   const sidebarDefaultOpen = !document.cookie.includes('sidebar_state=false')
@@ -411,6 +418,8 @@ function Home() {
     path: '/',
     title: 'The RS Guide | Practical RuneScape Guides',
     description: 'Practical RuneScape guides for combat, progression, setup, and account planning.',
+    image: '/og/home.png',
+    imageAlt: 'The RS Guide homepage preview',
   })
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -447,6 +456,8 @@ function NotFound() {
     path: '/404',
     title: 'Guide Not Found | The RS Guide',
     description: 'The requested RuneScape guide could not be found.',
+    image: '/og/home.png',
+    imageAlt: 'The RS Guide homepage preview',
   })
   return <main className="not-found"><p className="eyebrow">Lost in Gielinor</p><h1>That guide hasn’t been written.</h1><Button asChild><Link to="/">Return home</Link></Button></main>
 }

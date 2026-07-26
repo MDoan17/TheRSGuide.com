@@ -152,6 +152,8 @@ export function PlayerPage() {
     description: visiblePlayerData
       ? `Compare ${visiblePlayerData.username}'s RuneScape profile with early, mid, and late game progression recommendations.`
       : 'Compare a RuneScape profile with early, mid, and late game progression recommendations.',
+    image: '/og/extras-player.png',
+    imageAlt: 'RuneScape player progression preview',
   })
 
   useEffect(() => {
