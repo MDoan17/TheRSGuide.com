@@ -15,6 +15,8 @@ const document = (path: string) => ({
   section: 'guides',
   tableOfContents: [],
   hasTableOfContents: false,
+  requiresPlayerData: false,
+  ogImage: '',
   Component: EmptyDocument,
 })
 const node = (path: string, children: GuideNavNode[] = []): GuideNavNode => ({

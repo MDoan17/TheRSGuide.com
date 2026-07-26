@@ -4,22 +4,28 @@ import { createGuideSearchIndex } from './guide-search'
 
 const EmptyDocument = () => null
 const document = (
-  sourcePath: string,
+  path: string,
   title: string,
   description: string,
-  body: string,
 ): GuideDocumentSource => ({
-  sourcePath,
-  body: `---\ntitle: "${title}"\ndescription: "${description}"\n---\n${body}`,
+  sourcePath: `../../content${path === '/setup' ? '/setup/index' : path}.mdx`,
+  path,
+  title,
+  description,
+  section: path.split('/')[1],
+  tableOfContents: [],
+  hasTableOfContents: false,
+  requiresPlayerData: false,
+  ogImage: '',
   Component: EmptyDocument,
 })
 
 const catalog = createGuideCatalog({
   documents: [
-    document('../../content/guides/tick-food.mdx', 'Food Guide', '', 'Learn about the tick system while eating.'),
-    document('../../content/getting-started/tick-system.mdx', 'The Tick System', 'How RuneScape game ticks work.', 'Every action follows a 0.6 second cycle.'),
-    document('../../content/guides/tick.mdx', 'Tick', 'A concise tick reference.', 'Timing reference.'),
-    document('../../content/setup/index.mdx', 'Setup', 'Configure RuneScape.', 'Client and interface setup.'),
+    document('/guides/tick-food', 'Food Guide', ''),
+    document('/getting-started/tick-system', 'The Tick System', 'How RuneScape game ticks work.'),
+    document('/guides/tick', 'Tick', 'A concise tick reference.'),
+    document('/setup', 'Setup', 'Configure RuneScape.'),
   ],
   metadata: [
     { sourcePath: '../../content/getting-started/meta.json', pages: ['tick-system'] },
@@ -31,7 +37,12 @@ const catalog = createGuideCatalog({
     { id: 'guides', label: 'Guides' },
   ],
 })
-const search = createGuideSearchIndex(catalog)
+const search = createGuideSearchIndex(catalog, {
+  '/guides/tick-food': 'Learn about the tick system while eating.',
+  '/getting-started/tick-system': 'Every action follows a 0.6 second cycle.',
+  '/guides/tick': 'Timing reference.',
+  '/setup': 'Client and interface setup.',
+})
 
 describe('GuideSearchIndex', () => {
   it('uses one deterministic relevance order', () => {

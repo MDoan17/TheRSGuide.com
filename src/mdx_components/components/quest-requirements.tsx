@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, useState, useEffect, useCallback } from "react";
-import { usePlayerData } from "./player-data-context";
+import { usePlayerData } from "@/features/player/player-data-context";
 import { resolveAllRequirements, QuestTreeNode } from "@/utils/quest-requirements";
 import { SkillDrawer } from "./skill-drawer";
 import questsData from "@/data/quests.json";
@@ -74,7 +74,7 @@ const SkillRequirementItem: React.FC<SkillRequirementItemProps> = ({ skill, leve
   );
 };
 
-const QuestRequirementItem: React.FC<{ quest: string; depth?: number }> = ({ quest, depth = 0 }) => {
+const QuestRequirementItem: React.FC<{ quest: string }> = ({ quest }) => {
   const { playerData, isQuestComplete } = usePlayerData();
 
   const completed = isQuestComplete(quest);
@@ -113,7 +113,7 @@ const QuestTreeItem: React.FC<{ node: QuestTreeNode; depth?: number }> = ({ node
   return (
     <div>
       <div style={{ marginLeft: `${depth * 20}px` }}>
-        <QuestRequirementItem quest={node.name} depth={depth} />
+        <QuestRequirementItem quest={node.name} />
       </div>
       {node.children.length > 0 && (
         <div className="mt-1 space-y-1">

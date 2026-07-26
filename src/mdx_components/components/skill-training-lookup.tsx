@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { usePlayerData } from "./player-data-context";
+import { usePlayerData } from "@/features/player/player-data-context";
 import { SkillContent } from "./skill-content";
 
 const allSkills = [

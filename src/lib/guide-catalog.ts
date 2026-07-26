@@ -7,6 +7,8 @@ export type Doc = {
   section: string
   tableOfContents: readonly GuideTocItem[]
   hasTableOfContents: boolean
+  requiresPlayerData: boolean
+  ogImage: string
   Component: ComponentType | LazyExoticComponent<ComponentType>
 }
 
@@ -44,7 +46,14 @@ export type GuideAdjacent = {
 
 export type GuideDocumentSource = {
   sourcePath: string
-  body: string
+  path: string
+  title: string
+  description: string
+  section: string
+  tableOfContents: readonly GuideTocItem[]
+  hasTableOfContents: boolean
+  requiresPlayerData: boolean
+  ogImage: string
   Component: Doc['Component']
 }
 
@@ -73,14 +82,6 @@ const normalizeRoute = (path: string) => {
   return withLeadingSlash.replace(/\/+$/, '')
 }
 
-const routeFromDocumentSource = (sourcePath: string) => {
-  const relative = sourcePath
-    .replaceAll('\\', '/')
-    .replace(/^.*\/content\//, '')
-    .replace(/\.mdx$/, '')
-  return normalizeRoute(`/${relative.replace(/\/index$/, '')}`)
-}
-
 const directoryFromMetadataSource = (sourcePath: string) => {
   const relative = sourcePath
     .replaceAll('\\', '/')
@@ -88,54 +89,6 @@ const directoryFromMetadataSource = (sourcePath: string) => {
     .replace(/\/meta\.json$/, '')
   return normalizeRoute(relative || '/')
 }
-
-const readFrontmatter = (body: string) => {
-  const block = body.match(/^---\s*\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? ''
-  const field = (name: string) =>
-    block.match(new RegExp(`^${name}:\\s*["']?(.*?)["']?\\s*$`, 'm'))?.[1] ?? ''
-  const toc = field('toc').toLowerCase()
-  return {
-    title: field('title'),
-    description: field('description'),
-    toc: toc === 'true' ? true : toc === 'false' ? false : undefined,
-  }
-}
-
-const headingText = (value: string) =>
-  value
-    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
-    .replace(/<[^>]+>/g, '')
-    .replace(/[*_`~]/g, '')
-    .replace(/\s+#+\s*$/, '')
-    .trim()
-
-const headingId = (text: string, index: number) =>
-  `${text.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'section'}-${index}`
-
-const readTableOfContents = (body: string): GuideTocItem[] => {
-  const items: GuideTocItem[] = []
-  for (const line of body.replace(/^---[\s\S]*?---/, '').split(/\r?\n/)) {
-    const match = /^(##|###)\s+(.+)$/.exec(line)
-    if (!match) continue
-    const text = headingText(match[2])
-    if (!text) continue
-    items.push({
-      id: headingId(text, items.length),
-      text,
-      level: match[1].length as 2 | 3,
-    })
-  }
-  return items
-}
-
-const normalizeSearchableText = (body: string) =>
-  body
-    .replace(/^---[\s\S]*?---/, '')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/[#*_`>|\[\](){}]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
 
 const groupLabel = (path: string) => {
   const slug = path.split('/').filter(Boolean).at(-1) ?? path
@@ -150,7 +103,6 @@ export class GuideCatalog {
 
   readonly #documentsByPath: ReadonlyMap<string, Doc>
   readonly #sectionsById: ReadonlyMap<string, GuideSection>
-  readonly #searchableTextByPath: ReadonlyMap<string, string>
 
   constructor(options: GuideCatalogOptions) {
     const orderByPath = new Map<string, number>()
@@ -163,24 +115,17 @@ export class GuideCatalog {
       })
     }
 
-    const searchableTextByPath = new Map<string, string>()
-    const documents = options.documents.map((source) => {
-      const path = routeFromDocumentSource(source.sourcePath)
-      const parts = path.split('/').filter(Boolean)
-      const fallback = parts.at(-1) ?? 'The RS Guide'
-      const frontmatter = readFrontmatter(source.body)
-      const tableOfContents = readTableOfContents(source.body)
-      searchableTextByPath.set(path, normalizeSearchableText(source.body))
-      return {
-        path,
-        title: frontmatter.title || titleFromSlug(fallback),
-        description: frontmatter.description,
-        section: parts[0] ?? '',
-        tableOfContents,
-        hasTableOfContents: frontmatter.toc ?? tableOfContents.length > 0,
-        Component: source.Component,
-      } satisfies Doc
-    })
+    const documents = options.documents.map((source) => ({
+      path: normalizeRoute(source.path),
+      title: source.title,
+      description: source.description,
+      section: source.section,
+      tableOfContents: source.tableOfContents,
+      hasTableOfContents: source.hasTableOfContents,
+      requiresPlayerData: source.requiresPlayerData,
+      ogImage: source.ogImage,
+      Component: source.Component,
+    } satisfies Doc))
 
     const documentsByPath = new Map<string, Doc>()
     for (const document of documents) {
@@ -250,7 +195,6 @@ export class GuideCatalog {
     this.sections = sections
     this.#documentsByPath = documentsByPath
     this.#sectionsById = new Map(sections.map((section) => [section.id, section]))
-    this.#searchableTextByPath = searchableTextByPath
   }
 
   get(path: string) {
@@ -263,10 +207,6 @@ export class GuideCatalog {
 
   sectionLabel(id: string) {
     return this.section(id)?.label ?? titleFromSlug(id)
-  }
-
-  searchableText(document: Doc) {
-    return this.#searchableTextByPath.get(document.path) ?? ''
   }
 
   breadcrumbs(path: string): GuideBreadcrumb[] {

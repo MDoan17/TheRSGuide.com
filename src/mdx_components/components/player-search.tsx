@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { usePlayerData } from "./player-data-context";
+import { usePlayerData } from "@/features/player/player-data-context";
 
 export const PlayerSearch: React.FC = () => {
   const { playerData, loading, error, lastSearch, searchPlayer } =

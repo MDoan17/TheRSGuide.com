@@ -3,6 +3,9 @@ import { createGuideCatalog, type GuideDocumentSource } from './guide-catalog'
 
 const EmptyDocument = () => null
 
+const pathFromSource = (sourcePath: string) =>
+  `/${sourcePath.replaceAll('\\', '/').replace(/^.*\/content\//, '').replace(/\.mdx$/, '').replace(/\/index$/, '')}`
+
 const document = (
   sourcePath: string,
   title: string,
@@ -10,7 +13,18 @@ const document = (
   content = `${title} content`,
 ): GuideDocumentSource => ({
   sourcePath,
-  body: `---\ntitle: "${title}"\ndescription: "${description}"\n---\n\n## ${content}`,
+  path: pathFromSource(sourcePath),
+  title,
+  description,
+  section: pathFromSource(sourcePath).split('/')[1],
+  tableOfContents: [{
+    id: `${content.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-0`,
+    text: content,
+    level: 2,
+  }],
+  hasTableOfContents: true,
+  requiresPlayerData: false,
+  ogImage: '',
   Component: EmptyDocument,
 })
 
@@ -66,15 +80,6 @@ describe('GuideCatalog', () => {
     ])
   })
 
-  it('keeps raw MDX details behind normalized searchable text', () => {
-    const guide = catalog.get('/guides/melee/basic-abilities')!
-    const searchableText = catalog.searchableText(guide)
-
-    expect(searchableText).toContain('Melee Basic Abilities content')
-    expect(searchableText).not.toContain('title:')
-    expect(searchableText).not.toContain('##')
-  })
-
   it('precomputes the table of contents before a lazy guide component loads', () => {
     const guide = catalog.get('/guides/melee/basic-abilities')!
 
@@ -90,7 +95,14 @@ describe('GuideCatalog', () => {
     const componentCatalog = createGuideCatalog({
       documents: [{
         sourcePath: '../../content/guides/skill-training.mdx',
-        body: '---\ntitle: Skill Training\ntoc: true\n---\n\n<SkillTrainingLookup />',
+        path: '/guides/skill-training',
+        title: 'Skill Training',
+        description: '',
+        section: 'guides',
+        tableOfContents: [],
+        hasTableOfContents: true,
+        requiresPlayerData: true,
+        ogImage: '',
         Component: EmptyDocument,
       }],
       metadata: [],
@@ -100,25 +112,8 @@ describe('GuideCatalog', () => {
     expect(componentCatalog.get('/guides/skill-training')).toMatchObject({
       hasTableOfContents: true,
       tableOfContents: [],
+      requiresPlayerData: true,
     })
-  })
-
-  it('accepts CRLF frontmatter without exposing the source body', () => {
-    const crlfCatalog = createGuideCatalog({
-      documents: [{
-        sourcePath: '../../content/setup/client.mdx',
-        body: '---\r\ntitle: "Client Setup"\r\ndescription: "Install the client"\r\n---\r\nBody',
-        Component: EmptyDocument,
-      }],
-      metadata: [],
-      sections: [{ id: 'setup', label: 'Setup' }],
-    })
-
-    expect(crlfCatalog.get('/setup/client')).toMatchObject({
-      title: 'Client Setup',
-      description: 'Install the client',
-    })
-    expect(crlfCatalog.get('/setup/client')).not.toHaveProperty('body')
   })
 
   it('rejects duplicate route identities', () => {

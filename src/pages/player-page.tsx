@@ -6,7 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 // import { ProgressionAdvisor } from '@/components/progression-advisor'
-import { usePlayerData } from '@/mdx_components/components/player-data-context'
+import { usePlayerData } from '@/features/player/player-data-context'
 import {
   evaluateProgression,
   type EvaluatedRecommendation,
@@ -14,6 +14,7 @@ import {
   type ProgressionStatus,
 } from '@/lib/player-progression'
 import { browserPlayerStorage } from '@/lib/player-storage'
+import { usePageMetadata } from '@/lib/page-metadata'
 
 const stages: { key: ProgressionStage; title: string }[] = [
   { key: 'early', title: 'Early game' },
@@ -143,9 +144,17 @@ export function PlayerPage() {
     username: '',
     paths: new Set(),
   })
+  usePageMetadata({
+    path: '/extras/player',
+    title: visiblePlayerData
+      ? `${visiblePlayerData.username} Progression | The RS Guide`
+      : 'Player Progression | The RS Guide',
+    description: visiblePlayerData
+      ? `Compare ${visiblePlayerData.username}'s RuneScape profile with early, mid, and late game progression recommendations.`
+      : 'Compare a RuneScape profile with early, mid, and late game progression recommendations.',
+  })
 
   useEffect(() => {
-    document.title = visiblePlayerData ? `${visiblePlayerData.username} Progression | The RS Guide` : 'Player Progression | The RS Guide'
     window.scrollTo(0, 0)
   }, [visiblePlayerData])
 

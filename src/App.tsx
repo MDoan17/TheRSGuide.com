@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { MDXProvider } from '@mdx-js/react'
 import { Link, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { ArrowRight, BookOpen, ChevronLeft, ChevronRight, Command as CommandIcon, LoaderCircle, Menu, Moon, Search, Sun, UserRound } from 'lucide-react'
@@ -15,18 +15,33 @@ import {
   SidebarInset,
   SidebarProvider,
 } from '@/components/ui/sidebar'
-import { guideCatalog, guideSearch, type Doc } from '@/lib/content'
+import { guideCatalog, type Doc } from '@/lib/content'
 import { mdxComponents } from '@/mdx_components/mdx-components'
-import { PlayerDataProvider } from '@/mdx_components/components/player-data-context'
-import { PlayerPage } from '@/pages/player-page'
+import { PlayerDataProvider } from '@/features/player/player-data-context'
 import { CookieConsent } from '@/components/cookie-consent'
-import { HomeBackgroundMedia } from '@/components/home-background-media'
 import {
   GuideSidebar,
   GuideSidebarExpandTrigger,
   MobileGuideNavigation,
 } from '@/components/guide-navigation'
 import { cn } from '@/lib/utils'
+import { useGuideSearch } from '@/hooks/use-guide-search'
+import { usePageMetadata } from '@/lib/page-metadata'
+
+const PlayerPage = lazy(() => import('@/pages/player-page').then((module) => ({
+  default: module.PlayerPage,
+})))
+const HomeBackgroundMedia = lazy(() => import('@/components/home-background-media').then((module) => ({
+  default: module.HomeBackgroundMedia,
+})))
+
+function HomeBackground({ children }: { children: ReactNode }) {
+  return (
+    <Suspense fallback={<main className="home home-search-page">{children}</main>}>
+      <HomeBackgroundMedia>{children}</HomeBackgroundMedia>
+    </Suspense>
+  )
+}
 
 function Logo() {
   return (
@@ -58,10 +73,11 @@ function SearchButton({ onClick, compact = false }: { onClick: () => void; compa
 function SearchDialog({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
+  const { searchIndex, searchLoading } = useGuideSearch(open && Boolean(query.trim()))
   const results = useMemo(() => {
-    if (!query.trim()) return guideSearch.browse(14)
-    return guideSearch.search(query, 30)
-  }, [query])
+    if (!query.trim()) return searchIndex.browse(14)
+    return searchIndex.search(query, 30)
+  }, [query, searchIndex])
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="search-dialog">
@@ -70,7 +86,9 @@ function SearchDialog({ open, setOpen }: { open: boolean; setOpen: (open: boolea
           <CommandInput value={query} onValueChange={setQuery} placeholder="Search every guide…" />
           <ScrollArea type="always" className="search-dialog-results">
             <CommandList className="search-dialog-list">
-              <CommandEmpty>No guide matched that search.</CommandEmpty>
+              <CommandEmpty>
+                {searchLoading ? 'Loading guide search…' : 'No guide matched that search.'}
+              </CommandEmpty>
               <CommandGroup heading={query ? 'Results' : 'Browse guides'}>
                 {results.map(({ document, sectionLabel }) => (
                   <CommandItem key={document.path} value={document.path} onSelect={() => { navigate(document.path); setOpen(false) }}>
@@ -252,8 +270,28 @@ function PrevNext({ doc }: { doc: Doc }) {
 }
 
 function DocPage({ doc }: { doc: Doc }) {
-  useEffect(() => { document.title = `${doc.title} | The RS Guide`; window.scrollTo(0, 0) }, [doc])
+  usePageMetadata({
+    path: doc.path,
+    title: `${doc.title} | The RS Guide`,
+    description: doc.description || `Read ${doc.title} on The RS Guide.`,
+    image: doc.ogImage || undefined,
+    type: 'article',
+  })
+  useEffect(() => { window.scrollTo(0, 0) }, [doc])
   const sidebarDefaultOpen = !document.cookie.includes('sidebar_state=false')
+  const guideContent = (
+    <MDXProvider components={mdxComponents}>
+      <Suspense
+        fallback={(
+          <div className="guide-loading" role="status" aria-label="Loading guide">
+            <LoaderCircle aria-hidden="true" />
+          </div>
+        )}
+      >
+        <doc.Component />
+      </Suspense>
+    </MDXProvider>
+  )
 
   return (
     <SidebarProvider defaultOpen={sidebarDefaultOpen} className="guide-sidebar-provider">
@@ -265,17 +303,9 @@ function DocPage({ doc }: { doc: Doc }) {
             <Breadcrumbs doc={doc} />
         <article className="guide-prose">
           <header className="article-header"><p>{guideCatalog.sectionLabel(doc.section)}</p><h1>{doc.title}</h1>{doc.description && <div>{doc.description}</div>}</header>
-          <MDXProvider components={mdxComponents}>
-            <Suspense
-              fallback={(
-                <div className="guide-loading" role="status" aria-label="Loading guide">
-                  <LoaderCircle aria-hidden="true" />
-                </div>
-              )}
-            >
-              <doc.Component />
-            </Suspense>
-          </MDXProvider>
+          {doc.requiresPlayerData
+            ? <PlayerDataProvider>{guideContent}</PlayerDataProvider>
+            : guideContent}
         </article>
         <Separator />
         <PrevNext doc={doc} />
@@ -292,10 +322,11 @@ function HomeSearch() {
   const [query, setQuery] = useState('')
   const [resultsOpen, setResultsOpen] = useState(false)
   const needle = query.toLowerCase().trim()
+  const { searchIndex, searchLoading } = useGuideSearch(Boolean(needle))
   const results = useMemo(() => {
     if (!needle) return []
-    return guideSearch.search(query, 8)
-  }, [needle, query])
+    return searchIndex.search(query, 8)
+  }, [needle, query, searchIndex])
   const usernameCandidate = query.trim()
   const canLookupPlayer = usernameCandidate.length > 0
     && usernameCandidate.length <= 12
@@ -359,8 +390,14 @@ function HomeSearch() {
             </CommandGroup>
           ) : (
             <CommandEmpty>
-              <strong>No guide found for “{query.trim()}”</strong>
-              <span>Try another topic or a RuneScape username.</span>
+              {searchLoading ? (
+                <LoaderCircle className="search-loading-icon" aria-label="Loading guide search" />
+              ) : (
+                <>
+                  <strong>No guide found for “{query.trim()}”</strong>
+                  <span>Try another topic or a RuneScape username.</span>
+                </>
+              )}
             </CommandEmpty>
           )}
         </CommandList>
@@ -370,15 +407,19 @@ function HomeSearch() {
 }
 
 function Home() {
+  usePageMetadata({
+    path: '/',
+    title: 'The RS Guide | Practical RuneScape Guides',
+    description: 'Practical RuneScape guides for combat, progression, setup, and account planning.',
+  })
   useEffect(() => {
-    document.title = 'The RS Guide | Practical RuneScape Guides'
     window.scrollTo(0, 0)
     document.documentElement.classList.add('home-page')
     return () => document.documentElement.classList.remove('home-page')
   }, [])
 
   return (
-    <HomeBackgroundMedia>
+    <HomeBackground>
       <section className="home-search-landing">
         <div className="home-search-intro">
           <h1>The <span>RS</span> Guide</h1>
@@ -397,11 +438,16 @@ function Home() {
           <Link to="/guides/necromancy">Necromancy</Link>
         </nav>
       </section>
-    </HomeBackgroundMedia>
+    </HomeBackground>
   )
 }
 
 function NotFound() {
+  usePageMetadata({
+    path: '/404',
+    title: 'Guide Not Found | The RS Guide',
+    description: 'The requested RuneScape guide could not be found.',
+  })
   return <main className="not-found"><p className="eyebrow">Lost in Gielinor</p><h1>That guide hasn’t been written.</h1><Button asChild><Link to="/">Return home</Link></Button></main>
 }
 
@@ -421,17 +467,24 @@ function App() {
   }, [pathname])
   return (
     <TooltipProvider>
-      <PlayerDataProvider>
-        {pathname !== '/' && <Header openSearch={() => setSearchOpen(true)} />}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/extras/player" element={<PlayerPage />} />
-          {guideCatalog.documents.map((doc) => <Route key={doc.path} path={doc.path} element={<DocPage doc={doc} />} />)}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <SearchDialog open={searchOpen} setOpen={setSearchOpen} />
-        <CookieConsent />
-      </PlayerDataProvider>
+      {pathname !== '/' && <Header openSearch={() => setSearchOpen(true)} />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/extras/player"
+          element={(
+            <PlayerDataProvider>
+              <Suspense fallback={<div className="guide-loading" role="status" aria-label="Loading player progression"><LoaderCircle /></div>}>
+                <PlayerPage />
+              </Suspense>
+            </PlayerDataProvider>
+          )}
+        />
+        {guideCatalog.documents.map((doc) => <Route key={doc.path} path={doc.path} element={<DocPage doc={doc} />} />)}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <SearchDialog open={searchOpen} setOpen={setSearchOpen} />
+      <CookieConsent />
     </TooltipProvider>
   )
 }

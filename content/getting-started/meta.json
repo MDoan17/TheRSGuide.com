@@ -1,7 +1,6 @@
 {
   "pages": [
     "index",
-    "keybinds",
     "combat-basics",
     "damage",
     "tick-system",

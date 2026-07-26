@@ -214,6 +214,7 @@ a { color: inherit; text-decoration: none; }
 .guide-prose { font-size: 1rem; line-height: 1.75; }
 .guide-loading { min-height: min(20rem, 40svh); display: grid; place-items: center; color: var(--primary); }
 .guide-loading svg { width: 1.75rem; height: 1.75rem; animation: guide-loading-spin .8s linear infinite; }
+.search-loading-icon { width: 1.25rem; height: 1.25rem; margin: .75rem auto; animation: guide-loading-spin .8s linear infinite; }
 @keyframes guide-loading-spin { to { transform: rotate(360deg); } }
 .guide-prose > :not(.article-header) { margin-block: 1.15rem; }
 .guide-prose h2, .guide-prose h3, .guide-prose h4 { font-family: var(--font-display); line-height: 1.25; scroll-margin-top: 5.5rem; }

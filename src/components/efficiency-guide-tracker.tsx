@@ -3,7 +3,7 @@
 import { Check, ChevronDown, ExternalLink, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { PlayerSearch } from "@/mdx_components/components/player-search";
-import { usePlayerData } from "@/mdx_components/components/player-data-context";
+import { usePlayerData } from "@/features/player/player-data-context";
 
 export interface EfficiencyGuideRow {
   id: string;
@@ -49,7 +49,7 @@ function questUrl(questName: string) {
 }
 
 export function EfficiencyGuideTracker({ guide }: EfficiencyGuideTrackerProps) {
-  const { playerData, isQuestComplete } = usePlayerData();
+  const { isQuestComplete } = usePlayerData();
   const [manualChecked, setManualChecked] = useState<CheckedState>({});
   const [openSections, setOpenSections] = useState<CheckedState>(() => ({
     [guide.sections[0]?.id || ""]: true,

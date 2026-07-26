@@ -9,6 +9,8 @@ export type GuideSearchHit = {
   match: GuideSearchMatch
 }
 
+export type GuideSearchCorpus = Readonly<Record<string, string>>
+
 type SearchEntry = {
   document: Doc
   sectionLabel: string
@@ -57,9 +59,9 @@ const excerptFor = (entry: SearchEntry, query: string) => {
 export class GuideSearchIndex {
   readonly #entries: readonly SearchEntry[]
 
-  constructor(catalog: GuideCatalog) {
+  constructor(catalog: GuideCatalog, corpus: GuideSearchCorpus = {}) {
     this.#entries = catalog.documents.map((document, order) => {
-      const displayContent = catalog.searchableText(document).replace(/\s+/g, ' ').trim()
+      const displayContent = (corpus[document.path] ?? '').replace(/\s+/g, ' ').trim()
       return {
         document,
         sectionLabel: catalog.sectionLabel(document.section),
@@ -99,4 +101,7 @@ export class GuideSearchIndex {
   }
 }
 
-export const createGuideSearchIndex = (catalog: GuideCatalog) => new GuideSearchIndex(catalog)
+export const createGuideSearchIndex = (
+  catalog: GuideCatalog,
+  corpus?: GuideSearchCorpus,
+) => new GuideSearchIndex(catalog, corpus)

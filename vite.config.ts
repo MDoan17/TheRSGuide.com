@@ -6,6 +6,7 @@ import remarkFrontmatter from 'remark-frontmatter'
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import path from 'node:path'
 import { handlePlayerApi } from './server/player-api.mjs'
+import { guideContentPlugin } from './scripts/guide-content-plugin.mjs'
 
 const mdxPlugin = mdx({
   providerImportSource: '@mdx-js/react',
@@ -34,6 +35,7 @@ const playerApiPlugin = () => ({
 
 export default defineConfig({
   plugins: [
+    guideContentPlugin(),
     playerApiPlugin(),
     mdxWithoutRaw,
     react(),

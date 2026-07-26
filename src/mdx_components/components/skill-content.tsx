@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { usePlayerData } from "./player-data-context";
+import { usePlayerData } from "@/features/player/player-data-context";
 import skillsData from "@/utils/skills.json";
 
 export interface LevelRange {

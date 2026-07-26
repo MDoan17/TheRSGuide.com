@@ -16,7 +16,7 @@ import {
 import { browserPlayerStorage } from '@/lib/player-storage'
 import { runemetricsPlayerAdapter } from '@/lib/runemetrics-player-adapter'
 
-interface PlayerDataContextType {
+export interface PlayerDataContextValue {
   playerData: PlayerProfile | null
   loading: boolean
   error: string | null
@@ -26,7 +26,7 @@ interface PlayerDataContextType {
   isQuestComplete: (questName: string) => boolean | null
 }
 
-const PlayerDataContext = createContext<PlayerDataContextType | undefined>(undefined)
+const PlayerDataContext = createContext<PlayerDataContextValue | undefined>(undefined)
 
 export function PlayerDataProvider({ children }: { children: ReactNode }) {
   const controller = useMemo(

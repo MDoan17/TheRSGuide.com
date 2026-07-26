@@ -1,8 +1,8 @@
 import { lazy, type ComponentType } from 'react'
+import { guideManifest, guideMetadata } from 'virtual:guide-manifest'
 import {
   createGuideCatalog,
   type GuideDocumentSource,
-  type GuideMetadataSource,
 } from '@/lib/guide-catalog'
 import { createGuideSearchIndex } from '@/lib/guide-search'
 
@@ -12,32 +12,19 @@ type MdxModule = {
 }
 
 const modules = import.meta.glob<MdxModule>('../../content/**/*.mdx')
-type RawImport = string | { default?: unknown }
 
-const rawFiles = import.meta.glob('../../content/**/*.mdx', { eager: true, query: '?raw', import: 'default' }) as Record<string, RawImport>
-
-const normalizeRawImport = (value: RawImport | undefined): string => {
-  if (typeof value === 'string') return value
-  if (value && typeof value.default === 'string') return value.default
-  return ''
-}
-
-const metaFiles = import.meta.glob<{ pages?: string[] }>('../../content/**/meta.json', { eager: true, import: 'default' })
-
-const documentSources: GuideDocumentSource[] = Object.entries(modules).map(([sourcePath, loader]) => ({
-  sourcePath,
-  body: normalizeRawImport(rawFiles[sourcePath]),
-  Component: lazy(loader),
-}))
-
-const metadataSources: GuideMetadataSource[] = Object.entries(metaFiles).map(([sourcePath, metadata]) => ({
-  sourcePath,
-  pages: metadata.pages,
-}))
+const documentSources: GuideDocumentSource[] = guideManifest.map((document) => {
+  const loader = modules[document.sourcePath]
+  if (!loader) throw new Error(`Missing MDX module for ${document.sourcePath}`)
+  return {
+    ...document,
+    Component: lazy(loader),
+  }
+})
 
 export const guideCatalog = createGuideCatalog({
   documents: documentSources,
-  metadata: metadataSources,
+  metadata: guideMetadata,
   sections: [
     { id: 'setup', label: 'Setup' },
     { id: 'getting-started', label: 'Getting Started' },
@@ -47,6 +34,18 @@ export const guideCatalog = createGuideCatalog({
 })
 
 export const guideSearch = createGuideSearchIndex(guideCatalog)
+
+let fullGuideSearch: ReturnType<typeof createGuideSearchIndex> | null = null
+let guideSearchPromise: Promise<ReturnType<typeof createGuideSearchIndex>> | null = null
+
+export const loadGuideSearch = () => {
+  if (fullGuideSearch) return Promise.resolve(fullGuideSearch)
+  guideSearchPromise ??= import('virtual:guide-search-corpus').then(({ guideSearchCorpus }) => {
+    fullGuideSearch = createGuideSearchIndex(guideCatalog, guideSearchCorpus)
+    return fullGuideSearch
+  })
+  return guideSearchPromise
+}
 
 export type {
   Doc,
