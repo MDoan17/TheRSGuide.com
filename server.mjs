@@ -1,7 +1,11 @@
-import { createReadStream, existsSync, statSync } from 'node:fs'
+import { createReadStream, existsSync, readFile, statSync } from 'node:fs'
 import { createServer } from 'node:http'
 import { extname, join, resolve, sep } from 'node:path'
 import { handlePlayerApi } from './server/player-api.mjs'
+import {
+  requestOrigin,
+  rewriteSocialImageOrigin,
+} from './server/social-image-origin.mjs'
 
 const root = resolve(process.cwd(), 'dist')
 const mime = { '.css': 'text/css', '.html': 'text/html', '.ico': 'image/x-icon', '.jpeg': 'image/jpeg', '.jpg': 'image/jpeg', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp' }
@@ -24,14 +28,33 @@ createServer((req, res) => {
     const file = directFile ?? directoryIndex ?? join(root, 'index.html')
     const immutableAsset = file.includes(`${sep}assets${sep}`)
     const socialImage = file.includes(`${sep}og${sep}`)
-    res.writeHead(200, {
+    const headers = {
       'content-type': mime[extname(file)] ?? 'application/octet-stream',
       'cache-control': immutableAsset
         ? 'public, max-age=31536000, immutable'
         : socialImage
           ? 'public, max-age=86400, stale-while-revalidate=604800'
           : 'no-cache',
-    })
+    }
+
+    if (extname(file) === '.html') {
+      readFile(file, 'utf8', (error, html) => {
+        if (error) {
+          res.writeHead(500, { 'content-type': 'text/plain; charset=utf-8' })
+          res.end('Unable to load page')
+          return
+        }
+        const encrypted = Boolean(req.socket.encrypted)
+        res.writeHead(200, headers)
+        res.end(rewriteSocialImageOrigin(
+          html,
+          requestOrigin(req.headers, encrypted),
+        ))
+      })
+      return
+    }
+
+    res.writeHead(200, headers)
     createReadStream(file).pipe(res)
   } catch {
     res.writeHead(400, { 'content-type': 'text/plain; charset=utf-8' })

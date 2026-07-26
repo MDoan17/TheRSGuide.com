@@ -22,6 +22,7 @@ export type PageMetadata = {
 }
 
 const absoluteUrl = (value: string) => new URL(value, `${SITE_URL}/`).href
+const absoluteImageUrl = (value: string) => new URL(value, window.location.origin).href
 
 const setMeta = (
   selector: string,
@@ -77,7 +78,7 @@ export function applyPageMetadata({
   tags = [],
 }: PageMetadata) {
   const canonical = absoluteUrl(path)
-  const absoluteImage = absoluteUrl(image)
+  const absoluteImage = absoluteImageUrl(image)
 
   document.title = title
   setCanonical(canonical)
