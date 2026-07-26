@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 
-const SITE_URL = 'https://thersguide.com'
 const DEFAULT_OG_IMAGE = '/og/home.png'
 const OPEN_GRAPH_IMAGE_WIDTH = '1200'
 const OPEN_GRAPH_IMAGE_HEIGHT = '630'
@@ -21,8 +20,7 @@ export type PageMetadata = {
   tags?: readonly string[]
 }
 
-const absoluteUrl = (value: string) => new URL(value, `${SITE_URL}/`).href
-const absoluteImageUrl = (value: string) => new URL(value, window.location.origin).href
+const absoluteUrl = (value: string) => new URL(value, window.location.origin).href
 
 const setMeta = (
   selector: string,
@@ -78,7 +76,7 @@ export function applyPageMetadata({
   tags = [],
 }: PageMetadata) {
   const canonical = absoluteUrl(path)
-  const absoluteImage = absoluteImageUrl(image)
+  const absoluteImage = absoluteUrl(image)
 
   document.title = title
   setCanonical(canonical)

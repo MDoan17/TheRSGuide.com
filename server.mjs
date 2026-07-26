@@ -4,8 +4,8 @@ import { extname, join, resolve, sep } from 'node:path'
 import { handlePlayerApi } from './server/player-api.mjs'
 import {
   requestOrigin,
-  rewriteSocialImageOrigin,
-} from './server/social-image-origin.mjs'
+  rewritePageMetadataOrigin,
+} from './server/page-metadata-origin.mjs'
 
 const root = resolve(process.cwd(), 'dist')
 const mime = { '.css': 'text/css', '.html': 'text/html', '.ico': 'image/x-icon', '.jpeg': 'image/jpeg', '.jpg': 'image/jpeg', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp' }
@@ -46,7 +46,7 @@ createServer((req, res) => {
         }
         const encrypted = Boolean(req.socket.encrypted)
         res.writeHead(200, headers)
-        res.end(rewriteSocialImageOrigin(
+        res.end(rewritePageMetadataOrigin(
           html,
           requestOrigin(req.headers, encrypted),
         ))

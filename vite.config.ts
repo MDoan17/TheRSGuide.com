@@ -8,6 +8,12 @@ import path from 'node:path'
 import { handlePlayerApi } from './server/player-api.mjs'
 import { guideContentPlugin } from './scripts/guide-content-plugin.mjs'
 
+const deploymentUrl = (
+  process.env.SITE_URL
+  || process.env.COOLIFY_URL
+  || 'https://thersguide.com'
+).split(',')[0].trim()
+
 const mdxPlugin = mdx({
   providerImportSource: '@mdx-js/react',
   remarkPlugins: [remarkFrontmatter, [remarkMdxFrontmatter, { name: 'frontmatter' }]],
@@ -35,7 +41,7 @@ const playerApiPlugin = () => ({
 
 export default defineConfig({
   plugins: [
-    guideContentPlugin(),
+    guideContentPlugin({ siteUrl: deploymentUrl }),
     playerApiPlugin(),
     mdxWithoutRaw,
     react(),

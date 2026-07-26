@@ -20,6 +20,10 @@ npm start
 
 `npm start` serves the compiled SPA, provides history fallback for deep guide URLs, and exposes `/api/player/:username` for RuneMetrics requests. Set `PORT` to change the default port (`4173`).
 
+Absolute page and social metadata URLs use `SITE_URL` when provided, then
+Coolify's deployment-specific `COOLIFY_URL`, and finally the incoming request
+origin. This keeps production and PR preview links on the host that serves them.
+
 ## Content
 
 - Add `.mdx` files anywhere beneath `content/`.

@@ -20,8 +20,8 @@ export const requestOrigin = (headers, encrypted = false) => {
   return `${protocol}://${host}`
 }
 
-export const rewriteSocialImageOrigin = (html, origin) =>
+export const rewritePageMetadataOrigin = (html, origin) =>
   html.replace(
-    /(<meta (?:property="og:image(?::secure_url)?"|name="twitter:image") content=")https:\/\/thersguide\.com/gi,
-    `$1${origin}`,
+    /<!-- page-metadata:start -->[\s\S]*?<!-- page-metadata:end -->/,
+    (metadata) => metadata.replaceAll(DEFAULT_ORIGIN, origin),
   )
