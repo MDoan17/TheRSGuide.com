@@ -36,6 +36,13 @@ export const metadata: Metadata = {
 export default function Layout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={`${cinzel.variable} ${nunito.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          src="https://analytics.distortion.me/api/script.js"
+          data-site-id="d8c35c481bf4"
+          defer
+        />
+      </head>
       <body className="flex flex-col font-[family-name:var(--font-body)]" suppressHydrationWarning>
         <Script
           defer
