@@ -379,12 +379,12 @@ function HomeSearch() {
               <CommandItem
                 value={`player-${usernameCandidate}`}
                 className="home-player-result"
-                onSelect={() => navigate(`/extras/player?username=${encodeURIComponent(usernameCandidate)}`)}
+                onSelect={() => navigate(`/guides/skill-training?username=${encodeURIComponent(usernameCandidate)}`)}
               >
                 <Card size="sm">
                   <CardContent>
                     <span className="home-player-icon"><UserRound /></span>
-                    <span className="home-player-copy"><strong>{usernameCandidate}</strong><span>View player progression</span></span>
+                    <span className="home-player-copy"><strong>{usernameCandidate}</strong><span>View skill recommendations</span></span>
                     <ArrowRight />
                   </CardContent>
                 </Card>

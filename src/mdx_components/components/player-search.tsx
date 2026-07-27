@@ -1,21 +1,26 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import { usePlayerData } from "@/features/player/player-data-context";
 
 export const PlayerSearch: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const requestedUsername = searchParams.get("username")?.trim() ?? "";
   const { playerData, loading, error, lastSearch, searchPlayer } =
     usePlayerData();
-  const [inputValue, setInputValue] = useState(lastSearch);
+  const [inputValue, setInputValue] = useState(requestedUsername || lastSearch);
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(
     null,
   );
-  const [hasInitializedInput, setHasInitializedInput] = useState(false);
+  const [hasInitializedInput, setHasInitializedInput] = useState(
+    Boolean(requestedUsername),
+  );
 
   useEffect(() => {
     if (!hasInitializedInput) {
       setInputValue(lastSearch);
-      setHasInitializedInput(true);
+      if (lastSearch) setHasInitializedInput(true);
     }
   }, [hasInitializedInput, lastSearch]);
 
@@ -38,6 +43,7 @@ export const PlayerSearch: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    setHasInitializedInput(true);
     setInputValue(value);
     debouncedSearch(value);
   };
