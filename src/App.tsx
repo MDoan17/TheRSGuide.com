@@ -18,7 +18,7 @@ import {
 import { guideCatalog, type Doc } from '@/lib/content'
 import { mdxComponents } from '@/mdx_components/mdx-components'
 import { PlayerDataProvider } from '@/features/player/player-data-context'
-import { CookieConsent } from '@/components/cookie-consent'
+import { CookieConsent, PrivacySettingsButton } from '@/components/cookie-consent'
 import {
   GuideSidebar,
   GuideSidebarExpandTrigger,
@@ -27,6 +27,7 @@ import {
 import { cn } from '@/lib/utils'
 import { useGuideSearch } from '@/hooks/use-guide-search'
 import { openGraphImagePath, usePageMetadata } from '@/lib/page-metadata'
+import { functionalStorageAllowed } from '@/lib/privacy-preferences'
 
 const PlayerPage = lazy(() => import('@/pages/player-page').then((module) => ({
   default: module.PlayerPage,
@@ -53,8 +54,12 @@ function Logo() {
 
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
+    if (!functionalStorageAllowed()) window.localStorage.removeItem('theme')
+  }
   return (
-    <Button variant="ghost" size="icon" onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')} aria-label="Toggle color theme">
+    <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle color theme">
       {resolvedTheme === 'dark' ? <Sun /> : <Moon />}
     </Button>
   )
@@ -125,6 +130,9 @@ function Header({ openSearch }: { openSearch: () => void }) {
               <ScrollArea className="mobile-sidebar-scroll">
                 <MobileGuideNavigation close={() => setMobileOpen(false)} />
               </ScrollArea>
+              <div className="mobile-sidebar-footer">
+                <PrivacySettingsButton className="mobile-sidebar-privacy" />
+              </div>
             </SheetContent>
           </Sheet>
         </div>
@@ -285,7 +293,8 @@ function DocPage({ doc }: { doc: Doc }) {
     tags: ['RuneScape', socialSection, 'Guide'],
   })
   useEffect(() => { window.scrollTo(0, 0) }, [doc])
-  const sidebarDefaultOpen = !document.cookie.includes('sidebar_state=false')
+  const sidebarDefaultOpen = !functionalStorageAllowed()
+    || !document.cookie.includes('sidebar_state=false')
   const guideContent = (
     <MDXProvider components={mdxComponents}>
       <Suspense
@@ -429,24 +438,27 @@ function Home() {
 
   return (
     <HomeBackground>
-      <section className="home-search-landing">
-        <div className="home-search-intro">
-          <h1>The <span>RS</span> Guide</h1>
-        </div>
-        <HomeSearch />
-        <nav className="home-primary-links" aria-label="Main guide sections">
-          <Button size="lg" asChild><Link to="/guides">Guides</Link></Button>
-          <Button size="lg" variant="outline" asChild><Link to="/getting-started">Getting Started</Link></Button>
-          <Button size="lg" variant="outline" asChild><Link to="/setup">Setup Guide</Link></Button>
-          <Button size="lg" variant="outline" asChild><Link to="/extras">Extras</Link></Button>
-        </nav>
-        <nav className="home-combat-links" aria-label="Combat style guides">
-          <Link to="/guides/melee">Melee</Link><span aria-hidden="true">/</span>
-          <Link to="/guides/range">Ranged</Link><span aria-hidden="true">/</span>
-          <Link to="/guides/magic">Magic</Link><span aria-hidden="true">/</span>
-          <Link to="/guides/necromancy">Necromancy</Link>
-        </nav>
-      </section>
+      <>
+        <section className="home-search-landing">
+          <div className="home-search-intro">
+            <h1>The <span>RS</span> Guide</h1>
+          </div>
+          <HomeSearch />
+          <nav className="home-primary-links" aria-label="Main guide sections">
+            <Button size="lg" asChild><Link to="/guides">Guides</Link></Button>
+            <Button size="lg" variant="outline" asChild><Link to="/getting-started">Getting Started</Link></Button>
+            <Button size="lg" variant="outline" asChild><Link to="/setup">Setup Guide</Link></Button>
+            <Button size="lg" variant="outline" asChild><Link to="/extras">Extras</Link></Button>
+          </nav>
+          <nav className="home-combat-links" aria-label="Combat style guides">
+            <Link to="/guides/melee">Melee</Link><span aria-hidden="true">/</span>
+            <Link to="/guides/range">Ranged</Link><span aria-hidden="true">/</span>
+            <Link to="/guides/magic">Magic</Link><span aria-hidden="true">/</span>
+            <Link to="/guides/necromancy">Necromancy</Link>
+          </nav>
+        </section>
+        <PrivacySettingsButton className="home-privacy-settings" />
+      </>
     </HomeBackground>
   )
 }
@@ -465,6 +477,7 @@ function NotFound() {
 function App() {
   const { pathname } = useLocation()
   const [searchOpen, setSearchOpen] = useState(false)
+  const hasGuideSidebar = guideCatalog.documents.some((doc) => doc.path === pathname)
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
@@ -478,24 +491,28 @@ function App() {
   }, [pathname])
   return (
     <TooltipProvider>
-      {pathname !== '/' && <Header openSearch={() => setSearchOpen(true)} />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/extras/player"
-          element={(
-            <PlayerDataProvider>
-              <Suspense fallback={<div className="guide-loading" role="status" aria-label="Loading player progression"><LoaderCircle /></div>}>
-                <PlayerPage />
-              </Suspense>
-            </PlayerDataProvider>
-          )}
-        />
-        {guideCatalog.documents.map((doc) => <Route key={doc.path} path={doc.path} element={<DocPage doc={doc} />} />)}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <SearchDialog open={searchOpen} setOpen={setSearchOpen} />
-      <CookieConsent />
+      <CookieConsent>
+        {pathname !== '/' && <Header openSearch={() => setSearchOpen(true)} />}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/extras/player"
+            element={(
+              <PlayerDataProvider>
+                <Suspense fallback={<div className="guide-loading" role="status" aria-label="Loading player progression"><LoaderCircle /></div>}>
+                  <PlayerPage />
+                </Suspense>
+              </PlayerDataProvider>
+            )}
+          />
+          {guideCatalog.documents.map((doc) => <Route key={doc.path} path={doc.path} element={<DocPage doc={doc} />} />)}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        {pathname !== '/' && !hasGuideSidebar && (
+          <PrivacySettingsButton className="standalone-privacy-settings" />
+        )}
+        <SearchDialog open={searchOpen} setOpen={setSearchOpen} />
+      </CookieConsent>
     </TooltipProvider>
   )
 }

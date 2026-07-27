@@ -1,4 +1,5 @@
 import { normalizeUsername } from '@/lib/player-profile'
+import { functionalStorageAllowed } from '@/lib/privacy-preferences'
 
 interface KeyValueStorage {
   getItem(key: string): string | null
@@ -52,5 +53,5 @@ export const createPlayerStorage = (getStorage: () => KeyValueStorage | null): P
 }
 
 export const browserPlayerStorage = createPlayerStorage(() =>
-  typeof window === 'undefined' ? null : window.localStorage
+  typeof window === 'undefined' || !functionalStorageAllowed() ? null : window.localStorage
 )

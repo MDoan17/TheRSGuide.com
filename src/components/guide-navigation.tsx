@@ -7,6 +7,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -21,6 +22,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar'
+import { PrivacySettingsButton } from '@/components/cookie-consent'
 import { guideCatalog, type GuideNavNode, type GuideSection } from '@/lib/content'
 import {
   activeNavigationKeys,
@@ -386,6 +388,9 @@ export function GuideSidebar() {
           </nav>
         </ScrollArea>
       </SidebarContent>
+      <SidebarFooter className="guide-sidebar-footer">
+        <PrivacySettingsButton className="guide-sidebar-privacy" />
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   )

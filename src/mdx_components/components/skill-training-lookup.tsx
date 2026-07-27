@@ -2,15 +2,10 @@
 
 import React, { useState } from "react";
 import { usePlayerData } from "@/features/player/player-data-context";
+import { RUNESCAPE_SKILLS } from "@/lib/player-profile";
 import { SkillContent } from "./skill-content";
 
-const allSkills = [
-  "attack", "strength", "defence", "constitution", "ranged", "prayer", "magic",
-  "cooking", "woodcutting", "fletching", "fishing", "firemaking", "crafting",
-  "smithing", "mining", "herblore", "agility", "thieving", "slayer", "farming",
-  "runecrafting", "hunter", "construction", "summoning", "dungeoneering",
-  "divination", "invention", "archaeology", "necromancy"
-];
+const allSkills = RUNESCAPE_SKILLS.map((skill) => skill.toLowerCase());
 
 const skillSlots: Array<string | null> = allSkills.length % 2
   ? [...allSkills, null]

@@ -25,11 +25,12 @@ const catalog = createGuideCatalog({
     document('/guides/tick-food', 'Food Guide', ''),
     document('/getting-started/tick-system', 'The Tick System', 'How RuneScape game ticks work.'),
     document('/guides/tick', 'Tick', 'A concise tick reference.'),
+    document('/guides/skill-training', 'Skill Training Guide', 'Training methods for every skill.'),
     document('/setup', 'Setup', 'Configure RuneScape.'),
   ],
   metadata: [
     { sourcePath: '../../content/getting-started/meta.json', pages: ['tick-system'] },
-    { sourcePath: '../../content/guides/meta.json', pages: ['tick', 'tick-food'] },
+    { sourcePath: '../../content/guides/meta.json', pages: ['tick', 'tick-food', 'skill-training'] },
   ],
   sections: [
     { id: 'setup', label: 'Setup' },
@@ -70,12 +71,20 @@ describe('GuideSearchIndex', () => {
     expect(hit.sectionLabel).toBe('Guides')
   })
 
+  it('finds the skill training guide by individual skill name', () => {
+    const hit = search.search('Agility')[0]
+
+    expect(hit.document.path).toBe('/guides/skill-training')
+    expect(hit.match).toBe('keyword')
+  })
+
   it('browses in configured section and metadata order', () => {
     expect(search.browse().map(({ document }) => document.path)).toEqual([
       '/setup',
       '/getting-started/tick-system',
       '/guides/tick',
       '/guides/tick-food',
+      '/guides/skill-training',
     ])
   })
 })

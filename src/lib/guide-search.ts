@@ -1,6 +1,7 @@
 import type { Doc, GuideCatalog } from '@/lib/guide-catalog'
+import { RUNESCAPE_SKILLS } from '@/lib/player-profile'
 
-export type GuideSearchMatch = 'title-exact' | 'title-prefix' | 'title' | 'description' | 'content'
+export type GuideSearchMatch = 'title-exact' | 'title-prefix' | 'title' | 'description' | 'keyword' | 'content'
 
 export type GuideSearchHit = {
   document: Doc
@@ -16,6 +17,7 @@ type SearchEntry = {
   sectionLabel: string
   title: string
   description: string
+  keywords: string
   content: string
   displayContent: string
   order: number
@@ -34,12 +36,13 @@ const matchRank = (entry: SearchEntry, query: string): number => {
   if (entry.title.startsWith(query)) return 1
   if (entry.title.includes(query)) return 2
   if (entry.description.includes(query)) return 3
-  if (entry.content.includes(query)) return 4
+  if (entry.keywords.includes(query)) return 4
+  if (entry.content.includes(query)) return 5
   return -1
 }
 
 const matchName = (rank: number): GuideSearchMatch =>
-  ['title-exact', 'title-prefix', 'title', 'description', 'content'][rank] as GuideSearchMatch
+  ['title-exact', 'title-prefix', 'title', 'description', 'keyword', 'content'][rank] as GuideSearchMatch
 
 const excerptFor = (entry: SearchEntry, query: string) => {
   if (entry.description.includes(query) && entry.document.description) {
@@ -67,6 +70,9 @@ export class GuideSearchIndex {
         sectionLabel: catalog.sectionLabel(document.section),
         title: normalizeSearchValue(document.title),
         description: normalizeSearchValue(document.description),
+        keywords: document.path === '/guides/skill-training'
+          ? normalizeSearchValue(RUNESCAPE_SKILLS.join(' '))
+          : '',
         content: normalizeSearchValue(displayContent),
         displayContent,
         order,

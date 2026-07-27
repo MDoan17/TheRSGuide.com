@@ -2,6 +2,7 @@
 
 import { Check, ExternalLink, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { functionalStorageAllowed } from "@/lib/privacy-preferences";
 
 export type ActivityFrequency = "daily" | "weekly" | "monthly";
 
@@ -94,7 +95,7 @@ function formatCountdown(target: Date, now: Date) {
 }
 
 function loadCheckedState(): CheckedState {
-  if (typeof window === "undefined") return {};
+  if (typeof window === "undefined" || !functionalStorageAllowed()) return {};
 
   try {
     const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
@@ -142,7 +143,9 @@ export function RecurringActivitiesTracker({ activities }: RecurringActivitiesTr
 
   const updateChecked = (next: CheckedState) => {
     setChecked(next);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    if (functionalStorageAllowed()) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    }
   };
 
   const toggleActivity = (activity: RecurringActivity) => {

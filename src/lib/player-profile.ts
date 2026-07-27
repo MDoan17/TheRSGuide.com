@@ -75,6 +75,8 @@ const SKILL_NAME_MAP: Record<string, string> = {
   necromancy: 'Necromancy',
 }
 
+export const RUNESCAPE_SKILLS = Object.freeze(Object.values(SKILL_NAME_MAP))
+
 export const normalizeUsername = (username: string) => username.trim()
 
 export const playerSkillLevel = (profile: PlayerProfile | null, skillName: string): number | null => {

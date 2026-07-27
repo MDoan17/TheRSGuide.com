@@ -3,6 +3,7 @@ import type {
   BackgroundMediaPlayerAdapter,
   BackgroundMediaPreferenceAdapter,
 } from '@/lib/background-media'
+import { functionalStorageAllowed } from '@/lib/privacy-preferences'
 
 const ENABLED_PREFERENCE_KEY = 'home-background-video'
 const PLAYBACK_EVENTS = ['play', 'playing', 'timeupdate'] as const
@@ -29,13 +30,16 @@ export const vimeoBackgroundMediaAdapter: BackgroundMediaPlayerAdapter<HTMLIFram
 
 export const browserBackgroundMediaPreferences: BackgroundMediaPreferenceAdapter = {
   loadEnabled() {
-    if (typeof window === 'undefined') return false
+    if (typeof window === 'undefined' || !functionalStorageAllowed()) {
+      return typeof window !== 'undefined'
+        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    }
     const savedPreference = window.localStorage.getItem(ENABLED_PREFERENCE_KEY)
     if (savedPreference !== null) return savedPreference === 'true'
     return !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   },
   saveEnabled(enabled) {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && functionalStorageAllowed()) {
       window.localStorage.setItem(ENABLED_PREFERENCE_KEY, String(enabled))
     }
   },

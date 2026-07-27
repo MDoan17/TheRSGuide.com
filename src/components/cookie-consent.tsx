@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { createContext, type PropsWithChildren, useContext, useEffect, useState } from 'react'
 import { XIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -10,17 +10,15 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Switch } from '@/components/ui/switch'
+import { cn } from '@/lib/utils'
+import {
+  clearFunctionalStorage,
+  readConsent,
+  writeConsent,
+  type ConsentPreferences,
+} from '@/lib/privacy-preferences'
 
-const CONSENT_COOKIE = 'rs-guide-consent'
-const CONSENT_VERSION = 1
-const CONSENT_MAX_AGE = 60 * 60 * 24 * 180
 const RYBBIT_SCRIPT_ID = 'rybbit-analytics'
-
-type ConsentPreferences = {
-  version: number
-  analytics: boolean
-  updatedAt: string
-}
 
 declare global {
   interface Window {
@@ -28,37 +26,15 @@ declare global {
   }
 }
 
-function readConsent(): ConsentPreferences | null {
-  const cookie = document.cookie
-    .split('; ')
-    .find((item) => item.startsWith(`${CONSENT_COOKIE}=`))
-
-  if (!cookie) return null
-
-  try {
-    const parsed = JSON.parse(decodeURIComponent(cookie.split('=').slice(1).join('='))) as ConsentPreferences
-    return parsed.version === CONSENT_VERSION && typeof parsed.analytics === 'boolean'
-      ? parsed
-      : null
-  } catch {
-    return null
-  }
+type PrivacySettingsContextValue = {
+  hasConsent: boolean
+  openPreferences: () => void
 }
 
-function writeConsent(analytics: boolean): ConsentPreferences {
-  const preferences = {
-    version: CONSENT_VERSION,
-    analytics,
-    updatedAt: new Date().toISOString(),
-  }
-  const secure = window.location.protocol === 'https:' ? '; Secure' : ''
-  document.cookie = `${CONSENT_COOKIE}=${encodeURIComponent(JSON.stringify(preferences))}; Path=/; Max-Age=${CONSENT_MAX_AGE}; SameSite=Lax${secure}`
-  return preferences
-}
+const PrivacySettingsContext = createContext<PrivacySettingsContextValue | null>(null)
 
 function enableRybbit() {
   window.__RYBBIT_OPTOUT__ = false
-  window.localStorage.removeItem('disable-rybbit')
   if (document.getElementById(RYBBIT_SCRIPT_ID)) return
 
   const script = document.createElement('script')
@@ -71,27 +47,51 @@ function enableRybbit() {
 
 function disableRybbit() {
   window.__RYBBIT_OPTOUT__ = true
-  window.localStorage.setItem('disable-rybbit', 'true')
 }
 
-export function CookieConsent() {
+export function PrivacySettingsButton({ className }: { className?: string }) {
+  const privacySettings = useContext(PrivacySettingsContext)
+
+  if (!privacySettings?.hasConsent) return null
+
+  return (
+    <Button
+      className={cn('cookie-settings-trigger', className)}
+      variant="ghost"
+      size="sm"
+      onClick={privacySettings.openPreferences}
+    >
+      Privacy settings
+    </Button>
+  )
+}
+
+export function CookieConsent({ children }: PropsWithChildren) {
   const [consent, setConsent] = useState<ConsentPreferences | null>(() => readConsent())
   const [preferencesOpen, setPreferencesOpen] = useState(false)
   const [draftAnalytics, setDraftAnalytics] = useState(() => consent?.analytics ?? false)
+  const [draftFunctional, setDraftFunctional] = useState(() => consent?.functional ?? false)
 
   useEffect(() => {
     if (consent?.analytics) enableRybbit()
     else disableRybbit()
   }, [consent])
 
-  const saveConsent = (analytics: boolean) => {
+  const saveConsent = ({
+    analytics,
+    functional,
+  }: Pick<ConsentPreferences, 'analytics' | 'functional'>) => {
     const wasEnabled = consent?.analytics === true
-    const preferences = writeConsent(analytics)
+    const wasFunctional = consent?.functional === true
+    const preferences = writeConsent({ analytics, functional })
     setConsent(preferences)
     setDraftAnalytics(analytics)
+    setDraftFunctional(functional)
     setPreferencesOpen(false)
 
-    if (wasEnabled && !analytics) {
+    if (!functional) clearFunctionalStorage()
+
+    if ((wasEnabled && !analytics) || (wasFunctional && !functional)) {
       disableRybbit()
       window.location.reload()
     }
@@ -99,11 +99,27 @@ export function CookieConsent() {
 
   const openPreferences = () => {
     setDraftAnalytics(consent?.analytics ?? false)
+    setDraftFunctional(consent?.functional ?? false)
     setPreferencesOpen(true)
   }
 
+  const handlePreferencesOpenChange = (open: boolean) => {
+    if (open) {
+      setPreferencesOpen(true)
+      return
+    }
+
+    if (preferencesOpen) {
+      saveConsent({ analytics: draftAnalytics, functional: draftFunctional })
+    }
+  }
+
   return (
-    <>
+    <PrivacySettingsContext.Provider
+      value={{ hasConsent: Boolean(consent), openPreferences }}
+    >
+      {children}
+
       {!consent && (
         <section
           className="cookie-banner"
@@ -115,55 +131,63 @@ export function CookieConsent() {
             className="cookie-banner-close"
             variant="ghost"
             size="icon-xs"
-            onClick={() => saveConsent(false)}
-            aria-label="Close and continue without optional analytics"
-            title="Continue without optional analytics"
+            onClick={() => saveConsent({ analytics: false, functional: false })}
+            aria-label="Close and reject optional storage and analytics"
+            title="Continue without optional storage or analytics"
           >
             <XIcon />
           </Button>
           <div className="cookie-banner-copy">
             <h2 id="cookie-banner-title">Your privacy choices</h2>
             <p id="cookie-banner-description">
-              We use optional analytics to understand how the guide is used and where it can be
-              improved. Tracking stays off unless you allow it.
+              Choose whether this guide may remember your progress and preferences or use optional
+              analytics. Both stay off unless you allow them.
             </p>
           </div>
           <div className="cookie-banner-actions">
             <Button variant="ghost" size="sm" onClick={openPreferences}>Customize</Button>
-            <Button variant="outline" size="sm" onClick={() => saveConsent(false)}>Reject optional</Button>
-            <Button size="sm" onClick={() => saveConsent(true)}>Accept all</Button>
+            <Button variant="outline" size="sm" onClick={() => saveConsent({ analytics: false, functional: false })}>Reject optional</Button>
+            <Button size="sm" onClick={() => saveConsent({ analytics: true, functional: true })}>Accept all</Button>
           </div>
         </section>
       )}
 
-      {consent && (
-        <Button
-          className="cookie-settings-trigger"
-          variant="ghost"
-          size="sm"
-          onClick={openPreferences}
-        >
-          Privacy settings
-        </Button>
-      )}
-
-      <Dialog open={preferencesOpen} onOpenChange={setPreferencesOpen}>
+      <Dialog open={preferencesOpen} onOpenChange={handlePreferencesOpenChange}>
         <DialogContent className="cookie-preferences-dialog">
           <DialogHeader>
             <DialogTitle>Privacy settings</DialogTitle>
             <DialogDescription>
-              Choose whether optional analytics may run. You can return here and change this choice
-              at any time.
+              Choose what this guide may remember and whether optional analytics may run. You can
+              return here and change these choices at any time. Switch changes save when you close
+              this dialog.
             </DialogDescription>
           </DialogHeader>
 
           <div className="cookie-preference-list">
             <div className="cookie-preference">
               <div>
-                <strong>Essential cookies</strong>
-                <p>Remember privacy choices and settings required for the guide to function.</p>
+                <strong>Required consent record</strong>
+                <p>
+                  Stores this privacy choice for 180 days so the banner does not reappear on every
+                  page. It is not used for analytics or advertising.
+                </p>
               </div>
-              <Switch checked disabled aria-label="Essential cookies are always enabled" />
+              <Switch checked disabled aria-label="The consent record is always enabled" />
+            </div>
+            <div className="cookie-preference">
+              <div>
+                <strong>Remember progress and preferences</strong>
+                <p>
+                  Remembers your last player search, manually checked progression, activity and
+                  efficiency checklists, color theme, sidebar state, and background-video choice.
+                  When disabled, those features still work for the current visit but are not saved.
+                </p>
+              </div>
+              <Switch
+                checked={draftFunctional}
+                onCheckedChange={setDraftFunctional}
+                aria-label="Remember guide progress and preferences"
+              />
             </div>
             <div className="cookie-preference">
               <div>
@@ -182,12 +206,19 @@ export function CookieConsent() {
           </div>
 
           <DialogFooter className="cookie-preferences-actions">
-            <Button variant="outline" onClick={() => saveConsent(false)}>Reject optional</Button>
-            <Button variant="secondary" onClick={() => saveConsent(draftAnalytics)}>Save choices</Button>
-            <Button onClick={() => saveConsent(true)}>Accept all</Button>
+            <Button variant="outline" onClick={() => saveConsent({ analytics: false, functional: false })}>Reject optional</Button>
+            <Button
+              variant="secondary"
+              onClick={() => saveConsent({ analytics: false, functional: false })}
+              aria-label="Accept minimum: allow only the required consent record"
+              title="Allow only the required consent record"
+            >
+              Accept minimum
+            </Button>
+            <Button onClick={() => saveConsent({ analytics: true, functional: true })}>Accept all</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </>
+    </PrivacySettingsContext.Provider>
   )
 }
