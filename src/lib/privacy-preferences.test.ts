@@ -14,6 +14,7 @@ describe('privacy preferences', () => {
       version: CONSENT_VERSION,
       analytics: false,
       functional: true,
+      sessionReplay: false,
       updatedAt: '2026-07-26T00:00:00.000Z',
     }
 
@@ -24,6 +25,15 @@ describe('privacy preferences', () => {
     expect(readConsent(consentCookie({
       version: 1,
       analytics: true,
+      updatedAt: '2026-07-25T00:00:00.000Z',
+    }))).toBeNull()
+  })
+
+  it('rejects consent from before session recording had its own choice', () => {
+    expect(readConsent(consentCookie({
+      version: 2,
+      analytics: true,
+      functional: true,
       updatedAt: '2026-07-25T00:00:00.000Z',
     }))).toBeNull()
   })

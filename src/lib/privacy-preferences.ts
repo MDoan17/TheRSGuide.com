@@ -1,11 +1,12 @@
 export const CONSENT_COOKIE = 'rs-guide-consent'
-export const CONSENT_VERSION = 2
+export const CONSENT_VERSION = 3
 export const CONSENT_MAX_AGE = 60 * 60 * 24 * 180
 
 export type ConsentPreferences = {
   version: number
   analytics: boolean
   functional: boolean
+  sessionReplay: boolean
   updatedAt: string
 }
 
@@ -32,6 +33,7 @@ export function readConsent(cookieSource = document.cookie): ConsentPreferences 
     return parsed.version === CONSENT_VERSION
       && typeof parsed.analytics === 'boolean'
       && typeof parsed.functional === 'boolean'
+      && typeof parsed.sessionReplay === 'boolean'
       ? parsed
       : null
   } catch {
@@ -42,11 +44,13 @@ export function readConsent(cookieSource = document.cookie): ConsentPreferences 
 export function writeConsent({
   analytics,
   functional,
-}: Pick<ConsentPreferences, 'analytics' | 'functional'>): ConsentPreferences {
+  sessionReplay,
+}: Pick<ConsentPreferences, 'analytics' | 'functional' | 'sessionReplay'>): ConsentPreferences {
   const preferences = {
     version: CONSENT_VERSION,
     analytics,
     functional,
+    sessionReplay: analytics && sessionReplay,
     updatedAt: new Date().toISOString(),
   }
   const secure = window.location.protocol === 'https:' ? '; Secure' : ''

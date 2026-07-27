@@ -23,6 +23,9 @@ const RYBBIT_SCRIPT_ID = 'rybbit-analytics'
 declare global {
   interface Window {
     __RYBBIT_OPTOUT__?: boolean
+    rybbit?: {
+      stopSessionReplay?: () => void
+    }
   }
 }
 
@@ -33,7 +36,7 @@ type PrivacySettingsContextValue = {
 
 const PrivacySettingsContext = createContext<PrivacySettingsContextValue | null>(null)
 
-function enableRybbit() {
+function enableRybbit(sessionReplay: boolean) {
   window.__RYBBIT_OPTOUT__ = false
   if (document.getElementById(RYBBIT_SCRIPT_ID)) return
 
@@ -42,10 +45,20 @@ function enableRybbit() {
   script.src = 'https://analytics.distortion.me/api/script.js'
   script.async = true
   script.dataset.siteId = 'd8c35c481bf4'
+  // Rybbit checks the replay sample rate before loading its recorder. A rate of
+  // zero guarantees that replay never initializes for visitors who declined it.
+  script.dataset.replaySampleRate = sessionReplay ? '100' : '0'
+  script.dataset.replayMaskAllInputs = 'true'
+  script.dataset.replayCollectFonts = 'false'
+  script.dataset.replayMaskTextSelectors = JSON.stringify([
+    '.player-profile-header h1',
+    '.home-player-result strong',
+  ])
   document.head.append(script)
 }
 
 function disableRybbit() {
+  window.rybbit?.stopSessionReplay?.()
   window.__RYBBIT_OPTOUT__ = true
 }
 
@@ -71,27 +84,42 @@ export function CookieConsent({ children }: PropsWithChildren) {
   const [preferencesOpen, setPreferencesOpen] = useState(false)
   const [draftAnalytics, setDraftAnalytics] = useState(() => consent?.analytics ?? false)
   const [draftFunctional, setDraftFunctional] = useState(() => consent?.functional ?? false)
+  const [draftSessionReplay, setDraftSessionReplay] = useState(
+    () => consent?.sessionReplay ?? false,
+  )
 
   useEffect(() => {
-    if (consent?.analytics) enableRybbit()
+    if (consent?.analytics) enableRybbit(consent.sessionReplay)
     else disableRybbit()
   }, [consent])
 
   const saveConsent = ({
     analytics,
     functional,
-  }: Pick<ConsentPreferences, 'analytics' | 'functional'>) => {
-    const wasEnabled = consent?.analytics === true
+    sessionReplay,
+  }: Pick<ConsentPreferences, 'analytics' | 'functional' | 'sessionReplay'>) => {
+    const normalizedReplay = analytics && sessionReplay
+    const wasAnalyticsEnabled = consent?.analytics === true
     const wasFunctional = consent?.functional === true
-    const preferences = writeConsent({ analytics, functional })
+    const replayChanged = consent !== null && consent.sessionReplay !== normalizedReplay
+    const preferences = writeConsent({
+      analytics,
+      functional,
+      sessionReplay: normalizedReplay,
+    })
     setConsent(preferences)
     setDraftAnalytics(analytics)
     setDraftFunctional(functional)
+    setDraftSessionReplay(normalizedReplay)
     setPreferencesOpen(false)
 
     if (!functional) clearFunctionalStorage()
 
-    if ((wasEnabled && !analytics) || (wasFunctional && !functional)) {
+    if (
+      (wasAnalyticsEnabled && !analytics)
+      || (wasFunctional && !functional)
+      || replayChanged
+    ) {
       disableRybbit()
       window.location.reload()
     }
@@ -100,6 +128,7 @@ export function CookieConsent({ children }: PropsWithChildren) {
   const openPreferences = () => {
     setDraftAnalytics(consent?.analytics ?? false)
     setDraftFunctional(consent?.functional ?? false)
+    setDraftSessionReplay(consent?.sessionReplay ?? false)
     setPreferencesOpen(true)
   }
 
@@ -110,8 +139,22 @@ export function CookieConsent({ children }: PropsWithChildren) {
     }
 
     if (preferencesOpen) {
-      saveConsent({ analytics: draftAnalytics, functional: draftFunctional })
+      saveConsent({
+        analytics: draftAnalytics,
+        functional: draftFunctional,
+        sessionReplay: draftSessionReplay,
+      })
     }
+  }
+
+  const setAnalyticsPreference = (enabled: boolean) => {
+    setDraftAnalytics(enabled)
+    if (!enabled) setDraftSessionReplay(false)
+  }
+
+  const setSessionReplayPreference = (enabled: boolean) => {
+    setDraftSessionReplay(enabled)
+    if (enabled) setDraftAnalytics(true)
   }
 
   return (
@@ -131,9 +174,13 @@ export function CookieConsent({ children }: PropsWithChildren) {
             className="cookie-banner-close"
             variant="ghost"
             size="icon-xs"
-            onClick={() => saveConsent({ analytics: false, functional: false })}
-            aria-label="Close and reject optional storage and analytics"
-            title="Continue without optional storage or analytics"
+            onClick={() => saveConsent({
+              analytics: false,
+              functional: false,
+              sessionReplay: false,
+            })}
+            aria-label="Close and reject optional storage, analytics, and session recording"
+            title="Continue without optional storage, analytics, or session recording"
           >
             <XIcon />
           </Button>
@@ -141,13 +188,32 @@ export function CookieConsent({ children }: PropsWithChildren) {
             <h2 id="cookie-banner-title">Your privacy choices</h2>
             <p id="cookie-banner-description">
               Choose whether this guide may remember your progress and preferences or use optional
-              analytics. Both stay off unless you allow them.
+              analytics and session recording. All stay off unless you allow them.
             </p>
           </div>
           <div className="cookie-banner-actions">
             <Button variant="ghost" size="sm" onClick={openPreferences}>Customize</Button>
-            <Button variant="outline" size="sm" onClick={() => saveConsent({ analytics: false, functional: false })}>Reject optional</Button>
-            <Button size="sm" onClick={() => saveConsent({ analytics: true, functional: true })}>Accept all</Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => saveConsent({
+                analytics: false,
+                functional: false,
+                sessionReplay: false,
+              })}
+            >
+              Reject optional
+            </Button>
+            <Button
+              size="sm"
+              onClick={() => saveConsent({
+                analytics: true,
+                functional: true,
+                sessionReplay: true,
+              })}
+            >
+              Accept all
+            </Button>
           </div>
         </section>
       )}
@@ -194,28 +260,64 @@ export function CookieConsent({ children }: PropsWithChildren) {
                 <strong>Analytics</strong>
                 <p>
                   Rybbit measures visits, navigation, device types, and general usage patterns so we
-                  can improve the guide. Session recordings are not collected.
+                  can improve the guide. This does not enable session recording.
                 </p>
               </div>
               <Switch
                 checked={draftAnalytics}
-                onCheckedChange={setDraftAnalytics}
+                onCheckedChange={setAnalyticsPreference}
                 aria-label="Allow analytics"
+              />
+            </div>
+            <div className="cookie-preference">
+              <div>
+                <strong>Session recording</strong>
+                <p>
+                  Rybbit records clicks, scrolling, navigation, and page interactions so we can find
+                  usability problems. Form input values are masked by the recorder. This requires
+                  analytics and remains off unless you enable it.
+                </p>
+              </div>
+              <Switch
+                checked={draftSessionReplay}
+                onCheckedChange={setSessionReplayPreference}
+                aria-label="Allow session recording"
               />
             </div>
           </div>
 
           <DialogFooter className="cookie-preferences-actions">
-            <Button variant="outline" onClick={() => saveConsent({ analytics: false, functional: false })}>Reject optional</Button>
+            <Button
+              variant="outline"
+              onClick={() => saveConsent({
+                analytics: false,
+                functional: false,
+                sessionReplay: false,
+              })}
+            >
+              Reject optional
+            </Button>
             <Button
               variant="secondary"
-              onClick={() => saveConsent({ analytics: false, functional: false })}
+              onClick={() => saveConsent({
+                analytics: false,
+                functional: false,
+                sessionReplay: false,
+              })}
               aria-label="Accept minimum: allow only the required consent record"
               title="Allow only the required consent record"
             >
               Accept minimum
             </Button>
-            <Button onClick={() => saveConsent({ analytics: true, functional: true })}>Accept all</Button>
+            <Button
+              onClick={() => saveConsent({
+                analytics: true,
+                functional: true,
+                sessionReplay: true,
+              })}
+            >
+              Accept all
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
