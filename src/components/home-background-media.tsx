@@ -5,10 +5,7 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from 'react'
-import { Volume2, VolumeX } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Slider } from '@/components/ui/slider'
-import { Switch } from '@/components/ui/switch'
+import { useSiteSettings } from '@/components/site-settings-context'
 import { BackgroundMediaController } from '@/lib/background-media'
 import {
   browserBackgroundMediaPreferences,
@@ -19,6 +16,7 @@ const HOME_BACKGROUND_VIDEO_URL = 'https://player.vimeo.com/video/1212838611?bac
 
 export function HomeBackgroundMedia({ children }: { children: ReactNode }) {
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const { registerHomeMedia } = useSiteSettings()
   const controller = useMemo(
     () => new BackgroundMediaController(
       vimeoBackgroundMediaAdapter,
@@ -40,6 +38,21 @@ export function HomeBackgroundMedia({ children }: { children: ReactNode }) {
   }, [controller, state.enabled])
 
   useEffect(() => () => controller.dispose(), [controller])
+
+  const mediaSettings = useMemo(() => ({
+    enabled: state.enabled,
+    muted: state.muted,
+    volume: state.volume,
+    setEnabled: controller.setEnabled,
+    setMuted: controller.setMuted,
+    setVolume: controller.setVolume,
+  }), [controller, state.enabled, state.muted, state.volume])
+
+  useEffect(() => {
+    registerHomeMedia(mediaSettings)
+  }, [mediaSettings, registerHomeMedia])
+
+  useEffect(() => () => registerHomeMedia(null), [registerHomeMedia])
 
   return (
     <main className="home home-search-page" data-video-enabled={state.enabled}>
@@ -67,42 +80,6 @@ export function HomeBackgroundMedia({ children }: { children: ReactNode }) {
 
       {children}
 
-      <div className="home-media-controls">
-        <label className="home-video-control" htmlFor="home-background-video-toggle">
-          <span>Background video</span>
-          <Switch
-            id="home-background-video-toggle"
-            checked={state.enabled}
-            onCheckedChange={(enabled) => controller.setEnabled(enabled)}
-          />
-        </label>
-        {state.enabled && (
-          <div className="home-audio-controls" data-muted={state.muted}>
-            {!state.muted && (
-              <Slider
-                className="home-volume-slider"
-                value={[state.volume]}
-                min={1}
-                max={100}
-                step={1}
-                onValueChange={([volume]) => controller.setVolume(volume)}
-                aria-label="Background video volume"
-                aria-valuetext={`${state.volume}%`}
-              />
-            )}
-            <Button
-              className="home-audio-control"
-              variant="ghost"
-              size="icon"
-              onClick={() => controller.setMuted(!state.muted)}
-              aria-label={state.muted ? 'Unmute background video' : 'Mute background video'}
-              title={state.muted ? 'Unmute background video' : 'Mute background video'}
-            >
-              {state.muted ? <VolumeX /> : <Volume2 />}
-            </Button>
-          </div>
-        )}
-      </div>
     </main>
   )
 }

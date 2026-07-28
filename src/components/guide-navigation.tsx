@@ -22,7 +22,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar'
-import { PrivacySettingsButton } from '@/components/cookie-consent'
+import { SiteSettingsButton } from '@/components/cookie-consent'
 import { guideCatalog, type GuideNavNode, type GuideSection } from '@/lib/content'
 import {
   activeNavigationKeys,
@@ -389,7 +389,10 @@ export function GuideSidebar() {
         </ScrollArea>
       </SidebarContent>
       <SidebarFooter className="guide-sidebar-footer">
-        <PrivacySettingsButton className="guide-sidebar-privacy" />
+        <SiteSettingsButton
+          className="guide-sidebar-settings"
+          label="Open site settings"
+        />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

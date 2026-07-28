@@ -18,7 +18,7 @@ import {
 import { guideCatalog, type Doc } from '@/lib/content'
 import { mdxComponents } from '@/mdx_components/mdx-components'
 import { PlayerDataProvider } from '@/features/player/player-data-context'
-import { CookieConsent, PrivacySettingsButton } from '@/components/cookie-consent'
+import { CookieConsent, SiteSettingsButton } from '@/components/cookie-consent'
 import {
   GuideSidebar,
   GuideSidebarExpandTrigger,
@@ -110,7 +110,13 @@ function SearchDialog({ open, setOpen }: { open: boolean; setOpen: (open: boolea
   )
 }
 
-function Header({ openSearch }: { openSearch: () => void }) {
+function Header({
+  openSearch,
+  showSettings,
+}: {
+  openSearch: () => void
+  showSettings: boolean
+}) {
   const { pathname } = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
   return (
@@ -123,6 +129,7 @@ function Header({ openSearch }: { openSearch: () => void }) {
         <div className="header-actions">
           {pathname !== '/' && <SearchButton onClick={openSearch} />}
           <ThemeToggle />
+          {showSettings && <SiteSettingsButton label="Open site settings" />}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild><Button variant="ghost" size="icon" className="mobile-menu"><Menu /><span className="sr-only">Open menu</span></Button></SheetTrigger>
             <SheetContent side="left" className="mobile-sheet">
@@ -131,7 +138,10 @@ function Header({ openSearch }: { openSearch: () => void }) {
                 <MobileGuideNavigation close={() => setMobileOpen(false)} />
               </ScrollArea>
               <div className="mobile-sidebar-footer">
-                <PrivacySettingsButton className="mobile-sidebar-privacy" />
+                <SiteSettingsButton
+                  className="mobile-sidebar-settings"
+                  label="Open site settings"
+                />
               </div>
             </SheetContent>
           </Sheet>
@@ -457,7 +467,10 @@ function Home() {
             <Link to="/guides/necromancy">Necromancy</Link>
           </nav>
         </section>
-        <PrivacySettingsButton className="home-privacy-settings" />
+        <SiteSettingsButton
+          className="home-settings"
+          label="Open homepage settings"
+        />
       </>
     </HomeBackground>
   )
@@ -492,7 +505,12 @@ function App() {
   return (
     <TooltipProvider>
       <CookieConsent>
-        {pathname !== '/' && <Header openSearch={() => setSearchOpen(true)} />}
+        {pathname !== '/' && (
+          <Header
+            openSearch={() => setSearchOpen(true)}
+            showSettings={!hasGuideSidebar}
+          />
+        )}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -508,9 +526,6 @@ function App() {
           {guideCatalog.documents.map((doc) => <Route key={doc.path} path={doc.path} element={<DocPage doc={doc} />} />)}
           <Route path="*" element={<NotFound />} />
         </Routes>
-        {pathname !== '/' && !hasGuideSidebar && (
-          <PrivacySettingsButton className="standalone-privacy-settings" />
-        )}
         <SearchDialog open={searchOpen} setOpen={setSearchOpen} />
       </CookieConsent>
     </TooltipProvider>

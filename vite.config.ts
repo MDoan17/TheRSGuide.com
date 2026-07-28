@@ -6,6 +6,7 @@ import remarkFrontmatter from 'remark-frontmatter'
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import path from 'node:path'
 import { handlePlayerApi } from './server/player-api.mjs'
+import { handleFeedbackApi } from './server/feedback-api.mjs'
 import { guideContentPlugin } from './scripts/guide-content-plugin.mjs'
 
 const deploymentUrl = (
@@ -29,12 +30,19 @@ const mdxWithoutRaw = {
   },
 }
 
-const playerApiPlugin = () => ({
-  name: 'player-api',
+const localApiPlugin = () => ({
+  name: 'local-api',
   configureServer(server: { middlewares: { use: (handler: (req: import('node:http').IncomingMessage, res: import('node:http').ServerResponse, next: () => void) => void) => void } }) {
     server.middlewares.use((req, res, next) => {
-      if (!req.url?.startsWith('/api/player/')) return next()
-      void handlePlayerApi(req, res)
+      if (req.url?.startsWith('/api/player/')) {
+        void handlePlayerApi(req, res)
+        return
+      }
+      if (req.url?.startsWith('/api/feedback')) {
+        void handleFeedbackApi(req, res)
+        return
+      }
+      next()
     })
   },
 })
@@ -42,7 +50,7 @@ const playerApiPlugin = () => ({
 export default defineConfig({
   plugins: [
     guideContentPlugin({ siteUrl: deploymentUrl }),
-    playerApiPlugin(),
+    localApiPlugin(),
     mdxWithoutRaw,
     react(),
     tailwindcss(),
