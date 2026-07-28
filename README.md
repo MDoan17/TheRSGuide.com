@@ -1,78 +1,49 @@
-# The RS Guide
+# The RS Guide — Vite SPA
 
-A comprehensive guide website for RuneScape players, covering everything from beginner basics to endgame content.
-
-**Live Site:** [thersguide.com](https://thersguide.com)
-
-## About
-
-The RS Guide is designed to help RuneScape players of all experience levels. Whether you're just starting out or looking to optimize your endgame setup, this site provides guides on:
-
-- **Getting Started** - Combat basics, the combat triangle, keybinds, and prayers/curses
-- **Setup** - Client settings, interface layouts, and recommended configurations
-- **Progression Guides** - Early, mid, and late-game quest and unlock paths
-- **Combat Styles** - Magic, Melee, Ranged, and Necromancy ability guides
-
-## Tech Stack
-
-- [Next.js 15](https://nextjs.org/) - React framework
-- [Fumadocs](https://fumadocs.dev/) - Documentation framework
-- [MDX](https://mdxjs.com/) - Markdown with JSX components
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
+A from-scratch React/Vite rebuild of The RS Guide. The site reads the existing `content/` directory directly as MDX and does not use Fumadocs or Next.js.
 
 ## Development
 
-### Prerequisites
-
-- Node.js 20+
-- npm
-
-### Getting Started
-
 ```bash
-# Install dependencies
 npm install
-
-# Run development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+Open `http://localhost:5173`. Vite's development server also serves the RuneMetrics player endpoint used by the interactive account tools.
 
-### Building for Production
+## Production
 
 ```bash
 npm run build
 npm start
 ```
 
-### Docker
+`npm start` serves the compiled SPA, provides history fallback for deep guide URLs, and exposes `/api/player/:username` for RuneMetrics requests. Set `PORT` to change the default port (`4173`).
 
-```bash
-docker build -t thersguide .
-docker run -p 3000:3000 thersguide
-```
+To enable the settings dialog's feedback form, set `DISCORD_FEEDBACK_WEBHOOK_URL` to a Discord webhook URL in the server environment. The webhook remains server-side and is never included in the browser bundle.
 
-## Project Structure
+Absolute page and social metadata URLs use `SITE_URL` when provided, then
+Coolify's deployment-specific `COOLIFY_URL`, and finally the incoming request
+origin. This keeps production and PR preview links on the host that serves them.
 
-```
-├── content/           # MDX content files
-│   ├── getting-started/
-│   ├── guides/
-│   └── setup/
-├── src/
-│   ├── app/           # Next.js app router pages
-│   └── mdx_components/ # Custom MDX components
-└── source.config.ts   # Fumadocs configuration
-```
+## Content
 
-## Contributing
+- Add `.mdx` files anywhere beneath `content/`.
+- Use frontmatter `title` and `description` fields.
+- A branded 1200×630 social preview is generated from each page's `title`,
+  `description`, and guide location.
+- Optionally set `ogImage` to a public 1200×630 PNG path to replace the generated
+  preview, and use `ogImageAlt` to describe it.
+- Player-aware MDX components are detected at build time. Use `playerData: true` or
+  `playerData: false` only when a page needs to override that detection.
+- Use each directory's `meta.json` `pages` array to control navigation order.
+- An `index.mdx` file maps to the directory URL, such as `content/guides/index.mdx` → `/guides`.
 
-We welcome contributions! See the [contribution guide](CONTRIBUTING.md) for guidelines on contributing to the guides.
+Reusable MDX components are registered in `src/mdx_components/mdx-components.tsx`. The ShadCN theme and all semantic color tokens live in `src/index.css`.
 
-- **Online Editor:** [editor.thersguide.com](https://editor.thersguide.com) - Preview and test MDX content
-- **Discord:** [discord.gg/thersguy](https://discord.gg/thersguy) - Get help and discuss contributions
-
-## License
-
-All rights reserved.
+The Vite content plugin validates navigation references and generates lightweight
+route metadata before the app loads. Production builds also include a route-specific
+HTML entry for each guide so crawlers receive the correct canonical, Open Graph, and
+Twitter metadata—including image dimensions, accessible image text, content section,
+and guide topics—without executing JavaScript. Full guide text used by search is
+loaded only after a visitor begins searching.

@@ -3,7 +3,8 @@
 import { Check, ChevronDown, ExternalLink, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { PlayerSearch } from "@/mdx_components/components/player-search";
-import { usePlayerData } from "@/mdx_components/components/player-data-context";
+import { usePlayerData } from "@/features/player/player-data-context";
+import { functionalStorageAllowed } from "@/lib/privacy-preferences";
 
 export interface EfficiencyGuideRow {
   id: string;
@@ -34,7 +35,7 @@ type CheckedState = Record<string, boolean>;
 const STORAGE_KEY = "rs-guide-efficiency-guide";
 
 function loadCheckedState(): CheckedState {
-  if (typeof window === "undefined") return {};
+  if (typeof window === "undefined" || !functionalStorageAllowed()) return {};
 
   try {
     const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
@@ -49,7 +50,7 @@ function questUrl(questName: string) {
 }
 
 export function EfficiencyGuideTracker({ guide }: EfficiencyGuideTrackerProps) {
-  const { playerData, isQuestComplete } = usePlayerData();
+  const { isQuestComplete } = usePlayerData();
   const [manualChecked, setManualChecked] = useState<CheckedState>({});
   const [openSections, setOpenSections] = useState<CheckedState>(() => ({
     [guide.sections[0]?.id || ""]: true,
@@ -83,7 +84,9 @@ export function EfficiencyGuideTracker({ guide }: EfficiencyGuideTrackerProps) {
 
   const updateManualChecked = (next: CheckedState) => {
     setManualChecked(next);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    if (functionalStorageAllowed()) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    }
   };
 
   const toggleRow = (row: EfficiencyGuideRow) => {

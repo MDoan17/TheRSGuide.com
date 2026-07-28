@@ -13,8 +13,8 @@ export const Steps: React.FC<StepsProps> = ({ children }) => {
     <div className="my-4 border rounded-lg overflow-hidden bg-fd-card">
       <ol className="list-none m-0 p-0">
         {React.Children.map(children, (child, index) => {
-          if (React.isValidElement(child)) {
-            return React.cloneElement(child as React.ReactElement<any>, {
+          if (React.isValidElement<StepInternalProps>(child)) {
+            return React.cloneElement(child, {
               stepNumber: index + 1,
             });
           }

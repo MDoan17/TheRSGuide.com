@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { SkillContent } from "./skill-content";
-import { usePlayerData } from "./player-data-context";
+import { usePlayerData } from "@/features/player/player-data-context";
 
 interface SkillDrawerProps {
   skill: string | null;
@@ -54,21 +55,15 @@ export const SkillDrawer: React.FC<SkillDrawerProps> = ({
 }) => {
   // Track if we should render (stays true during exit animation)
   const [shouldRender, setShouldRender] = useState(open);
-  // Track animation state
-  const [isAnimating, setIsAnimating] = useState(false);
-
   useEffect(() => {
     if (open) {
       setShouldRender(true);
-      setIsAnimating(true);
     } else if (shouldRender) {
-      // Start exit animation
-      setIsAnimating(true);
+      // Keep rendering until the exit animation completes.
     }
   }, [open, shouldRender]);
 
   const handleAnimationEnd = () => {
-    setIsAnimating(false);
     if (!open) {
       setShouldRender(false);
     }
@@ -115,9 +110,11 @@ export const SkillDrawer: React.FC<SkillDrawerProps> = ({
           </div>
 
           {/* Scrollable Content */}
-          <div className="flex-1 overflow-y-auto p-4">
-            <SkillContent skill={skill} requiredLevel={requiredLevel} hideHeader />
-          </div>
+          <ScrollArea className="min-h-0 flex-1">
+            <div className="p-4">
+              <SkillContent skill={skill} requiredLevel={requiredLevel} hideHeader />
+            </div>
+          </ScrollArea>
 
           {/* Footer hint */}
           <div className="p-3 border-t border-fd-border bg-fd-muted/30">

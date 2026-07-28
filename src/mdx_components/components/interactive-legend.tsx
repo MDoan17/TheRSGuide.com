@@ -93,7 +93,7 @@ export const InteractiveLegend: React.FC<InteractiveLegendProps> = ({
             const isLocked = lockedItem === item.id;
             const isActive = activeItem === item.id;
 
-            let rowStyle: React.CSSProperties = {
+            const rowStyle: React.CSSProperties = {
               borderBottom: '1px solid var(--color-fd-border)',
               cursor: 'pointer',
               transition: 'background-color 0.15s',

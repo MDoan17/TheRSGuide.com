@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { usePlayerData } from "./player-data-context";
+import { usePlayerData } from "@/features/player/player-data-context";
 import skillsData from "@/utils/skills.json";
 
 export interface LevelRange {
@@ -15,9 +15,15 @@ interface SkillContentProps {
   skill: string;
   requiredLevel?: number;
   hideHeader?: boolean;
+  linkRanges?: boolean;
 }
 
-export const SkillContent: React.FC<SkillContentProps> = ({ skill, requiredLevel, hideHeader = false }) => {
+export const SkillContent: React.FC<SkillContentProps> = ({
+  skill,
+  requiredLevel,
+  hideHeader = false,
+  linkRanges = false,
+}) => {
   const { playerData, getSkillLevel } = usePlayerData();
   const playerLevel = getSkillLevel(skill);
   const skillInfo = (skillsData as Record<string, LevelRange[]>)[skill.toLowerCase()] || [];
@@ -78,6 +84,7 @@ export const SkillContent: React.FC<SkillContentProps> = ({ skill, requiredLevel
           const levelDisplay = range.start === range.end
             ? `Level ${range.start}`
             : `Levels ${range.start} - ${range.end}`;
+          const rangeId = `${skill.toLowerCase()}-levels-${range.start}-${range.end}-${idx}`;
 
           return (
             <div
@@ -94,9 +101,13 @@ export const SkillContent: React.FC<SkillContentProps> = ({ skill, requiredLevel
             >
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold text-sm">
-                    {levelDisplay}
-                  </span>
+                  {linkRanges ? (
+                    <h3 id={rangeId} className="skill-range-heading font-semibold text-sm">
+                      {levelDisplay}
+                    </h3>
+                  ) : (
+                    <span className="font-semibold text-sm">{levelDisplay}</span>
+                  )}
                   {isCompleted && (
                     <span className="text-xs px-1.5 py-0.5 rounded bg-[#7d9a78]/20 text-[#3d6b35] dark:text-[#a8c4a2]">
                       Completed

@@ -1,0 +1,59 @@
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+import mdx from '@mdx-js/rollup'
+import remarkFrontmatter from 'remark-frontmatter'
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
+import path from 'node:path'
+import { handlePlayerApi } from './server/player-api.mjs'
+import { handleFeedbackApi } from './server/feedback-api.mjs'
+import { guideContentPlugin } from './scripts/guide-content-plugin.mjs'
+
+const deploymentUrl = (
+  process.env.SITE_URL
+  || process.env.COOLIFY_URL
+  || 'https://thersguide.com'
+).split(',')[0].trim()
+
+const mdxPlugin = mdx({
+  providerImportSource: '@mdx-js/react',
+  remarkPlugins: [remarkFrontmatter, [remarkMdxFrontmatter, { name: 'frontmatter' }]],
+})
+const transformMdx = mdxPlugin.transform as (this: unknown, code: string, id: string) => unknown
+
+const mdxWithoutRaw = {
+  ...mdxPlugin,
+  enforce: 'pre' as const,
+  transform(this: unknown, code: string, id: string) {
+    if (id.includes('?raw')) return null
+    return transformMdx.call(this, code, id)
+  },
+}
+
+const localApiPlugin = () => ({
+  name: 'local-api',
+  configureServer(server: { middlewares: { use: (handler: (req: import('node:http').IncomingMessage, res: import('node:http').ServerResponse, next: () => void) => void) => void } }) {
+    server.middlewares.use((req, res, next) => {
+      if (req.url?.startsWith('/api/player/')) {
+        void handlePlayerApi(req, res)
+        return
+      }
+      if (req.url?.startsWith('/api/feedback')) {
+        void handleFeedbackApi(req, res)
+        return
+      }
+      next()
+    })
+  },
+})
+
+export default defineConfig({
+  plugins: [
+    guideContentPlugin({ siteUrl: deploymentUrl }),
+    localApiPlugin(),
+    mdxWithoutRaw,
+    react(),
+    tailwindcss(),
+  ],
+  resolve: { alias: { '@': path.resolve(__dirname, './src') } },
+})
