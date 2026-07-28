@@ -291,7 +291,7 @@ export function CookieConsent({ children }: PropsWithChildren) {
       setFeedbackMessage('')
       setFeedbackStatus({
         type: 'success',
-        message: 'Thanks—your message was sent.',
+        message: 'Thanks! Your message was sent.',
       })
     } catch (error) {
       setFeedbackStatus({
