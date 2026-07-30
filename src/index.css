@@ -278,9 +278,11 @@ a { color: inherit; text-decoration: none; }
 .home-search-page[data-video-enabled="true"] { --foreground: #efe4d2; --card: rgb(20 18 16 / 88%); --card-foreground: #efe4d2; --popover: #141210; --popover-foreground: #efe4d2; --primary: #cc9a63; --primary-foreground: #0a0908; --secondary: #1a1510; --secondary-foreground: #efe4d2; --muted: #1a1510; --muted-foreground: #cc9a63; --accent: #1f1a14; --accent-foreground: #efe4d2; --border: rgb(204 154 99 / 38%); --input: var(--border); --ring: var(--primary); }
 .home-video-background, .home-video-scrim { position: absolute; inset: 0; }
 .home-video-background { overflow: hidden; background-color: #0a0908; background-position: center; background-size: cover; }
-.home-video-background iframe { width: max(100vw, 177.78svh); height: max(100svh, 56.25vw); position: absolute; top: 50%; left: 50%; border: 0; opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(1.03); transition: opacity .35s ease; }
-.home-video-background[data-video-playing="true"] iframe { opacity: 1; }
+.home-video-background iframe { width: max(100vw, 177.78svh); height: max(100svh, 56.25vw); position: absolute; top: 50%; left: 50%; border: 0; pointer-events: none; transform: translate(-50%, -50%) scale(1.03); }
+.home-video-poster { position: absolute; inset: 0; z-index: 1; background: #0a0908; opacity: 1; pointer-events: none; transition: opacity .35s ease; }
+.home-video-background[data-video-playing="true"] .home-video-poster { opacity: 0; }
 .home-video-scrim { background: rgb(10 9 8 / 62%); }
+.home-video-playback-prompt { position: fixed; bottom: max(1.5rem, env(safe-area-inset-bottom)); left: 50%; z-index: 20; border-radius: 0; box-shadow: 0 .8rem 2.25rem rgb(0 0 0 / 32%); transform: translateX(-50%); }
 .home-search-landing { min-height: 100svh; padding: 4rem 1.5rem; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
 .home-settings { position: fixed; top: 1.5rem; right: 1.5rem; z-index: 20; color: color-mix(in srgb, var(--foreground) 76%, transparent); background: rgb(10 9 8 / 28%); backdrop-filter: blur(8px); }
 .home-settings:hover, .home-settings:focus-visible { color: var(--foreground); background: rgb(10 9 8 / 72%); }
