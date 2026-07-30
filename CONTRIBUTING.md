@@ -1,6 +1,8 @@
 # Contributing to The RS Guide
 
-Welcome! This repository contains the MDX content for The RS Guide website, built with [Fumadocs](https://fumadocs.dev/).
+Welcome! This repository contains the guides and website code for The RS Guide.
+You do not need to be an experienced developer to contribute. Content fixes,
+clearer explanations, and suggestions are all valuable.
 
 ## Table of Contents
 
@@ -19,14 +21,11 @@ Welcome! This repository contains the MDX content for The RS Guide website, buil
 
 We welcome contributions from everyone! There are two main ways to contribute:
 
-> [!TIP]
-> Need help writing or editing MDX content? Check out our [online editor](https://editor.thersguide.com) which includes our full MDX component library, making it easy to preview and test your content before submitting a pull request.
-
 ### Creating Issues
 
 If you've found a problem, have a suggestion, or want to request new content, please create an issue on GitHub:
 
-1. Go to the [Issues](https://github.com/TheRSGuide/TheRSGuide-Content/issues) page
+1. Go to the [Issues](https://github.com/RS3-Dev/TheRSGuide.com/issues) page
 2. Click "New Issue"
 3. Choose the appropriate issue template (if available) or select "Get started" for a blank issue
 4. Fill in the title and description with:
@@ -39,20 +38,20 @@ If you've found a problem, have a suggestion, or want to request new content, pl
 
 If you'd like to make changes directly to the content, you can open a pull request (PR). Here's how:
 
-#### Option 1: Fork the Repository (Recommended for External Contributors)
+#### Fork the Repository
 
 1. **Fork the repository** by clicking the "Fork" button at the top right of the GitHub page
 2. **Clone your fork** to your computer:
    ```bash
-   git clone https://github.com/TheRSGuide/TheRSGuide-Content.git
-   cd TheRSGuide
+   git clone https://github.com/YOUR-USERNAME/TheRSGuide.com.git
+   cd TheRSGuide.com
    ```
 3. **Create a new branch** for your changes.
    ```bash
    git checkout -b your-branch-name
    ```
 
-    > Replace `"your-branch-name"` with a brief description of what you will be contributing (e.g., `"fix-typeo-in-guide"` or `"fix-directions-in-guide"`). Avoid using the placeholder name `"your-branch-name"`.
+    > Replace `"your-branch-name"` with a brief description of what you will be contributing (for example, `"fix-typo-in-guide"` or `"fix-directions-in-guide"`). Avoid using the placeholder name `"your-branch-name"`.
 4. **Make your changes** to the MDX files (see the [Documentation](#documentation) section for detailed guides)
 5. **Commit your changes**:
    ```bash
@@ -68,7 +67,7 @@ If you'd like to make changes directly to the content, you can open a pull reque
 
     > Replace `"your-branch-name"` with the name of the branch you chose in step 3.
 7. **Open a Pull Request**:
-   - Go to the repository on [GitHub](https://github.com/TheRSGuide/TheRSGuide-Content)
+   - Go to your fork of the repository on GitHub
    - You should see a banner suggesting to create a PR from your recent push
    - Click "Compare & pull request"
    - Fill in the PR description explaining your changes
