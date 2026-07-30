@@ -17,6 +17,19 @@ information, and other improvements to those guides are all welcome. If you
 think the site needs a guide that does not exist yet, open an issue so we can
 discuss where it belongs before any work begins.
 
+## AI contributions
+
+AI-assisted contributions are allowed for code changes and bug fixes. If you use
+AI for code, you are still responsible for understanding the changes, reviewing
+them for correctness and security, testing them where possible, and clearly
+explaining what the contribution does.
+
+AI must not be used to write, rewrite, or expand guide content. This includes
+instructions, explanations, examples, descriptions, and other prose presented
+to readers. Content created wholly or partially with AI will be rejected
+immediately, even if it has been edited afterward. All guide content must be
+written and verified by a human contributor.
+
 ## The easiest way to help
 
 If you have found a problem but do not want to edit a file, [open a GitHub
