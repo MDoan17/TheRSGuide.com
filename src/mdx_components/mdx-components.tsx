@@ -17,6 +17,7 @@ const GearProgression = lazy(() => import('./components/gear-progression').then(
 const GearRecommendations = lazy(() => import('./components/gear-recommendations').then((module) => ({ default: module.GearRecommendations })))
 const RecurringActivitiesTool = lazy(() => import('./components/recurring-activities-tool').then((module) => ({ default: module.RecurringActivitiesTool })))
 const EfficiencyGuideTool = lazy(() => import('./components/efficiency-guide-tool').then((module) => ({ default: module.EfficiencyGuideTool })))
+const LeaguesRegionMap = lazy(() => import('./components/leagues-region-map'))
 
 function SmartLink({ href = '', children, ...props }: ComponentProps<'a'>) {
   if (href.startsWith('/')) return <Link to={href} {...props}>{children}</Link>
@@ -58,4 +59,5 @@ export const mdxComponents = {
   GearRecommendations,
   RecurringActivitiesTool,
   EfficiencyGuideTool,
+  LeaguesRegionMap,
 }

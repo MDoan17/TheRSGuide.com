@@ -11,10 +11,12 @@ const EmptyDocument = () => null
 const document = (path: string) => ({
   path,
   title: path,
+  navigationTitle: path,
   description: '',
   section: 'guides',
   tableOfContents: [],
   hasTableOfContents: false,
+  showPageHeader: true,
   requiresPlayerData: false,
   ogImage: '',
   Component: EmptyDocument,

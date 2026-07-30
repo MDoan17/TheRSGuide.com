@@ -29,6 +29,7 @@ const titleFromSlug = (value) =>
 const socialSection = (parts) => {
   if (parts[0] === 'getting-started') return 'Getting Started'
   if (parts[0] === 'setup') return 'Setup Guide'
+  if (parts[0] === 'leagues') return 'Leagues'
   if (parts[0] === 'extras') return 'Extras'
   if (parts[0] === 'guides' && parts[1]) return titleFromSlug(parts[1])
   return 'RuneScape Guides'
@@ -109,8 +110,12 @@ export async function buildGuideContent(root) {
     const route = routeFromRelativeFile(relativeFile)
     const parts = route.split('/').filter(Boolean)
     const fallback = parts.at(-1) ?? 'The RS Guide'
+    const title = typeof parsed.data.title === 'string' && parsed.data.title.trim()
+      ? parsed.data.title.trim()
+      : titleFromSlug(fallback)
     const toc = tableOfContents(parsed.content)
     const tocOverride = typeof parsed.data.toc === 'boolean' ? parsed.data.toc : undefined
+    const headerOverride = typeof parsed.data.header === 'boolean' ? parsed.data.header : undefined
     const customOgImage = typeof parsed.data.ogImage === 'string'
       ? parsed.data.ogImage
       : typeof parsed.data.image === 'string'
@@ -120,20 +125,23 @@ export async function buildGuideContent(root) {
     return {
       sourcePath,
       path: route,
-      title: typeof parsed.data.title === 'string' && parsed.data.title.trim()
-        ? parsed.data.title.trim()
-        : titleFromSlug(fallback),
+      title,
+      navigationTitle: typeof parsed.data.navigationTitle === 'string'
+        && parsed.data.navigationTitle.trim()
+        ? parsed.data.navigationTitle.trim()
+        : title,
       description: typeof parsed.data.description === 'string'
         ? parsed.data.description.trim()
         : '',
       section: parts[0] ?? '',
       tableOfContents: toc,
       hasTableOfContents: tocOverride ?? toc.length > 0,
+      showPageHeader: headerOverride ?? true,
       requiresPlayerData: requiresPlayerData(parsed.content, parsed.data.playerData),
       ogImage: customOgImage || openGraphImagePath(route),
       ogImageAlt: typeof parsed.data.ogImageAlt === 'string'
         ? parsed.data.ogImageAlt.trim()
-        : `${typeof parsed.data.title === 'string' ? parsed.data.title.trim() : titleFromSlug(fallback)} guide preview`,
+        : `${title} guide preview`,
       generatedOgImage: !customOgImage,
       socialSection: socialSection(parts),
       socialDetail: toc.length
@@ -245,6 +253,38 @@ const replaceMetadata = (html, metadata, siteUrl) => {
     : html.replace('</head>', `${replacement}\n  </head>`)
 }
 
+export const documentPageMetadata = (document) => {
+  if (document.path === '/leagues') {
+    return {
+      path: '/leagues',
+      title: 'RuneScape Leagues Guide | The RS Guide',
+      cardTitle: 'The Leagues Guide',
+      description: 'RuneScape Leagues guides for relics, blessings, regions, routes, skilling, and players coming from Old School RuneScape.',
+      ogImage: document.ogImage,
+      ogImageAlt: 'The RuneScape Leagues Guide homepage preview',
+      generatedOgImage: document.generatedOgImage,
+      section: 'The Leagues Guide',
+      detail: 'Relics · Blessings · Regions · Routes · Skilling',
+      type: 'website',
+      tags: ['RuneScape', 'RuneScape Leagues', 'Guides'],
+    }
+  }
+
+  return {
+    path: document.path,
+    title: `${document.title} | The RS Guide`,
+    cardTitle: document.title,
+    description: document.description || `Read ${document.title} on The RS Guide.`,
+    ogImage: document.ogImage,
+    ogImageAlt: document.ogImageAlt,
+    generatedOgImage: document.generatedOgImage,
+    section: document.socialSection,
+    detail: document.socialDetail,
+    type: 'article',
+    tags: ['RuneScape', document.socialSection, 'Guide'],
+  }
+}
+
 export function guideContentPlugin({ siteUrl = DEFAULT_SITE_URL } = {}) {
   let root = process.cwd()
   let outputDirectory = path.join(root, 'dist')
@@ -300,19 +340,7 @@ export const guideMetadata = ${JSON.stringify(metadata)}`
             type: 'website',
             tags: ['RuneScape', 'RuneScape 3', 'Guides'],
           },
-          ...documents.map((document) => ({
-            path: document.path,
-            title: `${document.title} | The RS Guide`,
-            cardTitle: document.title,
-            description: document.description || `Read ${document.title} on The RS Guide.`,
-            ogImage: document.ogImage,
-            ogImageAlt: document.ogImageAlt,
-            generatedOgImage: document.generatedOgImage,
-            section: document.socialSection,
-            detail: document.socialDetail,
-            type: 'article',
-            tags: ['RuneScape', document.socialSection, 'Guide'],
-          })),
+          ...documents.map(documentPageMetadata),
           {
             path: '/extras/player',
             title: 'Player Progression | The RS Guide',

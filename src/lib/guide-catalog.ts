@@ -3,10 +3,12 @@ import type { ComponentType, LazyExoticComponent } from 'react'
 export type Doc = {
   path: string
   title: string
+  navigationTitle: string
   description: string
   section: string
   tableOfContents: readonly GuideTocItem[]
   hasTableOfContents: boolean
+  showPageHeader: boolean
   requiresPlayerData: boolean
   ogImage: string
   Component: ComponentType | LazyExoticComponent<ComponentType>
@@ -48,10 +50,12 @@ export type GuideDocumentSource = {
   sourcePath: string
   path: string
   title: string
+  navigationTitle?: string
   description: string
   section: string
   tableOfContents: readonly GuideTocItem[]
   hasTableOfContents: boolean
+  showPageHeader: boolean
   requiresPlayerData: boolean
   ogImage: string
   Component: Doc['Component']
@@ -118,10 +122,12 @@ export class GuideCatalog {
     const documents = options.documents.map((source) => ({
       path: normalizeRoute(source.path),
       title: source.title,
+      navigationTitle: source.navigationTitle ?? source.title,
       description: source.description,
       section: source.section,
       tableOfContents: source.tableOfContents,
       hasTableOfContents: source.hasTableOfContents,
+      showPageHeader: source.showPageHeader,
       requiresPlayerData: source.requiresPlayerData,
       ogImage: source.ogImage,
       Component: source.Component,
@@ -163,7 +169,9 @@ export class GuideCatalog {
       const navigationDocuments = sectionDocuments.filter((document) => document.path !== path)
       const nodes: GuideNavNode[] = navigationDocuments.map((doc) => ({
         doc,
-        label: groupLabel(doc.path),
+        label: doc.section === 'leagues' && doc.path.split('/').filter(Boolean).length === 2
+          ? doc.navigationTitle
+          : groupLabel(doc.path),
         children: [],
       }))
       const nodesByPath = new Map(nodes.map((node) => [node.doc.path, node]))

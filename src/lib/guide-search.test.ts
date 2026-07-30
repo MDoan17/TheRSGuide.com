@@ -15,6 +15,7 @@ const document = (
   section: path.split('/')[1],
   tableOfContents: [],
   hasTableOfContents: false,
+  showPageHeader: true,
   requiresPlayerData: false,
   ogImage: '',
   Component: EmptyDocument,
@@ -27,6 +28,8 @@ const catalog = createGuideCatalog({
     document('/guides/tick', 'Tick', 'A concise tick reference.'),
     document('/guides/skill-training', 'Skill Training Guide', 'Training methods for every skill.'),
     document('/setup', 'Setup', 'Configure RuneScape.'),
+    document('/leagues/leagues-ii/routes', 'Routes', 'RuneScape Leagues progression guide.'),
+    document('/leagues/leagues-ii/relics', 'Relics', 'RuneScape Leagues relic guide.'),
   ],
   metadata: [
     { sourcePath: '../../content/getting-started/meta.json', pages: ['tick-system'] },
@@ -85,6 +88,22 @@ describe('GuideSearchIndex', () => {
       '/guides/tick',
       '/guides/tick-food',
       '/guides/skill-training',
+      '/leagues/leagues-ii/relics',
+      '/leagues/leagues-ii/routes',
+    ])
+  })
+
+  it('limits results to a requested content path', () => {
+    expect(search.search('guide', 30, '/leagues').map(({ document }) => document.path)).toEqual([
+      '/leagues/leagues-ii/relics',
+      '/leagues/leagues-ii/routes',
+    ])
+  })
+
+  it('limits browse results to a requested content path', () => {
+    expect(search.browse(14, '/leagues').map(({ document }) => document.path)).toEqual([
+      '/leagues/leagues-ii/relics',
+      '/leagues/leagues-ii/routes',
     ])
   })
 })

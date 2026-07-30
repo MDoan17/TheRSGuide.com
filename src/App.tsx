@@ -1,7 +1,7 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { Fragment, lazy, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { MDXProvider } from '@mdx-js/react'
 import { Link, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import { ArrowRight, BookOpen, ChevronLeft, ChevronRight, Command as CommandIcon, LoaderCircle, Menu, Moon, Search, Sun, UserRound } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BookOpen, ChevronLeft, ChevronRight, Command as CommandIcon, LoaderCircle, Menu, Moon, Search, Sun, UserRound } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
@@ -15,7 +15,12 @@ import {
   SidebarInset,
   SidebarProvider,
 } from '@/components/ui/sidebar'
-import { guideCatalog, type Doc } from '@/lib/content'
+import {
+  guideCatalog,
+  isLeaguesRoute,
+  primaryNavigationForPath,
+  type Doc,
+} from '@/lib/content'
 import { mdxComponents } from '@/mdx_components/mdx-components'
 import { PlayerDataProvider } from '@/features/player/player-data-context'
 import { CookieConsent, SiteSettingsButton } from '@/components/cookie-consent'
@@ -24,6 +29,8 @@ import {
   GuideSidebarExpandTrigger,
   MobileGuideNavigation,
 } from '@/components/guide-navigation'
+import { LeaguesCountdown } from '@/components/leagues-countdown'
+import { homepagePrimaryLinks } from '@/lib/homepage-mode'
 import { cn } from '@/lib/utils'
 import { useGuideSearch } from '@/hooks/use-guide-search'
 import { openGraphImagePath, usePageMetadata } from '@/lib/page-metadata'
@@ -45,9 +52,14 @@ function HomeBackground({ children }: { children: ReactNode }) {
 }
 
 function Logo() {
+  const { pathname } = useLocation()
+  const leaguesRoute = isLeaguesRoute(pathname)
+  const label = leaguesRoute ? 'The Leagues Guide' : 'The RS Guide'
+  const homePath = leaguesRoute ? '/leagues' : '/'
+
   return (
-    <Link to="/" className="brand-mark" aria-label="The RS Guide home">
-      The RS Guide
+    <Link to={homePath} className="brand-mark" aria-label={`${label} home`}>
+      {label}
     </Link>
   )
 }
@@ -75,14 +87,22 @@ function SearchButton({ onClick, compact = false }: { onClick: () => void; compa
   )
 }
 
-function SearchDialog({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
+function SearchDialog({
+  open,
+  setOpen,
+  pathScope,
+}: {
+  open: boolean
+  setOpen: (open: boolean) => void
+  pathScope?: string
+}) {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const { searchIndex, searchLoading } = useGuideSearch(open && Boolean(query.trim()))
   const results = useMemo(() => {
-    if (!query.trim()) return searchIndex.browse(14)
-    return searchIndex.search(query, 30)
-  }, [query, searchIndex])
+    if (!query.trim()) return searchIndex.browse(14, pathScope)
+    return searchIndex.search(query, 30, pathScope)
+  }, [pathScope, query, searchIndex])
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="search-dialog">
@@ -118,13 +138,14 @@ function Header({
   showSettings: boolean
 }) {
   const { pathname } = useLocation()
+  const primaryNavigation = primaryNavigationForPath(pathname)
   const [mobileOpen, setMobileOpen] = useState(false)
   return (
     <header className="site-header">
       <div className="header-inner">
         <Logo />
         <nav className="top-nav" aria-label="Primary navigation">
-          {guideCatalog.sections.map((section) => <NavLink key={section.id} to={section.path}>{section.label}</NavLink>)}
+          {primaryNavigation.map((link) => <NavLink key={link.id} to={link.path}>{link.label}</NavLink>)}
         </nav>
         <div className="header-actions">
           {pathname !== '/' && <SearchButton onClick={openSearch} />}
@@ -251,7 +272,7 @@ function TableOfContents({ doc }: { doc: Doc }) {
     }
   }, [items])
 
-  if (!doc.hasTableOfContents && !items.length) return null
+  if (!doc.hasTableOfContents) return null
   return (
     <aside className="toc">
       <ScrollArea className="toc-scroll">
@@ -328,7 +349,9 @@ function DocPage({ doc }: { doc: Doc }) {
           <main className="guide-main">
             <Breadcrumbs doc={doc} />
         <article className="guide-prose">
-          <header className="article-header"><p>{guideCatalog.sectionLabel(doc.section)}</p><h1>{doc.title}</h1>{doc.description && <div>{doc.description}</div>}</header>
+          {doc.showPageHeader && (
+            <header className="article-header"><p>{guideCatalog.sectionLabel(doc.section)}</p><h1>{doc.title}</h1>{doc.description && <div>{doc.description}</div>}</header>
+          )}
           {doc.requiresPlayerData
             ? <PlayerDataProvider>{guideContent}</PlayerDataProvider>
             : guideContent}
@@ -343,7 +366,17 @@ function DocPage({ doc }: { doc: Doc }) {
   )
 }
 
-function HomeSearch() {
+function HomeSearch({
+  pathScope,
+  playerLookup = true,
+  placeholder = 'Search topics or enter your username',
+  ariaLabel = 'Search topics or enter your RuneScape username',
+}: {
+  pathScope?: string
+  playerLookup?: boolean
+  placeholder?: string
+  ariaLabel?: string
+}) {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [resultsOpen, setResultsOpen] = useState(false)
@@ -351,10 +384,11 @@ function HomeSearch() {
   const { searchIndex, searchLoading } = useGuideSearch(Boolean(needle))
   const results = useMemo(() => {
     if (!needle) return []
-    return searchIndex.search(query, 8)
-  }, [needle, query, searchIndex])
+    return searchIndex.search(query, 8, pathScope)
+  }, [needle, pathScope, query, searchIndex])
   const usernameCandidate = query.trim()
-  const canLookupPlayer = usernameCandidate.length > 0
+  const canLookupPlayer = playerLookup
+    && usernameCandidate.length > 0
     && usernameCandidate.length <= 12
     && /^[a-z0-9 _-]+$/i.test(usernameCandidate)
 
@@ -379,8 +413,8 @@ function HomeSearch() {
         onFocus={() => {
           if (needle) setResultsOpen(true)
         }}
-        placeholder="Search topics or enter your username"
-        aria-label="Search topics or enter your RuneScape username"
+        placeholder={placeholder}
+        aria-label={ariaLabel}
       />
       {needle && resultsOpen && (
         <CommandList className="home-search-results">
@@ -421,7 +455,7 @@ function HomeSearch() {
               ) : (
                 <>
                   <strong>No guide found for “{query.trim()}”</strong>
-                  <span>Try another topic or a RuneScape username.</span>
+                  <span>{playerLookup ? 'Try another topic or a RuneScape username.' : 'Try another Leagues topic.'}</span>
                 </>
               )}
             </CommandEmpty>
@@ -432,14 +466,36 @@ function HomeSearch() {
   )
 }
 
-function Home() {
-  usePageMetadata({
-    path: '/',
-    title: 'The RS Guide | Practical RuneScape Guides',
-    description: 'Practical RuneScape guides for combat, progression, setup, and account planning.',
-    image: '/og/home.png',
-    imageAlt: 'The RS Guide homepage preview',
-  })
+type LandingLink = {
+  label: string
+  to: string
+  highlighted?: boolean
+}
+
+function LandingPage({
+  variant,
+  title,
+  primaryLinks,
+  secondaryLabel,
+  secondaryLinks = [],
+  search,
+  spotlight,
+  backLink,
+}: {
+  variant: 'evergreen' | 'leagues'
+  title: ReactNode
+  primaryLinks: readonly LandingLink[]
+  secondaryLabel?: string
+  secondaryLinks?: readonly LandingLink[]
+  search?: {
+    pathScope?: string
+    playerLookup?: boolean
+    placeholder?: string
+    ariaLabel?: string
+  }
+  spotlight?: ReactNode
+  backLink?: LandingLink
+}) {
   useEffect(() => {
     window.scrollTo(0, 0)
     document.documentElement.classList.add('home-page')
@@ -449,30 +505,102 @@ function Home() {
   return (
     <HomeBackground>
       <>
-        <section className="home-search-landing">
+        <section className={cn('home-search-landing', `home-search-landing-${variant}`)}>
           <div className="home-search-intro">
-            <h1>The <span>RS</span> Guide</h1>
+            <h1>{title}</h1>
           </div>
-          <HomeSearch />
+          {spotlight ?? <HomeSearch {...search} />}
           <nav className="home-primary-links" aria-label="Main guide sections">
-            <Button size="lg" asChild><Link to="/guides">Guides</Link></Button>
-            <Button size="lg" variant="outline" asChild><Link to="/getting-started">Getting Started</Link></Button>
-            <Button size="lg" variant="outline" asChild><Link to="/setup">Setup Guide</Link></Button>
-            <Button size="lg" variant="outline" asChild><Link to="/extras">Extras</Link></Button>
+            {primaryLinks.map((link) => (
+              <Button
+                key={link.to}
+                size="lg"
+                variant={link.highlighted ? 'default' : 'outline'}
+                className={link.to === '/leagues' ? 'home-leagues-link' : undefined}
+                asChild
+              >
+                <Link to={link.to}>{link.label}</Link>
+              </Button>
+            ))}
           </nav>
-          <nav className="home-combat-links" aria-label="Combat style guides">
-            <Link to="/guides/melee">Melee</Link><span aria-hidden="true">/</span>
-            <Link to="/guides/range">Ranged</Link><span aria-hidden="true">/</span>
-            <Link to="/guides/magic">Magic</Link><span aria-hidden="true">/</span>
-            <Link to="/guides/necromancy">Necromancy</Link>
-          </nav>
+          {secondaryLinks.length > 0 && (
+            <nav className="home-combat-links" aria-label={secondaryLabel}>
+              {secondaryLinks.map((link, index) => (
+                <Fragment key={link.to}>
+                  {index > 0 && <span aria-hidden="true">/</span>}
+                  <Link to={link.to}>{link.label}</Link>
+                </Fragment>
+              ))}
+            </nav>
+          )}
         </section>
+        {backLink && (
+          <Button variant="outline" size="sm" className="home-back-link" asChild>
+            <Link to={backLink.to}>
+              <ArrowLeft />
+              {backLink.label}
+            </Link>
+          </Button>
+        )}
         <SiteSettingsButton
           className="home-settings"
           label="Open homepage settings"
         />
       </>
     </HomeBackground>
+  )
+}
+
+const evergreenCombatLinks: readonly LandingLink[] = [
+  { label: 'Melee', to: '/guides/melee' },
+  { label: 'Ranged', to: '/guides/range' },
+  { label: 'Magic', to: '/guides/magic' },
+  { label: 'Necromancy', to: '/guides/necromancy' },
+]
+
+function Home() {
+  usePageMetadata({
+    path: '/',
+    title: 'The RS Guide | Practical RuneScape Guides',
+    description: 'Practical RuneScape guides for combat, progression, setup, and account planning.',
+    image: '/og/home.png',
+    imageAlt: 'The RS Guide homepage preview',
+  })
+
+  return (
+    <LandingPage
+      variant="evergreen"
+      title={<>The <span>RS</span> Guide</>}
+      primaryLinks={homepagePrimaryLinks(import.meta.env.VITE_HOMEPAGE_MODE)}
+      secondaryLabel="Combat style guides"
+      secondaryLinks={evergreenCombatLinks}
+    />
+  )
+}
+
+const leaguesPrimaryLinks: readonly LandingLink[] = [
+  { label: 'Leagues II', to: '/leagues/leagues-ii', highlighted: true },
+  { label: 'RS for OS', to: '/leagues/rs-for-os-players' },
+  { label: 'Regions', to: '/leagues/map' },
+]
+
+function LeaguesHome() {
+  usePageMetadata({
+    path: '/leagues',
+    title: 'RuneScape Leagues Guide | The RS Guide',
+    description: 'RuneScape Leagues guides for relics, blessings, regions, routes, skilling, and players coming from Old School RuneScape.',
+    image: '/og/leagues.png',
+    imageAlt: 'The RuneScape Leagues Guide homepage preview',
+  })
+
+  return (
+    <LandingPage
+      variant="leagues"
+      title={<>The <span>Leagues</span> Guide</>}
+      primaryLinks={leaguesPrimaryLinks}
+      spotlight={<LeaguesCountdown />}
+      backLink={{ label: 'Back to Main Site', to: '/' }}
+    />
   )
 }
 
@@ -490,22 +618,29 @@ function NotFound() {
 function App() {
   const { pathname } = useLocation()
   const [searchOpen, setSearchOpen] = useState(false)
+  const normalizedPathname = pathname === '/' ? pathname : pathname.replace(/\/+$/, '')
+  const isLandingPage = normalizedPathname === '/' || normalizedPathname === '/leagues'
+  const leaguesRoute = isLeaguesRoute(pathname)
   const hasGuideSidebar = guideCatalog.documents.some((doc) => doc.path === pathname)
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
-        event.preventDefault()
-        if (pathname === '/') document.querySelector<HTMLInputElement>('[data-home-search]')?.focus()
-        else setSearchOpen(true)
+        if (normalizedPathname === '/') {
+          event.preventDefault()
+          document.querySelector<HTMLInputElement>('[data-home-search]')?.focus()
+        } else if (normalizedPathname !== '/leagues') {
+          event.preventDefault()
+          setSearchOpen(true)
+        }
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [pathname])
+  }, [normalizedPathname])
   return (
     <TooltipProvider>
       <CookieConsent>
-        {pathname !== '/' && (
+        {!isLandingPage && (
           <Header
             openSearch={() => setSearchOpen(true)}
             showSettings={!hasGuideSidebar}
@@ -513,6 +648,7 @@ function App() {
         )}
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/leagues" element={<LeaguesHome />} />
           <Route
             path="/extras/player"
             element={(
@@ -523,10 +659,16 @@ function App() {
               </PlayerDataProvider>
             )}
           />
-          {guideCatalog.documents.map((doc) => <Route key={doc.path} path={doc.path} element={<DocPage doc={doc} />} />)}
+          {guideCatalog.documents
+            .filter((doc) => doc.path !== '/leagues')
+            .map((doc) => <Route key={doc.path} path={doc.path} element={<DocPage doc={doc} />} />)}
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <SearchDialog open={searchOpen} setOpen={setSearchOpen} />
+        <SearchDialog
+          open={searchOpen}
+          setOpen={setSearchOpen}
+          pathScope={leaguesRoute ? '/leagues' : undefined}
+        />
       </CookieConsent>
     </TooltipProvider>
   )

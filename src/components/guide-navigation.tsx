@@ -23,7 +23,12 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar'
 import { SiteSettingsButton } from '@/components/cookie-consent'
-import { guideCatalog, type GuideNavNode, type GuideSection } from '@/lib/content'
+import {
+  guideSectionsForPath,
+  isLeaguesRoute,
+  type GuideNavNode,
+  type GuideSection,
+} from '@/lib/content'
 import {
   activeNavigationKeys,
   setNavigationKeyExpanded,
@@ -38,13 +43,14 @@ type NavigationExpansionModel = {
 }
 
 const useNavigationExpansion = (pathname: string): NavigationExpansionModel => {
+  const sections = guideSectionsForPath(pathname)
   const [expanded, setExpanded] = useState<GuideNavigationExpansion>(() =>
-    activeNavigationKeys(guideCatalog.sections, pathname),
+    activeNavigationKeys(sections, pathname),
   )
 
   useEffect(() => {
-    setExpanded((current) => syncActiveNavigationKeys(current, guideCatalog.sections, pathname))
-  }, [pathname])
+    setExpanded((current) => syncActiveNavigationKeys(current, sections, pathname))
+  }, [pathname, sections])
 
   return {
     expanded,
@@ -176,11 +182,25 @@ function MobileNavigationSection({
 
 export function MobileGuideNavigation({ close }: { close?: () => void }) {
   const { pathname } = useLocation()
+  const sections = guideSectionsForPath(pathname)
+  const flattenLeaguesNavigation = isLeaguesRoute(pathname)
   const expansion = useNavigationExpansion(pathname)
 
   return (
     <nav className="sidebar-nav" aria-label="Guide navigation">
-      {guideCatalog.sections.map((section) => (
+      {sections.map((section) => flattenLeaguesNavigation ? (
+        <div key={section.id} className="sidebar-links">
+          {section.navigation.map((node) => (
+            <MobileNavigationNode
+              key={node.doc.path}
+              node={node}
+              pathname={pathname}
+              expansion={expansion}
+              close={close}
+            />
+          ))}
+        </div>
+      ) : (
         <MobileNavigationSection
           key={section.id}
           section={section}
@@ -365,6 +385,8 @@ function DesktopNavigationSection({
 
 export function GuideSidebar() {
   const { pathname } = useLocation()
+  const sections = guideSectionsForPath(pathname)
+  const flattenLeaguesNavigation = isLeaguesRoute(pathname)
   const expansion = useNavigationExpansion(pathname)
 
   return (
@@ -377,7 +399,22 @@ export function GuideSidebar() {
       <SidebarContent className="guide-sidebar-content">
         <ScrollArea type="always" className="guide-sidebar-scroll">
           <nav className="guide-sidebar-nav" aria-label="Guide navigation">
-            {guideCatalog.sections.map((section) => (
+            {sections.map((section) => flattenLeaguesNavigation ? (
+              <SidebarGroup key={section.id}>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {section.navigation.map((node) => (
+                      <DesktopNavigationNode
+                        key={node.doc.path}
+                        node={node}
+                        pathname={pathname}
+                        expansion={expansion}
+                      />
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            ) : (
               <DesktopNavigationSection
                 key={section.id}
                 section={section}
