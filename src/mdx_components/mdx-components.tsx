@@ -6,6 +6,7 @@ import 'react-medium-image-zoom/dist/styles.css'
 import { SplitContent, SplitItem, Center } from './components/split-content'
 import { YouTubeEmbed } from './components/youtube-embed'
 import { Steps, Step } from './components/steps'
+import { UnderConstruction } from './components/under-construction'
 
 const InteractiveLegend = lazy(() => import('./components/interactive-legend').then((module) => ({ default: module.InteractiveLegend })))
 const PlayerSearch = lazy(() => import('./components/player-search').then((module) => ({ default: module.PlayerSearch })))
@@ -49,6 +50,7 @@ export const mdxComponents = {
   YouTubeEmbed,
   Steps,
   Step,
+  UnderConstruction,
   InteractiveLegend,
   PlayerSearch,
   QuestRequirements,
