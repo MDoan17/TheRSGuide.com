@@ -9,6 +9,7 @@ import {
 import {
   ArrowLeftIcon,
   ChevronRightIcon,
+  GithubIcon,
   MessageSquareIcon,
   SettingsIcon,
   ShieldCheckIcon,
@@ -54,6 +55,7 @@ import {
 
 const RYBBIT_SCRIPT_ID = 'rybbit-analytics'
 const MAX_FEEDBACK_LENGTH = 1500
+const GITHUB_ISSUES_URL = 'https://github.com/RS3-Dev/TheRSGuide.com/issues'
 
 declare global {
   interface Window {
@@ -156,6 +158,21 @@ function SettingsDialogHeader({
         </Button>
       </DialogClose>
     </DialogHeader>
+  )
+}
+
+function GithubIssueLink() {
+  return (
+    <p className="settings-github-link">
+      <GithubIcon aria-hidden="true" />
+      <span>
+        See something wrong? Feel free to{' '}
+        <a href={GITHUB_ISSUES_URL} target="_blank" rel="noreferrer">
+          open an issue on GitHub
+        </a>
+        .
+      </span>
+    </p>
   )
 }
 
@@ -370,7 +387,7 @@ export function CookieConsent({ children }: PropsWithChildren) {
             <>
               <SettingsDialogHeader title="Settings" />
 
-              <ScrollArea className="site-settings-scroll">
+              <ScrollArea className="site-settings-scroll settings-main-scroll">
                 <div className="site-settings-body">
                   {homeMedia && (
                     <section className="settings-section" aria-labelledby="homepage-media-title">
@@ -451,6 +468,7 @@ export function CookieConsent({ children }: PropsWithChildren) {
                       <ChevronRightIcon data-icon="inline-end" />
                     </Button>
                   </nav>
+                  <GithubIssueLink />
                 </div>
               </ScrollArea>
             </>
@@ -608,6 +626,7 @@ export function CookieConsent({ children }: PropsWithChildren) {
                   <MessageSquareIcon data-icon="inline-start" />
                   {feedbackSending ? 'Sending…' : 'Send message'}
                 </Button>
+                <GithubIssueLink />
               </form>
             </>
           )}
