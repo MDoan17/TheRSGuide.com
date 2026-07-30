@@ -319,7 +319,7 @@ function DocPage({ doc }: { doc: Doc }) {
   )
 
   return (
-    <SidebarProvider defaultOpen={sidebarDefaultOpen} className="guide-sidebar-provider">
+    <SidebarProvider defaultOpen={sidebarDefaultOpen} collapseBreakpoint={1100} className="guide-sidebar-provider">
       <GuideSidebar />
       <SidebarInset>
         <GuideSidebarExpandTrigger />
