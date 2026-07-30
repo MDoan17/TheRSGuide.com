@@ -52,7 +52,7 @@ export default defineConfig({
     guideContentPlugin({ siteUrl: deploymentUrl }),
     localApiPlugin(),
     mdxWithoutRaw,
-    react(),
+    react({ include: /\.(mdx|js|jsx|ts|tsx)$/ }),
     tailwindcss(),
   ],
   resolve: { alias: { '@': path.resolve(__dirname, './src') } },
