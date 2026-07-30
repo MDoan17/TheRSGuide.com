@@ -70,7 +70,6 @@ function SearchButton({ onClick, compact = false }: { onClick: () => void; compa
     <Button variant="outline" size={compact ? 'icon' : 'default'} onClick={onClick} className={cn(!compact && 'search-button')}>
       <Search data-icon="inline-start" />
       {!compact && <><span>Search guides</span><kbd><CommandIcon /> K</kbd></>}
-      <span className="sr-only">Search guides</span>
     </Button>
   )
 }
@@ -379,8 +378,8 @@ function HomeSearch() {
         onFocus={() => {
           if (needle) setResultsOpen(true)
         }}
-        placeholder="Search topics or enter your username"
-        aria-label="Search topics or enter your RuneScape username"
+        placeholder="Search a topic or username"
+        aria-label="Search a topic or username"
       />
       {needle && resultsOpen && (
         <CommandList className="home-search-results">
