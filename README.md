@@ -8,9 +8,14 @@ You can contribute by:
 
 - correcting outdated or inaccurate information;
 - fixing spelling, grammar, or unclear wording;
-- suggesting a guide or topic that is missing;
 - adding examples, images, or useful details; or
 - improving the website itself.
+
+We kindly ask contributors not to add entirely new guides. Instead, please work
+within the existing scaffolded guides. Corrections, clearer wording, updated
+information, and other improvements to those guides are all welcome. If you
+think the site needs a guide that does not exist yet, open an issue so we can
+discuss where it belongs before any work begins.
 
 ## The easiest way to help
 

@@ -4,6 +4,13 @@ Welcome! This repository contains the guides and website code for The RS Guide.
 You do not need to be an experienced developer to contribute. Content fixes,
 clearer explanations, and suggestions are all valuable.
 
+We kindly ask that contributors refrain from adding entirely new guides. Please
+keep content contributions within the existing scaffolded guides. This includes
+fixing grammatical errors, clarifying explanations, correcting inaccurate or
+outdated information, and adding information that has changed since a guide was
+written. If you believe a new guide is needed, open an issue first so we can
+discuss it with you.
+
 ## Table of Contents
 
 - [How to Contribute](#how-to-contribute)
