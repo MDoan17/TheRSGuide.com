@@ -2,7 +2,9 @@
 
 ## What are Meta.json Files?
 
-In Fumadocs (the documentation framework used by the main site), `meta.json` files control the **order and structure** of pages in the navigation sidebar. They tell Fumadocs which pages exist and in what order they should appear.
+On The RS Guide, `meta.json` files control the **order and structure** of pages
+in the navigation sidebar. They tell the site which pages belong in a section
+and in what order they should appear.
 
 ## Meta.json Structure
 

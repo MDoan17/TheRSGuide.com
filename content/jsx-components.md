@@ -17,9 +17,6 @@ Don't worry if you're not familiar with JSX - you can contribute great content u
 
 For detailed information about available components and how to use them, see our [components guide](components.md).
 
-> [!TIP]
-> Want to explore and test JSX components? Visit our [online editor](https://editor.thersguide.com) which includes the full component library, allowing you to experiment with components and see live previews of your MDX content.
-
 > [!NOTE]
 > At this time, we do not accept contributions that include custom JSX components that do not already exist in our component library. Please use only the components documented in the [components guide](components.md), or use plain Markdown for your content. If you need a component that doesn't exist, please open an issue to discuss it first.
 
