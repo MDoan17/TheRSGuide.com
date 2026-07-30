@@ -1,5 +1,6 @@
 export interface BackgroundMediaPlayer {
   ready(): Promise<void>
+  play(): Promise<void>
   isPaused(): Promise<boolean>
   setVolume(volume: number): Promise<void>
   onPlayback(listener: () => void): () => void
@@ -78,7 +79,11 @@ export class BackgroundMediaController<Target = unknown> {
       .then(async () => {
         if (attachmentId !== this.#attachmentId) return
         await player.setVolume(this.#state.muted ? 0 : this.#state.volume / 100)
-        if (!await player.isPaused()) reveal()
+        if (!await player.isPaused()) {
+          reveal()
+          return
+        }
+        await player.play()
       })
       .catch(() => {
         if (attachmentId === this.#attachmentId) this.#update({ loaded: false })

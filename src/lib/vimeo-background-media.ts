@@ -13,6 +13,7 @@ export const vimeoBackgroundMediaAdapter: BackgroundMediaPlayerAdapter<HTMLIFram
     const player = new Player(target)
     return {
       ready: () => player.ready().then(() => undefined),
+      play: () => player.play().then(() => undefined),
       isPaused: () => player.getPaused(),
       setVolume: (volume) => player.setVolume(volume).then(() => undefined),
       onPlayback(listener) {

@@ -73,6 +73,7 @@ export function HomeBackgroundMedia({ children }: { children: ReactNode }) {
               loading="eager"
               referrerPolicy="strict-origin-when-cross-origin"
             />
+            <div className="home-video-poster" aria-hidden="true" />
           </div>
           <div className="home-video-scrim" aria-hidden="true" />
         </>

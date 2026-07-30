@@ -21,6 +21,7 @@ const createHarness = (enabled = true) => {
     playback: () => void
     ready: ReturnType<typeof deferred<void>>
     paused: boolean
+    play: ReturnType<typeof vi.fn<() => Promise<void>>>
     volumes: number[]
     disposed: boolean
   }> = []
@@ -31,12 +32,14 @@ const createHarness = (enabled = true) => {
         playback: (() => undefined) as () => void,
         ready: deferred<void>(),
         paused: true,
+        play: vi.fn(async () => undefined),
         volumes: [] as number[],
         disposed: false,
       }
       players.push(record)
       const player: BackgroundMediaPlayer = {
         ready: () => record.ready.promise,
+        play: record.play,
         isPaused: async () => record.paused,
         setVolume: async (volume) => { record.volumes.push(volume) },
         onPlayback: (listener) => {
@@ -91,6 +94,14 @@ describe('BackgroundMediaController', () => {
     players[0].ready.resolve()
 
     await vi.waitFor(() => expect(controller.getSnapshot().loaded).toBe(true))
+  })
+
+  it('requests autoplay when ready media is paused', async () => {
+    const { controller, players } = createHarness()
+    controller.attach('iframe')
+    players[0].ready.resolve()
+
+    await vi.waitFor(() => expect(players[0].play).toHaveBeenCalledOnce())
   })
 
   it('ignores playback events from a replaced attachment', () => {
