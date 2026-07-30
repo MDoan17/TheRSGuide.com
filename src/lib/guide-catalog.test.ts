@@ -76,8 +76,27 @@ describe('GuideCatalog', () => {
     )
     expect(catalog.breadcrumbs('/guides/melee/basic-abilities')).toEqual([
       { path: '/guides', label: 'Guides', current: false },
-      { path: '/guides/melee', label: 'Melee Abilities Guide', current: false },
+      { path: '/guides/melee', label: 'Melee', current: false },
       { path: '/guides/melee/basic-abilities', label: 'Melee Basic Abilities', current: true },
+    ])
+  })
+
+  it('uses the configured route section label instead of the section index title', () => {
+    const gettingStartedCatalog = createGuideCatalog({
+      documents: [
+        document('../../content/getting-started/index.mdx', 'Keybinds'),
+        document('../../content/getting-started/damage.mdx', 'Damage'),
+      ],
+      metadata: [{
+        sourcePath: '../../content/getting-started/meta.json',
+        pages: ['index', 'damage'],
+      }],
+      sections: [{ id: 'getting-started', label: 'Getting Started' }],
+    })
+
+    expect(gettingStartedCatalog.breadcrumbs('/getting-started/damage')).toEqual([
+      { path: '/getting-started', label: 'Getting Started', current: false },
+      { path: '/getting-started/damage', label: 'Damage', current: true },
     ])
   })
 

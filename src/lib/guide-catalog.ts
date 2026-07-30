@@ -222,12 +222,15 @@ export class GuideCatalog {
     const parts = normalizedPath.split('/').filter(Boolean)
     return parts.map((part, index) => {
       const breadcrumbPath = `/${parts.slice(0, index + 1).join('/')}`
+      const current = index === parts.length - 1
       return {
         path: breadcrumbPath,
-        label: this.get(breadcrumbPath)?.title
-          ?? (index === 0 ? this.section(part)?.label : undefined)
-          ?? titleFromSlug(part),
-        current: index === parts.length - 1,
+        label: index === 0
+          ? this.section(part)?.label ?? titleFromSlug(part)
+          : current
+            ? this.get(breadcrumbPath)?.title ?? titleFromSlug(part)
+            : titleFromSlug(part),
+        current,
       }
     })
   }

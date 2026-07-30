@@ -18,10 +18,9 @@ function Breadcrumbs({ doc }: { doc: Doc }) {
 
   return (
     <div className="breadcrumbs">
-      <Link to="/">Home</Link>
       {breadcrumbs.map((breadcrumb) => (
         <span key={breadcrumb.path}>
-          <ChevronRight />
+          {breadcrumb !== breadcrumbs[0] && <ChevronRight />}
           {breadcrumb.current
             ? <b>{breadcrumb.label}</b>
             : <Link to={breadcrumb.path}>{breadcrumb.label}</Link>}
@@ -217,7 +216,6 @@ export function GuidePage({ doc }: { doc: Doc }) {
             <article className="guide-prose">
               {doc.showPageHeader && (
                 <header className="article-header">
-                  <p>{guideCatalog.sectionLabel(doc.section)}</p>
                   <h1>{doc.title}</h1>
                   {doc.description && <div>{doc.description}</div>}
                 </header>
