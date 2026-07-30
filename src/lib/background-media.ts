@@ -19,7 +19,6 @@ export interface BackgroundMediaPreferenceAdapter {
 export type BackgroundMediaState = {
   enabled: boolean
   loaded: boolean
-  needsPlaybackGesture: boolean
   muted: boolean
   volume: number
 }
@@ -31,28 +30,23 @@ const clampVolume = (volume: number) => Math.min(Math.max(Math.round(volume), 0)
 export class BackgroundMediaController<Target = unknown> {
   readonly #adapter: BackgroundMediaPlayerAdapter<Target>
   readonly #preferences: BackgroundMediaPreferenceAdapter
-  readonly #playbackTimeoutMs: number
   readonly #listeners = new Set<Listener>()
 
   #state: BackgroundMediaState
   #player: BackgroundMediaPlayer | null = null
   #removePlaybackListener: (() => void) | null = null
-  #playbackTimer: ReturnType<typeof setTimeout> | null = null
   #attachmentId = 0
 
   constructor(
     adapter: BackgroundMediaPlayerAdapter<Target>,
     preferences: BackgroundMediaPreferenceAdapter,
     initialVolume = 10,
-    playbackTimeoutMs = 4_000,
   ) {
     this.#adapter = adapter
     this.#preferences = preferences
-    this.#playbackTimeoutMs = playbackTimeoutMs
     this.#state = {
       enabled: preferences.loadEnabled(),
       loaded: false,
-      needsPlaybackGesture: false,
       muted: true,
       volume: clampVolume(initialVolume),
     }
@@ -72,19 +66,11 @@ export class BackgroundMediaController<Target = unknown> {
     const attachmentId = ++this.#attachmentId
     const player = this.#adapter.create(target)
     this.#player = player
-    this.#update({ loaded: false, needsPlaybackGesture: false })
-    if (this.#playbackTimeoutMs > 0) {
-      this.#playbackTimer = setTimeout(() => {
-        if (attachmentId === this.#attachmentId && !this.#state.loaded) {
-          this.#update({ needsPlaybackGesture: true })
-        }
-      }, this.#playbackTimeoutMs)
-    }
+    this.#update({ loaded: false })
 
     const reveal = () => {
       if (attachmentId === this.#attachmentId && this.#state.enabled) {
-        this.#clearPlaybackTimer()
-        this.#update({ loaded: true, needsPlaybackGesture: false })
+        this.#update({ loaded: true })
       }
     }
     this.#removePlaybackListener = player.onPlayback(reveal)
@@ -100,16 +86,12 @@ export class BackgroundMediaController<Target = unknown> {
         await player.play()
       })
       .catch(() => {
-        if (attachmentId === this.#attachmentId) {
-          this.#clearPlaybackTimer()
-          this.#update({ loaded: false, needsPlaybackGesture: true })
-        }
+        if (attachmentId === this.#attachmentId) this.#update({ loaded: false })
       })
   }
 
   detach = () => {
     this.#attachmentId += 1
-    this.#clearPlaybackTimer()
     this.#removePlaybackListener?.()
     this.#removePlaybackListener = null
     this.#player?.dispose()
@@ -123,29 +105,8 @@ export class BackgroundMediaController<Target = unknown> {
     this.#update({
       enabled,
       loaded: false,
-      needsPlaybackGesture: false,
       ...(enabled ? {} : { muted: true }),
     })
-  }
-
-  requestPlayback = async () => {
-    const player = this.#player
-    const attachmentId = this.#attachmentId
-    if (!player || !this.#state.enabled) return
-
-    this.#update({ needsPlaybackGesture: false })
-    try {
-      await player.play()
-      if (attachmentId !== this.#attachmentId) return
-      if (!await player.isPaused()) {
-        this.#clearPlaybackTimer()
-        this.#update({ loaded: true, needsPlaybackGesture: false })
-      }
-    } catch {
-      if (attachmentId === this.#attachmentId) {
-        this.#update({ loaded: false, needsPlaybackGesture: true })
-      }
-    }
   }
 
   setMuted = (muted: boolean) => {
@@ -173,19 +134,11 @@ export class BackgroundMediaController<Target = unknown> {
     }
   }
 
-  #clearPlaybackTimer() {
-    if (this.#playbackTimer !== null) {
-      clearTimeout(this.#playbackTimer)
-      this.#playbackTimer = null
-    }
-  }
-
   #update(patch: Partial<BackgroundMediaState>) {
     const next = { ...this.#state, ...patch }
     if (
       next.enabled === this.#state.enabled
       && next.loaded === this.#state.loaded
-      && next.needsPlaybackGesture === this.#state.needsPlaybackGesture
       && next.muted === this.#state.muted
       && next.volume === this.#state.volume
     ) return

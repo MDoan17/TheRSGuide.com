@@ -16,7 +16,7 @@ const deferred = <T>() => {
   return { promise, resolve, reject }
 }
 
-const createHarness = (enabled = true, playbackTimeoutMs = 0) => {
+const createHarness = (enabled = true) => {
   const players: Array<{
     playback: () => void
     ready: ReturnType<typeof deferred<void>>
@@ -56,12 +56,7 @@ const createHarness = (enabled = true, playbackTimeoutMs = 0) => {
     saveEnabled: (value) => { savedPreferences.push(value) },
   }
   return {
-    controller: new BackgroundMediaController(
-      adapter,
-      preferences,
-      10,
-      playbackTimeoutMs,
-    ),
+    controller: new BackgroundMediaController(adapter, preferences, 10),
     players,
     savedPreferences,
   }
@@ -74,7 +69,6 @@ describe('BackgroundMediaController', () => {
     expect(controller.getSnapshot()).toEqual({
       enabled: false,
       loaded: false,
-      needsPlaybackGesture: false,
       muted: true,
       volume: 10,
     })
@@ -108,45 +102,6 @@ describe('BackgroundMediaController', () => {
     players[0].ready.resolve()
 
     await vi.waitFor(() => expect(players[0].play).toHaveBeenCalledOnce())
-  })
-
-  it('offers a playback gesture when autoplay is rejected', async () => {
-    const { controller, players } = createHarness()
-    controller.attach('iframe')
-    players[0].play.mockRejectedValueOnce(new Error('Autoplay blocked'))
-    players[0].ready.resolve()
-
-    await vi.waitFor(() => {
-      expect(controller.getSnapshot().needsPlaybackGesture).toBe(true)
-    })
-  })
-
-  it('offers a playback gesture when startup stalls', async () => {
-    const { controller } = createHarness(true, 10)
-    controller.attach('iframe')
-
-    await vi.waitFor(() => {
-      expect(controller.getSnapshot().needsPlaybackGesture).toBe(true)
-    })
-  })
-
-  it('recovers through a user-requested playback', async () => {
-    const { controller, players } = createHarness()
-    controller.attach('iframe')
-    players[0].play.mockRejectedValueOnce(new Error('Autoplay blocked'))
-    players[0].ready.resolve()
-    await vi.waitFor(() => {
-      expect(controller.getSnapshot().needsPlaybackGesture).toBe(true)
-    })
-
-    players[0].paused = false
-    await controller.requestPlayback()
-
-    expect(players[0].play).toHaveBeenCalledTimes(2)
-    expect(controller.getSnapshot()).toMatchObject({
-      loaded: true,
-      needsPlaybackGesture: false,
-    })
   })
 
   it('ignores playback events from a replaced attachment', () => {

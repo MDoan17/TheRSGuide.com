@@ -5,8 +5,6 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from 'react'
-import { PlayIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { useSiteSettings } from '@/components/site-settings-context'
 import { BackgroundMediaController } from '@/lib/background-media'
 import {
@@ -78,16 +76,6 @@ export function HomeBackgroundMedia({ children }: { children: ReactNode }) {
             <div className="home-video-poster" aria-hidden="true" />
           </div>
           <div className="home-video-scrim" aria-hidden="true" />
-          {state.needsPlaybackGesture && (
-            <Button
-              className="home-video-playback-prompt"
-              size="lg"
-              onClick={() => void controller.requestPlayback()}
-            >
-              <PlayIcon aria-hidden="true" />
-              Play background
-            </Button>
-          )}
         </>
       )}
 
