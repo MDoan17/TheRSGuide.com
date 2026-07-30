@@ -5,10 +5,11 @@ import {
   type GuideDocumentSource,
 } from '@/lib/guide-catalog'
 import { createGuideSearchIndex } from '@/lib/guide-search'
+import { resolveHomepageMode } from '@/lib/homepage-mode'
 
 type MdxModule = {
   default: ComponentType
-  frontmatter?: { title?: string; description?: string }
+  frontmatter?: { title?: string; navigationTitle?: string; description?: string }
 }
 
 const modules = import.meta.glob<MdxModule>('../../content/**/*.mdx')
@@ -30,8 +31,55 @@ export const guideCatalog = createGuideCatalog({
     { id: 'getting-started', label: 'Getting Started' },
     { id: 'guides', label: 'Guides' },
     { id: 'extras', label: 'Extras' },
+    { id: 'leagues', label: 'Leagues' },
   ],
 })
+
+export type PrimaryNavigationLink = {
+  id: string
+  label: string
+  path: string
+}
+
+const evergreenGuideSections = guideCatalog.sections.filter((section) => section.id !== 'leagues')
+const leaguesGuideSections = guideCatalog.sections.filter((section) => section.id === 'leagues')
+const evergreenPrimaryNavigation: readonly PrimaryNavigationLink[] = guideCatalog.sections
+  .filter((section) => section.id !== 'leagues')
+  .map((section) => ({
+    id: section.id,
+    label: section.label,
+    path: section.path,
+  }))
+const leaguesModeEvergreenPrimaryNavigation: readonly PrimaryNavigationLink[] =
+  guideCatalog.sections.map((section) => ({
+    id: section.id,
+    label: section.label,
+    path: section.path,
+  }))
+const leaguesPrimaryNavigation: readonly PrimaryNavigationLink[] =
+  guideCatalog.section('leagues')?.navigation.map((node) => ({
+    id: node.doc.path,
+    label: node.label,
+    path: node.doc.path,
+  })) ?? []
+
+export const isLeaguesRoute = (pathname: string) => {
+  const normalizedPathname = pathname === '/' ? pathname : pathname.replace(/\/+$/, '')
+  return normalizedPathname === '/leagues' || normalizedPathname.startsWith('/leagues/')
+}
+
+export const guideSectionsForPath = (pathname: string) =>
+  isLeaguesRoute(pathname) ? leaguesGuideSections : evergreenGuideSections
+
+export const primaryNavigationForPath = (
+  pathname: string,
+  homepageMode = import.meta.env.VITE_HOMEPAGE_MODE,
+) => {
+  if (isLeaguesRoute(pathname)) return leaguesPrimaryNavigation
+  return resolveHomepageMode(homepageMode) === 'leagues'
+    ? leaguesModeEvergreenPrimaryNavigation
+    : evergreenPrimaryNavigation
+}
 
 export const guideSearch = createGuideSearchIndex(guideCatalog)
 

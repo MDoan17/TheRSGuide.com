@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { buildGuideContent, metadataHtml } from './guide-content-plugin.mjs'
+import {
+  buildGuideContent,
+  documentPageMetadata,
+  metadataHtml,
+} from './guide-content-plugin.mjs'
 
 describe('guide content build manifest', () => {
   it('builds a unique, fully described guide manifest', async () => {
@@ -32,6 +36,21 @@ describe('guide content build manifest', () => {
     })
   })
 
+  it('precomputes optional article header visibility from frontmatter', async () => {
+    const { documents } = await buildGuideContent(process.cwd())
+    const byRoute = new Map(documents.map((document) => [document.path, document]))
+
+    expect(byRoute.get('/leagues/map')).toMatchObject({
+      title: 'Map',
+      navigationTitle: 'Regions',
+      hasTableOfContents: false,
+      showPageHeader: false,
+    })
+    expect(byRoute.get('/leagues/map/anachronia')).toMatchObject({
+      showPageHeader: true,
+    })
+  })
+
   it('extracts full text for the separately loaded search corpus', async () => {
     const { documents } = await buildGuideContent(process.cwd())
     const tickSystem = documents.find(
@@ -60,5 +79,18 @@ describe('guide content build manifest', () => {
     expect(html).toContain('property="article:section" content="Mid Game"')
     expect(html).toContain('property="article:tag" content="RuneScape"')
     expect(html).toContain('name="twitter:card" content="summary_large_image"')
+  })
+
+  it('treats the Leagues root as a website landing page', async () => {
+    const { documents } = await buildGuideContent(process.cwd())
+    const leagues = documents.find((document) => document.path === '/leagues')
+
+    expect(documentPageMetadata(leagues)).toMatchObject({
+      path: '/leagues',
+      title: 'RuneScape Leagues Guide | The RS Guide',
+      cardTitle: 'The Leagues Guide',
+      type: 'website',
+      section: 'The Leagues Guide',
+    })
   })
 })

@@ -80,20 +80,24 @@ export class GuideSearchIndex {
     })
   }
 
-  browse(limit = 14): GuideSearchHit[] {
-    return this.#entries.slice(0, limit).map((entry) => ({
+  browse(limit = 14, pathPrefix?: string): GuideSearchHit[] {
+    return this.#entries
+      .filter(({ document }) => !pathPrefix || document.path === pathPrefix || document.path.startsWith(`${pathPrefix}/`))
+      .slice(0, limit)
+      .map((entry) => ({
       document: entry.document,
       sectionLabel: entry.sectionLabel,
       excerpt: entry.document.description || `Browse the ${entry.sectionLabel} section.`,
       match: 'title',
-    }))
+      }))
   }
 
-  search(query: string, limit = 30): GuideSearchHit[] {
+  search(query: string, limit = 30, pathPrefix?: string): GuideSearchHit[] {
     const normalizedQuery = normalizeSearchValue(query)
     if (!normalizedQuery) return []
 
     return this.#entries
+      .filter(({ document }) => !pathPrefix || document.path === pathPrefix || document.path.startsWith(`${pathPrefix}/`))
       .map((entry) => ({ entry, rank: matchRank(entry, normalizedQuery) }))
       .filter(({ rank }) => rank >= 0)
       .sort((a, b) => a.rank - b.rank || a.entry.order - b.entry.order)

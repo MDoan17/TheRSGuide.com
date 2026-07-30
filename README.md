@@ -26,6 +26,25 @@ Absolute page and social metadata URLs use `SITE_URL` when provided, then
 Coolify's deployment-specific `COOLIFY_URL`, and finally the incoming request
 origin. This keeps production and PR preview links on the host that serves them.
 
+The main homepage and Leagues landing page use these build-time environment
+variables:
+
+```bash
+VITE_HOMEPAGE_MODE=normal
+VITE_LEAGUES_START_DATE=2026-08-10T12:00:00Z
+VITE_LEAGUES_END_DATE=2026-09-10T12:00:00Z
+```
+
+Set `VITE_HOMEPAGE_MODE=leagues` to add and highlight the Leagues button on the
+main homepage. Leave it unset or set it to `normal` to hide that button and
+highlight Guides instead.
+
+Use ISO-8601 values with an explicit timezone, preferably UTC (`Z`). Before the
+start, the page counts down to the start; during the League, it counts down to
+the end; at or after the end, it hides the countdown. Changing either value
+requires rebuilding the Vite application. The end date above is an example;
+set it to the actual event end date in the deployment environment.
+
 ## Content
 
 - Add `.mdx` files anywhere beneath `content/`.
