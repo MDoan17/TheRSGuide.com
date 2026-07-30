@@ -190,6 +190,26 @@ export async function buildGuideContent(root) {
   return { documents, metadata }
 }
 
+const browserGuideContent = ({ documents, metadata }) => ({
+  guideManifest: documents.map((document) => {
+    const browserDocument = Object.fromEntries(Object.entries(document).filter(([key]) =>
+      !['generatedOgImage', 'ogImageAlt', 'searchText', 'socialDetail', 'socialSection'].includes(key)
+    ))
+    browserDocument.ogImage = document.generatedOgImage ? '' : document.ogImage
+    return browserDocument
+  }),
+  guideMetadata: metadata,
+})
+
+const isGuideContentFile = (root, file) => {
+  const relativeFile = path.relative(path.join(root, 'content'), file)
+  const outsideContent = relativeFile === '..'
+    || relativeFile.startsWith(`..${path.sep}`)
+    || path.isAbsolute(relativeFile)
+  return !outsideContent
+    && (relativeFile.endsWith('.mdx') || relativeFile.endsWith('meta.json'))
+}
+
 const escapeHtml = (value) =>
   String(value)
     .replaceAll('&', '&amp;')
@@ -288,6 +308,7 @@ export const documentPageMetadata = (document) => {
 export function guideContentPlugin({ siteUrl = DEFAULT_SITE_URL } = {}) {
   let root = process.cwd()
   let outputDirectory = path.join(root, 'dist')
+  let manifestSnapshot = ''
 
   return {
     name: 'guide-content',
@@ -303,23 +324,31 @@ export function guideContentPlugin({ siteUrl = DEFAULT_SITE_URL } = {}) {
     },
     async load(id) {
       if (id !== RESOLVED_MANIFEST_ID && id !== RESOLVED_SEARCH_ID) return null
-      const { documents, metadata } = await buildGuideContent(root)
+      const guideContent = await buildGuideContent(root)
       if (id === RESOLVED_SEARCH_ID) {
-        const corpus = Object.fromEntries(documents.map((document) => [
+        const corpus = Object.fromEntries(guideContent.documents.map((document) => [
           document.path,
           document.searchText,
         ]))
         return `export const guideSearchCorpus = ${JSON.stringify(corpus)}`
       }
-      const manifest = documents.map((document) => {
-        const browserDocument = Object.fromEntries(Object.entries(document).filter(([key]) =>
-          !['generatedOgImage', 'ogImageAlt', 'searchText', 'socialDetail', 'socialSection'].includes(key)
-        ))
-        browserDocument.ogImage = document.generatedOgImage ? '' : document.ogImage
-        return browserDocument
-      })
-      return `export const guideManifest = ${JSON.stringify(manifest)}
-export const guideMetadata = ${JSON.stringify(metadata)}`
+      const browserContent = browserGuideContent(guideContent)
+      manifestSnapshot = JSON.stringify(browserContent)
+      return `export const guideManifest = ${JSON.stringify(browserContent.guideManifest)}
+export const guideMetadata = ${JSON.stringify(browserContent.guideMetadata)}`
+    },
+    async handleHotUpdate({ file, server }) {
+      if (!isGuideContentFile(root, file)) return
+
+      const browserContent = browserGuideContent(await buildGuideContent(root))
+      const nextSnapshot = JSON.stringify(browserContent)
+      if (!manifestSnapshot || nextSnapshot === manifestSnapshot) return
+
+      manifestSnapshot = nextSnapshot
+      const manifestModule = server.moduleGraph.getModuleById(RESOLVED_MANIFEST_ID)
+      if (manifestModule) server.moduleGraph.invalidateModule(manifestModule)
+      server.ws.send({ type: 'full-reload' })
+      return []
     },
     async closeBundle() {
       const indexPath = path.join(outputDirectory, 'index.html')
