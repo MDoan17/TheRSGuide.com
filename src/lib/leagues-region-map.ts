@@ -40,15 +40,16 @@ export type RegionMapBounds = {
 
 export const leaguesRegionGuidePaths: Readonly<Record<string, string>> = {
   'kharidian-desert': '/leagues/map/desert',
-  'misthalin-city-of-um-havenhythe': '/leagues/map/starting-regions',
-  'troll-country-asgarnia': '/leagues/map/asgarnia',
+  misthalin: '/leagues/map/starting-regions',
+  asgarnia: '/leagues/map/asgarnia',
   morytania: '/leagues/map/morytania',
-  'wilderness-daemonheim': '/leagues/map/wilderness',
+  wilderness: '/leagues/map/wilderness',
   karamja: '/leagues/map/starting-regions',
   'fremennik-providence': '/leagues/map/fremennik',
-  'kandarin-feldip-hills': '/leagues/map/kandarin',
+  kandarin: '/leagues/map/kandarin',
   tirannwn: '/leagues/map/tiranwn',
   anachronia: '/leagues/map/anachronia',
+  havenhythe: '/leagues/map/starting-regions',
 }
 
 export const regionGuidePath = (displayRegionId: string) =>

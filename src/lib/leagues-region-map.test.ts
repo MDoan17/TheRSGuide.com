@@ -45,11 +45,16 @@ describe('Leagues region map', () => {
   })
 
   it('maps every displayed map region directly to a Regions guide', () => {
-    expect(Object.keys(leaguesRegionGuidePaths)).toHaveLength(10)
+    expect(Object.keys(leaguesRegionGuidePaths)).toHaveLength(11)
     expect(Object.values(leaguesRegionGuidePaths).every(
       (path) => path.startsWith('/leagues/map/'),
     )).toBe(true)
     expect(regionGuidePath('kharidian-desert')).toBe('/leagues/map/desert')
+    expect(regionGuidePath('misthalin')).toBe('/leagues/map/starting-regions')
+    expect(regionGuidePath('asgarnia')).toBe('/leagues/map/asgarnia')
+    expect(regionGuidePath('kandarin')).toBe('/leagues/map/kandarin')
+    expect(regionGuidePath('wilderness')).toBe('/leagues/map/wilderness')
+    expect(regionGuidePath('havenhythe')).toBe('/leagues/map/starting-regions')
     expect(regionGuidePath('tirannwn')).toBe('/leagues/map/tiranwn')
     expect(regionGuidePath('unknown')).toBe('/leagues/map')
   })
