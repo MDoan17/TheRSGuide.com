@@ -213,8 +213,7 @@ a { color: inherit; text-decoration: none; }
 .breadcrumbs svg { width: .8rem; }
 .breadcrumbs b { color: var(--foreground); font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
 .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
-.article-header > p, .eyebrow { color: var(--primary); font-size: .72rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
-.article-header h1 { font-family: var(--font-display); font-size: clamp(1.95rem, 3vw, 2.6rem); font-weight: 600; line-height: 1.05; margin: .65rem 0 1rem; text-wrap: balance; }
+.article-header h1 { font-family: var(--font-display); font-size: clamp(1.95rem, 3vw, 2.6rem); font-weight: 600; line-height: 1.05; margin: 0 0 1rem; text-wrap: balance; }
 .article-header > div { color: var(--muted-foreground); font-size: 1.05rem; line-height: 1.65; }
 .guide-prose { font-size: 1rem; line-height: 1.75; }
 .guide-loading { min-height: min(20rem, 40svh); display: grid; place-items: center; color: var(--primary); }
