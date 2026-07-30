@@ -279,7 +279,7 @@ a { color: inherit; text-decoration: none; }
 .home-video-background, .home-video-scrim { position: absolute; inset: 0; }
 .home-video-background { overflow: hidden; background-color: #0a0908; background-position: center; background-size: cover; }
 .home-video-background iframe { width: max(100vw, 177.78svh); height: max(100svh, 56.25vw); position: absolute; top: 50%; left: 50%; border: 0; pointer-events: none; transform: translate(-50%, -50%) scale(1.03); }
-.home-video-poster { position: absolute; inset: 0; z-index: 1; background: #0a0908; opacity: 1; pointer-events: none; transition: opacity .35s ease; }
+.home-video-poster { position: absolute; inset: 0; background: #0a0908; opacity: 1; pointer-events: none; transition: opacity .35s ease; }
 .home-video-background[data-video-playing="true"] .home-video-poster { opacity: 0; }
 .home-video-scrim { background: rgb(10 9 8 / 62%); }
 .home-video-playback-prompt { position: fixed; bottom: max(1.5rem, env(safe-area-inset-bottom)); left: 50%; z-index: 20; border-radius: 0; box-shadow: 0 .8rem 2.25rem rgb(0 0 0 / 32%); transform: translateX(-50%); }
