@@ -184,7 +184,7 @@ a { color: inherit; text-decoration: none; }
 .guide-sidebar-content { overflow: hidden; }
 .guide-sidebar-scroll { min-height: 0; height: 100%; }
 .guide-sidebar-scroll [data-slot="scroll-area-thumb"] { background: color-mix(in oklch, var(--sidebar-muted-foreground) 55%, transparent); }
-.guide-sidebar-nav { padding: 1rem 0 2rem 33.333%; }
+.guide-sidebar-nav { padding: 1rem 0 2rem 20%; }
 .guide-sidebar-footer { padding: .5rem .75rem 1rem 33.333%; align-items: flex-end; }
 .guide-sidebar-settings { color: var(--sidebar-muted-foreground); }
 .guide-sidebar-settings:hover { background: var(--sidebar-accent); color: var(--sidebar-foreground); }

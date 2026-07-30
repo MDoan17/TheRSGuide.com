@@ -4,7 +4,7 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { Slot } from "radix-ui"
 
-import { useIsMobile } from "@/hooks/use-mobile"
+import { useIsBelowBreakpoint, useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { functionalStorageAllowed } from "@/lib/privacy-preferences"
 import { Button } from "@/components/ui/button"
@@ -27,7 +27,7 @@ import { PanelLeftIcon } from "lucide-react"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
-const SIDEBAR_WIDTH = "28rem"
+const SIDEBAR_WIDTH = "clamp(20rem, calc(35.556vw - 4.444rem), 24rem)"
 const SIDEBAR_WIDTH_MOBILE = "18rem"
 const SIDEBAR_WIDTH_ICON = "3rem"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
@@ -57,6 +57,7 @@ function SidebarProvider({
   defaultOpen = true,
   open: openProp,
   onOpenChange: setOpenProp,
+  collapseBreakpoint,
   className,
   style,
   children,
@@ -65,14 +66,38 @@ function SidebarProvider({
   defaultOpen?: boolean
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  collapseBreakpoint?: number
 }) {
   const isMobile = useIsMobile()
   const [openMobile, setOpenMobile] = React.useState(false)
 
   // This is the internal state of the sidebar.
   // We use openProp and setOpenProp for control from outside the component.
-  const [_open, _setOpen] = React.useState(defaultOpen)
+  const [_open, _setOpen] = React.useState(() => {
+    if (
+      collapseBreakpoint &&
+      typeof window !== "undefined" &&
+      window.innerWidth < collapseBreakpoint
+    ) {
+      return false
+    }
+    return defaultOpen
+  })
   const open = openProp ?? _open
+
+  const isBelowCollapseBreakpoint = useIsBelowBreakpoint(collapseBreakpoint ?? 0)
+  const wasBelowCollapseBreakpoint = React.useRef(isBelowCollapseBreakpoint)
+
+  React.useEffect(() => {
+    if (
+      collapseBreakpoint &&
+      isBelowCollapseBreakpoint &&
+      !wasBelowCollapseBreakpoint.current
+    ) {
+      _setOpen(false)
+    }
+    wasBelowCollapseBreakpoint.current = isBelowCollapseBreakpoint
+  }, [collapseBreakpoint, isBelowCollapseBreakpoint])
   const setOpen = React.useCallback(
     (value: boolean | ((value: boolean) => boolean)) => {
       const openState = typeof value === "function" ? value(open) : value
