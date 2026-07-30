@@ -82,7 +82,6 @@ function SearchButton({ onClick, compact = false }: { onClick: () => void; compa
     <Button variant="outline" size={compact ? 'icon' : 'default'} onClick={onClick} className={cn(!compact && 'search-button')}>
       <Search data-icon="inline-start" />
       {!compact && <><span>Search guides</span><kbd><CommandIcon /> K</kbd></>}
-      <span className="sr-only">Search guides</span>
     </Button>
   )
 }
@@ -369,8 +368,8 @@ function DocPage({ doc }: { doc: Doc }) {
 function HomeSearch({
   pathScope,
   playerLookup = true,
-  placeholder = 'Search topics or enter your username',
-  ariaLabel = 'Search topics or enter your RuneScape username',
+  placeholder = 'Search a topic or username',
+  ariaLabel = 'Search a topic or username',
 }: {
   pathScope?: string
   playerLookup?: boolean
