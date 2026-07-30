@@ -45,7 +45,7 @@ export const SkillTrainingLookup: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Skill Icon Grid */}
-      <div className="grid grid-cols-5 place-items-center gap-1 p-2 border border-fd-border rounded-lg bg-fd-card sm:grid-cols-10 md:grid-cols-[repeat(15,minmax(0,1fr))]">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(2.25rem,1fr))] place-items-center gap-1 p-2 border border-fd-border rounded-lg bg-fd-card md:grid-cols-[repeat(15,minmax(0,1fr))] ">
         {skillSlots.map((skill, index) => (
           skill
             ? (

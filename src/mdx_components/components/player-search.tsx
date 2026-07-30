@@ -78,9 +78,9 @@ export const PlayerSearch: React.FC = () => {
 
   return (
     <div className="my-4">
-      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+      <div className="flex flex-col sm:flex-row xs:items-center gap-3">
         {/* Search input group */}
-        <div className="relative flex-1 max-w-xs">
+        <div className="relative flex-1 min-[512px]:max-w-xs">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <svg
               className="h-4 w-4 text-fd-muted-foreground"
