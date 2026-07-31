@@ -1,6 +1,5 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
 import relicData from '@/data/leagues-ii/relics.json';
 
 interface RelicItem {
@@ -19,7 +18,7 @@ interface RelicDisplayProps {
     tier: number;
 }
 
-const RelicList: React.FC<{ title: string; relics: RelicItem[]; passives: PassiveEffect[] }> = ({ title, relics, passives }) => {
+const RelicList: React.FC<{ title: string; relics: RelicItem[]; passives: PassiveEffect[] }> = ({ relics, passives }) => {
   return (
     <div className="table-scroll">
         <table>
