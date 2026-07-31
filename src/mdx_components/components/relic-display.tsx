@@ -17,6 +17,7 @@ interface PassiveEffect {
 
 interface RelicDisplayProps {
     tier: number;
+    points: number;
 }
 
 const RelicList: React.FC<{ relics: RelicItem[]; passives: PassiveEffect[] }> = ({ relics, passives }) => {
@@ -51,7 +52,7 @@ const RelicList: React.FC<{ relics: RelicItem[]; passives: PassiveEffect[] }> = 
   );
 };
 
-export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier }) => {
+export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier, points }) => {
 
   const tierData = relicData.Relics.filter((data) => data.tier === tier);
   const tierPassives = relicData.Passives.find((data) => data.tier === tier)?.effects || [];
@@ -77,7 +78,10 @@ export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier }) => {
                 <span>These relics have not had their tiers announced yet.</span>
             </>
         ) : (
-            <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
+            <div className="flex items-baseline gap-8 mb-4">
+                <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
+                <span className="text-secondary-foreground">{points} points</span>
+            </div>
         )}
         <RelicList relics={tierData} passives={tierPassives} />
     </div>
