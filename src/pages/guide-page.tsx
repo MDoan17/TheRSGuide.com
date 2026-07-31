@@ -1,5 +1,5 @@
 import { Suspense, useEffect, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router'
 import { MDXProvider } from '@mdx-js/react'
 import { ChevronLeft, ChevronRight, LoaderCircle } from 'lucide-react'
 import { GuideSidebar, GuideSidebarExpandTrigger } from '@/components/guide-navigation'
