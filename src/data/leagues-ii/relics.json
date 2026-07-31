@@ -1,0 +1,129 @@
+{
+    "Relics": [
+        {
+            "name": "Survivalist",
+            "tier": 1,
+            "image": "/data/leagues/relics/tier-1/survivalist.png",
+            "effects": [
+                "Grants the Survivalist's bag, which can store logs, fish and ores, as well as the Pickaxe of the faithful, Hatchet of devolation, and Harpoon of the pious which act as the highest tier tool for Mining, Woodcutting, and Fishing.",
+                "Resources are doubled while Fishing, Mining, Woodcutting or excavating Archaeology hotspots.",
+                "Rockertunities and critical swings deal double damage.",
+                "Rockertunities immediately award an ore.",
+                "Sprite focus gain is doubled.",
+                "Whenever you discover an artefact or lore page, you immediately gain 100% sprite focus.",
+                "Discoverted artefacts have a 50% chance to be immediately restored, and gain the XP for the restoration."
+            ]
+        },
+        {
+            "name": "Endless Harvest",
+            "tier": 1,
+            "image": "/data/leagues/relics/tier-1/endless-harvest.png",
+            "effects": [
+                "All resources gathered from Archaeology, Farming, Fishing, Mining, and Woodcutting are automatically sent to the bank or metal bank or archaeology storage.",
+                "When Fishing, Mining, or Woodcutting there's a 10% chance for the resource to be upgraded to the next tier.",
+                "You never fell standard trees, unless someone else fells it. If a fishing spot moves you will follow it and continue gathering. If a tree is felled you will wait for it to regrow before continuing to gather from it.",
+                "Mining stamina is always 100%.",
+                "Archaeology time sprites do not move and follow the player."
+            ]
+        },
+        {
+            "name": "Golden Touch",
+            "tier": 1,
+            "image": "/data/leagues/relics/tier-1/golden-touch.png",
+            "effects": [
+                "Grants the Goldenhawk Boots. Goldenhawk Boots grant agility XP periodically while running, skilling, or when using ultimate abilities.",
+                "Gain Golden feathers when gaining xp in Agility or Thieving. These can be alchemised for 50,000 coins, or offered for Prayer XP.",
+                "Upon completing an Agility course lap, receive 10,000 coins per Agility level. Agility XP for the Lap is 200%.",
+                "Prevents you from failing any Agility course obstacles and shortcuts.",
+                "Never fail when Thieving. All Thieving loot is noted. Thieving loot is tripled.",
+                "Stealing from stalls and chests does not cause them to deplete. You automatically keep thieving when stealing from stalls and chests.",
+                "Safes no longer have a cooldown after being cracked.",
+                "Receive triple loot from pickpocketing and stalls (except coins). Coins gained from theiving are multiplied by 100x.",
+                "When looting chests or safes you have a chance to obtain a bundle of herbs or potion ingredients sent to your bank."
+            ]
+        },
+        {
+            "name": "Crystal Grace",
+            "tier": 0,
+            "image": "/data/leagues/relics/tier-0/crystal-grace.png",
+            "effects": [
+                "Grants you Seren's crystal tiara, which acts as an Omni-tiara for entering all Runecrafting altars and offers teleports to Runecrafting altars in your unlocked regions. The tiara also acts as a demonhorn necklace when worn or in the inventory.",
+                "Unlocks all magic spells.",
+                "When gaining XP in any skill: 5% chance to obtain a Crystal essence, which can be used in palce of Pure or Impure essence.",
+                "Rune quantity output from essence, including Crystal essence, is increased by 3x.",
+                "Level-based rune multipliers are always the maximum regardless of your Runecrafting level.",
+                "Necromancy rituals act as having the following glyphs active whitout needing to draw them: Multiply/Attraction/Protection - 200%, Speed - 50% (Ritual speeds cap at 50%)",
+                "Light soruces and glyphs no longer require ingredients.",
+                "When buring a bone or offering it at an altar, you will gain additional XP equivalent to a Dragon bone."
+            ]
+        },
+        {
+            "name": "Superheated",
+            "tier": 0,
+            "image": "/data/leagues/relics/tier-0/superheated.png",
+            "effects": [
+                "Burn logs automatically when Woodcutting, without required Firemaking level. (Toggleable)",
+                "Automatically cook fish caught with Fishing, without required Cooking level. (Toggleable)",
+                "Logs are added to bonfires at a rate of 0.6 seconds per log.",
+                "Lighting just one incense stick will provide max potency for 60 minutes.",
+                "Fire spirits are replaced with Blessed fire spirits and spawn more frequently. Blessed fire spirits can spawn while smithing.",
+                "When smelting ores, you always gain double the bars. There is a 3% chance to gain a bonus 50 bars.",
+                "When smelting ores, smelt bars u pto 60 times, instead of 28.",
+                "Completing in-progress smithing items will award the invention materials the item would've yielded if disassembled.",
+                "Always have max heat when smithing. Triple base-progress per strike when smithing.",
+                "Completing ceremonial sword plans gives 5x Smithing XP and 50 bars of the metal you were using. XP for burial sets is increased by 3x."
+            ]
+        },
+        {
+            "name": "Divine Druid",
+            "tier": 0,
+            "image": "/data/leagues/relics/tier-0/divine-druid.png",
+            "effects": [
+                "Grants Thera's summoning pouch, a pouch that stores grimy herbs and charms. Acts as infinite spirit shards and summoning pouches.",
+                "Cleaning grimy herbs turns them directly into unfinished potions. (Toggleable)",
+                "Grimy herbs/charms can be found frequently when Mining, Fishing, Woodcutting, siphoning or excavating Archaeology hotspots.",
+                "Grimy herbs are all cleaned at once.",
+                "50% chance to create an extra pouch per pouch created, sent directly to the bank.",
+                "All charm drops from defeating enemies are increased by 5x.",
+                "Summoning familiars which boost skills now boost them by 3x the amount.",
+                "Gain a 75% chance to save some ingredients when creating potions.",
+                "When crafting pouches, you will also make 10 of the respective familiar's scroll. Sent directly to the bank, no extra XP is awarded.",
+                "Always gather enriched memories.",
+                "Converting energies and memories together only requires half as many energies, rounded down.",
+                "Converting memories has a 10% chance to give a random porter or divine charge. Sent directly to the bank.",
+                "Memory strands are gained at 10x rate.",
+                "Chronicle fragements give 2x XP (Before League XP multipliers).",
+                "Crafting items from divine energies only requires half as many energies, rounded down.",
+                "Unlock all Meilyr potion recipes."
+            ]
+        },
+        {
+            "name": "Transmutation",
+            "tier": 0,
+            "image": "/data/leagues/relics/tier-0/transmutation.png",
+            "effects": [
+                "Grants the Deities' transmuter.",
+                "Alchemical spells transmute items. (Toggleable)",
+                "Transmutation spells bank noted products. (Toggleable)",
+                "Low alchemy and High alchemy spells transform into 2 new spells:",
+                "Divine Convergence: Downgrades up to 10 of a resource into a lower tier.",
+                "Divine Divergence: Upgrades up to 10 of a resource into a higher tier.",
+                "The Deities' transmuter must be in the inventory to cast these spells.",
+                "Using items on the Deities' transmuter will display what they can turn into.",
+                "Both spells have no level requirement. The spell gives 10 Magic XP for each item transmuted. (Before League XP multipliers)",
+                "When cast upon a stack of noted items, these spells will automatically re-cast over time as long as the items are available in the same slot in your inventory."
+            ]
+        }
+    ],
+    "Passives": [
+        {
+            "tier": 1,
+            "effects": [
+                {
+                    "title": "5x XP",
+                    "description": "Experience is gained at five times the normal rate."
+                }
+            ]
+        }
+    ]
+}
