@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import relicData from '@/data/leagues-ii/relics.json';
 
 interface RelicItem {
