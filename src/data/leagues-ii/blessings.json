@@ -1,0 +1,178 @@
+{
+    "Blessings": [
+        {
+            "name": "Adrenaline Junkie",
+            "path": "Chaos",
+            "tier": 1,
+            "image": "/data/leagues/blessings/tier-1/adrenaline-junkie.png",
+            "effects": [
+                "Your maximum adrenaline is increased by 50%.",
+                "Adrenaline generation is increased by 50%."
+            ],
+            "notes": [
+
+            ]
+        },
+        {
+            "name": "Big Boned",
+            "path": "Balance",
+            "tier": 1,
+            "image": "/data/leagues/blessings/tier-1/big-boned.png",
+            "effects": [
+                "Your maximum life points are increased by 50%.",
+                "All damage you deal gains 5% of your maximum life points as bonus damage."
+            ],
+            "notes": [
+
+            ]
+        },
+        {
+            "name": "Teragard's Aegis",
+            "path": "Order",
+            "tier": 1,
+            "image": "/data/leagues/blessings/tier-1/teragards-aegis.png",
+            "effects": [
+                "Your base ability damage is increased by 25% of your total armour value. This bonus is doubled while wielding a defender and tripled while wielding a shield.",
+                "Your base health regeneration is increased by 25% of your maximum life points. This bonus is doubled while wielding a defender and tripled while wielding a shield."
+            ],
+            "notes": [
+
+            ]
+        },
+        {
+            "name": "Abyssal Cinders",
+            "path": "Chaos",
+            "tier": 2,
+            "image": "/data/leagues/blessings/tier-2/abyssal-cinders.png",
+            "effects": [
+                "On hit: Your attacks deal 15% of ability damage as bonus damage.",
+                "On hit: Your attacks have a 5% chance to Trigger an Inferno of Zamorak.",
+                "Inferno of Zamorak: Deals 100-200% ability damage to a single target."
+            ],
+            "notes": [
+
+            ]
+        },
+        {
+            "name": "Barkscales",
+            "path": "Balance",
+            "tier": 2,
+            "image": "/data/leagues/blessings/tier-2/barkscales.png",
+            "effects": [
+                "Incoming damage is reduced by 10% of your armour value.",
+                "After Barkscales reduces damage 5 times, unleash a Grasp of Guthix at your attacker's location.",
+                "Grasp of Guthix: Deals poison damage equal to 80-120% of your ability damage in a 3x3 area."
+            ],
+            "notes": [
+
+            ]
+        },
+        {
+            "name": "Striking Light",
+            "path": "Order",
+            "tier": 2,
+            "image": "/data/leagues/blessings/tier-2/striking-light.png",
+            "effects": [
+                "Your basic attack's damage is increased by 40%.",
+                "Your basic attacks unleash a Light of Saradomin on your target. 9s cooldown.",
+                "Light of Saradomin: Deals damage equal to 40-60% of your ability damage, plus 250% of your armour value."
+            ],
+            "notes": [
+
+            ]
+        },
+        {
+            "name": "Avernic Rampage",
+            "path": "Chaos",
+            "tier": 3,
+            "image": "/data/leagues/blessings/tier-3/avernic-rampage.png",
+            "effects": [
+                "On-attack: 5% chance to activate Avernic Rampage for 7.2s.",
+                "Avernic Rampage: Abilities and special attacks cost 0% adrenaline."
+            ],
+            "notes": [
+
+            ]
+        },
+        {
+            "name": "Eternal Sustenance",
+            "path": "Balance",
+            "tier": 3,
+            "image": "/data/leagues/blessings/tier-3/eternal-sustenance.png",
+            "effects": [
+                "Food is no longer consumed when eaten.",
+                "You no longer lose adrenaline when eating."
+            ],
+            "notes": [
+
+            ]
+        },
+        {
+            "name": "Steadfast Will",
+            "path": "Order",
+            "tier": 3,
+            "image": "/data/leagues/blessings/tier-3/steadfast-will.png",
+            "effects": [
+                "Empowers the 'Bash', 'Preparation', 'Reflect', and 'Revenge' abilities.",
+                "Bash: Deals additional damage equal to 350-450% of your armour value.",
+                "Preparation: On activation reduces the cooldown of all abilities by 12s.",
+                "Reflect: Reflects 100% of incoming damage + 10-15% of your armour value as additional damage. Reflected damage hits up to 8 additional targets within 3 tiles of you.",
+                "Revenge: The duration and cooldown of this ability is doubled. The maximum number of stacks is increased by 20."
+            ],
+            "notes": [
+
+            ]
+        },
+        {
+            "name": "Demon's Mark",
+            "path": "Chaos",
+            "tier": 4,
+            "image": "/data/leagues/blessings/tier-4/demons-mark.png",
+            "effects": [
+                "Your accuracy is always calculated using your target's weakness."
+            ],
+            "notes": [
+
+            ]
+        },
+        {
+            "name": "Splash Zone",
+            "path": "Balance",
+            "tier": 4,
+            "image": "/data/leagues/blessings/tier-4/splash-zone.png",
+            "effects": [
+                "Area of effect and multi-target attacks deal 30% more damage.",
+                "Area of effect abilities deal 5% more damage per tile the target occupies."
+            ],
+            "notes": [
+
+            ]
+        },
+        {
+            "name": "Sacred Fervor",
+            "path": "Order",
+            "tier": 4,
+            "image": "/data/leagues/blessings/tier-4/sacred-fervor.png",
+            "effects": [
+                "Melee ability and special attack cooldowns are reduced by 30%.",
+                "Magic ability and special attack cooldowns are reduced by 30%.",
+                "Ranged ability and special attack cooldowns are reduced by 30%.",
+                "Necromancy ability and special attack cooldowns are reduced by 30%."
+            ],
+            "notes": [
+
+            ]
+        }
+    ],
+    "Passives": [
+        {
+            "tier": -1,
+            "effects": [
+                {
+                    "title": "Example Passive",
+                    "description": "This is an example passive effect."
+                }
+            ]
+        }
+    ]
+}

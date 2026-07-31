@@ -19,6 +19,8 @@ const GearRecommendations = lazy(() => import('./components/gear-recommendations
 const RecurringActivitiesTool = lazy(() => import('./components/recurring-activities-tool').then((module) => ({ default: module.RecurringActivitiesTool })))
 const EfficiencyGuideTool = lazy(() => import('./components/efficiency-guide-tool').then((module) => ({ default: module.EfficiencyGuideTool })))
 const LeaguesRegionMap = lazy(() => import('./components/leagues-region-map'))
+const RelicDisplay = lazy(() => import('./components/relic-display').then((module) => ({ default: module.RelicDisplay })))
+const BlessingDisplay = lazy(() => import('./components/blessing-display').then((module) => ({ default: module.BlessingDisplay })))
 
 function SmartLink({ href = '', children, ...props }: ComponentProps<'a'>) {
   if (href.startsWith('/')) return <Link to={href} {...props}>{children}</Link>
@@ -62,4 +64,6 @@ export const mdxComponents = {
   RecurringActivitiesTool,
   EfficiencyGuideTool,
   LeaguesRegionMap,
+  RelicDisplay,
+  BlessingDisplay,
 }
