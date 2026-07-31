@@ -5,8 +5,8 @@ import relicData from '@/data/leagues-ii/relics.json';
 interface RelicItem {
   name: string;
   tier: number;
-  image?: string;
-  effects?: string[];
+  image: string;
+  effects: string[];
 }
 
 interface PassiveEffect {
@@ -18,7 +18,7 @@ interface RelicDisplayProps {
     tier: number;
 }
 
-const RelicList: React.FC<{ title: string; relics: RelicItem[]; passives: PassiveEffect[] }> = ({ relics, passives }) => {
+const RelicList: React.FC<{ relics: RelicItem[]; passives: PassiveEffect[] }> = ({ relics, passives }) => {
   return (
     <div className="table-scroll">
         <table>
@@ -28,7 +28,7 @@ const RelicList: React.FC<{ title: string; relics: RelicItem[]; passives: Passiv
             <tbody>
                 {relics.map((relic, relicIndex) => (
                     <tr key={relicIndex}>
-                        <td><div className="league-relic-name"><img className="league-relic-icon" src={relic.image} alt="" /><strong>{relic.name}</strong></div></td>
+                        <td><div className="league-relic-name"><img className="league-relic-icon" src={relic.image} alt={relic.name} /><strong>{relic.name}</strong></div></td>
                         <td>
                             <ul className="bulleted-list">
                                 {relic.effects?.map((effect, effectIndex) => (
@@ -52,8 +52,8 @@ const RelicList: React.FC<{ title: string; relics: RelicItem[]; passives: Passiv
 
 export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier }) => {
 
-  const tierData = relicData.Relics.filter((data) => data.tier == tier);
-  const tierPassives = relicData.Passives.find((data) => data.tier == tier)?.effects || [];
+  const tierData = relicData.Relics.filter((data) => data.tier === tier);
+  const tierPassives = relicData.Passives.find((data) => data.tier === tier)?.effects || [];
 
   if (tierData.length === 0) {
     return (
@@ -67,7 +67,7 @@ export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier }) => {
   return (
     <div>
         <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
-        <RelicList title={`Tier ${tier}`} relics={tierData} passives={tierPassives} />
+        <RelicList relics={tierData} passives={tierPassives} />
     </div>
   );
 };
