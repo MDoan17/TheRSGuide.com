@@ -11,6 +11,7 @@ interface BlessingItem {
   tier: number;
   image: string;
   effects: string[];
+  notes: string[];
 }
 
 interface PassiveEffect {
@@ -39,6 +40,9 @@ const BlessingList: React.FC<{ blessings: BlessingItem[]; passives: PassiveEffec
                             <ul className="bulleted-list">
                                 {blessing.effects?.map((effect, effectIndex) => (
                                     <li key={effectIndex}>{effect}</li>
+                                ))}
+                                {blessing.notes?.map((note, noteIndex) => (
+                                    <li key={noteIndex}>{note}</li>
                                 ))}
                             </ul>
                         </td>

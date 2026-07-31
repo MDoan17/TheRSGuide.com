@@ -8,6 +8,9 @@
             "effects": [
                 "Your maximum adrenaline is increased by 50%.",
                 "Adrenaline generation is increased by 50%."
+            ],
+            "notes": [
+
             ]
         },
         {
@@ -18,6 +21,9 @@
             "effects": [
                 "Your maximum life points are increased by 50%.",
                 "All damage you deal gains 5% of your maximum life points as bonus damage."
+            ],
+            "notes": [
+
             ]
         },
         {
@@ -28,6 +34,9 @@
             "effects": [
                 "Your base ability damage is increased by 25% of your total armour value. This bonus is doubled while wielding a defender and tripled while wielding a shield.",
                 "Your base health regeneration is increased by 25% of your maximum life points. This bonus is doubled while wielding a defender and tripled while wielding a shield."
+            ],
+            "notes": [
+
             ]
         },
         {
@@ -39,6 +48,9 @@
                 "On hit: Your attacks deal 15% of ability damage as bonus damage.",
                 "On hit: Your attacks have a 5% chance to Trigger an Inferno of Zamorak.",
                 "Inferno of Zamorak: Deals 100-200% ability damage to a single target."
+            ],
+            "notes": [
+
             ]
         },
         {
@@ -50,6 +62,9 @@
                 "Incoming damage is reduced by 10% of your armour value.",
                 "After Barkscales reduces damage 5 times, unleash a Grasp of Guthix at your attacker's location.",
                 "Grasp of Guthix: Deals poison damage equal to 80-120% of your ability damage in a 3x3 area."
+            ],
+            "notes": [
+
             ]
         },
         {
@@ -61,6 +76,9 @@
                 "Your basic attack's damage is increased by 40%.",
                 "Your basic attacks unleash a Light of Saradomin on your target. 9s cooldown.",
                 "Light of Saradomin: Deals damage equal to 40-60% of your ability damage, plus 250% of your armour value."
+            ],
+            "notes": [
+
             ]
         },
         {
@@ -71,6 +89,9 @@
             "effects": [
                 "On-attack: 5% chance to activate Avernic Rampage for 7.2s.",
                 "Avernic Rampage: Abilities and special attacks cost 0% adrenaline."
+            ],
+            "notes": [
+
             ]
         },
         {
@@ -81,6 +102,9 @@
             "effects": [
                 "Food is no longer consumed when eaten.",
                 "You no longer lose adrenaline when eating."
+            ],
+            "notes": [
+
             ]
         },
         {
@@ -94,6 +118,9 @@
                 "Preparation: On activation reduces the cooldown of all abilities by 12s.",
                 "Reflect: Reflects 100% of incoming damage + 10-15% of your armour value as additional damage. Reflected damage hits up to 8 additional targets within 3 tiles of you.",
                 "Revenge: The duration and cooldown of this ability is doubled. The maximum number of stacks is increased by 20."
+            ],
+            "notes": [
+
             ]
         },
         {
@@ -103,6 +130,9 @@
             "image": "/data/leagues/blessings/tier-4/demons-mark.png",
             "effects": [
                 "Your accuracy is always calculated using your target's weakness."
+            ],
+            "notes": [
+
             ]
         },
         {
@@ -113,7 +143,9 @@
             "effects": [
                 "Area of effect and multi-target attacks deal 30% more damage.",
                 "Area of effect abilities deal 5% more damage per tile the target occupies."
-        
+            ],
+            "notes": [
+
             ]
         },
         {
@@ -126,6 +158,9 @@
                 "Magic ability and special attack cooldowns are reduced by 30%.",
                 "Ranged ability and special attack cooldowns are reduced by 30%.",
                 "Necromancy ability and special attack cooldowns are reduced by 30%."
+            ],
+            "notes": [
+
             ]
         }
     ],
