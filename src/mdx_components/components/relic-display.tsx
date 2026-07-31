@@ -56,18 +56,29 @@ export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier }) => {
   const tierData = relicData.Relics.filter((data) => data.tier === tier);
   const tierPassives = relicData.Passives.find((data) => data.tier === tier)?.effects || [];
 
-  if (tierData.length === 0) {
+  if (tierData.length === 0 && tier !== 0) {
     return (
         <div>
             <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
             <div className="bg-card p-4">Relics have not been confirmed for this tier yet. Check back soon!</div>
         </div>
     )
+  } else if (tierData.length === 0 && tier === 0) { // Hides unsorted relics if there are none
+    return (
+        <></>
+    );
   }
 
   return (
     <div>
-        <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
+        {tier === 0 ? (
+            <>
+                <h2>Unsorted Relics</h2>
+                <span>These relics have not had their tiers announced yet.</span>
+            </>
+        ) : (
+            <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
+        )}
         <RelicList relics={tierData} passives={tierPassives} />
     </div>
   );
