@@ -109,7 +109,7 @@
                 },
                 {
                     "skill": "herblore",
-                    "grade": "C"
+                    "grade": "B"
                 }
             ]
         },
@@ -375,35 +375,35 @@
             "tier": 1,
             "effects": [
                 {
-                    "title": "Experience is scaled at 5x the normal rate.",
-                    "description": "Experience is scaled at 5x the normal rate."
+                    "title": "5x XP",
+                    "description": "Experience is gained at five times the normal rate."
                 },
                 {
-                    "title": "All Farming crops grow 5x faster.",
-                    "description": "All Farming crops grow 5x faster."
+                    "title": "5x Crop speed",
+                    "description": "All farming crops grow 5x faster."
                 },
                 {
-                    "title": "Run energy rapidly replenishes to 100%.",
-                    "description": "Run energy rapidly replenishes to 100%."
+                    "title": "Near-infinite run energy",
+                    "description": "Run energy rapidly replenishes to 100%"
                 },
                 {
-                    "title": "The Archaeology Guild Shop is fully available.",
-                    "description": "The Archaeology Guild Shop is fully available."
+                    "title": "Fully available Archaeology guild shop",
+                    "description": "The archaeology guild shop is fully available."
                 },
                 {
-                    "title": "Receive 5x as many chronotes when handing in artefacts and collections.",
-                    "description": "Receive 5x as many chronotes when handing in artefacts and collections."
+                    "title": "5x Chronotes",
+                    "description": "Receive 5x as many Chronotes when handing in Artefacts and Collections."
                 },
                 {
-                    "title": "Souls earned from Necromancy rituals are increased by 400%.",
-                    "description": "Souls earned from Necromancy rituals are increased by 400%."
+                    "title": "+400% Souls from Rituals",
+                    "description": "Souls earned from necromancy rituals are increased by 400%."
                 },
                 {
-                    "title": "Bosses respawn faster on all speed presets.",
+                    "title": "Faster boss spawns",
                     "description": "Bosses respawn faster on all speed presets."
                 },
                 {
-                    "title": "The Invention tutorial is auto-completed.",
+                    "title": "Invention tutorial auto-completed",
                     "description": "The Invention tutorial is auto-completed."
                 }
             ]
@@ -412,28 +412,24 @@
             "tier": 2,
             "effects": [
                 {
-                    "title": "Experience is scaled at 8x the normal rate.",
-                    "description": "Experience is scaled at 8x the normal rate."
+                    "title": "8x XP",
+                    "description": "Experience is gained at eight times the normal rate."
                 },
                 {
-                    "title": "The quantity of Thaler earned is increased by 10x.",
-                    "description": "The quantity of Thaler earned is increased by 10x."
+                    "title": "Rare items are 2x more common",
+                    "description": "Rare items are twice as common from all sources."
                 },
                 {
-                    "title": "Rare items are 2x more common.",
-                    "description": "Rare items are 2x more common."
+                    "title": "4x Slayer and Reaper points",
+                    "description": "Slayer points and Reaper points are multiplied 5x when completing tasks."
                 },
                 {
-                    "title": "Slayer points and Reaper points are multiplied by 5 when completing tasks.",
-                    "description": "Slayer points and Reaper points are multiplied by 5 when completing tasks."
+                    "title": "4x Reputation for Heart of Gielinor, Menaphos and Farming",
+                    "description": "Heart of Gielinor, Menaphos and Farming reputation gain is multiplied by 4x."
                 },
                 {
-                    "title": "Heart of Gielinor, Menaphos, and Farming reputation gains are multiplied by 4.",
-                    "description": "Heart of Gielinor, Menaphos, and Farming reputation gains are multiplied by 4."
-                },
-                {
-                    "title": "Archaeology lore pages are 30% more common.",
-                    "description": "Archaeology lore pages are 30% more common."
+                    "title": "+30% Chance for Archaeology pages",
+                    "description": "Archaeology lore pages are 30% more common"
                 }
             ]
         },
@@ -441,12 +437,12 @@
             "tier": 3,
             "effects": [
                 {
-                    "title": "Where applicable, skillcape perks—except Defence—are passive when you have level 99 or 120 in the skill.",
-                    "description": "Where applicable, skillcape perks—except Defence—are passive when you have level 99 or 120 in the skill."
+                    "title": "Skillcape perks are passive",
+                    "description": "Where applicable, skillcape perks, except Defence, are passive as long as you have level 99 or 120 in the skill."
                 },
                 {
-                    "title": "When defeating enemies, there is a 10% chance to obtain 8x common or uncommon Invention materials.",
-                    "description": "When defeating enemies, there is a 10% chance to obtain 8x common or uncommon Invention materials."
+                    "title": "Bonus invention materials from enemies",
+                    "description": "When defeating enemies, there's a 10% chance to obtain 8x common or uncommon invention materials."
                 }
             ]
         },
@@ -454,35 +450,35 @@
             "tier": 4,
             "effects": [
                 {
-                    "title": "Experience is scaled at 12x the normal rate.",
-                    "description": "Experience is scaled at 12x the normal rate."
+                    "title": "12x XP",
+                    "description": "Experience is gained at twelve times the normal rate."
                 },
                 {
-                    "title": "Rare items are 4x more common.",
+                    "title": "4x Rares drop chance",
                     "description": "Rare items are 4x more common."
                 },
                 {
-                    "title": "Unlock all items on the toolbelt.",
+                    "title": "Unlock all toolbelt items",
                     "description": "Unlock all items on the toolbelt."
                 },
                 {
-                    "title": "When defeating enemies, there is a 20% chance to obtain 12x common or uncommon Invention materials.",
-                    "description": "When defeating enemies, there is a 20% chance to obtain 12x common or uncommon Invention materials."
+                    "title": "More bonus invention materials from enemies",
+                    "description": "When defeating enemies there's a 20% chance to obtain 12x common or uncommon invention materials."
                 },
                 {
-                    "title": "Kill count is no longer required to enter God Wars Dungeon encounters.",
-                    "description": "Kill count is no longer required to enter God Wars Dungeon encounters."
+                    "title": "No KC for God Wars Dungeon",
+                    "description": "Killcount is no longer required to enter God Wars Dungeon encounters."
                 },
                 {
-                    "title": "Kill count is no longer required to enter Heart of Gielinor encounters.",
-                    "description": "Kill count is no longer required to enter Heart of Gielinor encounters."
+                    "title": "No KC for Heart of Gielinor",
+                    "description": "Killcount is no longer required to enter Heart of Gielinor encounters."
                 },
                 {
-                    "title": "Ascension keystones are no longer required to fight the Legiones.",
+                    "title": "No Keystones for Legiones",
                     "description": "Ascension keystones are no longer required to fight the Legiones."
                 },
                 {
-                    "title": "Keys to the Crossing are no longer required to fight the Magister.",
+                    "title": "No Keys for the Magister",
                     "description": "Keys to the Crossing are no longer required to fight the Magister."
                 }
             ]
@@ -491,23 +487,23 @@
             "tier": 5,
             "effects": [
                 {
-                    "title": "Rare items are 6x more common.",
+                    "title": "6x Rares drop chance",
                     "description": "Rare items are 6x more common."
                 },
                 {
-                    "title": "You can swap spellbooks and prayers at the League Sage.",
+                    "title": "Swap spellbooks and prayers",
                     "description": "You can swap spellbooks and prayers at the League Sage."
                 },
                 {
-                    "title": "When Death assigns a Soul Reaper task, you can choose which task you want.",
-                    "description": "When Death assigns a Soul Reaper task, you can choose which task you want."
+                    "title": "Unlock Reaper's Choice",
+                    "description": "When getting assigned a Soul Reaper task from Death, you will be able to choose which task you want."
                 },
                 {
-                    "title": "When defeating enemies, there is a 20% chance to obtain 20x common or uncommon Invention materials.",
-                    "description": "When defeating enemies, there is a 20% chance to obtain 20x common or uncommon Invention materials."
+                    "title": "Even more bonus invention materials from enemies",
+                    "description": "When defeating enemies, there's a 20% chance to obtain 20x common or uncommon invention materials."
                 },
                 {
-                    "title": "Augmented items gain experience 4x faster.",
+                    "title": "4x Item XP rate",
                     "description": "Augmented items gain experience 4x faster."
                 }
             ]
@@ -516,15 +512,15 @@
             "tier": 6,
             "effects": [
                 {
-                    "title": "Experience is scaled at 16x the normal rate.",
-                    "description": "Experience is scaled at 16x the normal rate."
+                    "title": "16x XP",
+                    "description": "Experience is gained at sixteen times the normal rate."
                 },
                 {
-                    "title": "Rare items are 8x more common.",
+                    "title": "8x Rares drop chance",
                     "description": "Rare items are 8x more common."
                 },
                 {
-                    "title": "All Seren spells and prayers are unlocked.",
+                    "title": "Seren spells and prayers unlocked",
                     "description": "All Seren spells and prayers are unlocked."
                 }
             ]
@@ -533,12 +529,12 @@
             "tier": 7,
             "effects": [
                 {
-                    "title": "Rare items are 10x more common.",
+                    "title": "10x Rares drop chance",
                     "description": "Rare items are 10x more common."
                 },
                 {
-                    "title": "The Advance Time spell can be cast without limit.",
-                    "description": "The Advance Time spell can be cast without limit."
+                    "title": "Unlimited Advanced Time",
+                    "description": "The 'Advanced Time' spell can be cast without limit."
                 }
             ]
         }
