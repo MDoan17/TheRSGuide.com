@@ -37,6 +37,24 @@ Here's a real example from the repository:
 </Cards>
 ```
 
+## UnderConstruction Component
+
+Wrap unfinished MDX in `UnderConstruction` to keep it hidden from visitors while
+allowing them to reveal the work in progress:
+
+```mdx
+<UnderConstruction>
+
+# Unfinished guide
+
+Continue writing the page normally inside the wrapper.
+
+</UnderConstruction>
+```
+
+The wrapped content is not rendered until the visitor selects **Click to see the
+progress**.
+
 ## Need More Components?
 
 If you need to use a component that isn't documented here, or if you're unsure how to use a component:

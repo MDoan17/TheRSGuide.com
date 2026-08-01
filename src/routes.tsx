@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
+import { Link, Route, Routes } from 'react-router'
 import { LoaderCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { PlayerDataProvider } from '@/features/player/player-data-context'

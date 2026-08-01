@@ -55,7 +55,7 @@ describe('Leagues region map', () => {
     expect(regionGuidePath('kandarin')).toBe('/leagues/map/kandarin')
     expect(regionGuidePath('wilderness')).toBe('/leagues/map/wilderness')
     expect(regionGuidePath('havenhythe')).toBe('/leagues/map/starting-regions')
-    expect(regionGuidePath('tirannwn')).toBe('/leagues/map/tiranwn')
+    expect(regionGuidePath('tirannwn')).toBe('/leagues/map/tirannwn')
     expect(regionGuidePath('unknown')).toBe('/leagues/map')
   })
 })

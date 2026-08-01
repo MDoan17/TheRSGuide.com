@@ -75,7 +75,7 @@ describe('site guide catalog', () => {
       'Kandarin',
       'Desert',
       'Morytania',
-      'Tiranwn',
+      'Tirannwn',
       'Wilderness',
     ])
     expect(osPlayers?.children.map((node) => node.doc.title)).toEqual([

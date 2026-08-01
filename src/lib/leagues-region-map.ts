@@ -47,7 +47,7 @@ export const leaguesRegionGuidePaths: Readonly<Record<string, string>> = {
   karamja: '/leagues/map/starting-regions',
   'fremennik-providence': '/leagues/map/fremennik',
   kandarin: '/leagues/map/kandarin',
-  tirannwn: '/leagues/map/tiranwn',
+  tirannwn: '/leagues/map/tirannwn',
   anachronia: '/leagues/map/anachronia',
   havenhythe: '/leagues/map/starting-regions',
 }

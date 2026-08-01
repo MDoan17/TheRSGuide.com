@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 import { usePlayerData } from "@/features/player/player-data-context";
 
 export const PlayerSearch: React.FC = () => {
