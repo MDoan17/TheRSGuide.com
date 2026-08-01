@@ -257,6 +257,12 @@ a { color: inherit; text-decoration: none; }
 .leagues-region-map-links a:hover svg { transform: translateX(.15rem); }
 .league-relic-name { min-width: 11rem; display: inline-flex; align-items: center; gap: .75rem; }
 .guide-prose .league-relic-icon { width: 4rem; flex: none; }
+.relic-passives { margin: 1rem 0 1.5rem; padding: 1.15rem 1.25rem; border: 1px solid var(--border); background: color-mix(in oklch, var(--card) 72%, transparent); }
+.relic-passives-header { margin-bottom: .8rem; }
+.relic-passives-title { margin: 0; font-family: var(--font-display); font-size: .95rem; font-weight: 700; line-height: 1.25; letter-spacing: .035em; text-transform: uppercase; }
+.guide-prose .relic-passives-list { margin: 0; padding-left: 1.15rem; display: flex; flex-direction: column; gap: .55rem; }
+.guide-prose .relic-passives-list li { margin: 0; padding-left: .2rem; color: var(--muted-foreground); font-size: .88rem; line-height: 1.55; }
+.guide-prose .relic-passives-list li::marker { color: var(--primary); }
 .toc { position: sticky; top: 6rem; align-self: start; height: calc(100svh - 8rem); margin-top: 6.8rem; }
 .toc-scroll { height: 100%; }
 .toc-content { position: relative; padding: 0 .75rem 0 1rem; border-left: 1px solid var(--border); }

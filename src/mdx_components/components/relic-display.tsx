@@ -26,7 +26,7 @@ interface PassiveEffect {
 
 interface RelicDisplayProps {
     tier: number;
-    points: number;
+    points?: number;
 }
 
 interface SkillSolves {
@@ -107,7 +107,7 @@ export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier, points }) => {
 
     const [selectedRelic, setSelectedRelic] = useState<RelicItem | null>(null);
 
-        if (tierData.length === 0 && tier === 0) { // Hides unsorted relics if there are none
+    if (tierData.length === 0 && tier === 0) { // Hides unsorted relics if there are none
         return (
                 <></>
         );
