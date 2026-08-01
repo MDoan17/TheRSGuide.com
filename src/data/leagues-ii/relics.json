@@ -1,0 +1,384 @@
+{
+    "Relics": [
+        {
+            "name": "Survivalist",
+            "tagline": "More resources. Better tools. Maximum efficiency from the very start.",
+            "tier": 1,
+            "image": "/data/leagues/relics/tier-1/survivalist.png",
+            "effects": [
+                "Grants the Survivalist's bag, which can store logs, fish and ores, as well as the Pickaxe of the faithful, Hatchet of devotion, and Harpoon of the pious which act as the highest tier tool for Mining, Woodcutting, and Fishing.",
+                "Resources are doubled while Fishing, Mining, Woodcutting or excavating Archaeology hotspots.",
+                "Rockertunities and critical swings deal double damage.",
+                "Rockertunities immediately award an ore.",
+                "Sprite focus gain is doubled.",
+                "Whenever you discover an artefact or lore page, you immediately gain 100% sprite focus.",
+                "Discoverted artefacts have a 50% chance to be immediately restored, and gain the XP for the restoration."
+            ],
+            "notes": [
+                "The Survivalist's bag can be used to store logs, fish, and ores. It can hold up to 150 of three different types.",
+                "Doubled resources do not award additional XP."
+            ],
+            "skillSolves": [
+                {
+                    "skill": "mining",
+                    "grade": "A"
+                },
+                {
+                    "skill": "woodcutting",
+                    "grade": "A"
+                },
+                {
+                    "skill": "fishing",
+                    "grade": "A"
+                },
+                {
+                    "skill": "archaeology",
+                    "grade": "B"
+                }
+            ]
+        },
+        {
+            "name": "Endless Harvest",
+            "tagline": "Spend less time banking and more time gathering.",
+            "tier": 1,
+            "image": "/data/leagues/relics/tier-1/endless-harvest.png",
+            "effects": [
+                "All resources gathered from Archaeology, Farming, Fishing, Mining, and Woodcutting are automatically sent to the bank or metal bank or archaeology storage.",
+                "When Fishing, Mining, or Woodcutting there's a 10% chance for the resource to be upgraded to the next tier.",
+                "You never fell standard trees, unless someone else fells it. If a fishing spot moves you will follow it and continue gathering. If a tree is felled you will wait for it to regrow before continuing to gather from it.",
+                "Mining stamina is always 100%.",
+                "Archaeology time sprites do not move and follow the player."
+            ],
+            "notes": [
+
+            ],
+            "skillSolves": [
+                {
+                    "skill": "mining",
+                    "grade": "A"
+                },
+                {
+                    "skill": "woodcutting",
+                    "grade": "A"
+                },
+                {
+                    "skill": "fishing",
+                    "grade": "A"
+                },
+                {
+                    "skill": "archaeology",
+                    "grade": "A"
+                },
+                {
+                    "skill": "farming",
+                    "grade": "C"
+                }
+            ]
+        },
+        {
+            "name": "Golden Touch",
+            "tagline": "Transforms Agility and Thieving into your own personal goldmine.",
+            "tier": 1,
+            "image": "/data/leagues/relics/tier-1/golden-touch.png",
+            "effects": [
+                "Grants the Goldenhawk Boots. Goldenhawk Boots grant agility XP periodically while running, skilling, or when using ultimate abilities.",
+                "Gain Golden feathers when gaining xp in Agility or Thieving. These can be alchemised for 50,000 coins, or offered for Prayer XP.",
+                "Upon completing an Agility course lap, receive 10,000 coins per Agility level. Agility XP for the Lap is 200%.",
+                "Prevents you from failing any Agility course obstacles and shortcuts.",
+                "Never fail when Thieving. All Thieving loot is noted. Thieving loot is tripled.",
+                "Stealing from stalls and chests does not cause them to deplete. You automatically keep thieving when stealing from stalls and chests.",
+                "Safes no longer have a cooldown after being cracked.",
+                "Receive triple loot from pickpocketing and stalls (except coins). Coins gained from theiving are multiplied by 100x.",
+                "When looting chests or safes you have a chance to obtain a bundle of herbs or potion ingredients sent to your bank."
+            ],
+            "notes": [
+
+            ],
+            "skillSolves": [
+                {
+                    "skill": "agility",
+                    "grade": "S"
+                },
+                {
+                    "skill": "thieving",
+                    "grade": "S"
+                },
+                {
+                    "skill": "prayer",
+                    "grade": "B"
+                },
+                {
+                    "skill": "herblore",
+                    "grade": "C"
+                }
+            ]
+        },
+        {
+            "name": "Crystal Grace",
+            "tagline": "Master the mystic arts.",
+            "tier": 0,
+            "image": "/data/leagues/relics/tier-0/crystal-grace.png",
+            "effects": [
+                "Grants you Seren's crystal tiara, which acts as an Omni-tiara for entering all Runecrafting altars and offers teleports to Runecrafting altars in your unlocked regions. The tiara also acts as a demonhorn necklace when worn or in the inventory.",
+                "Unlocks all magic spells.",
+                "When gaining XP in any skill: 5% chance to obtain a Crystal essence, which can be used in place of Pure or Impure essence.",
+                "Rune quantity output from essence, including Crystal essence, is increased by 3x.",
+                "Level-based rune multipliers are always the maximum regardless of your Runecrafting level.",
+                "Necromancy rituals act as having the following glyphs active whitout needing to draw them: Multiply/Attraction/Protection - 200%, Speed - 50% (Ritual speeds cap at 50%)",
+                "Light soruces and glyphs no longer require ingredients.",
+                "When burning a bone or offering it at an altar, you will gain additional XP equivalent to a Dragon bone."
+            ],
+            "notes": [
+                "The Crystal essence stacks and whilst skilling you will gain Crystal essence in drops of 5-15, when consuming it at altars you will use up to 200 in a single binding action."
+            ],
+            "skillSolves": [
+                {
+                    "skill": "runecrafting",
+                    "grade": "S"
+                },
+                {
+                    "skill": "necromancy",
+                    "grade": "S"
+                },
+                {
+                    "skill": "prayer",
+                    "grade": "C"
+                }
+            ]
+        },
+        {
+            "name": "Superheated",
+            "tagline": "Burn through everything you touch.",
+            "tier": 0,
+            "image": "/data/leagues/relics/tier-0/superheated.png",
+            "effects": [
+                "Burn logs automatically when Woodcutting, without required Firemaking level. (Toggleable)",
+                "Automatically cook fish caught with Fishing, without required Cooking level. (Toggleable)",
+                "Logs are added to bonfires at a rate of 0.6 seconds per log.",
+                "Lighting just one incense stick will provide max potency for 60 minutes.",
+                "Fire spirits are replaced with Blessed Fire Spirits and spawn more frequently. Blessed Fire Spirits can spawn while smithing.",
+                "When smelting ores, you always gain double the bars. There is a 3% chance to gain a bonus 50 bars.",
+                "When smelting ores, smelt bars u pto 60 times, instead of 28.",
+                "Completing in-progress smithing items will award the invention materials the item would've yielded if disassembled.",
+                "Always have max heat when smithing. Triple base-progress per strike when smithing.",
+                "Completing ceremonial sword plans gives 5x Smithing XP and 50 bars of the metal you were using. XP for burial sets is increased by 3x."
+            ],
+            "notes": [
+                "The Blessed Fire Spirits can give your Stone Spirits, Uncut gems (up to Dragonstone), Charms, Clues, Coins (10k-100) or empty Crystal/Potion Flasks."
+            ],
+            "skillSolves": [
+                {
+                    "skill": "firemaking",
+                    "grade": "A"
+                },
+                {
+                    "skill": "smithing",
+                    "grade": "A"
+                },
+                {
+                    "skill": "cooking",
+                    "grade": "A"
+                }
+            ]
+        },
+        {
+            "name": "Divine Druid",
+            "tagline": "Become one with nature.",
+            "tier": 0,
+            "image": "/data/leagues/relics/tier-0/divine-druid.png",
+            "effects": [
+                "Grants Thera's summoning pouch, a pouch that stores grimy herbs and charms. Acts as infinite spirit shards and summoning pouches.",
+                "Cleaning grimy herbs turns them directly into unfinished potions. (Toggleable)",
+                "Grimy herbs/charms can be found frequently when Mining, Fishing, Woodcutting, siphoning or excavating Archaeology hotspots.",
+                "Grimy herbs are all cleaned at once.",
+                "50% chance to create an extra pouch per pouch created, sent directly to the bank.",
+                "All charm drops from defeating enemies are increased by 5x.",
+                "Summoning familiars which boost skills now boost them by 3x the amount.",
+                "Gain a 75% chance to save some ingredients when creating potions.",
+                "When crafting pouches, you will also make 10 of the respective familiar's scroll. Sent directly to the bank, no extra XP is awarded.",
+                "Always gather enriched memories.",
+                "Converting energies and memories together only requires half as many energies, rounded down.",
+                "Converting memories has a 10% chance to give a random porter or divine charge. Sent directly to the bank.",
+                "Memory strands are gained at 10x rate.",
+                "Chronicle fragements give 2x XP (Before League XP multipliers).",
+                "Crafting items from divine energies only requires half as many energies, rounded down.",
+                "Unlock all Meilyr potion recipes."
+            ],
+            "notes": [
+
+            ],
+            "skillSolves": [
+                {
+                    "skill": "herblore",
+                    "grade": "A"
+                },
+                {
+                    "skill": "summoning",
+                    "grade": "A"
+                },
+                {
+                    "skill": "divination",
+                    "grade": "B"
+                }
+            ]
+        },
+        {
+            "name": "Transmutation",
+            "tagline": "Rewrite the rules of resource gathering.",
+            "tier": 0,
+            "image": "/data/leagues/relics/tier-0/transmutation.png",
+            "effects": [
+                "Grants the Deities' transmuter.",
+                "Alchemical spells transmute items. (Toggleable)",
+                "Transmutation spells bank noted products. (Toggleable)",
+                "Low alchemy and High alchemy spells transform into 2 new spells:",
+                "Divine Convergence: Downgrades up to 10 of a resource into a lower tier.",
+                "Divine Divergence: Upgrades up to 10 of a resource into a higher tier.",
+                "The Deities' transmuter must be in the inventory to cast these spells.",
+                "Using items on the Deities' transmuter will display what they can turn into.",
+                "Both spells have no level requirement. The spell gives 10 Magic XP for each item transmuted. (Before League XP multipliers)",
+                "When cast upon a stack of noted items, these spells will automatically re-cast over time as long as the items are available in the same slot in your inventory."
+            ],
+            "notes": [
+                "You are able to transmute the following categories of items: Ashes, Bones, Fish, Logs, Ores, Clay and precious ores, Leather, Seeds (Fruit tree, tree, cactus, herb, flower, allotment, mushroom, bush and hops), Compost, Divine energy, Runes, Necromancy runes, Necromancy ink, Ritual candles, Necroplasm and Mementos."
+            ],
+            "skillSolves": [
+                {
+                    "skill": "crafting",
+                    "grade": "B"
+                },
+                {
+                    "skill": "cooking",
+                    "grade": "C"
+                },
+                {
+                    "skill": "divination",
+                    "grade": "C"
+                },
+                {
+                    "skill": "farming",
+                    "grade": "A"
+                },
+                {
+                    "skill": "firemaking",
+                    "grade": "B"
+                },
+                {
+                    "skill": "fletching",
+                    "grade": "A"
+                },
+                {
+                    "skill": "magic",
+                    "grade": "A"
+                },
+                {
+                    "skill": "necromancy",
+                    "grade": "A"
+                },
+                {
+                    "skill": "prayer",
+                    "grade": "B"
+                },
+                {
+                    "skill": "smithing",
+                    "grade": "B"
+                }
+            ]
+        },
+        {
+            "name": "Assassin's Insight",
+            "tagline": "Slay monsters with ease and efficiency.",
+            "tier": 0,
+            "image": "/data/leagues/relics/tier-0/assassins-insight.png",
+            "effects": [
+                "Grants the Skull of Slaying, which allows you to teleport to any slayer master and a range of slayer dungeons and monsters.",
+                "When assigned a slayer assignment, yo uwill be able to choose between two assignments.",
+                "Choose between minimum or maximum amounts when requesting a new slayer assignment.",
+                "Monsters can be added to the prefer and block lists for free.",
+                "You have the effects of the corrupted slayer mask without needing to wear it.",
+                "Elite slayer monsters are 5x more likely to spawn.",
+                "Elite slayer monsters gives 5x slayer xp when defeated (before League XP multipliers).",
+                "Monsters are captured into ushabti's 100% of the time."
+            ],
+            "notes": [
+
+            ],
+            "skillSolves": [
+                {
+                    "skill": "slayer",
+                    "grade": "A"
+                }   
+            ]
+        },
+        {
+            "name": "Nature's Netowrk",
+            "tagline": "Experience the world as fairies do.",
+            "tier": 0,
+            "image": "/data/leagues/relics/tier-0/natures-network.png",
+            "effects": [
+                "Grants a Fairy mushroom, which allows you to teleport to any fairy ring, spirit tree, or farming patch.",
+                "Patches are harvested instantly and produce is automatically noted.",
+                "Seeds planted instantly grow to full.",
+                "All patches are always treated with ultracompost.",
+                "25% chance to save planted seeds when sowing.",
+                "Herb seeds are planted at max amount, with only the base amount of seeds used."
+            ],
+            "notes": [
+
+            ],
+            "skillSolves": [
+                {
+                    "skill": "farming",
+                    "grade": "A"
+                }   
+            ]
+        },
+        {
+            "name": "Voidwalker",
+            "tagline": "Traverse the world and find items left to the void.",
+            "tier": 0,
+            "image": "/data/leagues/relics/tier-0/voidwalker.png",
+            "effects": [
+                "Grants the Voidwalker, which allows you to teleport to any Slayer dungeon, Slayer master, or Slayer monster.",
+                "Slayer monsters are 5x more likely to spawn.",
+                "Slayer monsters give 5x slayer xp when defeated (before League XP multipliers).",
+                "Monsters are captured into ushabti's 100% of the time."
+            ],
+            "notes": [
+                "Grants an Abyssal Conduit, a powerful item that provides unlimited teleports from the following jewelry pieces:",
+                "The Amulet of glory, Combat bracelet, Delver's anklet, Dig site pendant, Enlightened amulet, Ferocious ring, Games necklace, Ring of dueling, Ring of respawn, Ring of slaying, Ring of wealth, Skills necklace, and Traveller's necklace.",
+                "Occasionally gain Void shards. Void shards can be opened to gain one clue scroll and a piece of the following loot:",
+                "Summoning pouches, Ancient summoning pouches, Divine energy, Divine charge, Invention materials, Dragon equipment, Goldenhawk feathers, Divine geodes, Blessed fire spirits, or crystal essence."
+            ],
+            "skillSolves": [
+                {
+                    "skill": "divination",
+                    "grade": "C"
+                },
+                {
+                    "skill": "invention",
+                    "grade": "C"
+                },
+                {
+                    "skill": "prayer",
+                    "grade": "C"
+                },
+                {
+                    "skill": "runecrafting",
+                    "grade": "C"
+                }
+            ]
+        }
+    ],
+    "Passives": [
+        {
+            "tier": 1,
+            "effects": [
+                {
+                    "title": "5x XP",
+                    "description": "Experience is gained at five times the normal rate."
+                }
+            ]
+        }
+    ]
+}

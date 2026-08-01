@@ -1,11 +1,12 @@
 import { lazy, type ComponentProps, type ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { ExternalLink } from 'lucide-react'
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 import { SplitContent, SplitItem, Center } from './components/split-content'
 import { YouTubeEmbed } from './components/youtube-embed'
 import { Steps, Step } from './components/steps'
+import { UnderConstruction } from './components/under-construction'
 
 const InteractiveLegend = lazy(() => import('./components/interactive-legend').then((module) => ({ default: module.InteractiveLegend })))
 const PlayerSearch = lazy(() => import('./components/player-search').then((module) => ({ default: module.PlayerSearch })))
@@ -18,6 +19,8 @@ const GearRecommendations = lazy(() => import('./components/gear-recommendations
 const RecurringActivitiesTool = lazy(() => import('./components/recurring-activities-tool').then((module) => ({ default: module.RecurringActivitiesTool })))
 const EfficiencyGuideTool = lazy(() => import('./components/efficiency-guide-tool').then((module) => ({ default: module.EfficiencyGuideTool })))
 const LeaguesRegionMap = lazy(() => import('./components/leagues-region-map'))
+const RelicDisplay = lazy(() => import('./components/relic-display').then((module) => ({ default: module.RelicDisplay })))
+const BlessingDisplay = lazy(() => import('./components/blessing-display').then((module) => ({ default: module.BlessingDisplay })))
 
 function SmartLink({ href = '', children, ...props }: ComponentProps<'a'>) {
   if (href.startsWith('/')) return <Link to={href} {...props}>{children}</Link>
@@ -49,6 +52,7 @@ export const mdxComponents = {
   YouTubeEmbed,
   Steps,
   Step,
+  UnderConstruction,
   InteractiveLegend,
   PlayerSearch,
   QuestRequirements,
@@ -60,4 +64,6 @@ export const mdxComponents = {
   RecurringActivitiesTool,
   EfficiencyGuideTool,
   LeaguesRegionMap,
+  RelicDisplay,
+  BlessingDisplay,
 }

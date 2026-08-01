@@ -1,5 +1,5 @@
 import { Fragment, lazy, Suspense, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { ArrowLeft, ArrowRight, BookOpen, LoaderCircle, UserRound } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
