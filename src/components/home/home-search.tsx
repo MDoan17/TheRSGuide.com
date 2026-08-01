@@ -58,6 +58,7 @@ function HomeSearch({
         if (event.key === "Escape") {
           event.preventDefault()
           setResultsOpen(false)
+          inputRef.current?.blur()
         }
       }}
     >
@@ -71,9 +72,9 @@ function HomeSearch({
         onFocus={() => {
           if (hasQuery) setResultsOpen(true)
         }}
-        className="h-full px-4 pr-4 pl-[3.75rem] text-left text-[1.02rem] leading-none focus:placeholder:text-transparent max-[521px]:px-0 max-[521px]:text-center"
+        className="h-full pr-4 pl-[3.75rem]! text-left text-[1.02rem] leading-none focus:placeholder:text-transparent max-[521px]:px-0! max-[521px]:text-center"
         wrapperClassName="p-0"
-        inputGroupClassName="relative h-[3.125rem]! min-h-[3.125rem]! rounded-(--radius)! border-0 bg-transparent shadow-none! max-[521px]:h-[2.8125rem]! max-[521px]:min-h-[2.8125rem]!"
+        inputGroupClassName="relative h-[3.125rem]! min-h-[3.125rem]! rounded-(--radius)! border-0 bg-transparent shadow-none! *:data-[slot=input-group-addon]:pl-0! max-[521px]:h-[2.8125rem]! max-[521px]:min-h-[2.8125rem]!"
         addonClassName="absolute inset-y-0 left-0 w-[3.75rem] justify-center p-0!"
         placeholder={placeholder}
         aria-label={ariaLabel}
@@ -133,7 +134,7 @@ function HomeSearch({
                 />
               ) : (
                 <>
-                  <strong>No guide found for â€œ{query.trim()}â€</strong>
+                  <strong>No guide found for “{query.trim()}”</strong>
                   <span>
                     {playerLookup
                       ? "Try another topic or a RuneScape username."
