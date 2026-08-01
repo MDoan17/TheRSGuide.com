@@ -41,7 +41,7 @@ const RelicDetailView: React.FC<{ relic: RelicItem }> = ({ relic }) => {
                     <img src={relic.image} alt={relic.name} className="w-32 h-32 object-contain" />
                     <div className="flex-1">
                         <div className="flex flex-wrap gap-2 mb-2">
-                            {relic.skillSolves.map((solve, i) => (
+                            {relic.skillSolves.map((solve) => (
                                 <div key={`${relic.name}-${solve.skill}`} className="flex items-center gap-2 bg-secondary py-1 px-2">
                                     <img src={`/skills/${solve.skill}.png`} alt={solve.skill} className="w-6 h-6 object-contain" />
                                     <span className="font-bold">{solve.grade}</span>
