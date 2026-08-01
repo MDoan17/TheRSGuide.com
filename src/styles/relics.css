@@ -11,7 +11,7 @@
          align-items: center;
      }
 
-     .relics-container div {
+     .relics-container > div {
          width: 100%;
      }
 }

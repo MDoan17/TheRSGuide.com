@@ -38,11 +38,11 @@ const RelicDetailView: React.FC<{ relic: RelicItem }> = ({ relic }) => {
             </DrawerHeader>
             <div className="p-4 flex flex-col gap-4 h-full">
                 <div className="flex flex-col gap-4 items-center">
-                    <img src={relic.image} alt={relic.name} className="w-32 h-32 object-contain rounded" />
+                    <img src={relic.image} alt={relic.name} className="w-32 h-32 object-contain" />
                     <div className="flex-1">
                         <div className="flex flex-wrap gap-2 mb-2">
                             {relic.skillSolves.map((solve, i) => (
-                                <div key={i} className="flex items-center gap-2 bg-secondary py-1 px-2 rounded">
+                                <div key={`${relic.name}-${solve.skill}`} className="flex items-center gap-2 bg-secondary py-1 px-2">
                                     <img src={`/skills/${solve.skill}.png`} alt={solve.skill} className="w-6 h-6 object-contain" />
                                     <span className="font-bold">{solve.grade}</span>
                                 </div>
@@ -87,7 +87,7 @@ const RelicCards: React.FC<{ relics: RelicItem[]; onViewRelic: (r: RelicItem) =>
                         <span className="font-display text-xl mt-4 mb-2">{relic.name}</span>
                         <p className="mb-2 text-center text-secondary-foreground">{relic.tagline}</p>
                     </div>
-                    <button onClick={() => onViewRelic(relic)} className="text-card-foreground text-sm border border-primary rounded-md px-4 py-2 hover:bg-accent">View Details</button>
+                    <button type="button" onClick={() => onViewRelic(relic)} className="text-card-foreground text-sm border border-primary rounded-md px-4 py-2 hover:bg-accent">View Details</button>
                 </div>
             ))}
         </div>
@@ -102,17 +102,8 @@ function RelicDisplay({ tier, points }: RelicDisplayProps) {
 
     const [selectedRelic, setSelectedRelic] = useState<RelicItem | null>(null);
 
-    if (relics.length === 0 && tier !== 0) {
-        return (
-                <div>
-                        <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
-                        <div className="bg-card p-4">Relics have not been confirmed for this tier yet. Check back soon!</div>
-                </div>
-        )
-    } else if (relics.length === 0 && tier === 0) { // Hides unsorted relics if there are none
-        return (
-                <></>
-        );
+    if (relics.length === 0 && tier === 0) { // Hides unsorted relics if there are none
+        return null;
     }
 
       return (
@@ -125,7 +116,9 @@ function RelicDisplay({ tier, points }: RelicDisplayProps) {
             ) : (
                 <div className="flex items-baseline gap-8 mb-4">
                     <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
-                    <span className="text-secondary-foreground">{points} points</span>
+                    { points !== undefined && points > 0 && (
+                        <span className="text-secondary-foreground">{points} points</span>
+                    )}
                 </div>
             )}
 
@@ -136,11 +129,11 @@ function RelicDisplay({ tier, points }: RelicDisplayProps) {
                 </div>
             )}
             
-            {relics.length === 0 && tier !== 0 && (
+            { relics.length === 0 && tier !== 0 ? (
                 <div>
                     <div className="bg-card p-4">Relics have not been confirmed for this tier yet. Check back soon!</div>
                 </div>
-            ) || (
+            ) : (
                 <RelicCards relics={relics} onViewRelic={(r) => setSelectedRelic(r)} />
             )}
 

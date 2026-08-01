@@ -14,12 +14,12 @@ function LeaguesPassiveList({ passives }: LeaguesPassiveListProps) {
 
   return (
     <div className="flex flex-wrap gap-2">
-        {passives.map((effect, effectIndex) => (
-            <Popover key={effectIndex}>
-                <PopoverTrigger>
-                    <div className="bg-card p-2 cursor-pointer hover:bg-accent/50 text-xs">
+        {passives.map((effect) => (
+            <Popover key={`${effect.title}-${effect.description}`}>
+                <PopoverTrigger asChild>
+                    <button type="button" className="bg-card p-2 text-xs hover:bg-accent/50">
                         <strong>{effect.title}</strong>
-                    </div>
+                    </button>
                 </PopoverTrigger>
                 <PopoverContent>
                     <p>{effect.description}</p>
