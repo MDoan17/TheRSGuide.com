@@ -8,6 +8,7 @@ import '@/styles/relics.css';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from '@/components/ui/drawer';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface RelicItem {
   name: string;
@@ -100,6 +101,25 @@ const RelicCards: React.FC<{ relics: RelicItem[]; onViewRelic: (r: RelicItem) =>
   );
 };
 
+const PassiveEffects: React.FC<{ effects: PassiveEffect[] }> = ({ effects }) => {
+    return (
+        <div className="flex flex-wrap gap-2">
+            {effects.map((effect, effectIndex) => (
+                <Popover key={effectIndex}>
+                    <PopoverTrigger>
+                        <div className="bg-card p-2 cursor-pointer hover:bg-accent/50 text-xs">
+                            <strong>{effect.title}</strong>
+                        </div>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <p>{effect.description}</p>
+                    </PopoverContent>
+                </Popover>
+            ))}
+        </div>
+    );
+};
+
 export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier, points }) => {
 
     const tierData = relicData.Relics.filter((data) => data.tier === tier);
@@ -137,27 +157,7 @@ export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier, points }) => {
             { tierPassives.length > 0 && (
                 <div className="mb-2">
                     <span className="text-lg font-semibold mb-2">Passives</span>
-                    <div className="flex flex-wrap gap-2">
-                        {tierPassives.map((passive, passiveIndex) => (
-                            <Tooltip key={passiveIndex}>
-                                <TooltipTrigger>
-                                    <div className="bg-card p-2 cursor-pointer hover:bg-accent/50 text-xs">
-                                        <strong>{passive.title}</strong>
-                                    </div>
-                                </TooltipTrigger>
-                                <TooltipContent sideOffset={2}>
-                                    <p>{passive.description}</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        ))}
-                    </div>
-                    {/*
-                    <ul className="bulleted-list">
-                    {tierPassives.map((passive, passiveIndex) => (
-                        <li key={passiveIndex}><strong>{passive.title}</strong></li>
-                    ))}
-                    </ul>
-                     */}
+                    <PassiveEffects effects={tierPassives} />
                 </div>
             )}
             
@@ -169,7 +169,7 @@ export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier, points }) => {
                 <RelicCards relics={tierData} onViewRelic={(r) => setSelectedRelic(r)} />
             )}
 
-            <Drawer swipeDirection="right" open={Boolean(selectedRelic)} onOpenChange={(open) => { if (!open) setSelectedRelic(null) }}>
+            <Drawer direction="right" open={Boolean(selectedRelic)} onOpenChange={(open) => { if (!open) setSelectedRelic(null) }}>
                 <DrawerContent>
                     {selectedRelic && (
                         <RelicDetailView relic={selectedRelic} />
