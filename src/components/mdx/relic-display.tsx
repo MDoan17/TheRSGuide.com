@@ -97,19 +97,19 @@ const RelicCards: React.FC<{ relics: RelicItem[]; onViewRelic: (r: RelicItem) =>
 
 function RelicDisplay({ tier, points }: RelicDisplayProps) {
 
-    const tierData = relicData.Relics.filter((data) => data.tier === tier);
-    const tierPassives = relicData.Passives.find((data) => data.tier === tier)?.effects || [] as LeaguesPassive[];
+    const relics = relicData.Relics.filter((relic) => relic.tier === tier) as RelicItem[]
+    const passives = (relicData.Passives.find((entry) => entry.tier === tier)?.effects ?? []) as LeaguesPassive[]
 
     const [selectedRelic, setSelectedRelic] = useState<RelicItem | null>(null);
 
-    if (tierData.length === 0 && tier !== 0) {
+    if (relics.length === 0 && tier !== 0) {
         return (
                 <div>
                         <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
                         <div className="bg-card p-4">Relics have not been confirmed for this tier yet. Check back soon!</div>
                 </div>
         )
-    } else if (tierData.length === 0 && tier === 0) { // Hides unsorted relics if there are none
+    } else if (relics.length === 0 && tier === 0) { // Hides unsorted relics if there are none
         return (
                 <></>
         );
@@ -129,19 +129,19 @@ function RelicDisplay({ tier, points }: RelicDisplayProps) {
                 </div>
             )}
 
-            { tierPassives.length > 0 && (
+            { passives.length > 0 && (
                 <div className="mb-2">
                     <span className="text-lg font-semibold mb-2">Passives</span>
-                    <LeaguesPassiveList passives={tierPassives} />
+                    <LeaguesPassiveList passives={passives} />
                 </div>
             )}
             
-            {tierData.length === 0 && tier !== 0 && (
+            {relics.length === 0 && tier !== 0 && (
                 <div>
                     <div className="bg-card p-4">Relics have not been confirmed for this tier yet. Check back soon!</div>
                 </div>
             ) || (
-                <RelicCards relics={tierData} onViewRelic={(r) => setSelectedRelic(r)} />
+                <RelicCards relics={relics} onViewRelic={(r) => setSelectedRelic(r)} />
             )}
 
             <Drawer direction="right" open={Boolean(selectedRelic)} onOpenChange={(open) => { if (!open) setSelectedRelic(null) }}>
