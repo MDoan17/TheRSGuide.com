@@ -119,25 +119,6 @@ const PassiveEffects: React.FC<{ effects: PassiveEffect[] }> = ({ effects }) => 
     );
 };
 
-const PassiveEffects: React.FC<{ effects: PassiveEffect[] }> = ({ effects }) => {
-    return (
-        <div className="flex flex-wrap gap-2">
-            {effects.map((effect, effectIndex) => (
-                <Popover key={effectIndex}>
-                    <PopoverTrigger>
-                        <div className="bg-card p-2 cursor-pointer hover:bg-accent/50 text-xs">
-                            <strong>{effect.title}</strong>
-                        </div>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                        <p>{effect.description}</p>
-                    </PopoverContent>
-                </Popover>
-            ))}
-        </div>
-    );
-};
-
 export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier, points }) => {
 
     const tierData = relicData.Relics.filter((data) => data.tier === tier);
