@@ -8,7 +8,6 @@ import '@/styles/relics.css';
 
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from '@/components/ui/drawer';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface RelicItem {
   name: string;
@@ -96,7 +95,7 @@ const RelicCards: React.FC<{ relics: RelicItem[]; onViewRelic: (r: RelicItem) =>
   );
 };
 
-export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier, points }) => {
+function RelicDisplay({ tier, points }: RelicDisplayProps) {
 
     const tierData = relicData.Relics.filter((data) => data.tier === tier);
     const tierPassives = relicData.Passives.find((data) => data.tier === tier)?.effects || [] as LeaguesPassive[];
@@ -155,3 +154,6 @@ export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier, points }) => {
         </div>
       );
 };
+
+export { RelicDisplay };
+export type { RelicDisplayProps };
