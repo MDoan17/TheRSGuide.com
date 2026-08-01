@@ -16,14 +16,15 @@ interface BlessingItem {
 
 interface PassiveEffect {
     title: string;
+    description: string;
 }
 
 interface BlessingDisplayProps {
     tier: number;
-    tasks?: number;
+    tasks: number;
 }
 
-const BlessingList: React.FC<{ blessings: BlessingItem[] }> = ({ blessings }) => {
+const BlessingList: React.FC<{ blessings: BlessingItem[]; passives: PassiveEffect[] }> = ({ blessings, passives }) => {
   return (
     <div className="table-scroll">
         <table>
@@ -47,27 +48,16 @@ const BlessingList: React.FC<{ blessings: BlessingItem[] }> = ({ blessings }) =>
                         </td>
                     </tr>
                 ))}
+            {passives.map((passive, passiveIndex) => (
+                <tr key={passiveIndex}>
+                    <td><strong>Passive: {passive.title}</strong></td>
+                    <td>{passive.description}</td>
+                </tr>
+            ))}
             </tbody>
         </table>
         </div>
   );
-};
-
-const BlessingPassives: React.FC<{ effects: PassiveEffect[]; tier: number }> = ({ effects, tier }) => {
-    if (effects.length === 0) return null;
-
-    return (
-        <section className="relic-passives" aria-labelledby={`blessing-tier-${tier}-passives`}>
-            <div className="relic-passives-header">
-                <div className="relic-passives-title" id={`blessing-tier-${tier}-passives`}>Tier {tier} Passives</div>
-            </div>
-            <ul className="relic-passives-list">
-                {effects.map((passive) => (
-                    <li key={passive.title}>{passive.title}</li>
-                ))}
-            </ul>
-        </section>
-    );
 };
 
 export const BlessingDisplay: React.FC<BlessingDisplayProps> = ({ tier, tasks }) => {
@@ -75,7 +65,14 @@ export const BlessingDisplay: React.FC<BlessingDisplayProps> = ({ tier, tasks })
   const tierData = blessingData.Blessings.filter((data) => data.tier === tier);
   const tierPassives = blessingData.Passives.find((data) => data.tier === tier)?.effects || [];
 
-  if (tierData.length === 0 && tier === 0) { // Hides unsorted blessings if there are none
+  if (tierData.length === 0 && tier !== 0) {
+    return (
+        <div>
+            <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
+            <div className="bg-card p-4">Blessings have not been confirmed for this tier yet. Check back soon!</div>
+        </div>
+    )
+  } else if (tierData.length === 0 && tier === 0) { // Hides unsorted blessings if there are none
     return (
         <></>
     );
@@ -91,15 +88,10 @@ export const BlessingDisplay: React.FC<BlessingDisplayProps> = ({ tier, tasks })
         ) : (
             <div className="flex items-baseline gap-8 mb-4">
                 <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
-                {tasks !== undefined && tasks > 0 && <span className="text-secondary-foreground">{tasks} Blessing tasks</span>}
+                {tasks > 0 && <span className="text-secondary-foreground">{tasks} Blessing tasks</span>}
             </div>
         )}
-        {tierData.length === 0 ? (
-            <div className="bg-card p-4">Blessings have not been confirmed for this tier yet. Check back soon!</div>
-        ) : (
-            <BlessingList blessings={tierData} />
-        )}
-        <BlessingPassives effects={tierPassives} tier={tier} />
+        <BlessingList blessings={tierData} passives={tierPassives} />
     </div>
   );
 };
