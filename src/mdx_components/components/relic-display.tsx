@@ -22,13 +22,32 @@ interface PassiveEffect {
 
 interface RelicDisplayProps {
     tier: number;
-    points: number;
+    points?: number;
 }
 
 interface SkillSolves {
     skill: string;
     grade: string;
 }
+
+const PassiveEffects: React.FC<{ effects: PassiveEffect[]; tier: number }> = ({ effects, tier }) => {
+    if (effects.length === 0) return null;
+
+    return (
+        <section className="relic-passives" aria-labelledby={`tier-${tier}-passives`}>
+            <div className="relic-passives-header">
+                <div className="relic-passives-title" id={`tier-${tier}-passives`}>Tier {tier} Passives</div>
+            </div>
+            <ul className="relic-passives-list">
+                {effects.map((passive) => (
+                    <li key={passive.title}>
+                        {passive.description}
+                    </li>
+                ))}
+            </ul>
+        </section>
+    );
+};
 
 const RelicDetailView: React.FC<{ relic: RelicItem; onBack: () => void }> = ({ relic, onBack }) => {
     return (
@@ -98,14 +117,7 @@ export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier, points }) => {
 
     const [selectedRelic, setSelectedRelic] = useState<RelicItem | null>(null);
 
-    if (tierData.length === 0 && tier !== 0) {
-        return (
-                <div>
-                        <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
-                        <div className="bg-card p-4">Relics have not been confirmed for this tier yet. Check back soon!</div>
-                </div>
-        )
-    } else if (tierData.length === 0 && tier === 0) { // Hides unsorted relics if there are none
+    if (tierData.length === 0 && tier === 0) { // Hides unsorted relics if there are none
         return (
                 <></>
         );
@@ -121,26 +133,21 @@ export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier, points }) => {
             ) : (
                 <div className="flex items-baseline gap-8 mb-4">
                     <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
-                    <span className="text-secondary-foreground">{points} points</span>
+                    {points !== undefined && (
+                        <span className="text-secondary-foreground">{points} points</span>
+                    )}
                 </div>
             )}
 
-            { tierPassives.length > 0 && (
-                <div className="mb-2">
-                    <span className="text-lg font-semibold mb-2">Passives</span>
-                    <ul className="bulleted-list">
-                        {tierPassives.map((passive, passiveIndex) => (
-                            <li key={passiveIndex}><strong>{passive.title}:</strong> {passive.description}</li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-
-            {selectedRelic ? (
+            {tierData.length === 0 ? (
+                <div className="bg-card p-4">Relics have not been confirmed for this tier yet. Check back soon!</div>
+            ) : selectedRelic ? (
                 <RelicDetailView relic={selectedRelic} onBack={() => setSelectedRelic(null)} />
             ) : (
                 <RelicCards relics={tierData} onViewRelic={(r) => setSelectedRelic(r)} />
             )}
+
+            <PassiveEffects effects={tierPassives} tier={tier} />
         </div>
       );
 };

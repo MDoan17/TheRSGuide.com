@@ -376,7 +376,169 @@
             "effects": [
                 {
                     "title": "5x XP",
-                    "description": "Experience is gained at five times the normal rate."
+                    "description": "Experience is scaled at 5x the normal rate."
+                },
+                {
+                    "title": "Faster crop growth",
+                    "description": "All Farming crops grow 5x faster."
+                },
+                {
+                    "title": "Rapid run energy regeneration",
+                    "description": "Run energy rapidly replenishes to 100%."
+                },
+                {
+                    "title": "Archaeology Guild Shop",
+                    "description": "The Archaeology Guild Shop is fully available."
+                },
+                {
+                    "title": "5x chronotes",
+                    "description": "Receive 5x as many chronotes when handing in artefacts and collections."
+                },
+                {
+                    "title": "More ritual souls",
+                    "description": "Souls earned from Necromancy rituals are increased by 400%."
+                },
+                {
+                    "title": "Faster boss respawns",
+                    "description": "Bosses respawn faster on all speed presets."
+                },
+                {
+                    "title": "Invention tutorial",
+                    "description": "The Invention tutorial is auto-completed."
+                }
+            ]
+        },
+        {
+            "tier": 2,
+            "effects": [
+                {
+                    "title": "8x XP",
+                    "description": "Experience is scaled at 8x the normal rate."
+                },
+                {
+                    "title": "10x Thaler",
+                    "description": "The quantity of Thaler earned is increased by 10x."
+                },
+                {
+                    "title": "Improved rare-item drops",
+                    "description": "Rare items are 2x more common."
+                },
+                {
+                    "title": "5x Slayer and Reaper points",
+                    "description": "Slayer points and Reaper points are multiplied by 5 when completing tasks."
+                },
+                {
+                    "title": "4x reputation",
+                    "description": "Heart of Gielinor, Menaphos, and Farming reputation gains are multiplied by 4."
+                },
+                {
+                    "title": "Archaeology lore pages",
+                    "description": "Archaeology lore pages are 30% more common."
+                }
+            ]
+        },
+        {
+            "tier": 3,
+            "effects": [
+                {
+                    "title": "Passive skillcape perks",
+                    "description": "Where applicable, skillcape perks—except Defence—are passive when you have level 99 or 120 in the skill."
+                },
+                {
+                    "title": "Invention materials",
+                    "description": "When defeating enemies, there is a 10% chance to obtain 8x common or uncommon Invention materials."
+                }
+            ]
+        },
+        {
+            "tier": 4,
+            "effects": [
+                {
+                    "title": "12x XP",
+                    "description": "Experience is scaled at 12x the normal rate."
+                },
+                {
+                    "title": "Improved rare-item drops",
+                    "description": "Rare items are 4x more common."
+                },
+                {
+                    "title": "Full toolbelt",
+                    "description": "Unlock all items on the toolbelt."
+                },
+                {
+                    "title": "Invention materials",
+                    "description": "When defeating enemies, there is a 20% chance to obtain 12x common or uncommon Invention materials."
+                },
+                {
+                    "title": "God Wars Dungeon kill count",
+                    "description": "Kill count is no longer required to enter God Wars Dungeon encounters."
+                },
+                {
+                    "title": "Heart of Gielinor kill count",
+                    "description": "Kill count is no longer required to enter Heart of Gielinor encounters."
+                },
+                {
+                    "title": "The Legiones",
+                    "description": "Ascension keystones are no longer required to fight the Legiones."
+                },
+                {
+                    "title": "The Magister",
+                    "description": "Keys to the Crossing are no longer required to fight the Magister."
+                }
+            ]
+        },
+        {
+            "tier": 5,
+            "effects": [
+                {
+                    "title": "Improved rare-item drops",
+                    "description": "Rare items are 6x more common."
+                },
+                {
+                    "title": "Spellbook and prayer swapping",
+                    "description": "You can swap spellbooks and prayers at the League Sage."
+                },
+                {
+                    "title": "Choose Soul Reaper tasks",
+                    "description": "When Death assigns a Soul Reaper task, you can choose which task you want."
+                },
+                {
+                    "title": "Invention materials",
+                    "description": "When defeating enemies, there is a 20% chance to obtain 20x common or uncommon Invention materials."
+                },
+                {
+                    "title": "Augmented item experience",
+                    "description": "Augmented items gain experience 4x faster."
+                }
+            ]
+        },
+        {
+            "tier": 6,
+            "effects": [
+                {
+                    "title": "16x XP",
+                    "description": "Experience is scaled at 16x the normal rate."
+                },
+                {
+                    "title": "Improved rare-item drops",
+                    "description": "Rare items are 8x more common."
+                },
+                {
+                    "title": "Seren spells and prayers",
+                    "description": "All Seren spells and prayers are unlocked."
+                }
+            ]
+        },
+        {
+            "tier": 7,
+            "effects": [
+                {
+                    "title": "Improved rare-item drops",
+                    "description": "Rare items are 10x more common."
+                },
+                {
+                    "title": "Unlimited Advance Time",
+                    "description": "The Advance Time spell can be cast without limit."
                 }
             ]
         }
