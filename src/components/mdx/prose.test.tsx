@@ -7,6 +7,7 @@ import { mdxComponents } from "@/mdx_components/mdx-components"
 
 describe("MDX prose adapters", () => {
   it("maps authored prose elements to component-owned Tailwind styles", () => {
+    const Heading1 = proseComponents.h1
     const Heading = proseComponents.h2
     const Link = proseComponents.a
     const Code = proseComponents.code
@@ -20,6 +21,7 @@ describe("MDX prose adapters", () => {
 
     const markup = renderToStaticMarkup(
       <>
+        <Heading1 id="page-section">Page section</Heading1>
         <Heading id="overview">Overview</Heading>
         <Link href="https://runescape.wiki">RuneScape Wiki</Link>
         <Code>ability</Code>
@@ -45,6 +47,8 @@ describe("MDX prose adapters", () => {
       </>
     )
 
+    expect(markup).toContain('id="page-section"')
+    expect(markup).toContain("text-[2.25rem]")
     expect(markup).toContain('id="overview"')
     expect(markup).toContain('target="_blank"')
     expect(markup).toContain("overflow")

@@ -51,6 +51,18 @@ function ProseImage({ className, ...props }: ComponentProps<"img">) {
   )
 }
 
+function ProseHeading1({ className, ...props }: ComponentProps<"h1">) {
+  return (
+    <h1
+      className={cn(
+        "mt-[3.8rem] scroll-mt-[5.5rem] font-display text-[2.25rem] leading-[1.15] font-semibold text-balance",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
 function ProseHeading2({ className, ...props }: ComponentProps<"h2">) {
   return (
     <h2
@@ -228,6 +240,7 @@ function Cards({ children }: { children?: ReactNode }) {
 const proseComponents = {
   a: SmartLink,
   img: ProseImage,
+  h1: ProseHeading1,
   h2: ProseHeading2,
   h3: ProseHeading3,
   h4: ProseHeading4,
@@ -250,6 +263,7 @@ export {
   DocCard,
   ProseBlockquote,
   ProseCode,
+  ProseHeading1,
   ProseHeading2,
   ProseHeading3,
   ProseHeading4,
