@@ -17,7 +17,6 @@ interface RelicItem {
 
 interface PassiveEffect {
     title: string;
-    description: string;
 }
 
 interface RelicDisplayProps {
@@ -41,7 +40,7 @@ const PassiveEffects: React.FC<{ effects: PassiveEffect[]; tier: number }> = ({ 
             <ul className="relic-passives-list">
                 {effects.map((passive) => (
                     <li key={passive.title}>
-                        {passive.description}
+                        {passive.title}
                     </li>
                 ))}
             </ul>
