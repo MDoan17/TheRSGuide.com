@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import relicData from '@/data/leagues-ii/relics.json';
+import { LeaguesPassiveList, type LeaguesPassive } from '@/components/mdx/leagues-passive-list'
 
 import '@/styles/relics.css';
 
@@ -17,11 +18,6 @@ interface RelicItem {
   effects: string[];
   notes: string[];
   skillSolves: SkillSolves[];
-}
-
-interface PassiveEffect {
-    title: string;
-    description: string;
 }
 
 interface RelicDisplayProps {
@@ -100,29 +96,10 @@ const RelicCards: React.FC<{ relics: RelicItem[]; onViewRelic: (r: RelicItem) =>
   );
 };
 
-const PassiveEffects: React.FC<{ effects: PassiveEffect[] }> = ({ effects }) => {
-    return (
-        <div className="flex flex-wrap gap-2">
-            {effects.map((effect, effectIndex) => (
-                <Popover key={effectIndex}>
-                    <PopoverTrigger>
-                        <div className="bg-card p-2 cursor-pointer hover:bg-accent/50 text-xs">
-                            <strong>{effect.title}</strong>
-                        </div>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                        <p>{effect.description}</p>
-                    </PopoverContent>
-                </Popover>
-            ))}
-        </div>
-    );
-};
-
 export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier, points }) => {
 
     const tierData = relicData.Relics.filter((data) => data.tier === tier);
-    const tierPassives = relicData.Passives.find((data) => data.tier === tier)?.effects || [] as PassiveEffect[];
+    const tierPassives = relicData.Passives.find((data) => data.tier === tier)?.effects || [] as LeaguesPassive[];
 
     const [selectedRelic, setSelectedRelic] = useState<RelicItem | null>(null);
 
@@ -156,7 +133,7 @@ export const RelicDisplay: React.FC<RelicDisplayProps> = ({ tier, points }) => {
             { tierPassives.length > 0 && (
                 <div className="mb-2">
                     <span className="text-lg font-semibold mb-2">Passives</span>
-                    <PassiveEffects effects={tierPassives} />
+                    <LeaguesPassiveList passives={tierPassives} />
                 </div>
             )}
             
