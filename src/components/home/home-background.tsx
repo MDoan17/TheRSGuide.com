@@ -7,6 +7,7 @@ import {
 } from 'react'
 import { useSiteSettings } from '@/components/settings/site-settings-context'
 import { BackgroundMediaController } from '@/lib/background-media'
+import { thirdPartyMediaAllowed } from '@/lib/privacy-preferences'
 import {
   browserBackgroundMediaPreferences,
   vimeoBackgroundMediaAdapter,
@@ -15,6 +16,7 @@ import {
 const HOME_BACKGROUND_VIDEO_URL = 'https://player.vimeo.com/video/1212838611?background=1&autoplay=1&muted=1&loop=1&autopause=0&dnt=1'
 
 export function HomeBackgroundMedia({ children }: { children: ReactNode }) {
+  const mediaAllowed = thirdPartyMediaAllowed()
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const { registerHomeMedia } = useSiteSettings()
   const controller = useMemo(
@@ -32,10 +34,10 @@ export function HomeBackgroundMedia({ children }: { children: ReactNode }) {
   )
 
   useEffect(() => {
-    if (!state.enabled || !iframeRef.current) return
+    if (!mediaAllowed || !state.enabled || !iframeRef.current) return
     controller.attach(iframeRef.current)
     return () => controller.detach()
-  }, [controller, state.enabled])
+  }, [controller, mediaAllowed, state.enabled])
 
   useEffect(() => () => controller.dispose(), [controller])
 
@@ -57,9 +59,9 @@ export function HomeBackgroundMedia({ children }: { children: ReactNode }) {
   return (
     <main
       className="relative isolate min-h-svh overflow-hidden data-[video-enabled=true]:[--accent-foreground:#efe4d2] data-[video-enabled=true]:[--accent:#1f1a14] data-[video-enabled=true]:[--border:rgb(204_154_99_/_38%)] data-[video-enabled=true]:[--card-foreground:#efe4d2] data-[video-enabled=true]:[--card:rgb(20_18_16_/_88%)] data-[video-enabled=true]:[--foreground:#efe4d2] data-[video-enabled=true]:[--input:var(--border)] data-[video-enabled=true]:[--muted-foreground:#cc9a63] data-[video-enabled=true]:[--muted:#1a1510] data-[video-enabled=true]:[--popover-foreground:#efe4d2] data-[video-enabled=true]:[--popover:#141210] data-[video-enabled=true]:[--primary-foreground:#0a0908] data-[video-enabled=true]:[--primary:#cc9a63] data-[video-enabled=true]:[--ring:var(--primary)] data-[video-enabled=true]:[--secondary-foreground:#efe4d2] data-[video-enabled=true]:[--secondary:#1a1510]"
-      data-video-enabled={state.enabled}
+      data-video-enabled={mediaAllowed && state.enabled}
     >
-      {state.enabled && (
+      {mediaAllowed && state.enabled && (
         <>
           <div
             className="group/video absolute inset-0 overflow-hidden bg-home-video-background bg-center bg-cover"

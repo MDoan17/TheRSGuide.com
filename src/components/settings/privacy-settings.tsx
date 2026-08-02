@@ -13,29 +13,26 @@ import {
 } from "@/components/ui/field"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Switch } from "@/components/ui/switch"
+import { Link } from "react-router"
 
 function PrivacySettings({
   functional,
   analytics,
-  sessionReplay,
+  strictRegion,
   onFunctionalChange,
   onAnalyticsChange,
-  onSessionReplayChange,
   onBack,
   onReject,
-  onAcceptMinimum,
-  onAcceptAll,
+  onSave,
 }: {
   functional: boolean
   analytics: boolean
-  sessionReplay: boolean
+  strictRegion: boolean
   onFunctionalChange: (enabled: boolean) => void
   onAnalyticsChange: (enabled: boolean) => void
-  onSessionReplayChange: (enabled: boolean) => void
   onBack: () => void
   onReject: () => void
-  onAcceptMinimum: () => void
-  onAcceptAll: () => void
+  onSave: () => void
 }) {
   return (
     <>
@@ -46,8 +43,8 @@ function PrivacySettings({
       >
         <div className="px-6 pt-[1.35rem] pb-6">
           <DialogDescription className="mt-0 mb-5">
-            Choose what this guide may remember and whether optional analytics
-            may run. Changes save when you go back or close this dialog.
+            Control saved preferences and browser-level analytics. Anonymous
+            aggregate visit totals do not use a persistent browser identifier.
           </DialogDescription>
           <FieldGroup className="gap-0">
             <Field
@@ -56,18 +53,18 @@ function PrivacySettings({
             >
               <FieldContent>
                 <FieldTitle className="mb-1 text-[.82rem]">
-                  Required consent record
+                  Anonymous aggregate measurement
                 </FieldTitle>
                 <FieldDescription className="m-0 max-w-[38rem] text-[.76rem] leading-[1.5]">
-                  Stores this privacy choice for 180 days so the banner does not
-                  reappear on every page. It is not used for analytics or
-                  advertising.
+                  Cloudflare Web Analytics counts pageviews and visits without
+                  cookies, localStorage, fingerprinting, or a persistent visitor
+                  identifier. These totals cannot identify a person.
                 </FieldDescription>
               </FieldContent>
               <Switch
                 checked
                 disabled
-                aria-label="The consent record is always enabled"
+                aria-label="Anonymous aggregate measurement is always enabled"
               />
             </Field>
             <Field
@@ -102,9 +99,13 @@ function PrivacySettings({
                   Analytics
                 </FieldTitle>
                 <FieldDescription className="m-0 max-w-[38rem] text-[.76rem] leading-[1.5]">
-                  Rybbit measures visits, navigation, device types, and general
-                  usage patterns so we can improve the guide. This does not
-                  enable session recording.
+                  Rybbit measures daily unique browsers, page navigation,
+                  referrers, device types, and approximate location. It uses a
+                  random browser identifier, but never receives player names or
+                  form values. Turning this off deletes its identifier from this
+                  browser. {strictRegion
+                    ? "It remains off until you allow it."
+                    : "It is enabled by default in your region and can be disabled anytime."}
                 </FieldDescription>
               </FieldContent>
               <Switch
@@ -114,44 +115,17 @@ function PrivacySettings({
                 aria-label="Allow analytics"
               />
             </Field>
-            <Field
-              className="items-start justify-between gap-6 border-t py-4"
-              orientation="horizontal"
-            >
-              <FieldContent>
-                <FieldTitle className="mb-1 text-[.82rem]">
-                  Session recording
-                </FieldTitle>
-                <FieldDescription className="m-0 max-w-[38rem] text-[.76rem] leading-[1.5]">
-                  Rybbit records clicks, scrolling, navigation, and page
-                  interactions so we can find usability problems. Form input
-                  values and player names are masked by the recorder. This
-                  requires analytics and remains off unless you enable it.
-                </FieldDescription>
-              </FieldContent>
-              <Switch
-                className="mt-[.15rem]"
-                checked={sessionReplay}
-                onCheckedChange={onSessionReplayChange}
-                aria-label="Allow session recording"
-              />
-            </Field>
           </FieldGroup>
+          <p className="mt-5 mb-0 text-[.72rem] leading-[1.5] text-muted-foreground">
+            Read the full <Link className="font-bold text-primary underline underline-offset-2" to="/privacy" onClick={() => onSave()}>privacy notice</Link>.
+          </p>
         </div>
       </ScrollArea>
       <DialogFooter className="justify-stretch [&>button]:flex-1 max-[521px]:flex-col-reverse max-[521px]:[&>button]:w-full">
         <Button variant="outline" onClick={onReject}>
-          Reject optional
+          Disable optional
         </Button>
-        <Button
-          variant="secondary"
-          onClick={onAcceptMinimum}
-          aria-label="Accept minimum: allow only the required consent record"
-          title="Allow only the required consent record"
-        >
-          Accept minimum
-        </Button>
-        <Button onClick={onAcceptAll}>Accept all</Button>
+        <Button onClick={() => onSave()}>Save choices</Button>
       </DialogFooter>
     </>
   )

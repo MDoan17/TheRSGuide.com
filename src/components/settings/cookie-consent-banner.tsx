@@ -23,8 +23,8 @@ function CookieConsentBanner({
         variant="ghost"
         size="icon-xs"
         onClick={onReject}
-        aria-label="Close and reject optional storage, analytics, and session recording"
-        title="Continue without optional storage, analytics, or session recording"
+        aria-label="Close and decline optional storage and browser analytics"
+        title="Continue without optional storage or browser analytics"
       >
         <XIcon />
       </Button>
@@ -39,9 +39,9 @@ function CookieConsentBanner({
           className="m-0 text-[.72rem] leading-[1.4] text-muted-foreground"
           id="cookie-banner-description"
         >
-          Choose whether this guide may remember your progress and preferences
-          or use optional analytics and session recording. All stay off unless
-          you allow them.
+          Anonymous visit totals are always measured without storing a browser
+          identifier. You can also allow optional browser analytics and saved
+          preferences. Change either choice anytime in Settings.
         </p>
       </div>
       <div className="flex shrink-0 items-center gap-[.65rem] max-[521px]:grid max-[521px]:grid-cols-2 max-[521px]:[&>button:last-child]:col-span-full">
@@ -49,10 +49,10 @@ function CookieConsentBanner({
           Customize
         </Button>
         <Button variant="outline" size="sm" onClick={onReject}>
-          Reject optional
+          Decline optional
         </Button>
-        <Button size="sm" onClick={onAccept}>
-          Accept all
+        <Button variant="outline" size="sm" onClick={onAccept}>
+          Allow optional
         </Button>
       </div>
     </section>

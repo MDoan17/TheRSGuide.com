@@ -14,7 +14,6 @@ describe('privacy preferences', () => {
       version: CONSENT_VERSION,
       analytics: false,
       functional: true,
-      sessionReplay: false,
       updatedAt: '2026-07-26T00:00:00.000Z',
     }
 
@@ -29,7 +28,22 @@ describe('privacy preferences', () => {
     }))).toBeNull()
   })
 
-  it('rejects consent from before session recording had its own choice', () => {
+  it('migrates the previous session-recording preference without retaining it', () => {
+    expect(readConsent(consentCookie({
+      version: 3,
+      analytics: true,
+      functional: true,
+      sessionReplay: true,
+      updatedAt: '2026-07-25T00:00:00.000Z',
+    }))).toEqual({
+      version: CONSENT_VERSION,
+      analytics: true,
+      functional: true,
+      updatedAt: '2026-07-25T00:00:00.000Z',
+    })
+  })
+
+  it('rejects consent from before functional storage had its own choice', () => {
     expect(readConsent(consentCookie({
       version: 2,
       analytics: true,

@@ -1,12 +1,13 @@
+import { readPrivacyRegion } from '@/lib/privacy-region'
+
 export const CONSENT_COOKIE = 'rs-guide-consent'
-export const CONSENT_VERSION = 3
+export const CONSENT_VERSION = 4
 export const CONSENT_MAX_AGE = 60 * 60 * 24 * 180
 
 export type ConsentPreferences = {
   version: number
   analytics: boolean
   functional: boolean
-  sessionReplay: boolean
   updatedAt: string
 }
 
@@ -29,12 +30,34 @@ export function readConsent(cookieSource = document.cookie): ConsentPreferences 
   try {
     const parsed = JSON.parse(
       decodeURIComponent(cookie.split('=').slice(1).join('=')),
-    ) as ConsentPreferences
-    return parsed.version === CONSENT_VERSION
+    ) as Record<string, unknown>
+    const currentPreference = parsed.version === CONSENT_VERSION
+      && typeof parsed.analytics === 'boolean'
+      && typeof parsed.functional === 'boolean'
+      && typeof parsed.updatedAt === 'string'
+
+    if (currentPreference) {
+      return {
+        version: CONSENT_VERSION,
+        analytics: parsed.analytics as boolean,
+        functional: parsed.functional as boolean,
+        updatedAt: parsed.updatedAt as string,
+      }
+    }
+
+    const legacyPreference = parsed.version === 3
       && typeof parsed.analytics === 'boolean'
       && typeof parsed.functional === 'boolean'
       && typeof parsed.sessionReplay === 'boolean'
-      ? parsed
+      && typeof parsed.updatedAt === 'string'
+
+    return legacyPreference
+      ? {
+          version: CONSENT_VERSION,
+          analytics: parsed.analytics as boolean,
+          functional: parsed.functional as boolean,
+          updatedAt: parsed.updatedAt as string,
+        }
       : null
   } catch {
     return null
@@ -44,13 +67,11 @@ export function readConsent(cookieSource = document.cookie): ConsentPreferences 
 export function writeConsent({
   analytics,
   functional,
-  sessionReplay,
-}: Pick<ConsentPreferences, 'analytics' | 'functional' | 'sessionReplay'>): ConsentPreferences {
+}: Pick<ConsentPreferences, 'analytics' | 'functional'>): ConsentPreferences {
   const preferences = {
     version: CONSENT_VERSION,
     analytics,
     functional,
-    sessionReplay: analytics && sessionReplay,
     updatedAt: new Date().toISOString(),
   }
   const secure = window.location.protocol === 'https:' ? '; Secure' : ''
@@ -59,8 +80,11 @@ export function writeConsent({
 }
 
 export function functionalStorageAllowed() {
-  return typeof document !== 'undefined' && readConsent()?.functional === true
+  if (typeof document === 'undefined') return false
+  return readConsent()?.functional ?? readPrivacyRegion() === 'standard'
 }
+
+export const thirdPartyMediaAllowed = functionalStorageAllowed
 
 export function clearFunctionalStorage() {
   if (typeof window === 'undefined') return

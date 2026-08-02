@@ -27,20 +27,23 @@ import {
   writeConsent,
   type ConsentPreferences,
 } from "@/lib/privacy-preferences"
+import { readPrivacyRegion } from "@/lib/privacy-region"
 
 const REJECTED_PREFERENCES = {
   analytics: false,
   functional: false,
-  sessionReplay: false,
 } as const
 
 const ACCEPTED_PREFERENCES = {
   analytics: true,
   functional: true,
-  sessionReplay: true,
 } as const
 
 function SiteSettingsProvider({ children }: PropsWithChildren) {
+  const privacyRegion = useMemo(() => readPrivacyRegion(), [])
+  const defaults = privacyRegion === "standard"
+    ? ACCEPTED_PREFERENCES
+    : REJECTED_PREFERENCES
   const [consent, setConsent] = useState<ConsentPreferences | null>(() =>
     readConsent()
   )
@@ -48,67 +51,57 @@ function SiteSettingsProvider({ children }: PropsWithChildren) {
   const [settingsPage, setSettingsPage] = useState<SettingsPage>("main")
   const [homeMedia, setHomeMedia] = useState<HomeMediaSettings | null>(null)
   const [draftAnalytics, setDraftAnalytics] = useState(
-    () => consent?.analytics ?? false
+    () => consent?.analytics ?? defaults.analytics
   )
   const [draftFunctional, setDraftFunctional] = useState(
-    () => consent?.functional ?? false
+    () => consent?.functional ?? defaults.functional
   )
-  const [draftSessionReplay, setDraftSessionReplay] = useState(
-    () => consent?.sessionReplay ?? false
-  )
+  const analyticsEnabled = consent?.analytics ?? defaults.analytics
 
   useEffect(() => {
-    if (consent?.analytics) enableAnalytics(consent.sessionReplay)
-    else disableAnalytics()
-  }, [consent])
+    if (analyticsEnabled) enableAnalytics()
+    else disableAnalytics({
+      forget: consent?.analytics === false,
+      persist: consent?.analytics === false,
+    })
+  }, [analyticsEnabled, consent?.analytics])
 
   const saveConsent = useCallback(
     (
       {
         analytics,
         functional,
-        sessionReplay,
-      }: Pick<
-        ConsentPreferences,
-        "analytics" | "functional" | "sessionReplay"
-      >,
+      }: Pick<ConsentPreferences, "analytics" | "functional">,
       close = true
     ) => {
-      const normalizedReplay = analytics && sessionReplay
-      const wasAnalyticsEnabled = consent?.analytics === true
-      const wasFunctional = consent?.functional === true
-      const replayChanged =
-        consent !== null && consent.sessionReplay !== normalizedReplay
+      const wasAnalyticsEnabled = consent?.analytics ?? defaults.analytics
+      const wasFunctional = consent?.functional ?? defaults.functional
       const preferences = writeConsent({
         analytics,
         functional,
-        sessionReplay: normalizedReplay,
       })
       setConsent(preferences)
       setDraftAnalytics(analytics)
       setDraftFunctional(functional)
-      setDraftSessionReplay(normalizedReplay)
       if (close) setSettingsOpen(false)
 
       if (!functional) clearFunctionalStorage()
 
       if (
         (wasAnalyticsEnabled && !analytics) ||
-        (wasFunctional && !functional) ||
-        replayChanged
+        wasFunctional !== functional
       ) {
-        disableAnalytics()
+        if (!analytics) disableAnalytics({ forget: true, persist: true })
         window.location.reload()
       }
     },
-    [consent]
+    [consent, defaults]
   )
 
   const resetPrivacyDraft = useCallback(() => {
-    setDraftAnalytics(consent?.analytics ?? false)
-    setDraftFunctional(consent?.functional ?? false)
-    setDraftSessionReplay(consent?.sessionReplay ?? false)
-  }, [consent])
+    setDraftAnalytics(consent?.analytics ?? defaults.analytics)
+    setDraftFunctional(consent?.functional ?? defaults.functional)
+  }, [consent, defaults])
 
   const openSettings = useCallback(
     (page: SettingsPage = "main") => {
@@ -140,12 +133,11 @@ function SiteSettingsProvider({ children }: PropsWithChildren) {
         {
           analytics: draftAnalytics,
           functional: draftFunctional,
-          sessionReplay: draftSessionReplay,
         },
         close
       )
     },
-    [draftAnalytics, draftFunctional, draftSessionReplay, saveConsent]
+    [draftAnalytics, draftFunctional, saveConsent]
   )
 
   const backToSettings = () => {
@@ -163,23 +155,13 @@ function SiteSettingsProvider({ children }: PropsWithChildren) {
     else setSettingsOpen(false)
   }
 
-  const setAnalyticsPreference = (enabled: boolean) => {
-    setDraftAnalytics(enabled)
-    if (!enabled) setDraftSessionReplay(false)
-  }
-
-  const setSessionReplayPreference = (enabled: boolean) => {
-    setDraftSessionReplay(enabled)
-    if (enabled) setDraftAnalytics(true)
-  }
-
   const rejectOptional = () => saveConsent(REJECTED_PREFERENCES)
   const acceptAll = () => saveConsent(ACCEPTED_PREFERENCES)
 
   return (
     <SiteSettingsContext.Provider value={contextValue}>
       {children}
-      {!consent && (
+      {privacyRegion === "strict" && !consent && !settingsOpen && (
         <CookieConsentBanner
           onReject={rejectOptional}
           onCustomize={() => openSettings("privacy")}
@@ -208,14 +190,12 @@ function SiteSettingsProvider({ children }: PropsWithChildren) {
             <PrivacySettings
               functional={draftFunctional}
               analytics={draftAnalytics}
-              sessionReplay={draftSessionReplay}
+              strictRegion={privacyRegion === "strict"}
               onFunctionalChange={setDraftFunctional}
-              onAnalyticsChange={setAnalyticsPreference}
-              onSessionReplayChange={setSessionReplayPreference}
+              onAnalyticsChange={setDraftAnalytics}
               onBack={backToSettings}
               onReject={rejectOptional}
-              onAcceptMinimum={rejectOptional}
-              onAcceptAll={acceptAll}
+              onSave={savePrivacyDraft}
             />
           )}
           {settingsPage === "feedback" && (
