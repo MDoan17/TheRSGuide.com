@@ -5,6 +5,16 @@ import {
   guideSections,
   primaryNavigation,
 } from './content'
+import { isLeaguesMode } from './homepage-mode'
+
+const leaguesMode = isLeaguesMode(import.meta.env.VITE_HOMEPAGE_MODE)
+const expectedSectionIds = [
+  'setup',
+  'getting-started',
+  'guides',
+  'extras',
+  ...(leaguesMode ? ['leagues'] : []),
+]
 
 describe('site guide catalog', () => {
   it('loads every current MDX route with a unique identity', () => {
@@ -12,19 +22,14 @@ describe('site guide catalog', () => {
 
     expect(paths.length).toBeGreaterThanOrEqual(60)
     expect(new Set(paths).size).toBe(paths.length)
-    expect(paths.some((path) => path.startsWith('/leagues'))).toBe(false)
+    expect(paths.some((path) => path.startsWith('/leagues'))).toBe(leaguesMode)
     for (const document of guideCatalog.documents) {
       expect(guideCatalog.get(document.path)).toBe(document)
     }
   })
 
   it('keeps configured sections in primary-navigation order', () => {
-    expect(guideCatalog.sections.map((section) => section.id)).toEqual([
-      'setup',
-      'getting-started',
-      'guides',
-      'extras',
-    ])
+    expect(guideCatalog.sections.map((section) => section.id)).toEqual(expectedSectionIds)
     expect(guideCatalog.sections.every((section) => section.index)).toBe(true)
   })
 
@@ -39,18 +44,10 @@ describe('site guide catalog', () => {
   })
 
   it('uses one consistent navigation tree across every guide route', () => {
-    expect(guideSections.map((section) => section.id)).toEqual([
-      'setup',
-      'getting-started',
-      'guides',
-      'extras',
-    ])
-    expect(primaryNavigation.map((link) => link.label)).toEqual([
-      'Setup',
-      'Getting Started',
-      'Guides',
-      'Extras',
-    ])
+    expect(guideSections.map((section) => section.id)).toEqual(expectedSectionIds)
+    expect(primaryNavigation.map((link) => link.label)).toEqual(
+      guideSections.map((section) => section.label),
+    )
     expect(guideSectionDefinitionsForMode('leagues').map((section) => section.label)).toEqual([
       'Setup',
       'Getting Started',

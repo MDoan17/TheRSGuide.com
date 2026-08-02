@@ -1,41 +1,82 @@
-const RYBBIT_SCRIPT_ID = "rybbit-analytics"
-const PRIVATE_PLAYER_NAME_SELECTOR = "[data-private-player-name]"
+const RYBBIT_ANALYTICS_ENDPOINT = "https://analytics.distortion.me/api/track"
+const RYBBIT_SITE_ID = "d8c35c481bf4"
+const TRACKED_HOSTNAMES = new Set(["thersguide.com", "www.thersguide.com"])
+const LEGACY_RYBBIT_SCRIPT_ID = "rybbit-analytics"
+const LEGACY_RYBBIT_STORAGE_KEYS = [
+  "disable-rybbit",
+  "rybbit-visitor-id",
+  "rybbit-user-id",
+  "rybbit-replay-sampled",
+] as const
+
+type AnonymousPageviewPayload = {
+  site_id: string
+  hostname: string
+  pathname: "/"
+  querystring: ""
+  type: "pageview"
+}
 
 declare global {
   interface Window {
-    __RYBBIT_OPTOUT__?: boolean
     rybbit?: {
+      cleanup?: () => void
       stopSessionReplay?: () => void
     }
   }
 }
 
-function enableAnalytics(sessionReplay: boolean) {
-  window.__RYBBIT_OPTOUT__ = false
-  if (document.getElementById(RYBBIT_SCRIPT_ID)) return
+let lastNavigationKey: string | null = null
 
-  const script = document.createElement("script")
-  script.id = RYBBIT_SCRIPT_ID
-  script.src = "https://analytics.distortion.me/api/script.js"
-  script.async = true
-  script.dataset.siteId = "d8c35c481bf4"
-  script.dataset.replaySampleRate = sessionReplay ? "100" : "0"
-  script.dataset.replayMaskAllInputs = "true"
-  script.dataset.replayCollectFonts = "false"
-  script.dataset.replayMaskTextSelectors = JSON.stringify([
-    PRIVATE_PLAYER_NAME_SELECTOR,
-  ])
-  document.head.append(script)
+function createAnonymousPageviewPayload(hostname: string): AnonymousPageviewPayload {
+  return {
+    site_id: RYBBIT_SITE_ID,
+    hostname,
+    pathname: "/",
+    querystring: "",
+    type: "pageview",
+  }
 }
 
-function disableAnalytics() {
+function clearLegacyAnalyticsStorage() {
   window.rybbit?.stopSessionReplay?.()
-  window.__RYBBIT_OPTOUT__ = true
+  window.rybbit?.cleanup?.()
+  document.getElementById(LEGACY_RYBBIT_SCRIPT_ID)?.remove()
+
+  for (const key of LEGACY_RYBBIT_STORAGE_KEYS) {
+    window.localStorage.removeItem(key)
+    window.sessionStorage.removeItem(key)
+  }
+}
+
+function trackAnonymousPageview(navigationKey: string, enabled = true) {
+  if (!enabled) return
+
+  const hostname = window.location.hostname.toLowerCase()
+  if (!TRACKED_HOSTNAMES.has(hostname)) return
+  if (navigationKey === lastNavigationKey) return
+  lastNavigationKey = navigationKey
+
+  void fetch(RYBBIT_ANALYTICS_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(createAnonymousPageviewPayload(hostname)),
+    mode: "cors",
+    credentials: "omit",
+    keepalive: true,
+    referrerPolicy: "no-referrer",
+  }).catch(() => {
+    // Analytics must never interfere with the guide.
+  })
 }
 
 export {
-  disableAnalytics,
-  enableAnalytics,
-  PRIVATE_PLAYER_NAME_SELECTOR,
-  RYBBIT_SCRIPT_ID,
+  clearLegacyAnalyticsStorage,
+  createAnonymousPageviewPayload,
+  LEGACY_RYBBIT_STORAGE_KEYS,
+  RYBBIT_ANALYTICS_ENDPOINT,
+  RYBBIT_SITE_ID,
+  trackAnonymousPageview,
 }
