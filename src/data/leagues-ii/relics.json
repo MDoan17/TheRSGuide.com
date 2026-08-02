@@ -292,7 +292,7 @@
             "image": "https://media.thersguide.com/leagues-2/relics/assassins-insight.png",
             "effects": [
                 "Grants the Skull of Slaying, which allows you to teleport to any slayer master and a range of slayer dungeons and monsters.",
-                "When assigned a slayer assignment, yo uwill be able to choose between two assignments.",
+                "When assigned a slayer assignment, you will be able to choose between two assignments.",
                 "Choose between minimum or maximum amounts when requesting a new slayer assignment.",
                 "Monsters can be added to the prefer and block lists for free.",
                 "You have the effects of the corrupted slayer mask without needing to wear it.",
@@ -311,7 +311,7 @@
             ]
         },
         {
-            "name": "Nature's Netowrk",
+            "name": "Nature's Network",
             "tagline": "Experience the world as fairies do.",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/natures-network.png",
