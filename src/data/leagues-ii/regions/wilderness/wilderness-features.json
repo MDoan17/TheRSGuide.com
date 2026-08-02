@@ -1,0 +1,45 @@
+{
+  "title": "Features",
+  "titleAs": "h2",
+  "rowId": "id",
+  "columns": [
+    {
+      "key": "feature",
+      "header": "Feature",
+      "link": { "hrefKey": "url", "external": true },
+      "hidden": true
+    }
+  ],
+  "rows": [
+    {
+      "id": "wilderness-slayer",
+      "feature": "Wilderness Slayer",
+      "url": "https://runescape.wiki/w/Mandrith"
+    },
+    {
+      "id": "dungeoneering",
+      "feature": "Dungeoneering",
+      "url": "https://runescape.wiki/w/Dungeoneering"
+    },
+    {
+      "id": "primal-mining",
+      "feature": "Primal Mining",
+      "url": "https://runescape.wiki/w/Ores#Primal_ores"
+    },
+    {
+      "id": "wilderness-agility-course",
+      "feature": "Wilderness Agility Course",
+      "url": "https://runescape.wiki/w/Wilderness_Agility_Course"
+    },
+    {
+      "id": "daemonheim-dig-site",
+      "feature": "Daemonheim Dig Site",
+      "url": "https://runescape.wiki/w/Daemonheim_Dig_Site"
+    },
+    {
+      "id": "revenants",
+      "feature": "Revenants",
+      "url": "https://runescape.wiki/w/Revenants"
+    }
+  ]
+}

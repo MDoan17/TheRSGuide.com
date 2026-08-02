@@ -1,0 +1,497 @@
+{
+  "title": "PVM Upgrades",
+  "titleAs": "h3",
+  "sortable": true,
+  "rowId": "id",
+  "search": {
+    "label": "Search Wilderness PvM upgrades",
+    "placeholder": "Search Wilderness upgrades..."
+  },
+  "emptyMessage": "No Wilderness upgrades match those filters.",
+  "columns": [
+    {
+      "key": "source",
+      "header": "Source",
+      "filter": true,
+      "width": "md",
+      "wrap": false
+    },
+    {
+      "key": "tier",
+      "header": "Tier",
+      "filter": true,
+      "width": "sm",
+      "emphasis": true,
+      "wrap": false
+    },
+    {
+      "key": "style",
+      "header": "Combat style",
+      "filter": true,
+      "width": "md",
+      "wrap": false
+    },
+    {
+      "key": "item",
+      "header": "Item",
+      "link": {
+        "hrefKey": "url",
+        "external": true
+      },
+      "info": true
+    }
+  ],
+  "rows": [
+    {
+      "id": "primal-equipment",
+      "tier": "85-90",
+      "style": "Melee",
+      "item": "Primal Equipment",
+      "url": "https://runescape.wiki/w/Primal_equipment",
+      "source": "Skilling"
+    },
+    {
+      "id": "chaotic-grimoire",
+      "tier": "N/A",
+      "style": "Hybrid",
+      "item": "Chaotic Grimoire",
+      "url": "https://runescape.wiki/w/Chaotic_Grimoire",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "ring-of-vigour",
+      "tier": "N/A",
+      "style": "Hybrid",
+      "item": "Ring of Vigour",
+      "url": "https://runescape.wiki/w/Ring_of_Vigour",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "gravite-longsword",
+      "tier": "55",
+      "style": "Melee",
+      "item": "Gravite Longsword",
+      "url": "https://runescape.wiki/w/Gravite_longsword",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "off-hand-gravite-longsword",
+      "tier": "55",
+      "style": "Melee",
+      "item": "Off-hand Gravite Longsword",
+      "url": "https://runescape.wiki/w/Off-hand_gravite_longsword",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "gravite-2h-sword",
+      "tier": "55",
+      "style": "Melee",
+      "item": "Gravite 2h Sword",
+      "url": "https://runescape.wiki/w/Gravite_2h_Sword",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "gravite-rapier",
+      "tier": "55",
+      "style": "Melee",
+      "item": "Gravite Rapier",
+      "url": "https://runescape.wiki/w/Gravite_rapier",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "off-hand-gravite-rapier",
+      "tier": "55",
+      "style": "Melee",
+      "item": "Off-hand Gravite Rapier",
+      "url": "https://runescape.wiki/w/Off-hand_gravite_rapier",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "chaotic-longsword",
+      "tier": "80",
+      "style": "Melee",
+      "item": "Chaotic Longsword",
+      "url": "https://runescape.wiki/w/Chaotic_longsword",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "off-hand-chaotic-longsword",
+      "tier": "80",
+      "style": "Melee",
+      "item": "Off-hand Chaotic Longsword",
+      "url": "https://runescape.wiki/w/Off-hand_chaotic_longsword",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "chaotic-maul",
+      "tier": "80",
+      "style": "Melee",
+      "item": "Chaotic Maul",
+      "url": "https://runescape.wiki/w/Chaotic_maul",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "chaotic-spear",
+      "tier": "80",
+      "style": "Melee",
+      "item": "Chaotic Spear",
+      "url": "https://runescape.wiki/w/Chaotic_spear",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "chaotic-rapier",
+      "tier": "80",
+      "style": "Melee",
+      "item": "Chaotic Rapier",
+      "url": "https://runescape.wiki/w/Chaotic_rapier",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "off-hand-chaotic-rapier",
+      "tier": "80",
+      "style": "Melee",
+      "item": "Off-hand Chaotic Rapier",
+      "url": "https://runescape.wiki/w/Off-hand_chaotic_rapier",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "chaotic-claw",
+      "tier": "80",
+      "style": "Melee",
+      "item": "Chaotic Claw",
+      "url": "https://runescape.wiki/w/Chaotic_claw",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "off-hand-chaotic-claw",
+      "tier": "80",
+      "style": "Melee",
+      "item": "Off-hand Chaotic Claw",
+      "url": "https://runescape.wiki/w/Off-hand_chaotic_claw",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "ruinous-maul",
+      "tier": "90",
+      "style": "Melee",
+      "item": "Ruinous Maul",
+      "url": "https://runescape.wiki/w/Ruinous_maul",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "ruinous-rapier",
+      "tier": "90",
+      "style": "Melee",
+      "item": "Ruinous Rapier",
+      "url": "https://runescape.wiki/w/Ruinous_rapier",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "off-hand-ruinous-rapier",
+      "tier": "90",
+      "style": "Melee",
+      "item": "Off-hand Ruinous Rapier",
+      "url": "https://runescape.wiki/w/Off-hand_ruinous_rapier",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "gravite-wand",
+      "tier": "55",
+      "style": "Magic",
+      "item": "Gravite Wand",
+      "url": "https://runescape.wiki/w/Gravite_wand",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "gravite-orb",
+      "tier": "55",
+      "style": "Magic",
+      "item": "Gravite Orb",
+      "url": "https://runescape.wiki/w/Gravite_orb",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "gravite-staff",
+      "tier": "55",
+      "style": "Magic",
+      "item": "Gravite Staff",
+      "url": "https://runescape.wiki/w/Gravite_staff",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "chaotic-staff",
+      "tier": "80",
+      "style": "Magic",
+      "item": "Chaotic Staff",
+      "url": "https://runescape.wiki/w/Chaotic_staff",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "ruinous-staff",
+      "tier": "90",
+      "style": "Magic",
+      "item": "Ruinous Staff",
+      "url": "https://runescape.wiki/w/Ruinous_staff",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "gravite-chargebow",
+      "tier": "55",
+      "style": "Range",
+      "item": "Gravite Chargebow",
+      "url": "https://runescape.wiki/w/Gravite_chargebow",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "gravite-knife",
+      "tier": "55",
+      "style": "Range",
+      "item": "Gravite Knife",
+      "url": "https://runescape.wiki/w/Gravite_knife",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "off-hand-gravite-knife",
+      "tier": "55",
+      "style": "Range",
+      "item": "Off-hand Gravite Knife",
+      "url": "https://runescape.wiki/w/Off-hand_gravite_knife",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "chaotic-crossbow",
+      "tier": "80",
+      "style": "Range",
+      "item": "Chaotic Crossbow",
+      "url": "https://runescape.wiki/w/Chaotic_crossbow",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "off-hand-chaotic-crossbow",
+      "tier": "80",
+      "style": "Range",
+      "item": "Off-hand Chaotic Crossbow",
+      "url": "https://runescape.wiki/w/Off-hand_chaotic_crossbow",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "ruinous-crossbow",
+      "tier": "90",
+      "style": "Range",
+      "item": "Ruinous Crossbow",
+      "url": "https://runescape.wiki/w/Ruinous_crossbow",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "off-hand-ruinous-crossbow",
+      "tier": "90",
+      "style": "Range",
+      "item": "Off-hand Ruinous Crossbow",
+      "url": "https://runescape.wiki/w/Off-hand_ruinous_crossbow",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "gravite-guard",
+      "tier": "55",
+      "style": "Necromancy",
+      "item": "Gravite Guard",
+      "url": "https://runescape.wiki/w/Gravite_guard",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "gravite-lantern",
+      "tier": "55",
+      "style": "Necromancy",
+      "item": "Gravite Lantern",
+      "url": "https://runescape.wiki/w/Gravite_lantern",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "chaotic-guard",
+      "tier": "80",
+      "style": "Necromancy",
+      "item": "Chaotic Guard",
+      "url": "https://runescape.wiki/w/Chaotic_guard",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "chaotic-lantern",
+      "tier": "80",
+      "style": "Necromancy",
+      "item": "Chaotic Lantern",
+      "url": "https://runescape.wiki/w/Chaotic_lantern",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "ruinous-guard",
+      "tier": "90",
+      "style": "Necromancy",
+      "item": "Ruinous Guard",
+      "url": "https://runescape.wiki/w/Ruinous_guard",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "ruinous-lantern",
+      "tier": "90",
+      "style": "Necromancy",
+      "item": "Ruinous Lantern",
+      "url": "https://runescape.wiki/w/Ruinous_lantern",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "chaotic-kiteshield",
+      "tier": "80",
+      "style": "Melee",
+      "item": "Chaotic Kiteshield",
+      "url": "https://runescape.wiki/w/Chaotic_kiteshield",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "eagle-eye-kiteshield",
+      "tier": "80",
+      "style": "Range",
+      "item": "Eagle-eye Kiteshield",
+      "url": "https://runescape.wiki/w/Eagle-eye_kiteshield",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "farseer-kiteshield",
+      "tier": "80",
+      "style": "Magic",
+      "item": "Farseer Kiteshield",
+      "url": "https://runescape.wiki/w/Farseer_kiteshield",
+      "source": "Dungeoneering"
+    },
+    {
+      "id": "statius-equipment",
+      "tier": "78",
+      "style": "Melee",
+      "item": "Statius's Equipment",
+      "url": "https://runescape.wiki/w/Statius's_Equipment",
+      "source": "Revenants"
+    },
+    {
+      "id": "vestas-equipment",
+      "tier": "78",
+      "style": "Melee",
+      "item": "Vesta's Equipment",
+      "url": "https://runescape.wiki/w/Vesta's_Equipment",
+      "source": "Revenants"
+    },
+    {
+      "id": "morrigans-equipment",
+      "tier": "78",
+      "style": "Range",
+      "item": "Morrigan's Equipment",
+      "url": "https://runescape.wiki/w/Morrigan's_Equipment",
+      "source": "Revenants"
+    },
+    {
+      "id": "zuriels-equipment",
+      "tier": "78",
+      "style": "Magic",
+      "item": "Zuriel's Equipment",
+      "url": "https://runescape.wiki/w/Zuriel's_Equipment",
+      "source": "Revenants"
+    },
+    {
+      "id": "ancient-warriors-equipment-patch",
+      "tier": "N/A",
+      "style": "Upgrade Item",
+      "item": "Ancient Warrior's Equipment Patch",
+      "url": "https://runescape.wiki/w/Ancient_warrior's_equipment_patch",
+      "source": "Revenants",
+      "info": "Upgrade item for the tier 78 equipment."
+    },
+    {
+      "id": "obliteration",
+      "tier": "87",
+      "style": "Magic",
+      "item": "Obliteration",
+      "url": "https://runescape.wiki/w/Obliteration",
+      "source": "Slayer"
+    },
+    {
+      "id": "decimation",
+      "tier": "87",
+      "style": "Range",
+      "item": "Decimation",
+      "url": "https://runescape.wiki/w/Decimation",
+      "source": "Slayer"
+    },
+    {
+      "id": "annihilation",
+      "tier": "87",
+      "style": "Melee",
+      "item": "Annihilation",
+      "url": "https://runescape.wiki/w/Annihilation",
+      "source": "Slayer"
+    },
+    {
+      "id": "hexhunter-bow",
+      "tier": "80",
+      "style": "Range",
+      "item": "Hexhunter Bow",
+      "url": "https://runescape.wiki/w/Hexhunter_Bow",
+      "source": "Slayer"
+    },
+    {
+      "id": "strykebow",
+      "tier": "85",
+      "style": "Range",
+      "item": "Strykebow",
+      "url": "https://runescape.wiki/w/Strykebow",
+      "source": "Slayer"
+    },
+    {
+      "id": "staff-of-darkness",
+      "tier": "85",
+      "style": "Magic",
+      "item": "Staff of Darkness",
+      "url": "https://runescape.wiki/w/Staff_of_Darkness",
+      "source": "Slayer"
+    },
+    {
+      "id": "staff-of-light",
+      "tier": "85",
+      "style": "Magic",
+      "item": "Staff of Light",
+      "url": "https://runescape.wiki/w/Staff_of_Light",
+      "source": "Slayer"
+    },
+    {
+      "id": "lava-whip",
+      "tier": "85",
+      "style": "Melee",
+      "item": "Lava Whip",
+      "url": "https://runescape.wiki/w/Lava_Whip",
+      "source": "Slayer"
+    },
+    {
+      "id": "wyvern-crossbow",
+      "tier": "85",
+      "style": "Range",
+      "item": "Wyvern Crossbow",
+      "url": "https://runescape.wiki/w/Wyvern_Crossbow",
+      "source": "Slayer",
+      "info": "Also available in Asgarnia."
+    },
+    {
+      "id": "dark-bow",
+      "tier": "70",
+      "style": "Range",
+      "item": "Dark Bow",
+      "url": "https://runescape.wiki/w/Dark_Bow",
+      "source": "Slayer",
+      "info": "Also available in Kandarin, Morytania, and Tirannwn."
+    },
+    {
+      "id": "eldritch-crossbow",
+      "tier": "92",
+      "style": "Range",
+      "item": "Eldritch Crossbow",
+      "url": "https://runescape.wiki/w/Eldritch_Crossbow",
+      "source": "Elite Dungeon 3"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "title": "Teleport Relics",
+  "titleAs": "h2",
+  "sortable": true,
+  "rowId": "id",
+  "search": {
+    "placeholder": "Search Wilderness teleport relics..."
+  },
+  "columns": [
+    {
+      "key": "relic",
+      "header": "Relic",
+      "filter": true,
+      "width": "lg",
+      "wrap": false
+    },
+    {
+      "key": "loc-type",
+      "header": "Location Type"
+    },
+    {
+      "key": "loc",
+      "header": "Location",
+      "info": true
+    }
+  ],
+  "rows": [
+    {
+      "id": "natures-network-ALR",
+      "relic": "Nature's Network",
+      "loc-type": "Fairy Ring",
+      "loc": "ALR - Other realms: Abyss"
+    },
+    {
+      "id": "natures-network-herb-wilderness",
+      "relic": "Nature's Network",
+      "loc-type": "Farming Patch",
+      "loc": "Herb and Allotment - Wilderness"
+    },
+        {
+      "id": "natures-network-limpwurt-wilderness",
+      "relic": "Nature's Network",
+      "loc-type": "Farming Patch",
+      "loc": "Patches - Wilderness (Limpwurt Patch)"
+    },
+    {
+      "id": "assassins-insight-mandrith",
+      "relic": "Assassin's Insight",
+      "loc": "Mandrith",
+      "loc-type": "Slayer Master"
+    },
+    {
+      "id": "assassins-insight-stalker-dungeon",
+      "relic": "Assassin's Insight",
+      "loc": "Stalker Dungeon",
+      "loc-type": "Slayer Dungeon",
+      "info": "Requires the Dishonour among Thieves quest."
+    },
+    {
+      "id": "assassins-insight-kalgerion-demons",
+      "relic": "Assassin's Insight",
+      "loc-type":"Slayer Dungeon",
+      "loc": "Kal'gerion demons",
+      "info": "Located in the Kal'gerion resource dungeon."
+    },
+    {
+      "id": "voidwalker-games-necklace",
+      "relic": "Voidwalker",
+      "loc-type": "Games Necklace",
+      "loc": "Corporeal Beast"
+    },
+    {
+      "id": "voidwalker-enlightened-amulet",
+      "relic": "Voidwalker",
+      "loc-type": "Enlightened Amulet",
+      "loc": "Graveyard of Shadows"
+    }
+  ]
+}

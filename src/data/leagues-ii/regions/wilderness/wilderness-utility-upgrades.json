@@ -1,0 +1,15 @@
+{
+  "title": "Wilderness Utility Upgrades",
+  "titleAs": "h3",
+  "rowId": "id",
+  "columns": [
+    { "key": "tier", "header": "Tier", "width": "sm", "emphasis": true, "wrap": false },
+    { "key": "item", "header": "Item", "link": { "hrefKey": "url", "external": true } }
+  ],
+  "rows": [
+    { "id": "bonecrusher", "tier": "Utility", "item": "Bonecrusher", "url": "https://runescape.wiki/w/Bonecrusher" },
+    { "id": "charming-imp", "tier": "Utility", "item": "Charming Imp", "url": "https://runescape.wiki/w/Charming_Imp" },
+    { "id": "gem-bag-upgraded", "tier": "Utility", "item": "Gem bag (upgraded)", "url": "https://runescape.wiki/w/Gem_bag_(upgraded)" },
+    { "id": "herbicide", "tier": "Utility", "item": "Herbicide", "url": "https://runescape.wiki/w/Herbicide" }
+  ]
+}

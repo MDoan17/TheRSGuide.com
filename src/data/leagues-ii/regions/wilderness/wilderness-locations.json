@@ -1,0 +1,30 @@
+{
+  "title": "Locations",
+  "titleAs": "h2",
+  "rowId": "id",
+  "columns": [
+    {
+      "key": "location",
+      "header": "Location",
+      "link": { "hrefKey": "url", "external": true },
+      "hidden": true
+    }
+  ],
+  "rows": [
+    {
+      "id": "wilderness-crater",
+      "location": "Wilderness Crater",
+      "url": "https://runescape.wiki/w/Wilderness_Crater"
+    },
+    {
+      "id": "daemonheim",
+      "location": "Daemonheim",
+      "url": "https://runescape.wiki/w/Daemonheim"
+    },
+    {
+      "id": "mage-training-arena",
+      "location": "Mage Training Arena",
+      "url": "https://runescape.wiki/w/Mage_Training_Arena"
+    }
+  ]
+}
