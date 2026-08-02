@@ -66,6 +66,9 @@
   --progress-ready-foreground: var(--primary-foreground);
   --progress-locked: var(--muted-foreground);
   --leagues-accent: #cc9a63;
+  --leagues-chaos: #ff2929;
+  --leagues-balance: #1f870c;
+  --leagues-order: #3079ff;
   --home-video-background: #0a0908;
   --home-video-foreground: #efe4d2;
 }
