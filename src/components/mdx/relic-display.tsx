@@ -128,7 +128,7 @@ function RelicDisplay({ tier, points }: RelicDisplayProps) {
                     <LeaguesPassiveList passives={passives} />
                 </div>
             )}
-            
+
             { relics.length === 0 && tier !== 0 ? (
                 <div>
                     <div className="bg-card p-4">Relics have not been confirmed for this tier yet. Check back soon!</div>
