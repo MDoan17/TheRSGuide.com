@@ -126,8 +126,8 @@ npm start
 exposes `/api/player/:username` for RuneMetrics requests. Set `PORT` to change
 the default port of `4173`.
 
-The production origin also reads Cloudflare's `CF-IPCountry` header to select
-the regional analytics policy without a Worker or redirect. See
+The production origin also reads Cloudflare's `CF-IPCountry` header to choose
+the default for saved progress and preferences without a Worker or redirect. See
 [`docs/analytics-privacy.md`](docs/analytics-privacy.md) for the measurement,
 opt-out, and retention configuration.
 

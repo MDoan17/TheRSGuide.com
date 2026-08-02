@@ -1,7 +1,7 @@
 import { readPrivacyRegion } from '@/lib/privacy-region'
 
 export const CONSENT_COOKIE = 'rs-guide-consent'
-export const CONSENT_VERSION = 4
+export const CONSENT_VERSION = 6
 export const CONSENT_MAX_AGE = 60 * 60 * 24 * 180
 
 export type ConsentPreferences = {
@@ -45,16 +45,28 @@ export function readConsent(cookieSource = document.cookie): ConsentPreferences 
       }
     }
 
-    const legacyPreference = parsed.version === 3
+    const legacyPreference = (parsed.version === 3 || parsed.version === 4)
       && typeof parsed.analytics === 'boolean'
       && typeof parsed.functional === 'boolean'
-      && typeof parsed.sessionReplay === 'boolean'
       && typeof parsed.updatedAt === 'string'
 
-    return legacyPreference
+    if (legacyPreference) {
+      return {
+        version: CONSENT_VERSION,
+        analytics: parsed.analytics as boolean,
+        functional: parsed.functional as boolean,
+        updatedAt: parsed.updatedAt as string,
+      }
+    }
+
+    const aggregateAnalyticsPreference = parsed.version === 5
+      && typeof parsed.functional === 'boolean'
+      && typeof parsed.updatedAt === 'string'
+
+    return aggregateAnalyticsPreference
       ? {
           version: CONSENT_VERSION,
-          analytics: parsed.analytics as boolean,
+          analytics: true,
           functional: parsed.functional as boolean,
           updatedAt: parsed.updatedAt as string,
         }

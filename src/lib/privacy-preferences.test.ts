@@ -28,17 +28,29 @@ describe('privacy preferences', () => {
     }))).toBeNull()
   })
 
-  it('migrates the previous session-recording preference without retaining it', () => {
+  it('keeps a previous analytics opt-out', () => {
     expect(readConsent(consentCookie({
-      version: 3,
-      analytics: true,
+      version: 4,
+      analytics: false,
       functional: true,
-      sessionReplay: true,
+      updatedAt: '2026-07-25T00:00:00.000Z',
+    }))).toEqual({
+      version: CONSENT_VERSION,
+      analytics: false,
+      functional: true,
+      updatedAt: '2026-07-25T00:00:00.000Z',
+    })
+  })
+
+  it('enables private traffic counts when migrating aggregate-only settings', () => {
+    expect(readConsent(consentCookie({
+      version: 5,
+      functional: false,
       updatedAt: '2026-07-25T00:00:00.000Z',
     }))).toEqual({
       version: CONSENT_VERSION,
       analytics: true,
-      functional: true,
+      functional: false,
       updatedAt: '2026-07-25T00:00:00.000Z',
     })
   })

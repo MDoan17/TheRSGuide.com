@@ -1,16 +1,13 @@
 # Analytics privacy configuration
 
-The site uses two measurement layers:
+The site sends a minimal pageview to its self-hosted Rybbit service. This is on
+by default and can be turned off from Privacy Settings. The opt-out is stored in
+the site's preference cookie without a unique browser ID.
 
-1. Cloudflare Web Analytics provides anonymous aggregate pageview and visit
-   totals for all traffic. It does not use a persistent browser identifier.
-2. Self-hosted Rybbit provides daily unique-browser and navigation metrics.
-   It is opt-in in the EEA and United Kingdom and opt-out elsewhere.
-
-The Node origin reads Cloudflare's `CF-IPCountry` request header and replaces
-the `rs-guide-privacy-region` meta value in each HTML response. Unknown country
-codes fail closed to the strict opt-in behavior. No country value is persisted
-by this decision.
+The Node origin still reads Cloudflare's `CF-IPCountry` request header to choose
+whether progress and preferences are remembered by default. It does not use
+the country value to decide whether Rybbit runs, and it does not persist the
+country value.
 
 Rybbit site settings for `thersguide.com`:
 
@@ -20,10 +17,12 @@ Rybbit site settings for `thersguide.com`:
 - URL parameters off
 - session replay off
 - error, form, copy, button-click, and outbound-click capture off
-- initial pageviews and SPA navigation on
+- page paths, query strings, referrers, screen details, and browser IDs omitted
+- one minimal event per initial pageview and SPA navigation
 
-Opting out writes Rybbit's supported `disable-rybbit` flag and deletes its
-visitor, user, and replay-sampling identifiers from local and session storage.
+The site bypasses Rybbit's browser script and posts the minimal event directly.
+It also removes identifiers left by older versions of the script from local and
+session storage.
 
 Detailed ClickHouse `events` rows have a 13-month TTL. Two materialized
 aggregate tables retain non-identifying historical totals:
@@ -45,5 +44,8 @@ GROUP BY date
 ORDER BY date;
 ```
 
-These are browser estimates, not authenticated players or people. Cloudflare
-aggregate visits should be kept alongside them as the all-traffic baseline.
+These are estimates, not authenticated players or exact counts of people.
+
+The homepage Vimeo background is separate from analytics and saved-progress
+preferences. It loads automatically with Vimeo's `dnt=1` option. YouTube
+embeds remain click-to-load in strict regions.

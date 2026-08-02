@@ -11,34 +11,31 @@ function PrivacyNotice() {
         </p>
         <h1 className="mt-0 mb-4 text-4xl text-foreground">Privacy notice</h1>
         <p>
-          The RS Guide collects the minimum information needed to measure which
-          guides are useful and to remember features you choose. We do not sell
+          The RS Guide collects the minimum information needed to count visits
+          and remember features you choose. We do not sell
           visitor data, use it for advertising, or send player names and form
           values to analytics.
         </p>
 
-        <h2>Anonymous aggregate measurement</h2>
+        <h2>Traffic counts</h2>
         <p>
-          Cloudflare Web Analytics measures aggregate pageviews and visits. It
-          does not use cookies, localStorage, fingerprinting, or a persistent
-          visitor identifier. These totals cannot be used to identify you.
-        </p>
-
-        <h2>Optional browser analytics</h2>
-        <p>
-          Our self-hosted Rybbit service records page paths, page titles,
-          referrers, browser and device type, language, screen size, and coarse
-          location. It assigns a random browser identifier so daily unique
-          browsers and navigation can be measured. IP addresses and player
-          names are not stored, URL parameters and session recording are off,
-          and identifiers are salted daily on the server.
+          We use our self-hosted Rybbit service to estimate daily visitors and
+          sessions. The site sends a minimal pageview that does not include the
+          page you viewed, player names, searches, form values, referrers,
+          screen details, or a browser identifier. Rybbit does not set a cookie
+          or save an analytics ID in your browser.
         </p>
         <p>
-          In the EEA and United Kingdom this analytics remains off until you
-          allow it. Elsewhere it is enabled based on our legitimate interest in
-          understanding site usage, but you can disable it anytime in Privacy
-          Settings. Disabling it stops future events and deletes Rybbit's local
-          browser identifiers.
+          Like any web request, the Rybbit server briefly receives an IP address
+          and browser user agent. It turns them into a daily rotating code used
+          to count visitors and sessions and may derive a broad location and
+          device type. It stores the event without the raw IP address. The code
+          changes each day, so visits cannot be linked across days.
+        </p>
+        <p>
+          These traffic counts are on by default. You can turn them off at any
+          time from Privacy Settings. Your choice is saved in a preference
+          cookie that contains no unique ID.
         </p>
 
         <h2>Saved progress and preferences</h2>
@@ -59,9 +56,11 @@ function PrivacyNotice() {
 
         <h2>Third-party media</h2>
         <p>
-          Vimeo background media is not loaded before optional storage is
-          allowed in strict-consent regions. YouTube videos use its privacy-
-          enhanced domain and otherwise load only after you request the video.
+          The homepage background loads from Vimeo using its Do Not Track
+          setting. Vimeo still receives the connection information needed to
+          deliver the video and may use security cookies. YouTube videos use
+          its privacy-enhanced domain and otherwise load only after you request
+          the video.
         </p>
 
         <h2>Your choices</h2>

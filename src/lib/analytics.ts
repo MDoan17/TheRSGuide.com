@@ -1,56 +1,82 @@
-const RYBBIT_SCRIPT_ID = "rybbit-analytics"
-const RYBBIT_OPT_OUT_KEY = "disable-rybbit"
-const RYBBIT_STORAGE_KEYS = [
+const RYBBIT_ANALYTICS_ENDPOINT = "https://analytics.distortion.me/api/track"
+const RYBBIT_SITE_ID = "d8c35c481bf4"
+const TRACKED_HOSTNAMES = new Set(["thersguide.com", "www.thersguide.com"])
+const LEGACY_RYBBIT_SCRIPT_ID = "rybbit-analytics"
+const LEGACY_RYBBIT_STORAGE_KEYS = [
+  "disable-rybbit",
   "rybbit-visitor-id",
   "rybbit-user-id",
   "rybbit-replay-sampled",
 ] as const
 
+type AnonymousPageviewPayload = {
+  site_id: string
+  hostname: string
+  pathname: "/"
+  querystring: ""
+  type: "pageview"
+}
+
 declare global {
   interface Window {
-    __RYBBIT_OPTOUT__?: boolean
     rybbit?: {
       cleanup?: () => void
-      clearUserId?: () => void
       stopSessionReplay?: () => void
     }
   }
 }
 
-function enableAnalytics() {
-  window.localStorage.removeItem(RYBBIT_OPT_OUT_KEY)
-  window.__RYBBIT_OPTOUT__ = false
-  if (document.getElementById(RYBBIT_SCRIPT_ID)) return
+let lastNavigationKey: string | null = null
 
-  const script = document.createElement("script")
-  script.id = RYBBIT_SCRIPT_ID
-  script.src = "https://analytics.distortion.me/api/script.js"
-  script.async = true
-  script.dataset.siteId = "d8c35c481bf4"
-  document.head.append(script)
+function createAnonymousPageviewPayload(hostname: string): AnonymousPageviewPayload {
+  return {
+    site_id: RYBBIT_SITE_ID,
+    hostname,
+    pathname: "/",
+    querystring: "",
+    type: "pageview",
+  }
 }
 
-function clearAnalyticsStorage() {
-  window.rybbit?.clearUserId?.()
-  for (const key of RYBBIT_STORAGE_KEYS) {
+function clearLegacyAnalyticsStorage() {
+  window.rybbit?.stopSessionReplay?.()
+  window.rybbit?.cleanup?.()
+  document.getElementById(LEGACY_RYBBIT_SCRIPT_ID)?.remove()
+
+  for (const key of LEGACY_RYBBIT_STORAGE_KEYS) {
     window.localStorage.removeItem(key)
     window.sessionStorage.removeItem(key)
   }
 }
 
-function disableAnalytics({ forget = false, persist = false } = {}) {
-  window.rybbit?.stopSessionReplay?.()
-  window.rybbit?.cleanup?.()
-  window.__RYBBIT_OPTOUT__ = true
-  if (persist) window.localStorage.setItem(RYBBIT_OPT_OUT_KEY, "true")
-  if (forget) clearAnalyticsStorage()
+function trackAnonymousPageview(navigationKey: string, enabled = true) {
+  if (!enabled) return
+
+  const hostname = window.location.hostname.toLowerCase()
+  if (!TRACKED_HOSTNAMES.has(hostname)) return
+  if (navigationKey === lastNavigationKey) return
+  lastNavigationKey = navigationKey
+
+  void fetch(RYBBIT_ANALYTICS_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(createAnonymousPageviewPayload(hostname)),
+    mode: "cors",
+    credentials: "omit",
+    keepalive: true,
+    referrerPolicy: "no-referrer",
+  }).catch(() => {
+    // Analytics must never interfere with the guide.
+  })
 }
 
 export {
-  clearAnalyticsStorage,
-  disableAnalytics,
-  enableAnalytics,
-  RYBBIT_OPT_OUT_KEY,
-  RYBBIT_STORAGE_KEYS,
-  RYBBIT_SCRIPT_ID,
+  clearLegacyAnalyticsStorage,
+  createAnonymousPageviewPayload,
+  LEGACY_RYBBIT_STORAGE_KEYS,
+  RYBBIT_ANALYTICS_ENDPOINT,
+  RYBBIT_SITE_ID,
+  trackAnonymousPageview,
 }
