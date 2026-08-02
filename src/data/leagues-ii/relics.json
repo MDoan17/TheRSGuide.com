@@ -4,7 +4,7 @@
             "name": "Survivalist",
             "tagline": "More resources. Better tools. Maximum efficiency from the very start.",
             "tier": 1,
-            "image": "/data/leagues/relics/tier-1/survivalist.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/survivalist.png",
             "effects": [
                 "Grants the Survivalist's bag, which can store logs, fish and ores, as well as the Pickaxe of the faithful, Hatchet of devotion, and Harpoon of the pious which act as the highest tier tool for Mining, Woodcutting, and Fishing.",
                 "Resources are doubled while Fishing, Mining, Woodcutting or excavating Archaeology hotspots.",
@@ -41,7 +41,7 @@
             "name": "Endless Harvest",
             "tagline": "Spend less time banking and more time gathering.",
             "tier": 1,
-            "image": "/data/leagues/relics/tier-1/endless-harvest.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/endless-harvest.png",
             "effects": [
                 "All resources gathered from Archaeology, Farming, Fishing, Mining, and Woodcutting are automatically sent to the bank or metal bank or archaeology storage.",
                 "When Fishing, Mining, or Woodcutting there's a 10% chance for the resource to be upgraded to the next tier.",
@@ -79,7 +79,7 @@
             "name": "Golden Touch",
             "tagline": "Transforms Agility and Thieving into your own personal goldmine.",
             "tier": 1,
-            "image": "/data/leagues/relics/tier-1/golden-touch.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/golden-touch.png",
             "effects": [
                 "Grants the Goldenhawk Boots. Goldenhawk Boots grant agility XP periodically while running, skilling, or when using ultimate abilities.",
                 "Gain Golden feathers when gaining xp in Agility or Thieving. These can be alchemised for 50,000 coins, or offered for Prayer XP.",
@@ -117,7 +117,7 @@
             "name": "Crystal Grace",
             "tagline": "Master the mystic arts.",
             "tier": 0,
-            "image": "/data/leagues/relics/tier-0/crystal-grace.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/crystal-grace.png",
             "effects": [
                 "Grants you Seren's crystal tiara, which acts as an Omni-tiara for entering all Runecrafting altars and offers teleports to Runecrafting altars in your unlocked regions. The tiara also acts as a demonhorn necklace when worn or in the inventory.",
                 "Unlocks all magic spells.",
@@ -150,7 +150,7 @@
             "name": "Superheated",
             "tagline": "Burn through everything you touch.",
             "tier": 0,
-            "image": "/data/leagues/relics/tier-0/superheated.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/superheated.png",
             "effects": [
                 "Burn logs automatically when Woodcutting, without required Firemaking level. (Toggleable)",
                 "Automatically cook fish caught with Fishing, without required Cooking level. (Toggleable)",
@@ -185,7 +185,7 @@
             "name": "Divine Druid",
             "tagline": "Become one with nature.",
             "tier": 0,
-            "image": "/data/leagues/relics/tier-0/divine-druid.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/divine-druid.png",
             "effects": [
                 "Grants Thera's summoning pouch, a pouch that stores grimy herbs and charms. Acts as infinite spirit shards and summoning pouches.",
                 "Cleaning grimy herbs turns them directly into unfinished potions. (Toggleable)",
@@ -226,7 +226,7 @@
             "name": "Transmutation",
             "tagline": "Rewrite the rules of resource gathering.",
             "tier": 0,
-            "image": "/data/leagues/relics/tier-0/transmutation.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/transmutation.png",
             "effects": [
                 "Grants the Deities' transmuter.",
                 "Alchemical spells transmute items. (Toggleable)",
@@ -289,10 +289,10 @@
             "name": "Assassin's Insight",
             "tagline": "Slay monsters with ease and efficiency.",
             "tier": 0,
-            "image": "/data/leagues/relics/tier-0/assassins-insight.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/assassins-insight.png",
             "effects": [
                 "Grants the Skull of Slaying, which allows you to teleport to any slayer master and a range of slayer dungeons and monsters.",
-                "When assigned a slayer assignment, yo uwill be able to choose between two assignments.",
+                "When assigned a slayer assignment, you will be able to choose between two assignments.",
                 "Choose between minimum or maximum amounts when requesting a new slayer assignment.",
                 "Monsters can be added to the prefer and block lists for free.",
                 "You have the effects of the corrupted slayer mask without needing to wear it.",
@@ -311,10 +311,10 @@
             ]
         },
         {
-            "name": "Nature's Netowrk",
+            "name": "Nature's Network",
             "tagline": "Experience the world as fairies do.",
             "tier": 0,
-            "image": "/data/leagues/relics/tier-0/natures-network.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/natures-network.png",
             "effects": [
                 "Grants a Fairy mushroom, which allows you to teleport to any fairy ring, spirit tree, or farming patch.",
                 "Patches are harvested instantly and produce is automatically noted.",
@@ -337,7 +337,7 @@
             "name": "Voidwalker",
             "tagline": "Traverse the world and find items left to the void.",
             "tier": 0,
-            "image": "/data/leagues/relics/tier-0/voidwalker.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/voidwalker.png",
             "effects": [
                 "Grants an Abyssal Conduit, a powerful item that provides unlimited teleports from the following jewelry pieces:",
                 "The Amulet of glory, Combat bracelet, Delver's anklet, Dig site pendant, Enlightened amulet, Ferocious ring, Games necklace, Ring of dueling, Ring of respawn, Ring of slaying, Ring of wealth, Skills necklace, and Traveller's necklace.",
@@ -363,6 +363,64 @@
                     "skill": "runecrafting",
                     "grade": "C"
                 }
+            ]
+        },
+        {
+            "name": "Animal Wrangler",
+            "tagline": "Wrangle the wild and tame the untamable.",
+            "tier": 0,
+            "image": "https://media.thersguide.com/leagues-2/relics/animal-wrangler-temp.png",
+            "effects": [
+                "Bank fish automatiically when fishing and hunter loot when hunting. (Toggleable)",
+                "When capturing hunter creatures or fishing, there is a 2% chance to receive a random farm animal, sent to your bank.",
+                "When gaining a bonus baby animal from this relic, you can isntead receive an Anachronia dinosaur farm animal. (Toggleable)",
+                "When catching fish, capturing hunter creatures, or harvesting farm animals there is a 33% chance to obtain a random clean herb, or herb, tree or fruit tree seed sent to your bank.",
+                "Farm animals always have 100% stats and never get hungry.",
+                "Hunter catch channce is 100%.",
+                "Buyers always pay the highest amount of beans for sold animals, regardless of age or disease.",
+                "Hunter loot quantity is increased by 5x.",
+                "Hunter traps attract creatures faster.",
+                "Hunter marks are increased by 5x.",
+                "Fishing no longer requires bait, always catch an additional fish.",
+                "Anachronia and Havenhythe Big Game Hunter creatures no longer require bait and are twice as slow to catch you.",
+                "Spirit moths give 10x charms.",
+                "Farm animals are 20x more common from their sources."
+            ],
+            "notes": [
+            ],
+            "skillSolves": [
+                {
+                    "skill": "fishing",
+                    "grade": "A"
+                },
+                {
+                    "skill": "hunter",
+                    "grade": "A"
+                },
+                {
+                    "skill": "farming",
+                    "grade": "B"
+                },
+                {
+                    "skill": "summoning",
+                    "grade": "C"
+                }
+            ]
+        },
+        {
+            "name": "Icyenic Faith",
+            "tagline": "Gain the strength and protection of the Icyene.",
+            "tier": 0,
+            "image": "https://media.thersguide.com/leagues-2/relics/icyenic-faith-temp.png",
+            "effects": [
+                "Grants you the Tome of the Icyene.",
+                "When worn: The Tome provide +50 Prayer bonus, Gain 0.2% critical strike chance and 0.2% base ability damage per 1 prayer bonus you have.",
+                "Protection prayers and Deflect curses black +50% of damage.",
+                "Protection prayers and Deflect curses act as Soul split being active."
+            ],
+            "notes": [
+            ],
+            "skillSolves": [
             ]
         }
     ],

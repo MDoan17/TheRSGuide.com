@@ -14,6 +14,7 @@ export type ConsentPreferences = {
 const FUNCTIONAL_STORAGE_KEYS = new Set([
   'home-background-video',
   'rs-guide-efficiency-guide',
+  'rs-guide-efficiency-guide-ignore-player',
   'rs-guide-recurring-activities',
   'rs3_player_search',
   'theme',

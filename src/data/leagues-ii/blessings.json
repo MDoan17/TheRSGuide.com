@@ -2,9 +2,10 @@
     "Blessings": [
         {
             "name": "Adrenaline Junkie",
+            "tagline": "Increases your maximum adrenaline and adrenaline generation.",
             "path": "Chaos",
             "tier": 1,
-            "image": "/data/leagues/blessings/tier-1/adrenaline-junkie.png",
+            "image": "https://media.thersguide.com/leagues-2/blessings/adrenaline-junkie.png",
             "effects": [
                 "Your maximum adrenaline is increased by 50%.",
                 "Adrenaline generation is increased by 50%."
@@ -15,9 +16,10 @@
         },
         {
             "name": "Big Boned",
+            "tagline": "Increases your maximum life points and damage dealt based on your maximum life points.",
             "path": "Balance",
             "tier": 1,
-            "image": "/data/leagues/blessings/tier-1/big-boned.png",
+            "image": "https://media.thersguide.com/leagues-2/blessings/big-boned.png",
             "effects": [
                 "Your maximum life points are increased by 50%.",
                 "All damage you deal gains 5% of your maximum life points as bonus damage."
@@ -28,9 +30,10 @@
         },
         {
             "name": "Teragard's Aegis",
+            "tagline": "Increases your base ability damage and health regeneration based on your armour value.",
             "path": "Order",
             "tier": 1,
-            "image": "/data/leagues/blessings/tier-1/teragards-aegis.png",
+            "image": "https://media.thersguide.com/leagues-2/blessings/teragards-aegis.png",
             "effects": [
                 "Your base ability damage is increased by 25% of your total armour value. This bonus is doubled while wielding a defender and tripled while wielding a shield.",
                 "Your base health regeneration is increased by 25% of your maximum life points. This bonus is doubled while wielding a defender and tripled while wielding a shield."
@@ -41,9 +44,10 @@
         },
         {
             "name": "Abyssal Cinders",
+            "tagline": "Zamorak's fury engulfs your enemies.",
             "path": "Chaos",
             "tier": 2,
-            "image": "/data/leagues/blessings/tier-2/abyssal-cinders.png",
+            "image": "https://media.thersguide.com/leagues-2/blessings/abyssal-cinders.png",
             "effects": [
                 "On hit: Your attacks deal 15% of ability damage as bonus damage.",
                 "On hit: Your attacks have a 5% chance to Trigger an Inferno of Zamorak.",
@@ -55,9 +59,10 @@
         },
         {
             "name": "Barkscales",
+            "tagline": "Guthix's hand protects you and poisons your enemies.",
             "path": "Balance",
             "tier": 2,
-            "image": "/data/leagues/blessings/tier-2/barkscales.png",
+            "image": "https://media.thersguide.com/leagues-2/blessings/barkscales.png",
             "effects": [
                 "Incoming damage is reduced by 10% of your armour value.",
                 "After Barkscales reduces damage 5 times, unleash a Grasp of Guthix at your attacker's location.",
@@ -69,9 +74,10 @@
         },
         {
             "name": "Striking Light",
+            "tagline": "Saradomin's might courses through your basic attacks.",
             "path": "Order",
             "tier": 2,
-            "image": "/data/leagues/blessings/tier-2/striking-light.png",
+            "image": "https://media.thersguide.com/leagues-2/blessings/striking-light.png",
             "effects": [
                 "Your basic attack's damage is increased by 40%.",
                 "Your basic attacks unleash a Light of Saradomin on your target. 9s cooldown.",
@@ -83,9 +89,10 @@
         },
         {
             "name": "Avernic Rampage",
+            "tagline": "Chance for free casting of abilities and special attacks.",
             "path": "Chaos",
             "tier": 3,
-            "image": "/data/leagues/blessings/tier-3/avernic-rampage.png",
+            "image": "https://media.thersguide.com/leagues-2/blessings/avernic-rampage.png",
             "effects": [
                 "On-attack: 5% chance to activate Avernic Rampage for 7.2s.",
                 "Avernic Rampage: Abilities and special attacks cost 0% adrenaline."
@@ -96,9 +103,10 @@
         },
         {
             "name": "Eternal Sustenance",
+            "tagline": "Food is no longer consumed when eaten.",
             "path": "Balance",
             "tier": 3,
-            "image": "/data/leagues/blessings/tier-3/eternal-sustenance.png",
+            "image": "https://media.thersguide.com/leagues-2/blessings/eternal-sustenance.png",
             "effects": [
                 "Food is no longer consumed when eaten.",
                 "You no longer lose adrenaline when eating."
@@ -109,9 +117,10 @@
         },
         {
             "name": "Steadfast Will",
+            "tagline": "Empowers the 'Bash', 'Preparation', 'Reflect', and 'Revenge' abilities.",
             "path": "Order",
             "tier": 3,
-            "image": "/data/leagues/blessings/tier-3/steadfast-will.png",
+            "image": "https://media.thersguide.com/leagues-2/blessings/steadfast-will.png",
             "effects": [
                 "Empowers the 'Bash', 'Preparation', 'Reflect', and 'Revenge' abilities.",
                 "Bash: Deals additional damage equal to 350-450% of your armour value.",
@@ -125,9 +134,10 @@
         },
         {
             "name": "Demon's Mark",
+            "tagline": "Always hit your target's weak spot.",
             "path": "Chaos",
             "tier": 4,
-            "image": "/data/leagues/blessings/tier-4/demons-mark.png",
+            "image": "https://media.thersguide.com/leagues-2/blessings/demons-mark.png",
             "effects": [
                 "Your accuracy is always calculated using your target's weakness."
             ],
@@ -137,9 +147,10 @@
         },
         {
             "name": "Splash Zone",
+            "tagline": "The bigger they are, the harder they fall.",
             "path": "Balance",
             "tier": 4,
-            "image": "/data/leagues/blessings/tier-4/splash-zone.png",
+            "image": "https://media.thersguide.com/leagues-2/blessings/splash-zone.png",
             "effects": [
                 "Area of effect and multi-target attacks deal 30% more damage.",
                 "Area of effect abilities deal 5% more damage per tile the target occupies."
@@ -150,9 +161,10 @@
         },
         {
             "name": "Sacred Fervor",
+            "tagline": "Ability and special attack cooldowns reduced.",
             "path": "Order",
             "tier": 4,
-            "image": "/data/leagues/blessings/tier-4/sacred-fervor.png",
+            "image": "https://media.thersguide.com/leagues-2/blessings/sacred-fervor.png",
             "effects": [
                 "Melee ability and special attack cooldowns are reduced by 30%.",
                 "Magic ability and special attack cooldowns are reduced by 30%.",
@@ -169,19 +181,19 @@
             "tier": 1,
             "effects": [
                 {
-                    "title": "There is a 50% chance to save runes in combat.",
+                    "title": "50% Runes saved",
                     "description": "There is a 50% chance to save runes in combat."
                 },
                 {
-                    "title": "There is a 50% chance to save ammunition in combat.",
+                    "title": "50% Ammunition saved",
                     "description": "There is a 50% chance to save ammunition in combat."
                 },
                 {
-                    "title": "There is a 50% chance to save ectoplasm and runes when casting abilities and incantations.",
+                    "title": "50% Ectoplasm and Necromancy Runes saved",
                     "description": "There is a 50% chance to save ectoplasm and runes when casting abilities and incantations."
                 },
                 {
-                    "title": "Gain 1 Blessing progression reset.",
+                    "title": "+1 Blessing Reset",
                     "description": "Gain 1 Blessing progression reset."
                 }
             ]
@@ -190,11 +202,11 @@
             "tier": 2,
             "effects": [
                 {
-                    "title": "The Dive ability is automatically unlocked.",
+                    "title": "Dive ability unlocked",
                     "description": "The Dive ability is automatically unlocked."
                 },
                 {
-                    "title": "Your attack range for all combat styles is increased by 1 tile, up to a maximum range of 10 tiles.",
+                    "title": "Attack range +1 tile",
                     "description": "Your attack range for all combat styles is increased by 1 tile, up to a maximum range of 10 tiles."
                 }
             ]
@@ -203,23 +215,23 @@
             "tier": 3,
             "effects": [
                 {
-                    "title": "There is a 75% chance to save runes in combat.",
+                    "title": "75% Runes saved",
                     "description": "There is a 75% chance to save runes in combat."
                 },
                 {
-                    "title": "There is a 75% chance to save ammunition in combat.",
+                    "title": "75% Ammunition saved",
                     "description": "There is a 75% chance to save ammunition in combat."
                 },
                 {
-                    "title": "There is a 75% chance to save ectoplasm and runes when casting abilities and incantations.",
+                    "title": "75% Ectoplasm and Necromancy Runes saved",
                     "description": "There is a 75% chance to save ectoplasm and runes when casting abilities and incantations."
                 },
                 {
-                    "title": "All movement ability cooldowns are reduced to 4.2 seconds.",
+                    "title": "4.2s Movement ability cooldown",
                     "description": "All movement ability cooldowns are reduced to 4.2 seconds."
                 },
                 {
-                    "title": "You are granted Nature's rune pouch.",
+                    "title": "Free rune pouch",
                     "description": "You are granted Nature's rune pouch."
                 }
             ]
@@ -228,7 +240,7 @@
             "tier": 4,
             "effects": [
                 {
-                    "title": "Gain 1 Blessing progression reset.",
+                    "title": "+1 Blessing Reset",
                     "description": "Gain 1 Blessing progression reset."
                 }
             ]
@@ -237,11 +249,11 @@
             "tier": 5,
             "effects": [
                 {
-                    "title": "All War's Wares rewards are unlocked.",
+                    "title": "War's Wares rewards unlocked",
                     "description": "All War's Wares rewards are unlocked."
                 },
                 {
-                    "title": "Your maximum adrenaline is increased by 25%.",
+                    "title": "Maximum adrenaline +25%",
                     "description": "Your maximum adrenaline is increased by 25%."
                 }
             ]
@@ -250,7 +262,7 @@
             "tier": 6,
             "effects": [
                 {
-                    "title": "God books, scriptures, grimoires, and scrimshaws no longer use charge.",
+                    "title": "Combat pocket items no longer use charges.",
                     "description": "God books, scriptures, grimoires, and scrimshaws no longer use charge."
                 },
                 {
@@ -263,15 +275,15 @@
             "tier": 7,
             "effects": [
                 {
-                    "title": "There is a 95% chance to save runes in combat.",
+                    "title": "95% Runes saved",
                     "description": "There is a 95% chance to save runes in combat."
                 },
                 {
-                    "title": "There is a 95% chance to save ammunition in combat.",
+                    "title": "95% Ammunition saved",
                     "description": "There is a 95% chance to save ammunition in combat."
                 },
                 {
-                    "title": "There is a 95% chance to save ectoplasm and runes when casting abilities and incantations.",
+                    "title": "95% Ectoplasm and Necromancy Runes saved",
                     "description": "There is a 95% chance to save ectoplasm and runes when casting abilities and incantations."
                 }
             ]
@@ -280,7 +292,7 @@
             "tier": 8,
             "effects": [
                 {
-                    "title": "Gain 1 Blessing progression reset.",
+                    "title": "+1 Blessing Reset",
                     "description": "Gain 1 Blessing progression reset."
                 }
             ]

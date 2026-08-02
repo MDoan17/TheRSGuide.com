@@ -1,9 +1,10 @@
 "use client";
 
-import { Check, ChevronDown, ExternalLink, RotateCcw } from "lucide-react";
+import { Check, ChevronDown, Eraser, ExternalLink, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { PlayerSearch } from "@/components/mdx/player-search";
 import { usePlayerData } from "@/components/player/player-data-context";
+import { efficiencyRowComplete } from "@/lib/efficiency-guide";
 import { functionalStorageAllowed } from "@/lib/privacy-preferences";
 
 export interface EfficiencyGuideRow {
@@ -33,6 +34,7 @@ interface EfficiencyGuideTrackerProps {
 type CheckedState = Record<string, boolean>;
 
 const STORAGE_KEY = "rs-guide-efficiency-guide";
+const IGNORE_PLAYER_STORAGE_KEY = "rs-guide-efficiency-guide-ignore-player";
 
 function loadCheckedState(): CheckedState {
   if (typeof window === "undefined" || !functionalStorageAllowed()) return {};
@@ -45,19 +47,27 @@ function loadCheckedState(): CheckedState {
   }
 }
 
+function loadIgnorePlayerData(): boolean {
+  if (typeof window === "undefined" || !functionalStorageAllowed()) return false;
+
+  return localStorage.getItem(IGNORE_PLAYER_STORAGE_KEY) === "true";
+}
+
 function questUrl(questName: string) {
   return `https://runescape.wiki/w/${questName.replaceAll(" ", "_")}/Quick_guide`;
 }
 
 export function EfficiencyGuideTracker({ guide }: EfficiencyGuideTrackerProps) {
-  const { isQuestComplete } = usePlayerData();
+  const { isQuestComplete, lastSearch, loading, playerData, searchPlayer } = usePlayerData();
   const [manualChecked, setManualChecked] = useState<CheckedState>({});
+  const [ignorePlayerData, setIgnorePlayerData] = useState(false);
   const [openSections, setOpenSections] = useState<CheckedState>(() => ({
     [guide.sections[0]?.id || ""]: true,
   }));
 
   useEffect(() => {
     setManualChecked(loadCheckedState());
+    setIgnorePlayerData(loadIgnorePlayerData());
   }, []);
 
   const rows = useMemo(
@@ -77,7 +87,7 @@ export function EfficiencyGuideTracker({ guide }: EfficiencyGuideTrackerProps) {
   }, [isQuestComplete, rows]);
 
   const isComplete = (row: EfficiencyGuideRow) => {
-    return manualChecked[row.id] === true || questCompletion[row.id] === true;
+    return efficiencyRowComplete(row.id, { manualChecked, questCompletion, ignorePlayerData });
   };
 
   const completedCount = rows.filter(isComplete).length;
@@ -101,8 +111,22 @@ export function EfficiencyGuideTracker({ guide }: EfficiencyGuideTrackerProps) {
     updateManualChecked(next);
   };
 
-  const clearManualChecks = () => {
+  const updateIgnorePlayerData = (next: boolean) => {
+    setIgnorePlayerData(next);
+    if (functionalStorageAllowed()) {
+      localStorage.setItem(IGNORE_PLAYER_STORAGE_KEY, String(next));
+    }
+  };
+
+  const reloadPlayer = () => {
     updateManualChecked({});
+    updateIgnorePlayerData(false);
+    if (lastSearch) void searchPlayer(lastSearch);
+  };
+
+  const clearAllTasks = () => {
+    updateManualChecked({});
+    updateIgnorePlayerData(true);
   };
 
   const toggleSection = (sectionId: string) => {
@@ -117,14 +141,25 @@ export function EfficiencyGuideTracker({ guide }: EfficiencyGuideTrackerProps) {
       <div className="border border-border bg-card p-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <PlayerSearch />
-          <button
-            type="button"
-            onClick={clearManualChecks}
-            className="inline-flex items-center justify-center gap-2 border border-border px-3 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary hover:text-primary"
-          >
-            <RotateCcw className="size-4" />
-            Clear
-          </button>
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={reloadPlayer}
+              disabled={loading}
+              className="inline-flex items-center justify-center gap-2 border border-border px-3 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-border disabled:hover:text-foreground"
+            >
+              <RotateCcw className={`size-4 ${loading ? "animate-spin" : ""}`} />
+              Reload player
+            </button>
+            <button
+              type="button"
+              onClick={clearAllTasks}
+              className="inline-flex items-center justify-center gap-2 border border-border px-3 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary hover:text-primary"
+            >
+              <Eraser className="size-4" />
+              Clear all tasks
+            </button>
+          </div>
         </div>
 
         <div className="flex flex-col gap-3 pt-3 lg:flex-row lg:items-center lg:justify-between">
@@ -132,6 +167,11 @@ export function EfficiencyGuideTracker({ guide }: EfficiencyGuideTrackerProps) {
             <div className="text-sm font-semibold text-foreground">
               {completedCount} of {rows.length} steps complete
             </div>
+            {ignorePlayerData && playerData ? (
+              <div className="text-sm text-muted-foreground">
+                Progress from {playerData.username} is hidden. Use Reload player to show it again.
+              </div>
+            ) : null}
           </div>
           <a
             href={guide.sourceUrl}
