@@ -78,20 +78,18 @@ const RelicDetailView: React.FC<{ relic: RelicItem }> = ({ relic }) => {
 
 const RelicCards: React.FC<{ relics: RelicItem[]; onViewRelic: (r: RelicItem) => void }> = ({ relics, onViewRelic }) => {
   return (
-    <>
-        <div className="relics-container mx-auto my-0">
-            {relics.map((relic, relicIndex) => (
-                <div key={relicIndex} className="bg-card/50 flex flex-col items-center p-4 border grow shrink basis-[30%] justify-between">
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
-                        <img src={relic.image} alt={relic.name} style={{ width: '128px' }} />
-                        <span className="font-display text-xl mt-4 mb-2">{relic.name}</span>
-                        <p className="mb-2 text-center text-secondary-foreground">{relic.tagline}</p>
-                    </div>
-                    <button type="button" onClick={() => onViewRelic(relic)} className="text-card-foreground text-sm border border-primary rounded-md px-4 py-2 hover:bg-accent">View Details</button>
+    <div className="relics-container mx-auto my-0">
+        {relics.map((relic, relicIndex) => (
+            <div key={relicIndex} className="bg-card/50 flex flex-col items-center p-4 border grow shrink basis-[30%] justify-between">
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
+                    <img src={relic.image} alt={relic.name} style={{ width: '128px' }} />
+                    <span className="font-display text-xl mt-4 mb-2 text-center">{relic.name}</span>
+                    <p className="mb-2 text-center text-secondary-foreground">{relic.tagline}</p>
                 </div>
-            ))}
-        </div>
-    </>
+                <button type="button" onClick={() => onViewRelic(relic)} className="text-card-foreground text-sm border border-primary rounded-md px-4 py-2 hover:bg-accent">View Details</button>
+            </div>
+        ))}
+    </div>
   );
 };
 
@@ -102,12 +100,10 @@ function RelicDisplay({ tier, points }: RelicDisplayProps) {
 
     const [selectedRelic, setSelectedRelic] = useState<RelicItem | null>(null);
 
-    if (relics.length === 0 && tier === 0) { // Hides unsorted relics if there are none
-        return null;
-    }
+    if (relics.length === 0 && tier === 0) return null;
 
       return (
-        <div>
+        <section>
             {tier === 0 ? (
                 <>
                     <h2>Unsorted Relics</h2>
@@ -144,7 +140,7 @@ function RelicDisplay({ tier, points }: RelicDisplayProps) {
                     )}
                 </DrawerContent>
             </Drawer>
-        </div>
+        </section>
       );
 };
 
