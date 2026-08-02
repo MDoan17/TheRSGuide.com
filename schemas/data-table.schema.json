@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thersguide.com/schemas/data-table.schema.json",
+  "title": "The RS Guide data table",
+  "description": "A complete, JSON-powered data table definition.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["title", "columns", "rows"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The visible and accessible table name."
+    },
+    "titleAs": {
+      "type": "string",
+      "enum": ["h1", "h2", "h3", "h4", "h5", "h6"],
+      "default": "h2",
+      "description": "The heading level used by the table title."
+    },
+    "headingId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Optional anchor ID for the table title. Defaults to a URL-friendly version of the title."
+    },
+    "sortable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Makes every column sortable unless a column overrides it."
+    },
+    "rowId": {
+      "type": "string",
+      "description": "A row property containing a unique ID."
+    },
+    "caption": {
+      "type": "string"
+    },
+    "emptyMessage": {
+      "type": "string",
+      "default": "No results."
+    },
+    "search": {
+      "description": "Use true for default search text or an object to customize it.",
+      "oneOf": [
+        { "type": "boolean" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": { "type": "string" },
+            "placeholder": { "type": "string" }
+          }
+        }
+      ]
+    },
+    "columns": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/column" }
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": {
+          "type": ["string", "number", "boolean", "null"]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "filterOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "value"],
+      "properties": {
+        "label": { "type": "string" },
+        "value": { "type": ["string", "number", "boolean"] }
+      }
+    },
+    "column": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The row property displayed by this column."
+        },
+        "header": {
+          "type": "string",
+          "description": "Optional label. When omitted, the key is converted to title case."
+        },
+        "hidden": {
+          "type": "boolean",
+          "default": false,
+          "description": "Visually hides this column's header while preserving it for assistive technology. When every column header is hidden, the header row is collapsed."
+        },
+        "sortable": {
+          "type": "boolean",
+          "description": "Overrides the table-level sortable setting."
+        },
+        "filter": {
+          "description": "Use true to derive choices from the rows, or provide custom choices.",
+          "oneOf": [
+            { "type": "boolean" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "label": { "type": "string" },
+                "options": {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/filterOption" }
+                }
+              }
+            }
+          ]
+        },
+        "link": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["hrefKey"],
+          "properties": {
+            "hrefKey": {
+              "type": "string",
+              "description": "The row property containing the link URL."
+            },
+            "external": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        "info": {
+          "description": "Use true to read optional popover text from the row's info field, or configure a different row field and accessible label.",
+          "oneOf": [
+            { "type": "boolean" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "contentKey": {
+                  "type": "string",
+                  "default": "info"
+                },
+                "label": {
+                  "type": "string",
+                  "description": "Accessible label for the info button."
+                }
+              }
+            }
+          ]
+        },
+        "align": {
+          "type": "string",
+          "enum": ["left", "center", "right"]
+        },
+        "width": {
+          "type": "string",
+          "enum": ["sm", "md", "lg"]
+        },
+        "emphasis": {
+          "type": "boolean"
+        },
+        "wrap": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  }
+}
