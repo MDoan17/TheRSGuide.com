@@ -5,7 +5,6 @@ import { PageLoading } from '@/components/ui/page-loading'
 import { guideCatalog } from '@/lib/content'
 import { GuidePage } from '@/pages/guide-page'
 import { HomePage } from '@/pages/home-page'
-import { LeaguesHomePage } from '@/pages/leagues-home-page'
 import { NotFoundPage } from '@/pages/not-found-page'
 
 const PlayerPage = lazy(() =>
@@ -18,7 +17,6 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/leagues" element={<LeaguesHomePage />} />
       <Route
         path="/extras/player"
         element={
@@ -27,11 +25,9 @@ function AppRoutes() {
           </Suspense>
         }
       />
-      {guideCatalog.documents
-        .filter((doc) => doc.path !== '/leagues')
-        .map((doc) => (
-          <Route key={doc.path} path={doc.path} element={<GuidePage doc={doc} />} />
-        ))}
+      {guideCatalog.documents.map((doc) => (
+        <Route key={doc.path} path={doc.path} element={<GuidePage doc={doc} />} />
+      ))}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )

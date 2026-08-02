@@ -10,7 +10,6 @@ import { useLocation } from "react-router"
 
 import { GuideSearchDialog } from "@/components/search/guide-search-dialog"
 import { GuideSearchDialogContext } from "@/components/search/guide-search-context"
-import { isLeaguesRoute } from "@/lib/content"
 
 function GuideSearchProvider({ children }: PropsWithChildren) {
   const { pathname } = useLocation()
@@ -18,7 +17,6 @@ function GuideSearchProvider({ children }: PropsWithChildren) {
   const landingSearchFocusRef = useRef<(() => void) | null>(null)
   const normalizedPathname =
     pathname === "/" ? pathname : pathname.replace(/\/+$/, "")
-  const leaguesRoute = isLeaguesRoute(pathname)
 
   const openSearch = useCallback(() => setOpen(true), [])
   const closeSearch = useCallback(() => setOpen(false), [])
@@ -41,10 +39,8 @@ function GuideSearchProvider({ children }: PropsWithChildren) {
         return
       }
 
-      if (normalizedPathname !== "/leagues") {
-        event.preventDefault()
-        openSearch()
-      }
+      event.preventDefault()
+      openSearch()
     }
 
     window.addEventListener("keydown", onKeyDown)
@@ -63,11 +59,7 @@ function GuideSearchProvider({ children }: PropsWithChildren) {
   return (
     <GuideSearchDialogContext.Provider value={value}>
       {children}
-      <GuideSearchDialog
-        open={open}
-        onOpenChange={setOpen}
-        pathScope={leaguesRoute ? "/leagues" : undefined}
-      />
+      <GuideSearchDialog open={open} onOpenChange={setOpen} />
     </GuideSearchDialogContext.Provider>
   )
 }

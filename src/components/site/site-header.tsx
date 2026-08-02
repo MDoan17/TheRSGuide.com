@@ -9,7 +9,7 @@ import { ThemeToggle } from '@/components/site/theme-toggle'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { primaryNavigationForPath } from '@/lib/content'
+import { primaryNavigation } from '@/lib/content'
 import { cn } from '@/lib/utils'
 
 export function SiteHeader({
@@ -18,7 +18,6 @@ export function SiteHeader({
   showSettings: boolean
 }) {
   const { pathname } = useLocation()
-  const primaryNavigation = primaryNavigationForPath(pathname)
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (

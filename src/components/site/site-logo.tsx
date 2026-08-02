@@ -1,20 +1,13 @@
-import { Link, useLocation } from "react-router"
-
-import { isLeaguesRoute } from "@/lib/content"
+import { Link } from "react-router"
 
 function SiteLogo() {
-  const { pathname } = useLocation()
-  const leaguesRoute = isLeaguesRoute(pathname)
-  const label = leaguesRoute ? "The Leagues Guide" : "The RS Guide"
-  const homePath = leaguesRoute ? "/leagues" : "/"
-
   return (
     <Link
-      to={homePath}
+      to="/"
       className="inline-flex items-center whitespace-nowrap font-brand font-bold tracking-[.02em]"
-      aria-label={`${label} home`}
+      aria-label="The RS Guide home"
     >
-      {label}
+      The RS Guide
     </Link>
   )
 }
