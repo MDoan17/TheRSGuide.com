@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react'
 import { LeaguesPassiveList, type LeaguesPassive } from '@/components/mdx/leagues-passive-list'
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from '../ui/drawer'
-import { ScrollArea } from '../ui/scroll-area'
+ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from '@/components/ui/drawer'
+ import { ScrollArea } from '@/components/ui/scroll-area'
 
 import blessingData from '@/data/leagues-ii/blessings.json'
 import '@/styles/blessings.css'
@@ -63,8 +63,8 @@ const BlessingDetailView: React.FC<{ blessing: BlessingItem }> = ({ blessing }) 
 const BlessingCards: React.FC<{ blessings: BlessingItem[]; onViewBlessing: (r: BlessingItem) => void }> = ({ blessings, onViewBlessing }) => {
   return (
     <div className="blessings-container mx-auto my-0">
-        {blessings.map((blessing, blessingIndex) => (
-            <div key={blessingIndex} className={`blessing-card ${blessing.path.toLowerCase()} bg-card/50 flex flex-col items-center p-4 border grow shrink basis-[30%] justify-between`}>
+        {blessings.map((blessing) => (
+            <div key={blessing.name} className={`blessing-card ${blessing.path.toLowerCase()} bg-card/50 flex flex-col items-center p-4 border grow shrink basis-[30%] justify-between`}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
                     <img src={blessing.image} alt={blessing.name} style={{ width: '128px' }} />
                     <span className="font-display text-xl mt-4 mb-2 text-center">{blessing.name}</span>
