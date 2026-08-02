@@ -1,149 +1,152 @@
-import { useState } from 'react'
-import { ArrowLeft } from 'lucide-react'
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { ScrollArea } from '@/components/ui/scroll-area'
+import React, { useState } from 'react';
+import relicData from '@/data/leagues-ii/relics.json';
 import { LeaguesPassiveList, type LeaguesPassive } from '@/components/mdx/leagues-passive-list'
-import relicData from '@/data/leagues-ii/relics.json'
 
-type SkillSolve = {
-  skill: string
-  grade: string
+import '@/styles/relics.css';
+
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from '@/components/ui/drawer';
+
+interface RelicItem {
+  name: string;
+  tagline: string;
+  tier: number;
+  image: string;
+  effects: string[];
+  notes: string[];
+  skillSolves: SkillSolves[];
 }
 
-type RelicItem = {
-  name: string
-  tagline: string
-  tier: number
-  image: string
-  effects: string[]
-  notes: string[]
-  skillSolves: SkillSolve[]
+interface RelicDisplayProps {
+    tier: number;
+    points: number;
 }
 
-type RelicDisplayProps = {
-  tier: number
-  points?: number
+interface SkillSolves {
+    skill: string;
+    grade: string;
 }
 
-function RelicDetail({ relic, onBack }: { relic: RelicItem; onBack: () => void }) {
+const RelicDetailView: React.FC<{ relic: RelicItem }> = ({ relic }) => {
+    return (
+        <>
+            <DrawerHeader>
+                <DrawerTitle className="text-2xl text-center">{relic.name}</DrawerTitle>
+                <DrawerDescription className="text-center italic">{relic.tagline}</DrawerDescription>
+            </DrawerHeader>
+            <div className="p-4 flex flex-col gap-4 h-full">
+                <div className="flex flex-col gap-4 items-center">
+                    <img src={relic.image} alt={relic.name} className="w-32 h-32 object-contain" />
+                    <div className="flex-1">
+                        <div className="flex flex-wrap gap-2 mb-2">
+                            {relic.skillSolves.map((solve) => (
+                                <div key={`${relic.name}-${solve.skill}`} className="flex items-center gap-2 bg-secondary py-1 px-2">
+                                    <img src={`/skills/${solve.skill}.png`} alt={solve.skill} className="w-6 h-6 object-contain" />
+                                    <span className="font-bold">{solve.grade}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <ScrollArea style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+                    <div>
+                        <p className="w-full border-b text-secondary-foreground font-semibold">Effects</p>
+                        <ul className="list-disc pl-5 py-2">
+                            {relic.effects.map((effect, effectIndex) => (
+                                <li key={effectIndex} className="list-item">{effect}</li>
+                            ))}
+                        </ul>
+                    </div>
+                    {relic.notes.length > 0 && (
+                        <div>
+                            <p className="w-full border-b text-secondary-foreground font-semibold">Notes</p>
+                            <ul className="list-disc pl-5 py-2">
+                                {relic.notes.map((note, noteIndex) => (
+                                    <li key={noteIndex}>{note}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </ScrollArea>
+            </div>
+        </>
+    );
+}
+
+const RelicCards: React.FC<{ relics: RelicItem[]; onViewRelic: (r: RelicItem) => void }> = ({ relics, onViewRelic }) => {
   return (
-    <section className="my-4 border bg-card/50 p-4">
-      <div className="flex gap-6 max-[640px]:flex-col">
-        <div className="flex shrink-0 flex-col items-center gap-3">
-          <Button className="self-start" variant="outline" size="sm" onClick={onBack}>
-            <ArrowLeft data-icon="inline-start" />
-            Back
-          </Button>
-          <img className="size-[4.5rem] object-contain" src={relic.image} alt="" />
-          <h3 className="m-0 text-center font-display text-xl">{relic.name}</h3>
-          <div className="grid w-48 grid-cols-2 gap-0.5">
-            {relic.skillSolves.map((solve) => (
-              <div
-                className="flex h-8 items-center border bg-secondary px-2 py-1"
-                key={`${relic.name}-${solve.skill}`}
-              >
-                <img
-                  className="mr-2 size-6 object-contain"
-                  src={`/skills/${solve.skill}.png`}
-                  alt=""
-                />
-                <span className="font-bold">{solve.grade}</span>
-                <span className="sr-only">{solve.skill}</span>
-              </div>
+    <>
+        <div className="relics-container mx-auto my-0">
+            {relics.map((relic, relicIndex) => (
+                <div key={relicIndex} className="bg-card/50 flex flex-col items-center p-4 border grow shrink basis-[30%] justify-between">
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
+                        <img src={relic.image} alt={relic.name} style={{ width: '128px' }} />
+                        <span className="font-display text-xl mt-4 mb-2">{relic.name}</span>
+                        <p className="mb-2 text-center text-secondary-foreground">{relic.tagline}</p>
+                    </div>
+                    <button type="button" onClick={() => onViewRelic(relic)} className="text-card-foreground text-sm border border-primary rounded-md px-4 py-2 hover:bg-accent">View Details</button>
+                </div>
             ))}
-          </div>
         </div>
-        <ScrollArea className="max-h-[18.75rem] min-w-0 flex-1">
-          <div className="pr-4">
-            <h4 className="m-0 border-b pb-1 font-semibold">Effects</h4>
-            <ul className="list-disc pl-6">
-              {relic.effects.map((effect) => (
-                <li className="my-1" key={`${relic.name}-effect-${effect}`}>{effect}</li>
-              ))}
-            </ul>
-            {relic.notes.length > 0 && (
-              <>
-                <h4 className="m-0 border-b pb-1 font-semibold">Notes</h4>
-                <ul className="list-disc pl-6">
-                  {relic.notes.map((note) => (
-                    <li className="my-1" key={`${relic.name}-note-${note}`}>{note}</li>
-                  ))}
-                </ul>
-              </>
-            )}
-          </div>
-        </ScrollArea>
-      </div>
-    </section>
-  )
-}
-
-function RelicCards({
-  relics,
-  onSelect,
-}: {
-  relics: RelicItem[]
-  onSelect: (relic: RelicItem) => void
-}) {
-  return (
-    <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-2 max-[560px]:grid-cols-1">
-      {relics.map((relic) => (
-        <article
-          className="flex min-w-0 flex-col items-center justify-between border bg-card/50 p-4"
-          key={relic.name}
-        >
-          <div className="mb-4 flex flex-col items-center">
-            <img className="size-32 object-contain" src={relic.image} alt="" />
-            <h3 className="mt-4 mb-2 text-center font-display text-xl">{relic.name}</h3>
-            <p className="m-0 text-center">{relic.tagline}</p>
-          </div>
-          <Button variant="outline" size="sm" onClick={() => onSelect(relic)}>
-            View details
-          </Button>
-        </article>
-      ))}
-    </div>
-  )
-}
+    </>
+  );
+};
 
 function RelicDisplay({ tier, points }: RelicDisplayProps) {
-  const relics = relicData.Relics.filter((relic) => relic.tier === tier) as RelicItem[]
-  const passives = (relicData.Passives.find((entry) => entry.tier === tier)?.effects ?? []) as LeaguesPassive[]
-  const [selectedRelic, setSelectedRelic] = useState<RelicItem | null>(null)
 
-  if (tier === 0 && relics.length === 0) return null
+    const relics = relicData.Relics.filter((relic) => relic.tier === tier) as RelicItem[]
+    const passives = (relicData.Passives.find((entry) => entry.tier === tier)?.effects ?? []) as LeaguesPassive[]
 
-  return (
-    <section className="my-6">
-      {tier === 0 ? (
-        <div className="mb-4">
-          <h2 className="mb-2 text-xl font-semibold">Unsorted Relics</h2>
-          <p className="m-0">These relics have not had their tiers announced yet.</p>
+    const [selectedRelic, setSelectedRelic] = useState<RelicItem | null>(null);
+
+    if (relics.length === 0 && tier === 0) { // Hides unsorted relics if there are none
+        return null;
+    }
+
+      return (
+        <div>
+            {tier === 0 ? (
+                <>
+                    <h2>Unsorted Relics</h2>
+                    <span>These relics have not had their tiers announced yet.</span>
+                </>
+            ) : (
+                <div className="flex items-baseline gap-8 mb-4">
+                    <h2 className="text-xl font-semibold mb-4">Tier {tier}</h2>
+                    { points !== undefined && points > 0 && (
+                        <span className="text-secondary-foreground">{points} points</span>
+                    )}
+                </div>
+            )}
+
+            { passives.length > 0 && (
+                <div className="mb-2">
+                    <span className="text-lg font-semibold mb-2">Passives</span>
+                    <LeaguesPassiveList passives={passives} />
+                </div>
+            )}
+
+            { relics.length === 0 && tier !== 0 ? (
+                <div>
+                    <div className="bg-card p-4">Relics have not been confirmed for this tier yet. Check back soon!</div>
+                </div>
+            ) : (
+                <RelicCards relics={relics} onViewRelic={(r) => setSelectedRelic(r)} />
+            )}
+
+            <Drawer direction="right" open={Boolean(selectedRelic)} onOpenChange={(open) => { if (!open) setSelectedRelic(null) }}>
+                <DrawerContent>
+                    {selectedRelic && (
+                        <RelicDetailView relic={selectedRelic} />
+                    )}
+                </DrawerContent>
+            </Drawer>
         </div>
-      ) : (
-        <div className="mb-4 flex items-baseline gap-8">
-          <h2 className="m-0 text-xl font-semibold">Tier {tier}</h2>
-          {points !== undefined && points > 0 && (
-            <span className="text-primary">{points} points</span>
-          )}
-        </div>
-      )}
+      );
+};
 
-      <LeaguesPassiveList passives={passives} />
-
-      {relics.length === 0 ? (
-        <p className="border bg-card p-4">
-          Relics have not been confirmed for this tier yet. Check back soon!
-        </p>
-      ) : selectedRelic ? (
-        <RelicDetail relic={selectedRelic} onBack={() => setSelectedRelic(null)} />
-      ) : (
-        <RelicCards relics={relics} onSelect={setSelectedRelic} />
-      )}
-    </section>
-  )
-}
-
-export { RelicDisplay }
-export type { RelicDisplayProps }
+export { RelicDisplay };
+export type { RelicDisplayProps };

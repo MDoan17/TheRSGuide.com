@@ -16,7 +16,7 @@ describe('Leagues MDX displays', () => {
   })
 
   it('renders passives for relic tiers whose choices are not yet confirmed', () => {
-    const markup = renderToStaticMarkup(<RelicDisplay tier={2} />)
+    const markup = renderToStaticMarkup(<RelicDisplay tier={2} points={0} />)
     const passive = 'Experience is scaled at 8x the normal rate.'
 
     expect(markup.match(new RegExp(passive.replace('.', '\\.'), 'g'))).toHaveLength(1)
@@ -25,7 +25,7 @@ describe('Leagues MDX displays', () => {
   })
 
   it('renders blessing data in the shared scrollable table boundary', () => {
-    const markup = renderToStaticMarkup(<BlessingDisplay tier={1} />)
+    const markup = renderToStaticMarkup(<BlessingDisplay tier={1} tasks={0} />)
 
     expect(markup).toContain('data-slot="table-scroll"')
     expect(markup).toContain('Adrenaline Junkie')
@@ -34,7 +34,7 @@ describe('Leagues MDX displays', () => {
   })
 
   it('renders passives for blessing tiers whose choices are not yet confirmed', () => {
-    const markup = renderToStaticMarkup(<BlessingDisplay tier={5} />)
+    const markup = renderToStaticMarkup(<BlessingDisplay tier={5} tasks={0}  />)
 
     expect(markup.match(/All War/g)).toHaveLength(1)
     expect(markup).toContain('rewards are unlocked.')
