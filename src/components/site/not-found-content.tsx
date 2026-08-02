@@ -16,7 +16,7 @@ function NotFoundContent() {
         <EmptyHeader>
           <EmptyDescription>Lost in Gielinor</EmptyDescription>
           <EmptyTitle className="font-display text-[2.5rem]">
-            That guide hasnâ€™t been written.
+            That guide hasn't been written.
           </EmptyTitle>
         </EmptyHeader>
         <EmptyContent>
