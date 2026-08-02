@@ -67,7 +67,7 @@ function PrivacyNotice() {
         <p>
           Open the gear button on any page and choose Privacy Settings to change
           or withdraw your choices. To ask a privacy question or request access
-          or deletion, use <strong>Settings → Send us a message</strong>.
+          or deletion, open Settings and choose <strong>Send us a message</strong>.
         </p>
 
         <Button className="mt-8" variant="outline" asChild>

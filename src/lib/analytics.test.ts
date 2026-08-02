@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest"
 import {
   createAnonymousPageviewPayload,
   LEGACY_RYBBIT_STORAGE_KEYS,
+  trackAnonymousPageview,
 } from "@/lib/analytics"
 
 describe("anonymous analytics", () => {
@@ -19,5 +20,9 @@ describe("anonymous analytics", () => {
   it("cleans up identifiers left by the old Rybbit script", () => {
     expect(LEGACY_RYBBIT_STORAGE_KEYS).toContain("rybbit-visitor-id")
     expect(LEGACY_RYBBIT_STORAGE_KEYS).toContain("rybbit-user-id")
+  })
+
+  it("does nothing when a visitor opts out", () => {
+    expect(() => trackAnonymousPageview("navigation", false)).not.toThrow()
   })
 })

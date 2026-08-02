@@ -30,6 +30,12 @@ aggregate tables retain non-identifying historical totals:
 - `daily_site_aggregates`
 - `daily_page_aggregates`
 
+The intended middle-ground policy is to reduce the raw `events` TTL to 48
+hours after confirming both aggregate tables are receiving complete daily
+data. This is a ClickHouse/Rybbit server change; the frontend cannot enforce
+it. Do not describe the shorter retention period in the public notice until
+the production TTL has been changed and verified.
+
 Daily traffic query:
 
 ```sql
