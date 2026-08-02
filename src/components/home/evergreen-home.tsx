@@ -1,5 +1,6 @@
 import { HomeLanding, type LandingLink } from "@/components/home/home-landing"
-import { homepagePrimaryLinks } from "@/lib/homepage-mode"
+import { LeaguesCountdown } from "@/components/home/leagues-countdown"
+import { homepagePrimaryLinks, isLeaguesMode } from "@/lib/homepage-mode"
 
 const evergreenCombatLinks: readonly LandingLink[] = [
   { label: "Melee", to: "/guides/melee" },
@@ -9,15 +10,17 @@ const evergreenCombatLinks: readonly LandingLink[] = [
 ]
 
 function EvergreenHome() {
+  const leaguesMode = isLeaguesMode(import.meta.env.VITE_HOMEPAGE_MODE)
+
   return (
     <HomeLanding
-      variant="evergreen"
       title={
         <>
           The <span>RS</span> Guide
         </>
       }
       primaryLinks={homepagePrimaryLinks(import.meta.env.VITE_HOMEPAGE_MODE)}
+      spotlight={leaguesMode ? <LeaguesCountdown /> : undefined}
       secondaryLabel="Combat style guides"
       secondaryLinks={evergreenCombatLinks}
     />

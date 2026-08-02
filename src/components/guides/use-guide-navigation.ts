@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { useLocation } from "react-router"
 
-import { guideSectionsForPath, isLeaguesRoute } from "@/lib/content"
+import { guideSections } from "@/lib/content"
 import {
   createGuideNavigationModel,
   type GuideNavigationModel,
@@ -13,14 +13,12 @@ type GuideNavigationViewModel = GuideNavigationModel & {
 
 function useGuideNavigation(): GuideNavigationViewModel {
   const { pathname } = useLocation()
-  const sections = guideSectionsForPath(pathname)
-  const flattened = isLeaguesRoute(pathname)
   const [expanded, setExpanded] = useState<ReadonlySet<string>>(() =>
     createGuideNavigationModel({
-      sections,
+      sections: guideSections,
       pathname,
       expanded: new Set(),
-      flattened,
+      flattened: false,
       syncActive: true,
     }).expanded
   )
@@ -29,24 +27,24 @@ function useGuideNavigation(): GuideNavigationViewModel {
     setExpanded(
       (current) =>
         createGuideNavigationModel({
-          sections,
+          sections: guideSections,
           pathname,
           expanded: current,
-          flattened,
+          flattened: false,
           syncActive: true,
         }).expanded
     )
-  }, [flattened, pathname, sections])
+  }, [pathname])
 
   const model = useMemo(
     () =>
       createGuideNavigationModel({
-        sections,
+        sections: guideSections,
         pathname,
         expanded,
-        flattened,
+        flattened: false,
       }),
-    [expanded, flattened, pathname, sections]
+    [expanded, pathname]
   )
 
   return {

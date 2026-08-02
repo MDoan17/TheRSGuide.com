@@ -8,8 +8,7 @@ function SiteShell({ children }: PropsWithChildren) {
   const { pathname } = useLocation()
   const normalizedPathname =
     pathname === "/" ? pathname : pathname.replace(/\/+$/, "")
-  const isLandingPage =
-    normalizedPathname === "/" || normalizedPathname === "/leagues"
+  const isLandingPage = normalizedPathname === "/"
   const hasGuideSidebar = guideCatalog.documents.some(
     (doc) => doc.path === pathname
   )
