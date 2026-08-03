@@ -553,6 +553,10 @@
                 {
                     "title": "Bonus invention materials from enemies",
                     "description": "When defeating enemies, there's a 10% chance to obtain 8x common or uncommon invention materials."
+                },
+                {
+                    "title": "3x Dungeoneering tokens",
+                    "description": "Dungeoneering tokens are multiplied 3x."
                 }
             ]
         },
@@ -615,6 +619,10 @@
                 {
                     "title": "4x Item XP rate",
                     "description": "Augmented items gain experience 4x faster."
+                },
+                {
+                    "title": "5x Dungeoneering tokens",
+                    "description": "Dungeoneering tokens are multiplied 5x."
                 }
             ]
         },
