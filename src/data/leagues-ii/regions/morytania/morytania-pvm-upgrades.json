@@ -28,9 +28,9 @@
     { "id": "veracs-equipment", "item": "Verac the Defiled's Equipment", "tier": "70", "style": "Melee", "source": "The Barrows Brothers", "url": "https://runescape.wiki/w/Verac_the_Defiled%27s_equipment" },
     { "id": "akrisaes-equipment", "item": "Akrisae the Doomed's Equipment", "tier": "70", "style": "Hybrid", "source": "The Barrows Brothers", "url": "https://runescape.wiki/w/Akrisae_the_Doomed%27s_equipment" },
     { "id": "linzas-equipment", "item": "Linza the Disgraced's Equipment", "tier": "80", "style": "Melee", "source": "The Barrows Brothers", "url": "https://runescape.wiki/w/Linza_the_Disgraced%27s_equipment" },
-    { "id": "blighted-rebounder", "item": "Blighted Rebounder", "tier": "70", "style": "Defender", "source": "The Barrows Brothers", "url": "https://runescape.wiki/w/Blighted_rebounder" },
-    { "id": "corrupted-defender", "item": "Corrupted Defender", "tier": "70", "style": "Defender", "source": "The Barrows Brothers", "url": "https://runescape.wiki/w/Corrupted_defender" },
-    { "id": "tainted-repriser", "item": "Tainted Repriser", "tier": "70", "style": "Defender", "source": "The Barrows Brothers", "url": "https://runescape.wiki/w/Tainted_repriser" },
+    { "id": "blighted-rebounder", "item": "Blighted Rebounder", "tier": "70", "style": "Magic", "source": "The Barrows Brothers", "url": "https://runescape.wiki/w/Blighted_rebounder" },
+    { "id": "corrupted-defender", "item": "Corrupted Defender", "tier": "70", "style": "Melee", "source": "The Barrows Brothers", "url": "https://runescape.wiki/w/Corrupted_defender" },
+    { "id": "tainted-repriser", "item": "Tainted Repriser", "tier": "70", "style": "Range", "source": "The Barrows Brothers", "url": "https://runescape.wiki/w/Tainted_repriser" },
     { "id": "sunspear", "item": "Sunspear", "tier": "78", "style": "Hybrid", "source": "Quests", "url": "https://runescape.wiki/w/Sunspear_(melee)", "info": "Requires completion of the River of Blood quest." },
     { "id": "salve-amulet", "item": "Salve Amulet", "tier": "N/A", "style": "Hybrid", "source": "Quests", "url": "https://runescape.wiki/w/Salve_amulet", "info": "Requires completion of the Haunted Mine quest." },
     { "id": "dark-bow", "item": "Dark Bow", "tier": "70", "style": "Range", "source": "Slayer", "url": "https://runescape.wiki/w/Dark_Bow", "info": "Also available in the Wilderness, Kandarin, and Tirannwn." }

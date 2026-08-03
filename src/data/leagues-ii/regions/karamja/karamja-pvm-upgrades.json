@@ -14,9 +14,9 @@
   ],
   "rows": [
     { "id": "fire-cape", "item": "Fire Cape", "tier": "N/A", "style": "Melee", "source": "Fight Caves", "url": "https://runescape.wiki/w/Fire_cape" },
-    { "id": "tokhaar-kal-ket", "item": "TokHaar-Kal-Ket", "tier": "N/A", "style": "Hybrid", "source": "Fight Kiln", "url": "https://runescape.wiki/w/TokHaar-Kal-Ket" },
-    { "id": "tokhaar-kal-xil", "item": "TokHaar-Kal-Xil", "tier": "N/A", "style": "Hybrid", "source": "Fight Kiln", "url": "https://runescape.wiki/w/TokHaar-Kal-Xil" },
-    { "id": "tokhaar-kal-mej", "item": "TokHaar-Kal-Mej", "tier": "N/A", "style": "Hybrid", "source": "Fight Kiln", "url": "https://runescape.wiki/w/TokHaar-Kal-Mej" },
-    { "id": "tokhaar-kal-mor", "item": "TokHaar-Kal-Mor", "tier": "N/A", "style": "Hybrid", "source": "Fight Kiln", "url": "https://runescape.wiki/w/TokHaar-Kal-Mor" }
+    { "id": "tokhaar-kal-ket", "item": "TokHaar-Kal-Ket", "tier": "N/A", "style": "Melee", "source": "Fight Kiln", "url": "https://runescape.wiki/w/TokHaar-Kal-Ket" },
+    { "id": "tokhaar-kal-xil", "item": "TokHaar-Kal-Xil", "tier": "N/A", "style": "Range", "source": "Fight Kiln", "url": "https://runescape.wiki/w/TokHaar-Kal-Xil" },
+    { "id": "tokhaar-kal-mej", "item": "TokHaar-Kal-Mej", "tier": "N/A", "style": "Magic", "source": "Fight Kiln", "url": "https://runescape.wiki/w/TokHaar-Kal-Mej" },
+    { "id": "tokhaar-kal-mor", "item": "TokHaar-Kal-Mor", "tier": "N/A", "style": "Necromancy", "source": "Fight Kiln", "url": "https://runescape.wiki/w/TokHaar-Kal-Mor" }
   ]
 }

@@ -28,7 +28,7 @@ describe("Wilderness JSON data tables", () => {
       .map((config) => renderToStaticMarkup(<DataTable config={config} />))
       .join("")
 
-    expect(tables.map((table) => table.rows.length)).toEqual([3, 10, 6, 56, 4, 4, 8])
+    expect(tables.map((table) => table.rows.length)).toEqual([3, 10, 6, 47, 4, 4, 8])
     expect(tables.every((table) => table.collapsed)).toBe(true)
     expect(markup.match(/data-slot="data-table"/g)).toHaveLength(7)
     expect(markup.match(/<h2/g)).toHaveLength(4)
@@ -43,7 +43,7 @@ describe("Wilderness JSON data tables", () => {
     expect(markup).not.toMatch(/id="_r_[^"]+-title"/)
     expect(wildernessAbilityUpgrades.columns.map(({ key }) => key)).toEqual([
       "item",
-      "tier",
+      "level",
       "style",
       "source",
     ])

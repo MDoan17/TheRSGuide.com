@@ -24,7 +24,7 @@ describe("Asgarnia JSON data tables", () => {
       .map((config) => renderToStaticMarkup(<DataTable config={config} />))
       .join("")
 
-    expect(tables.map((table) => table.rows.length)).toEqual([7, 12, 10, 30, 25])
+    expect(tables.map((table) => table.rows.length)).toEqual([7, 12, 10, 29, 25])
     expect(tables.every((table) => table.collapsed)).toBe(true)
     expect(markup.match(/data-slot="data-table"/g)).toHaveLength(5)
     expect(markup.match(/<h2/g)).toHaveLength(4)
@@ -81,10 +81,11 @@ describe("Asgarnia JSON data tables", () => {
     )
 
     expect(pvmMarkup).toContain("Armadyl Godsword")
-    expect(pvmMarkup).toContain("Off-hand Armadyl Crossbow")
+    expect(pvmMarkup).toContain("Armadyl Crossbow")
+    expect(pvmMarkup).not.toContain("Off-hand Armadyl Crossbow")
     expect(pvmMarkup).toContain("Tectonic Robe Armour")
     expect(pvmMarkup).toContain("Jessika&#x27;s Sword")
-    expect(pvmMarkup.match(/aria-label="More information about/g)).toHaveLength(2)
+    expect(pvmMarkup.match(/aria-label="More information about/g)).toHaveLength(3)
     expect(teleportMarkup).toContain("AIQ - Mudskipper Point")
     expect(teleportMarkup).toContain("Burthorpe Bank")
     expect(teleportMarkup.match(/aria-label="More information about/g)).toHaveLength(1)

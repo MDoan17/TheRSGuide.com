@@ -49,7 +49,8 @@
       "style": "Melee",
       "item": "Primal Equipment",
       "url": "https://runescape.wiki/w/Primal_equipment",
-      "source": "Skilling"
+      "source": "Smithing",
+      "info": "Primal ore is also available via Transmutation. Requires 100 Smithing."
     },
     {
       "id": "chaotic-grimoire",
@@ -73,15 +74,8 @@
       "style": "Melee",
       "item": "Gravite Longsword",
       "url": "https://runescape.wiki/w/Gravite_longsword",
-      "source": "Dungeoneering"
-    },
-    {
-      "id": "off-hand-gravite-longsword",
-      "tier": "55",
-      "style": "Melee",
-      "item": "Off-hand Gravite Longsword",
-      "url": "https://runescape.wiki/w/Off-hand_gravite_longsword",
-      "source": "Dungeoneering"
+      "source": "Dungeoneering",
+      "info": "Off-hand equivalent available."
     },
     {
       "id": "gravite-2h-sword",
@@ -97,15 +91,8 @@
       "style": "Melee",
       "item": "Gravite Rapier",
       "url": "https://runescape.wiki/w/Gravite_rapier",
-      "source": "Dungeoneering"
-    },
-    {
-      "id": "off-hand-gravite-rapier",
-      "tier": "55",
-      "style": "Melee",
-      "item": "Off-hand Gravite Rapier",
-      "url": "https://runescape.wiki/w/Off-hand_gravite_rapier",
-      "source": "Dungeoneering"
+      "source": "Dungeoneering",
+      "info": "Off-hand equivalent available."
     },
     {
       "id": "chaotic-longsword",
@@ -113,15 +100,8 @@
       "style": "Melee",
       "item": "Chaotic Longsword",
       "url": "https://runescape.wiki/w/Chaotic_longsword",
-      "source": "Dungeoneering"
-    },
-    {
-      "id": "off-hand-chaotic-longsword",
-      "tier": "80",
-      "style": "Melee",
-      "item": "Off-hand Chaotic Longsword",
-      "url": "https://runescape.wiki/w/Off-hand_chaotic_longsword",
-      "source": "Dungeoneering"
+      "source": "Dungeoneering",
+      "info": "Off-hand equivalent available."
     },
     {
       "id": "chaotic-maul",
@@ -145,15 +125,8 @@
       "style": "Melee",
       "item": "Chaotic Rapier",
       "url": "https://runescape.wiki/w/Chaotic_rapier",
-      "source": "Dungeoneering"
-    },
-    {
-      "id": "off-hand-chaotic-rapier",
-      "tier": "80",
-      "style": "Melee",
-      "item": "Off-hand Chaotic Rapier",
-      "url": "https://runescape.wiki/w/Off-hand_chaotic_rapier",
-      "source": "Dungeoneering"
+      "source": "Dungeoneering",
+      "info": "Off-hand equivalent available."
     },
     {
       "id": "chaotic-claw",
@@ -161,15 +134,8 @@
       "style": "Melee",
       "item": "Chaotic Claw",
       "url": "https://runescape.wiki/w/Chaotic_claw",
-      "source": "Dungeoneering"
-    },
-    {
-      "id": "off-hand-chaotic-claw",
-      "tier": "80",
-      "style": "Melee",
-      "item": "Off-hand Chaotic Claw",
-      "url": "https://runescape.wiki/w/Off-hand_chaotic_claw",
-      "source": "Dungeoneering"
+      "source": "Dungeoneering",
+      "info": "Off-hand equivalent available."
     },
     {
       "id": "ruinous-maul",
@@ -177,7 +143,8 @@
       "style": "Melee",
       "item": "Ruinous Maul",
       "url": "https://runescape.wiki/w/Ruinous_maul",
-      "source": "Dungeoneering"
+      "source": "Dungeoneering",
+      "info": "This is purchased for 1 million Dungeoneering tokens. This requires a Warped Stone from the warped floors with in Daemonheim (95 Dungeoneering)"
     },
     {
       "id": "ruinous-rapier",
@@ -185,15 +152,8 @@
       "style": "Melee",
       "item": "Ruinous Rapier",
       "url": "https://runescape.wiki/w/Ruinous_rapier",
-      "source": "Dungeoneering"
-    },
-    {
-      "id": "off-hand-ruinous-rapier",
-      "tier": "90",
-      "style": "Melee",
-      "item": "Off-hand Ruinous Rapier",
-      "url": "https://runescape.wiki/w/Off-hand_ruinous_rapier",
-      "source": "Dungeoneering"
+      "source": "Dungeoneering",
+      "info": "This is purchased as a set which includes the off-hand for 1 million Dungeoneering tokens. This also requires a Warped Stone from the warped floors with in Daemonheim (95 Dungeoneering)"
     },
     {
       "id": "gravite-wand",
@@ -233,7 +193,8 @@
       "style": "Magic",
       "item": "Ruinous Staff",
       "url": "https://runescape.wiki/w/Ruinous_staff",
-      "source": "Dungeoneering"
+      "source": "Dungeoneering",
+      "info": "This is purchased for 1 million Dungeoneering tokens. This requires a Warped Stone from the warped floors with in Daemonheim (95 Dungeoneering)"
     },
     {
       "id": "gravite-chargebow",
@@ -249,15 +210,8 @@
       "style": "Range",
       "item": "Gravite Knife",
       "url": "https://runescape.wiki/w/Gravite_knife",
-      "source": "Dungeoneering"
-    },
-    {
-      "id": "off-hand-gravite-knife",
-      "tier": "55",
-      "style": "Range",
-      "item": "Off-hand Gravite Knife",
-      "url": "https://runescape.wiki/w/Off-hand_gravite_knife",
-      "source": "Dungeoneering"
+      "source": "Dungeoneering",
+      "info": "Off-hand equivalent available."
     },
     {
       "id": "chaotic-crossbow",
@@ -265,31 +219,18 @@
       "style": "Range",
       "item": "Chaotic Crossbow",
       "url": "https://runescape.wiki/w/Chaotic_crossbow",
-      "source": "Dungeoneering"
+      "source": "Dungeoneering",
+      "info": "Off-hand equivalent available."
     },
-    {
-      "id": "off-hand-chaotic-crossbow",
-      "tier": "80",
-      "style": "Range",
-      "item": "Off-hand Chaotic Crossbow",
-      "url": "https://runescape.wiki/w/Off-hand_chaotic_crossbow",
-      "source": "Dungeoneering"
-    },
+
     {
       "id": "ruinous-crossbow",
       "tier": "90",
       "style": "Range",
       "item": "Ruinous Crossbow",
       "url": "https://runescape.wiki/w/Ruinous_crossbow",
-      "source": "Dungeoneering"
-    },
-    {
-      "id": "off-hand-ruinous-crossbow",
-      "tier": "90",
-      "style": "Range",
-      "item": "Off-hand Ruinous Crossbow",
-      "url": "https://runescape.wiki/w/Off-hand_ruinous_crossbow",
-      "source": "Dungeoneering"
+      "source": "Dungeoneering",
+      "info": "This is purchased as a set which includes the off-hand for 1 million Dungeoneering tokens. This requires a Warped Stone from the warped floors with in Daemonheim (95 Dungeoneering)"
     },
     {
       "id": "gravite-guard",
@@ -329,7 +270,8 @@
       "style": "Necromancy",
       "item": "Ruinous Guard",
       "url": "https://runescape.wiki/w/Ruinous_guard",
-      "source": "Dungeoneering"
+      "source": "Dungeoneering",
+      "info": "This is purchased as a set which includes the off-hand for 1 million Dungeoneering tokens. This requires a Warped Stone from the warped floors with in Daemonheim (95 Dungeoneering)"
     },
     {
       "id": "ruinous-lantern",
@@ -337,7 +279,8 @@
       "style": "Necromancy",
       "item": "Ruinous Lantern",
       "url": "https://runescape.wiki/w/Ruinous_lantern",
-      "source": "Dungeoneering"
+      "source": "Dungeoneering",
+      "info": "This is the off-hand for the Ruinous Guard"
     },
     {
       "id": "chaotic-kiteshield",
@@ -397,12 +340,12 @@
     },
     {
       "id": "ancient-warriors-equipment-patch",
-      "tier": "N/A",
+      "tier": "88",
       "style": "Upgrade Item",
       "item": "Ancient Warrior's Equipment Patch",
       "url": "https://runescape.wiki/w/Ancient_warrior's_equipment_patch",
       "source": "Revenants",
-      "info": "Upgrade item for the tier 78 equipment."
+      "info": "Upgrade item for the tier 78 Revenant equipment."
     },
     {
       "id": "obliteration",
