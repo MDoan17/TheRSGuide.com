@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { Route, Routes } from 'react-router'
+import { Navigate, Route, Routes, useLocation } from 'react-router'
 
 import { PageLoading } from '@/components/ui/page-loading'
 import { guideCatalog } from '@/lib/content'
@@ -14,6 +14,21 @@ const PlayerPage = lazy(() =>
   })),
 )
 
+function LegacyLeaguesMapRedirect() {
+  const { hash, pathname, search } = useLocation()
+
+  return (
+    <Navigate
+      replace
+      to={{
+        hash,
+        pathname: pathname.replace(/^\/leagues\/map/, '/leagues/regions'),
+        search,
+      }}
+    />
+  )
+}
+
 function AppRoutes() {
   return (
     <Routes>
@@ -27,6 +42,7 @@ function AppRoutes() {
           </Suspense>
         }
       />
+      <Route path="/leagues/map/*" element={<LegacyLeaguesMapRedirect />} />
       {guideCatalog.documents.map((doc) => (
         <Route key={doc.path} path={doc.path} element={<GuidePage doc={doc} />} />
       ))}
