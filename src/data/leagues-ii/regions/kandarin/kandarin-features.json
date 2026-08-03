@@ -1,0 +1,25 @@
+{
+  "title": "Features",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "feature", "header": "Feature", "link": { "hrefKey": "url", "external": true }, "hidden": true }
+  ],
+  "rows": [
+    { "id": "player-owned-farm", "feature": "Player-Owned Farm", "url": "https://runescape.wiki/w/Player-owned_farm" },
+    { "id": "gnome-agility-course", "feature": "Gnome Agility Course", "url": "https://runescape.wiki/w/Gnome_Agility_Course" },
+    { "id": "penguins", "feature": "Penguins", "url": "https://runescape.wiki/w/Penguins" },
+    { "id": "ourania-altar", "feature": "Ourania Altar", "url": "https://runescape.wiki/w/Ourania_Altar" },
+    { "id": "deep-sea-fishing", "feature": "Deep Sea Fishing", "url": "https://runescape.wiki/w/Deep_Sea_Fishing" },
+    { "id": "fishing-guild", "feature": "Fishing Guild", "url": "https://runescape.wiki/w/Fishing_Guild" },
+    { "id": "eternal-magic-trees", "feature": "Eternal Magic Trees", "url": "https://runescape.wiki/w/Eternal_Magic_Trees" },
+    { "id": "ranging-guild", "feature": "Ranging Guild", "url": "https://runescape.wiki/w/Range_Guild" },
+    { "id": "ape-atoll-agility-course", "feature": "Ape Atoll Agility Course", "url": "https://runescape.wiki/w/Ape_Atoll_Agility_Course" },
+    { "id": "ancient-invention", "feature": "Ancient Invention", "url": "https://runescape.wiki/w/Ancient_Invention" },
+    { "id": "memorial-to-guthix", "feature": "Memorial to Guthix", "url": "https://runescape.wiki/w/Memorial_to_Guthix" },
+    { "id": "warforge-dig-site", "feature": "Warforge Dig Site", "url": "https://runescape.wiki/w/Warforge_Dig_Site" },
+    { "id": "burial-smithing", "feature": "Burial Smithing", "url": "https://runescape.wiki/w/Burial_Smithing" },
+    { "id": "stormguard-citadel-dig-site", "feature": "Stormguard Citadel Dig Site", "url": "https://runescape.wiki/w/Stormguard_Citadel_Dig_Site" }
+  ]
+}

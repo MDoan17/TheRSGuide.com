@@ -1,0 +1,20 @@
+{
+  "title": "Notable Locations",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "city", "header": "City", "link": { "hrefKey": "url", "external": true }, "hidden": true }
+  ],
+  "rows": [
+    { "id": "gnome-stronghold", "city": "Gnome Stronghold", "url": "https://runescape.wiki/w/Gnome_Stronghold" },
+    { "id": "tree-gnome-village", "city": "Tree Gnome Village", "url": "https://runescape.wiki/w/Tree_Gnome_Village" },
+    { "id": "ardougne", "city": "Ardougne", "url": "https://runescape.wiki/w/Ardougne" },
+    { "id": "yanille", "city": "Yanille", "url": "https://runescape.wiki/w/Yanille" },
+    { "id": "ancient-cavern", "city": "Ancient Cavern", "url": "https://runescape.wiki/w/Ancient_Cavern" },
+    { "id": "seers-village", "city": "Seers' Village", "url": "https://runescape.wiki/w/Seers_Village" },
+    { "id": "catherby", "city": "Catherby", "url": "https://runescape.wiki/w/Catherby" },
+    { "id": "ape-atoll", "city": "Ape Atoll", "url": "https://runescape.wiki/w/Ape_Atoll" },
+    { "id": "ooglog", "city": "Oo'glog", "url": "https://runescape.wiki/w/Oo%27glog" }
+  ]
+}
