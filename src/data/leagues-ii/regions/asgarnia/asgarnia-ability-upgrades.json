@@ -1,0 +1,74 @@
+{
+  "title": "Ability Upgrades",
+  "titleAs": "h3",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    {
+      "key": "item",
+      "header": "Ability",
+      "link": { "hrefKey": "url", "external": true },
+      "info": true
+    },
+    {
+      "key": "level",
+      "header": "Level",
+      "filter": true,
+      "width": "sm",
+      "emphasis": true,
+      "wrap": false
+    },
+    {
+      "key": "style",
+      "header": "Combat style",
+      "filter": true,
+      "width": "md",
+      "wrap": false
+    },
+    {
+      "key": "source",
+      "header": "Source",
+      "filter": true,
+      "width": "md",
+      "wrap": false
+    }
+  ],
+  "rows": [
+    {
+      "source": "Nex, Angel of Death",
+      "id": "malevolence",
+      "level": "99",
+      "style": "Prayer",
+      "item": "Malevolence",
+      "url": "hhttps://runescape.wiki/w/Praesul_codex#Unlocking",
+      "info": "Level 99 Melee Curse."
+    },
+    {
+      "source": "Nex, Angel of Death",
+      "id": "desolation",
+      "level": "99",
+      "style": "Prayer",
+      "item": "Desolation",
+      "url": "https://runescape.wiki/w/Praesul_codex#Unlocking",
+      "info": "Level 99 Range Curse."
+    },
+    {
+      "source": "Nex, Angel of Death",
+      "id": "greater-fury",
+      "level": "99",
+      "style": "Prayer",
+      "item": "Affliction",
+      "url": "https://runescape.wiki/w/Praesul_codex#Unlocking",
+      "info": "level 99 Magic Curse."
+    },
+    {
+      "source": "Nex, Angel of Death",
+      "id": "ruination",
+      "level": "99",
+      "style": "Prayer",
+      "item": "Ruination",
+      "url": "https://runescape.wiki/w/Praesul_codex#Unlocking",
+      "info": "Level 99 Necromancy Curse. Must be handed in to Selene in the City of Um."
+    }
+  ]
+}

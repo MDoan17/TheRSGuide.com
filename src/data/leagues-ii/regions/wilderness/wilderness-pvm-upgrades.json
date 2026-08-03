@@ -297,6 +297,17 @@
       "url": "https://runescape.wiki/w/Farseer_kiteshield",
       "source": "Dungeoneering"
     },
+
+    {
+      "id": "tectonic-robe-armour",
+      "tier": "90",
+      "style": "Magic",
+      "item": "Tectonic Robe Armour",
+      "url": "https://runescape.wiki/w/Tectonic_robe_armour",
+      "source": "Elite Dungeon 2",
+      "info": "This requires a Stone of Binding from the Bandit Camp"
+    },
+    
     {
       "id": "statius-equipment",
       "tier": "78",
@@ -392,8 +403,20 @@
       "style": "Magic",
       "item": "Staff of Light",
       "url": "https://runescape.wiki/w/Staff_of_Light",
-      "source": "Slayer"
+      "source": "Slayer",
+      "info": "Also available in Fremennik."
     },
+
+    {
+      "id": "ripper-claws",
+      "tier": "85",
+      "style": "Melee",
+      "item": "Ripper Claws",
+      "url": "https://runescape.wiki/w/Ripper_claws",
+      "source": "Slayer",
+      "info": "Off-hand equivalent available."
+    },
+
     {
       "id": "lava-whip",
       "tier": "85",

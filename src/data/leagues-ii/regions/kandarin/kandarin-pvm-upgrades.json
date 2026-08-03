@@ -13,6 +13,7 @@
     { "key": "source", "header": "Source", "filter": true, "width": "md", "wrap": false }
   ],
   "rows": [
+    { "id": "nightmare-gauntlets", "item": "Nightmare Gauntlets", "tier": "85", "style": "Range", "source": "Slayer", "url": "https://runescape.wiki/w/Nightmare_gauntlets", "info": "These drop from Nightmares which require 80 Slayer."},
     { "id": "ascension-crossbow", "item": "Ascension Crossbow", "tier": "90", "style": "Range", "source": "Legiones", "url": "https://runescape.wiki/w/Ascension_crossbow", "info": "Off-hand equivalent available."},
     { "id": "dark-bow", "item": "Dark Bow", "tier": "70", "style": "Range", "source": "Slayer", "url": "https://runescape.wiki/w/Dark_Bow", "info": "Also available in the Wilderness, Morytania, and Tirannwn." },
     { "id": "spear-of-annihilation", "item": "Spear of Annihilation", "tier": "90", "style": "Melee", "source": "Archaeology", "url": "https://runescape.wiki/w/Spear_of_Annihilation" },
