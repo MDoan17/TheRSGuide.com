@@ -16,6 +16,7 @@
     { "id": "berserker-ring", "item": "Berserker Ring", "tier": "N/A", "style": "Hybrid", "source": "Dagannoth Kings", "url": "https://runescape.wiki/w/Berserker_Ring" },
     { "id": "warrior-ring", "item": "Warrior Ring", "tier": "N/A", "style": "Melee", "source": "Dagannoth Kings", "url": "https://runescape.wiki/w/Warrior_Ring" },
     { "id": "archers-ring", "item": "Archers' Ring", "tier": "N/A", "style": "Range", "source": "Dagannoth Kings", "url": "https://runescape.wiki/w/Archers%27_Ring" },
-    { "id": "seers-ring", "item": "Seers' Ring", "tier": "N/A", "style": "Magic", "source": "Dagannoth Kings", "url": "https://runescape.wiki/w/Seers%27_Ring" }
+    { "id": "seers-ring", "item": "Seers' Ring", "tier": "N/A", "style": "Magic", "source": "Dagannoth Kings", "url": "https://runescape.wiki/w/Seers%27_Ring" },
+    {"id": "staff-of-light", "tier": "85", "style": "Magic", "item": "Staff of Light", "url": "https://runescape.wiki/w/Staff_of_Light", "source": "Slayer", "info": "Also available in the Wilderness."}
   ]
 }

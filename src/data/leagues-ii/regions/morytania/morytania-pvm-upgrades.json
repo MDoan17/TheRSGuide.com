@@ -16,7 +16,7 @@
     { "id": "noxious-scythe", "item": "Noxious Scythe", "tier": "90", "style": "Melee", "source": "Araxxi", "url": "https://runescape.wiki/w/Noxious_Scythe" },
     { "id": "noxious-longbow", "item": "Noxious Longbow", "tier": "90", "style": "Range", "source": "Araxxi", "url": "https://runescape.wiki/w/Noxious_Longbow" },
     { "id": "noxious-staff", "item": "Noxious Staff", "tier": "90", "style": "Magic", "source": "Araxxi", "url": "https://runescape.wiki/w/Noxious_Staff" },
-    { "id": "malevolent-armour", "item": "Malevolent Armour", "tier": "90", "style": "Melee", "source": "Rise of the Six", "url": "https://runescape.wiki/w/Malevolent_Armour" },
+    { "id": "malevolent-armour", "item": "Malevolent Armour", "tier": "90", "style": "Melee", "source": "Rise of the Six", "url": "https://runescape.wiki/w/Malevolent_Armour", "info":"This also requires Reinforcing Plates from the Wilderness Bandit Camp (Wilderness) or Keldagrim (Fremennik)"},
     { "id": "malevolent-shield", "item": "Malevolent Shield", "tier": "90", "style": "Melee", "source": "Rise of the Six", "url": "https://runescape.wiki/w/Malevolent_Shield" },
     { "id": "merciless-kiteshield", "item": "Merciless Kiteshield", "tier": "90", "style": "Magic", "source": "Rise of the Six", "url": "https://runescape.wiki/w/Merciless_Kiteshield" },
     { "id": "vengeful-kiteshield", "item": "Vengeful Kiteshield", "tier": "90", "style": "Range", "source": "Rise of the Six", "url": "https://runescape.wiki/w/Vengeful_Kiteshield" },
@@ -33,6 +33,7 @@
     { "id": "tainted-repriser", "item": "Tainted Repriser", "tier": "70", "style": "Range", "source": "The Barrows Brothers", "url": "https://runescape.wiki/w/Tainted_repriser" },
     { "id": "sunspear", "item": "Sunspear", "tier": "78", "style": "Hybrid", "source": "Quests", "url": "https://runescape.wiki/w/Sunspear_(melee)", "info": "Requires completion of the River of Blood quest." },
     { "id": "salve-amulet", "item": "Salve Amulet", "tier": "N/A", "style": "Hybrid", "source": "Quests", "url": "https://runescape.wiki/w/Salve_amulet", "info": "Requires completion of the Haunted Mine quest." },
-    { "id": "dark-bow", "item": "Dark Bow", "tier": "70", "style": "Range", "source": "Slayer", "url": "https://runescape.wiki/w/Dark_Bow", "info": "Also available in the Wilderness, Kandarin, and Tirannwn." }
+    { "id": "dark-bow", "item": "Dark Bow", "tier": "70", "style": "Range", "source": "Slayer", "url": "https://runescape.wiki/w/Dark_Bow", "info": "Also available in the Wilderness, Kandarin, and Tirannwn." },
+    { "id": "dragon-rider-armour", "item": "Dragon Rider Armour", "tier": "70", "style": "Hybrid", "source": "Slayer", "url": "https://runescape.wiki/w/Dragon_Rider_armour", "info": "This has a high prayer bonus, this may pair very well with the Icyene Faith relic." }
   ]
 }

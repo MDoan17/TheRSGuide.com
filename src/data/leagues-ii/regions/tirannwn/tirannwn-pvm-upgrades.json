@@ -17,6 +17,7 @@
     { "id": "erethdors-grimoire", "item": "Erethdor's Grimoire", "tier": "N/A", "style": "Hybrid", "source": "Solak", "url": "https://runescape.wiki/w/Erethdor%27s_Grimoire" },
     { "id": "cinderbane-gloves", "item": "Cinderbane Gloves", "tier": "85", "style": "Hybrid", "source": "The Lost Grove", "url": "https://runescape.wiki/w/Cinderbane_gloves" },
     { "id": "blightbound-crossbow", "item": "Blightbound Crossbow", "tier": "92", "style": "Range", "source": "Solak", "url": "https://runescape.wiki/w/Blightbound_crossbow", "info": "Off-hand equivalent available." },
+    { "id": "blood-necklace-shard", "item": "Blood Necklace Shard", "tier": "N/A", "style": "Upgrade Item", "source": "Slayer", "url": "https://runescape.wiki/w/Blood_necklace_shard","info": "This is an upgrade for the T80 Dungeoneering necklaces as well as the Amulet of Fury. This drops from Eddimu which require 115 Dungeoneering and 90 Slayer." },
     { "id": "dark-bow", "item": "Dark Bow", "tier": "70", "style": "Range", "source": "Slayer", "url": "https://runescape.wiki/w/Dark_Bow", "info": "Also available in the Wilderness, Morytania, and Kandarin." },
     { "id": "dragon-halberd", "item": "Dragon Halberd", "tier": "60", "style": "Hybrid", "source": "Tyras Camp", "url": "https://runescape.wiki/w/Dragon_halberd" },
     { "id": "crystal-equipment", "item": "Crystal Equipment", "tier": "70", "style": "Hybrid", "source": "Prifddinas", "url": "https://runescape.wiki/w/Crystal_equipment#Regular_crystal_armour" },

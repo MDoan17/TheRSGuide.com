@@ -26,6 +26,13 @@
       "id": "mage-training-arena",
       "location": "Mage Training Arena",
       "url": "https://runescape.wiki/w/Mage_Training_Arena"
+    },
+
+    {
+      "id": "bandit-camp",
+      "location": "Bandit Camp",
+      "url": "https://runescape.wiki/w/Bandit_Camp_(Wilderness)",
+      "info": "Stone of Binding, Algarum Thread and Reinforcing Plates are available here as an alternative source"
     }
   ]
 }
