@@ -10,11 +10,13 @@
   "emptyMessage": "No Wilderness upgrades match those filters.",
   "columns": [
     {
-      "key": "source",
-      "header": "Source",
-      "filter": true,
-      "width": "md",
-      "wrap": false
+      "key": "item",
+      "header": "Item",
+      "link": {
+        "hrefKey": "url",
+        "external": true
+      },
+      "info": true
     },
     {
       "key": "tier",
@@ -32,13 +34,11 @@
       "wrap": false
     },
     {
-      "key": "item",
-      "header": "Item",
-      "link": {
-        "hrefKey": "url",
-        "external": true
-      },
-      "info": true
+      "key": "source",
+      "header": "Source",
+      "filter": true,
+      "width": "md",
+      "wrap": false
     }
   ],
   "rows": [
