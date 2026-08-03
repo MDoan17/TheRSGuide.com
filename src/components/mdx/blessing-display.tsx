@@ -25,17 +25,14 @@ type BlessingDisplayProps = {
 
 const BlessingDetailView: React.FC<{ blessing: BlessingItem }> = ({ blessing }) => {
     return (
-        <>
-            <DrawerHeader>
+        <div className="flex flex-col">
+            <DrawerHeader className="min-h-54 max-h-[30vh] grow items-center">
                 <DrawerTitle className="text-2xl text-center">{blessing.name}</DrawerTitle>
                 <DrawerDescription className="text-center italic">{blessing.path}</DrawerDescription>
+                <img src={blessing.image} alt={blessing.name} className="w-32 min-w-0 min-h-14 max-h-full object-scale-down" />
             </DrawerHeader>
-            <div className="p-4 flex flex-col gap-4 h-full">
-                <div className="flex flex-col gap-4 items-center">
-                    <img src={blessing.image} alt={blessing.name} className="w-32 h-32 object-contain" />
-                </div>
-
-                <ScrollArea style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+            <div className="px-4 flex flex-col gap-4 max-h-[calc(100vh-13.5rem)]">
+                <ScrollArea style={{ maxHeight: '70vh', overflowY: 'auto', 'paddingBottom': '1rem' }}>
                     <div>
                         <p className="w-full border-b text-secondary-foreground font-semibold">Effects</p>
                         <ul className="list-disc pl-5 py-2">
@@ -56,7 +53,7 @@ const BlessingDetailView: React.FC<{ blessing: BlessingItem }> = ({ blessing }) 
                     )}
                 </ScrollArea>
             </div>
-        </>
+        </div>
     );
 }
 
