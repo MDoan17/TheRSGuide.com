@@ -1,0 +1,15 @@
+{
+  "title": "Bosses",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "boss", "header": "Boss", "link": { "hrefKey": "url", "external": true } },
+    { "key": "location", "header": "Location" }
+  ],
+  "rows": [
+    { "id": "araxxi", "boss": "Araxxi", "location": "Araxyte Hive", "url": "https://runescape.wiki/w/Araxxi" },
+    { "id": "rise-of-the-six", "boss": "Rise of the Six", "location": "Barrows - Rise of the Six", "url": "https://runescape.wiki/w/Rise_of_the_Six" },
+    { "id": "barrows-brothers", "boss": "The Barrows Brothers", "location": "Barrows", "url": "https://runescape.wiki/w/The_Barrows_Brothers" }
+  ]
+}
