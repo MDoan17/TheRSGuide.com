@@ -1,0 +1,15 @@
+{
+  "title": "Notable Locations",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "city", "header": "City", "link": { "hrefKey": "url", "external": true }, "hidden": true }
+  ],
+  "rows": [
+    { "id": "prifddinas", "city": "Prifddinas", "url": "https://runescape.wiki/w/Prifddinas" },
+    { "id": "lletya", "city": "Lletya", "url": "https://runescape.wiki/w/Lletya" },
+    { "id": "lost-grove", "city": "The Lost Grove", "url": "https://runescape.wiki/w/The_Lost_Grove" },
+    { "id": "tyras-camp", "city": "Tyras Camp", "url": "https://runescape.wiki/w/Tyras_Camp" }
+  ]
+}

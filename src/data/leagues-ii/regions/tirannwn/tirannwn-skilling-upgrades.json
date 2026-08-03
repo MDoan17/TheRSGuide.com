@@ -1,0 +1,25 @@
+{
+  "title": "Skilling Upgrades",
+  "titleAs": "h3",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "label": "Search Tirannwn skilling upgrades", "placeholder": "Search Tirannwn skilling upgrades..." },
+  "emptyMessage": "No Tirannwn skilling upgrades match those filters.",
+  "columns": [
+    { "key": "item", "header": "Item", "link": { "hrefKey": "url", "external": true }, "info": true },
+    { "key": "tier", "header": "Tier", "filter": true, "width": "sm", "emphasis": true, "wrap": false },
+    { "key": "style", "header": "Skill", "filter": true, "width": "md", "wrap": false },
+    { "key": "source", "header": "Source", "filter": true, "width": "md", "wrap": false }
+  ],
+  "rows": [
+    { "id": "crystal-hatchet", "item": "Crystal Hatchet", "tier": "70", "style": "Woodcutting", "source": "Prifddinas", "url": "https://runescape.wiki/w/Crystal_hatchet" },
+    { "id": "crystal-pickaxe", "item": "Crystal Pickaxe", "tier": "70", "style": "Mining", "source": "Prifddinas", "url": "https://runescape.wiki/w/Crystal_pickaxe" },
+    { "id": "crystal-mattock", "item": "Crystal Mattock", "tier": "70", "style": "Archaeology", "source": "Prifddinas", "url": "https://runescape.wiki/w/Crystal_mattock" },
+    { "id": "crystal-fishing-rod", "item": "Crystal Fishing Rod", "tier": "80", "style": "Fishing", "source": "Prifddinas", "url": "https://runescape.wiki/w/Crystal_fishing_rod" },
+    { "id": "crystal-hammer", "item": "Crystal Hammer", "tier": "80", "style": "Smithing", "source": "Prifddinas", "url": "https://runescape.wiki/w/Crystal_hammer" },
+    { "id": "crystal-knife", "item": "Crystal Knife", "tier": "N/A", "style": "Fletching", "source": "Prifddinas", "url": "https://runescape.wiki/w/Crystal_knife" },
+    { "id": "crystal-saw", "item": "Crystal Saw", "tier": "N/A", "style": "Construction", "source": "Prifddinas", "url": "https://runescape.wiki/w/Crystal_saw" },
+    { "id": "crystal-tinderbox", "item": "Crystal Tinderbox", "tier": "N/A", "style": "Firemaking", "source": "Prifddinas", "url": "https://runescape.wiki/w/Crystal_tinderbox" }
+  ]
+}
