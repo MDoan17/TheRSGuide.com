@@ -1,0 +1,29 @@
+{
+  "title": "Teleport Relics",
+  "titleAs": "h2",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "placeholder": "Search Tirannwn teleport relics..." },
+  "columns": [
+    { "key": "relic", "header": "Relic", "filter": true, "width": "lg", "wrap": false },
+    { "key": "loc-type", "header": "Location Type" },
+    { "key": "loc", "header": "Location", "info": true }
+  ],
+  "rows": [
+    { "id": "natures-network-spirit-tree-prifddinas", "relic": "Nature's Network", "loc-type": "Spirit Tree", "loc": "Prifddinas" },
+    { "id": "natures-network-fairy-ring-bjs", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "BJS - The Lost Grove" },
+    { "id": "natures-network-fairy-ring-djs", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "DJS - Prifddinas (Clan Amlodd)" },
+    { "id": "natures-network-fairy-ring-dlr", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "DLR - Poison Waste south of Isafdar" },
+    { "id": "natures-network-farming-prifddinas-crwys", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Herb and Allotment - Prifddinas (Crwys District)" },
+    { "id": "natures-network-farming-prifddinas-trahaearn", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Tree Patch - Prifddinas (Trahaearn District)" },
+    { "id": "natures-network-farming-lletya", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Fruit Tree Patch - Lletya" },
+    { "id": "natures-network-farming-prifddinas-meilyr", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Fruit Tree Patch - Prifddinas (Meilyr District)" },
+    { "id": "natures-network-farming-isafdar", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Mushroom Patch - Isafdar" },
+    { "id": "assassins-insight-morvran", "relic": "Assassin's Insight", "loc-type": "Slayer Master", "loc": "Morvran" },
+    { "id": "assassins-insight-lost-grove", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "The Lost Grove" },
+    { "id": "assassins-insight-poison-waste-slayer-dungeon", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Poison Waste Slayer Dungeon", "info": "Requires The Path of Glouphrie quest." },
+    { "id": "assassins-insight-edimmus", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Edimmus", "info": "Located in the Edimmu resource dungeon, which requires 115 Dungeoneering to access." },
+    { "id": "voidwalker-ferocious-ring", "relic": "Voidwalker", "loc-type": "Ferocious Ring", "loc": "Morvran" }
+  ]
+}

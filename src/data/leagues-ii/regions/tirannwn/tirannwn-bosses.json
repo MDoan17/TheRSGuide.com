@@ -1,0 +1,13 @@
+{
+  "title": "Bosses",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "boss", "header": "Boss", "link": { "hrefKey": "url", "external": true } },
+    { "key": "location", "header": "Location", "link": { "hrefKey": "locationUrl", "external": true } }
+  ],
+  "rows": [
+    { "id": "solak", "boss": "Solak", "location": "The Lost Grove", "url": "https://runescape.wiki/w/Solak", "locationUrl": "https://runescape.wiki/w/The_Lost_Grove" }
+  ]
+}
