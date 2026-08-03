@@ -29,6 +29,7 @@ describe("Wilderness JSON data tables", () => {
       .join("")
 
     expect(tables.map((table) => table.rows.length)).toEqual([3, 10, 6, 56, 4, 4, 8])
+    expect(tables.every((table) => table.collapsed)).toBe(true)
     expect(markup.match(/data-slot="data-table"/g)).toHaveLength(7)
     expect(markup.match(/<h2/g)).toHaveLength(4)
     expect(markup.match(/<h3/g)).toHaveLength(3)
@@ -39,13 +40,21 @@ describe("Wilderness JSON data tables", () => {
     expect(markup).toContain("PVM Upgrades</h3>")
     expect(markup).toContain('id="pvm-upgrades"')
     expect(markup).toContain('aria-labelledby="pvm-upgrades"')
-    expect(markup).not.toMatch(/id="_r_[^\"]+-title"/)
+    expect(markup).not.toMatch(/id="_r_[^"]+-title"/)
+    expect(wildernessAbilityUpgrades.columns.map(({ key }) => key)).toEqual([
+      "item",
+      "tier",
+      "style",
+      "source",
+    ])
   })
 
   it("preserves every location, boss grouping, feature, and Wiki link", () => {
     const markup = tables
       .slice(0, 3)
-      .map((config) => renderToStaticMarkup(<DataTable config={config} />))
+      .map((config) => renderToStaticMarkup(
+        <DataTable config={{ ...config, collapsed: false }} />
+      ))
       .join("")
 
     expect(markup).toContain("Wilderness Crater")
@@ -61,12 +70,21 @@ describe("Wilderness JSON data tables", () => {
     expect(markup).toContain('href="https://runescape.wiki/w/Ores#Primal_ores"')
   })
 
+  it("uses only single numeric PvM tiers or N/A", () => {
+    expect(
+      wildernessPvmUpgrades.rows.every(({ tier }) => /^(?:\d+|N\/A)$/.test(tier))
+    ).toBe(true)
+    expect(wildernessPvmUpgrades.rows).toContainEqual(
+      expect.objectContaining({ id: "primal-equipment", tier: "90" })
+    )
+  })
+
   it("collapses an all-hidden header row without removing its accessible label", () => {
     const locationsMarkup = renderToStaticMarkup(
-      <DataTable config={wildernessLocations} />
+      <DataTable config={{ ...wildernessLocations, collapsed: false }} />
     )
     const featuresMarkup = renderToStaticMarkup(
-      <DataTable config={wildernessFeatures} />
+      <DataTable config={{ ...wildernessFeatures, collapsed: false }} />
     )
 
     expect(wildernessLocations.columns[0].hidden).toBe(true)
@@ -81,7 +99,7 @@ describe("Wilderness JSON data tables", () => {
 
   it("preserves every teleport relic unlock and its supporting information", () => {
     const markup = renderToStaticMarkup(
-      <DataTable config={wildernessTeleportRelics} />
+      <DataTable config={{ ...wildernessTeleportRelics, collapsed: false }} />
     )
 
     expect(wildernessTeleportRelics.rows).toHaveLength(8)

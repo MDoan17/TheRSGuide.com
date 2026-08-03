@@ -1,6 +1,7 @@
 {
   "title": "Wilderness Utility Upgrades",
   "titleAs": "h3",
+  "collapsed": true,
   "rowId": "id",
   "columns": [
     { "key": "tier", "header": "Tier", "width": "sm", "emphasis": true, "wrap": false },

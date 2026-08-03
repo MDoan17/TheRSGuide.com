@@ -47,6 +47,8 @@ deeply.
 - `titleAs`: Heading hierarchy from `h1` through `h6`; defaults to `h2`.
 - `headingId`: Optional anchor override; otherwise derived from `title` (for
   example, `PVM Upgrades` becomes `#pvm-upgrades`).
+- `collapsed`: Adds an expand/collapse control. Use `true` to hide body rows
+  initially or `false` to leave them initially visible.
 - `sortable`: Makes every column sortable. A column can override this.
 - `search`: Use `true`, or provide `label` and `placeholder` text.
 - `rowId`: The row field containing a stable unique ID.
@@ -72,10 +74,28 @@ row collapses completely. This is useful for simple one-column tables:
 }
 ```
 
+## Collapsible rows
+
+Add `"collapsed": true` to show the table title, controls, and column headers
+while hiding its body rows initially. Readers can expand or collapse the rows
+from the table header.
+
+```json
+{
+  "title": "Recommended gear",
+  "collapsed": true,
+  "columns": [{ "key": "item" }],
+  "rows": [{ "item": "Granite maul" }]
+}
+```
+
+Use `false` when the table should start expanded but still have the collapse
+control. Omit `collapsed` entirely when no control is needed.
+
 ## Filters
 
-Set `"filter": true` on a column to create its checkbox choices automatically
-from the unique values in `rows`:
+Set `"filter": true` on a column to create its searchable multi-select choices
+automatically from the unique values in `rows`:
 
 ```json
 { "key": "combat_style", "filter": true }

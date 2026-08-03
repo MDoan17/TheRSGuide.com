@@ -1,6 +1,7 @@
 {
   "title": "PVM Upgrades",
   "titleAs": "h3",
+  "collapsed": true,
   "sortable": true,
   "rowId": "id",
   "search": {
@@ -44,7 +45,7 @@
   "rows": [
     {
       "id": "primal-equipment",
-      "tier": "85-90",
+      "tier": "90",
       "style": "Melee",
       "item": "Primal Equipment",
       "url": "https://runescape.wiki/w/Primal_equipment",

@@ -26,6 +26,10 @@
       "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
       "description": "Optional anchor ID for the table title. Defaults to a URL-friendly version of the title."
     },
+    "collapsed": {
+      "type": "boolean",
+      "description": "Adds a row visibility toggle and controls whether the table body is collapsed initially."
+    },
     "sortable": {
       "type": "boolean",
       "default": false,
