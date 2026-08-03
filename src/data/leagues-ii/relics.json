@@ -422,6 +422,62 @@
             ],
             "skillSolves": [
             ]
+        },
+        {
+            "name": "Devout",
+            "tagline": "A faithful companion to aid you in your adventures.",
+            "tier": 0,
+            "image": "https://media.thersguide.com/leagues-2/relics/devout.png",
+            "effects": [
+                "Grants a Devout yak pouch and the Ethereal storage scroll.",
+                "The Devout yak is a summoning familiar with 32 inventory slots. It can access the bank from anywhere and change items to/from notes.",
+                "The Ethereal storage scroll can be used to repeat the last unnote action, using the last noted item and amount. The scroll and pouch are never consumed and do not require summoning points.",
+                "Familiars which give you stat boosts also give 10 xp (before League XP multipliers) in the respective skill when gaining XP, up to every 6 seconds.",
+                "Summoning scrolls are no longer consumed when used.",
+                "Familiar spell point costs are reduced to 10% of their original value.",
+                "Familiars deal more damage based on your summoning level, up to +500% damage at 99 Summoning."
+            ],
+            "notes": [
+            ],
+            "skillSolves": [
+            ]
+        },
+        {
+            "name": "Perkfection",
+            "tagline": "Inventing a new path forward.",
+            "tier": 0,
+            "image": "https://media.thersguide.com/leagues-2/relics/perkfection.png",
+            "effects": [
+                "Grants the Inventor's Toolbox, which acts as an XP capacitor but can store 10x max charges and also charges 10x faster. It also have two gizmo slots which are applied in addition to any equipped perks. You must be using an augmented item for these perks to activate. These can be swapped out freely. Additionally the toolbox allows you to teleport to Inventor's workbenches that are available in your unlocked regions.",
+                "When disassembling items, your junk channce is reduced to 0%. (Toggleable)",
+                "Machines can be built from level 1 and run 10x faster.",
+                "Obtain 10x invention materials when disassembling items.",
+                "Augmented items and machines consume no charge.",
+                "The capacity of machines is increased by 10x.",
+                "Helpful perks will trigger 20% more often (does not stack with item level 20 benefit).",
+                "Unlocks all blueprints in the dwarven and goblin tech tree."
+            ],
+            "notes": [
+            ],
+            "skillSolves": [
+                {
+                    "skill": "invention",
+                    "grade": "A"
+                }
+            ]
+        },
+        {
+            "name": "Rejuvenated",
+            "tagline": "Rewind to a previous relic tier.",
+            "tier": 0,
+            "image": "https://media.thersguide.com/leagues-2/relics/rejuvenated.png",
+            "effects": [
+                "Choose another relic from a previous tier."
+            ],
+            "notes": [
+            ],
+            "skillSolves": [
+            ]
         }
     ],
     "Passives": [
