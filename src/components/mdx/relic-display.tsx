@@ -35,16 +35,18 @@ const RelicDetailView: React.FC<{ relic: RelicItem }> = ({ relic }) => {
             <DrawerHeader className="min-h-54 max-h-[30vh] grow">
                 <DrawerTitle className="text-2xl text-center">{relic.name}</DrawerTitle>
                 <DrawerDescription className="text-center italic">{relic.tagline}</DrawerDescription>
-                <div className="flex items-center gap-4 min-h-0">
+                <div className="flex items-center justify-center gap-4 min-h-0">
                     <img src={relic.image} alt={relic.name} className="w-32 min-w-0 min-h-14 max-h-full object-scale-down" />
-                    <div className="flex flex-wrap justify-center gap-2 max-h-32 basis-[fit-content]">
-                        {relic.skillSolves.map((solve) => (
-                            <div key={`${relic.name}-${solve.skill}`} className="flex flex-col items-center self-center gap-2 bg-secondary py-1 px-2">
-                                <img src={`/skills/${solve.skill}.png`} alt={solve.skill} className="w-6 h-6 object-contain" />
-                                <span className="font-bold">{solve.grade}</span>
-                            </div>
-                        ))}
-                    </div>
+                    {(relic.skillSolves.length > 0) && (
+                        <div className="flex flex-wrap justify-center gap-2 max-h-32 basis-[fit-content]">
+                            {relic.skillSolves.map((solve) => (
+                                <div key={`${relic.name}-${solve.skill}`} className="flex flex-col items-center self-center gap-2 bg-secondary py-1 px-2">
+                                    <img src={`/skills/${solve.skill}.png`} alt={solve.skill} className="w-6 h-6 object-contain" />
+                                    <span className="font-bold">{solve.grade}</span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </DrawerHeader>
             <div className="px-4 flex flex-col gap-4 max-h-[calc(100vh-13.5rem)]">
