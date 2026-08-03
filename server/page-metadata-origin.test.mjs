@@ -42,7 +42,11 @@ describe('page metadata deployment origin', () => {
     expect(rewritten).toContain(
       'property="og:url" content="https://staging-15.thersguide.com/guides/skill-training"',
     )
-    expect(rewritten.match(/https:\/\/staging-15\.thersguide\.com\/og\//g)).toHaveLength(3)
+    const metadataBlock = rewritten.match(
+      /<!-- page-metadata:start -->[\s\S]*?<!-- page-metadata:end -->/,
+    )?.[0]
+    expect(metadataBlock).toBeDefined()
+    expect(metadataBlock).not.toContain('https://thersguide.com/')
     expect(rewritten).toContain(
       'name="twitter:image:alt" content="Skill Training Guide preview"',
     )

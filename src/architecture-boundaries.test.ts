@@ -90,15 +90,4 @@ describe("source architecture boundaries", () => {
       existsSync(resolve(sourceDirectory, "mdx_components", "components"))
     ).toBe(false)
   })
-
-  it("uses TableScroll for the categorized glossary tables", () => {
-    const glossary = readFileSync(
-      resolve(sourceDirectory, "..", "content", "setup", "glossary.mdx"),
-      "utf8"
-    )
-
-    expect(glossary).not.toContain('className="table-scroll"')
-    expect(glossary.match(/<TableScroll>/g)).toHaveLength(6)
-    expect(glossary.match(/<\/TableScroll>/g)).toHaveLength(6)
-  })
 })

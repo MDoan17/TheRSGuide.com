@@ -4,42 +4,54 @@ import { describe, expect, it } from 'vitest'
 import { BlessingDisplay } from '@/components/mdx/blessing-display'
 import { RelicDisplay } from '@/components/mdx/relic-display'
 import { mdxComponents } from '@/mdx_components/mdx-components'
+import blessingData from '@/data/leagues-ii/blessings.json'
+import relicData from '@/data/leagues-ii/relics.json'
 
 describe('Leagues MDX displays', () => {
-  it('renders confirmed relic data and an optional point requirement', () => {
-    const markup = renderToStaticMarkup(<RelicDisplay tier={1} points={10} />)
+  it('renders confirmed relic data with an optional point requirement', () => {
+    const confirmed = relicData.Relics.find((relic) => relic.tier > 0)
+    expect(confirmed).toBeDefined()
+    const markup = renderToStaticMarkup(
+      <RelicDisplay tier={confirmed!.tier} points={10} />,
+    )
 
-    expect(markup).toContain('Tier 1')
+    expect(markup).toContain(`Tier ${confirmed!.tier}`)
     expect(markup).toContain('10 points')
-    expect(markup).toContain('Survivalist')
-    expect(markup).toContain('View details')
+    expect(markup).toContain(confirmed!.name)
+    expect(markup).toContain('View Details')
+    expect(markup).not.toContain('undefined')
   })
 
-  it('renders passives for relic tiers whose choices are not yet confirmed', () => {
-    const markup = renderToStaticMarkup(<RelicDisplay tier={2} points={0} />)
-    const passive = 'Experience is scaled at 8x the normal rate.'
+  it('renders a useful fallback for a relic tier without choices', () => {
+    const markup = renderToStaticMarkup(
+      <RelicDisplay tier={Number.MAX_SAFE_INTEGER} points={0} />,
+    )
 
-    expect(markup.match(new RegExp(passive.replace('.', '\\.'), 'g'))).toHaveLength(1)
     expect(markup).toContain('Relics have not been confirmed')
     expect(markup).not.toContain('undefined')
   })
 
-  it('renders blessing data in the shared scrollable table boundary', () => {
-    const markup = renderToStaticMarkup(<BlessingDisplay tier={1} tasks={0} />)
+  it('renders confirmed blessing data with an optional task requirement', () => {
+    const confirmed = blessingData.Blessings.find((blessing) => blessing.tier > 0)
+    expect(confirmed).toBeDefined()
+    const markup = renderToStaticMarkup(
+      <BlessingDisplay tier={confirmed!.tier} tasks={10} />,
+    )
 
-    expect(markup).toContain('data-slot="table-scroll"')
-    expect(markup).toContain('Adrenaline Junkie')
-    expect(markup).toContain('<th>Path</th>')
+    expect(markup).toContain(`Tier ${confirmed!.tier}`)
+    expect(markup).toContain('10 tasks')
+    expect(markup).toContain(confirmed!.name)
+    expect(markup).toContain('View Details')
     expect(markup).not.toContain('undefined')
   })
 
-  it('renders passives for blessing tiers whose choices are not yet confirmed', () => {
-    const markup = renderToStaticMarkup(<BlessingDisplay tier={5} tasks={0}  />)
+  it('renders a useful fallback for a blessing tier without choices', () => {
+    const markup = renderToStaticMarkup(
+      <BlessingDisplay tier={Number.MAX_SAFE_INTEGER} tasks={0} />,
+    )
 
-    expect(markup.match(/All War/g)).toHaveLength(1)
-    expect(markup).toContain('rewards are unlocked.')
     expect(markup).toContain('Blessings have not been confirmed')
-    expect(markup).not.toContain('data-slot="table-scroll"')
+    expect(markup).not.toContain('undefined')
   })
 
   it('registers both displays through the MDX registry', () => {

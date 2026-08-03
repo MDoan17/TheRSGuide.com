@@ -24,26 +24,19 @@ describe('homepage mode', () => {
   })
 
   it('highlights Guides and omits Leagues in normal mode', () => {
-    expect(homepagePrimaryLinks('normal')).toEqual([
-      { label: 'Guides', to: '/guides', highlighted: true },
-      { label: 'Getting Started', to: '/getting-started' },
-      { label: 'Setup Guide', to: '/setup' },
-      { label: 'Extras', to: '/extras' },
-    ])
+    const links = homepagePrimaryLinks('normal')
+
+    expect(links.some((link) => link.to === '/leagues')).toBe(false)
+    expect(links.filter((link) => link.highlighted).map((link) => link.to)).toEqual(['/guides'])
   })
 
   it('inserts and highlights Leagues in leagues mode', () => {
     const links = homepagePrimaryLinks('leagues')
 
-    expect(links.map((link) => link.label)).toEqual([
-      'Guides',
-      'Getting Started',
-      'Leagues',
-      'Setup Guide',
-      'Extras',
-    ])
-    expect(links.filter((link) => link.highlighted)).toEqual([
-      { label: 'Leagues', to: '/leagues', highlighted: true },
-    ])
+    expect(links.some((link) => link.to === '/leagues')).toBe(true)
+    expect(links.filter((link) => link.highlighted).map((link) => link.to)).toEqual(['/leagues'])
+    expect(links.filter((link) => link.to !== '/leagues').map((link) => link.to)).toEqual(
+      homepagePrimaryLinks('normal').map((link) => link.to),
+    )
   })
 })

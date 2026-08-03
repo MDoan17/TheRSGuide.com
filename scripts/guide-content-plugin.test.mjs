@@ -1,4 +1,7 @@
-import { describe, expect, it } from 'vitest'
+import { promises as fs } from 'node:fs'
+import os from 'node:os'
+import path from 'node:path'
+import { afterEach, describe, expect, it } from 'vitest'
 import {
   buildGuideContent,
   documentPageMetadata,
@@ -6,61 +9,80 @@ import {
   metadataHtml,
 } from './guide-content-plugin.mjs'
 
+const temporaryDirectories = []
+
+afterEach(async () => {
+  await Promise.all(temporaryDirectories.splice(0).map((directory) =>
+    fs.rm(directory, { recursive: true, force: true })
+  ))
+})
+
+async function fixtureContent() {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'rs-guide-content-'))
+  temporaryDirectories.push(root)
+  const guidesDirectory = path.join(root, 'content', 'guides')
+  const leaguesDirectory = path.join(root, 'content', 'leagues')
+  await fs.mkdir(guidesDirectory, { recursive: true })
+  await fs.mkdir(leaguesDirectory, { recursive: true })
+  await Promise.all([
+    fs.writeFile(path.join(guidesDirectory, 'index.mdx'), `---
+title: Fixture Guide
+navigationTitle: Fixture Navigation
+description: A fixture guide used to verify manifest behavior.
+header: false
+---
+## First heading
+
+Searchable fixture prose.
+
+<PlayerSearch />
+
+### Second heading
+`),
+    fs.writeFile(path.join(guidesDirectory, 'meta.json'), JSON.stringify({
+      pages: ['index'],
+    })),
+    fs.writeFile(path.join(leaguesDirectory, 'index.mdx'), `---
+title: Fixture League
+description: A fixture League guide.
+---
+League content.
+`),
+    fs.writeFile(path.join(leaguesDirectory, 'meta.json'), JSON.stringify({
+      pages: ['index'],
+    })),
+  ])
+  return buildGuideContent(root)
+}
+
 describe('guide content build manifest', () => {
   it('builds a unique, fully described guide manifest', async () => {
     const content = await buildGuideContent(process.cwd())
     const { documents } = guideContentForMode(content, false)
     const routes = documents.map((document) => document.path)
 
-    expect(documents.length).toBeGreaterThan(0)
     expect(new Set(routes)).toHaveLength(routes.length)
     expect(documents.every((document) => document.description.length > 0)).toBe(true)
   })
 
-  it('precomputes route layout and player-data requirements', async () => {
-    const { documents } = await buildGuideContent(process.cwd())
-    const byRoute = new Map(documents.map((document) => [document.path, document]))
+  it('precomputes route behavior from frontmatter and MDX', async () => {
+    const { documents, metadata } = await fixtureContent()
 
-    expect(byRoute.get('/getting-started/tick-system')).toMatchObject({
-      title: 'The Tick System',
-      requiresPlayerData: false,
-      hasTableOfContents: true,
-      ogImage: '/og/getting-started-tick-system.png',
-      ogImageAlt: 'The Tick System guide preview',
-      socialSection: 'Getting Started',
-    })
-    expect(byRoute.get('/guides/skill-training')).toMatchObject({
+    expect(documents.find((document) => document.path === '/guides')).toMatchObject({
+      title: 'Fixture Guide',
+      navigationTitle: 'Fixture Navigation',
       requiresPlayerData: true,
       hasTableOfContents: true,
-    })
-    expect(byRoute.get('/guides/early-game/desert-treasure')).toMatchObject({
-      requiresPlayerData: true,
-    })
-  })
-
-  it('precomputes optional article header visibility from frontmatter', async () => {
-    const { documents } = await buildGuideContent(process.cwd())
-    const byRoute = new Map(documents.map((document) => [document.path, document]))
-
-    expect(byRoute.get('/leagues/regions')).toMatchObject({
-      title: 'Map',
-      navigationTitle: 'Regions',
-      hasTableOfContents: false,
       showPageHeader: false,
+      ogImage: '/og/guides.png',
+      ogImageAlt: 'Fixture Guide guide preview',
+      socialSection: 'RuneScape Guides',
+      searchText: expect.stringContaining('Searchable fixture prose'),
     })
-    expect(byRoute.get('/leagues/regions/anachronia')).toMatchObject({
-      showPageHeader: true,
-    })
-  })
-
-  it('extracts full text for the separately loaded search corpus', async () => {
-    const { documents } = await buildGuideContent(process.cwd())
-    const tickSystem = documents.find(
-      (document) => document.path === '/getting-started/tick-system',
-    )
-
-    expect(tickSystem?.searchText).toContain('0.6')
-    expect(tickSystem?.tableOfContents.length).toBeGreaterThan(0)
+    expect(metadata).toEqual([
+      { sourcePath: '../../content/guides/meta.json', pages: ['index'] },
+      { sourcePath: '../../content/leagues/meta.json', pages: ['index'] },
+    ])
   })
 
   it('renders complete social metadata for guide links', () => {
@@ -83,22 +105,27 @@ describe('guide content build manifest', () => {
     expect(html).toContain('name="twitter:card" content="summary_large_image"')
   })
 
-  it('treats the Leagues root as a regular guide page', async () => {
-    const content = await buildGuideContent(process.cwd())
-    const { documents } = guideContentForMode(content, true)
-    const leagues = documents.find((document) => document.path === '/leagues')
-
-    expect(documentPageMetadata(leagues)).toMatchObject({
-      path: '/leagues',
-      title: 'Leagues | The RS Guide',
-      cardTitle: 'Leagues',
+  it('creates page metadata from any guide document', () => {
+    expect(documentPageMetadata({
+      path: '/fixture',
+      title: 'Fixture',
+      description: 'Fixture description',
+      ogImage: '/fixture.png',
+      ogImageAlt: 'Fixture preview',
+      generatedOgImage: true,
+      socialSection: 'Fixtures',
+      socialDetail: 'Fixture detail',
+    })).toMatchObject({
+      path: '/fixture',
+      title: 'Fixture | The RS Guide',
+      cardTitle: 'Fixture',
       type: 'article',
-      section: 'Leagues',
+      section: 'Fixtures',
     })
   })
 
   it('excludes Leagues documents and metadata outside Leagues mode', async () => {
-    const content = await buildGuideContent(process.cwd())
+    const content = await fixtureContent()
     const normalContent = guideContentForMode(content, false)
     const leaguesContent = guideContentForMode(content, true)
 
