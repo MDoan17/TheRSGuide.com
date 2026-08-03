@@ -1,0 +1,23 @@
+{
+  "title": "Notable Locations",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "city", "header": "City", "link": { "hrefKey": "url", "external": true } },
+    { "key": "region", "header": "Region", "width": "md", "wrap": false }
+  ],
+  "rows": [
+    { "id": "varrock", "city": "Varrock", "region": "Misthalin", "url": "https://runescape.wiki/w/Varrock" },
+    { "id": "draynor-village", "city": "Draynor Village", "region": "Misthalin", "url": "https://runescape.wiki/w/Draynor_Village" },
+    { "id": "lumbridge", "city": "Lumbridge", "region": "Misthalin", "url": "https://runescape.wiki/w/Lumbridge" },
+    { "id": "edgeville", "city": "Edgeville", "region": "Misthalin", "url": "https://runescape.wiki/w/Edgeville" },
+    { "id": "zanaris", "city": "Zanaris", "region": "Misthalin", "url": "https://runescape.wiki/w/Zanaris" },
+    { "id": "city-of-um", "city": "City of Um", "region": "Misthalin", "url": "https://runescape.wiki/w/City_of_Um" },
+    { "id": "senntisten", "city": "Senntisten", "region": "Misthalin", "url": "https://runescape.wiki/w/Senntisten" },
+    { "id": "dorgesh-kaan", "city": "Dorgesh-Kaan", "region": "Misthalin", "url": "https://runescape.wiki/w/Dorgesh-Kaan" },
+    { "id": "polypore-dungeon", "city": "Polypore Dungeon", "region": "Misthalin", "url": "https://runescape.wiki/w/Polypore_Dungeon" },
+    { "id": "wendlewick", "city": "Wendlewick", "region": "Havenhythe", "url": "https://runescape.wiki/w/Wendlewick" },
+    { "id": "amberfell", "city": "Amberfell", "region": "Havenhythe", "url": "https://runescape.wiki/w/Amberfell" }
+  ]
+}

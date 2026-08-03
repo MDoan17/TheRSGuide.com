@@ -12,6 +12,8 @@ import {
 import {
   ArrowDown,
   ArrowUp,
+  ChevronDown,
+  ChevronRight,
   ChevronsUpDown,
   ExternalLink,
   Info,
@@ -19,13 +21,18 @@ import {
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
 import {
   Field,
   FieldGroup,
   FieldLabel,
-  FieldLegend,
-  FieldSet,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
@@ -89,6 +96,7 @@ type DataTableConfig = {
   title: string
   titleAs?: string
   headingId?: string
+  collapsed?: boolean
   sortable?: boolean
   columns: readonly DataTableColumn[]
   rows: readonly DataTableRow[]
@@ -217,6 +225,84 @@ function DataTableInfo({
   )
 }
 
+function DataTableMultiSelect({
+  id,
+  label,
+  onChange,
+  options,
+  selectedValues,
+}: {
+  id: string
+  label: string
+  onChange: (values: string[]) => void
+  options: readonly DataTableFilterOption[]
+  selectedValues: string[]
+}) {
+  const [open, setOpen] = useState(false)
+  const selectedLabel = selectedValues.length === 1
+    ? options.find((option) => String(option.value) === selectedValues[0])?.label
+    : undefined
+
+  return (
+    <Field>
+      <FieldLabel htmlFor={id}>{label}</FieldLabel>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            id={id}
+            type="button"
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            aria-label={`Filter by ${label}`}
+            className="w-full justify-between font-normal"
+          >
+            <span className="truncate">
+              {selectedLabel
+                ?? (selectedValues.length
+                  ? `${selectedValues.length} selected`
+                  : "All options")}
+            </span>
+            <ChevronsUpDown data-icon="inline-end" aria-hidden="true" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          align="start"
+          className="w-[var(--radix-popover-trigger-width)] p-0"
+        >
+          <Command>
+            <CommandInput placeholder={`Search ${label.toLocaleLowerCase()}...`} />
+            <CommandList>
+              <CommandEmpty>No options found.</CommandEmpty>
+              <CommandGroup>
+                {options.map((option) => {
+                  const optionValue = String(option.value)
+                  const checked = selectedValues.includes(optionValue)
+
+                  return (
+                    <CommandItem
+                      key={optionValue}
+                      value={`${option.label} ${optionValue}`}
+                      data-checked={checked}
+                      onSelect={() => onChange(
+                        checked
+                          ? selectedValues.filter((value) => value !== optionValue)
+                          : [...selectedValues, optionValue]
+                      )}
+                    >
+                      {option.label}
+                    </CommandItem>
+                  )
+                })}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </Field>
+  )
+}
+
 function DataTable({
   config,
   className,
@@ -234,6 +320,8 @@ function DataTable({
   const Heading = resolveHeadingTag(config.titleAs)
   const id = useId()
   const headingId = config.headingId ?? slugifyHeading(title)
+  const collapsible = typeof config.collapsed === "boolean"
+  const [isCollapsed, setIsCollapsed] = useState(config.collapsed ?? false)
   const [sorting, setSorting] = useState<SortingState>([])
   const [globalFilter, setGlobalFilter] = useState("")
   const textFilterFn = useMemo<FilterFn<DataTableRow>>(
@@ -368,19 +456,41 @@ function DataTable({
               className="h-auto whitespace-normal p-3"
             >
               <div className="flex flex-col gap-3">
-                <div data-slot="data-table-title-row">
+                <div
+                  data-slot="data-table-title-row"
+                  className="flex items-center justify-between gap-3"
+                >
                   <Heading
                     id={headingId}
                     className="scroll-mt-[5.5rem] font-display text-base font-semibold"
                   >
                     {title}
                   </Heading>
+
+                  {collapsible ? (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      aria-controls={`${id}-body`}
+                      aria-expanded={!isCollapsed}
+                      aria-label={isCollapsed ? `Expand ${title}` : `Collapse ${title}`}
+                      onClick={() => setIsCollapsed((current) => !current)}
+                    >
+                      {isCollapsed ? (
+                        <ChevronRight aria-hidden="true" />
+                      ) : (
+                        <ChevronDown aria-hidden="true" />
+                      )}
+                    </Button>
+                  ) : null}
                 </div>
 
-                <div
-                  data-slot="data-table-controls"
-                  className="flex min-w-0 items-center justify-between gap-3"
-                >
+                {!isCollapsed && (searchConfig || filterableColumns.length) ? (
+                  <div
+                    data-slot="data-table-controls"
+                    className="flex min-w-0 items-center gap-2"
+                  >
                   {searchConfig ? (
                     <Field className="min-w-0 max-w-xs flex-1 sm:w-64 sm:flex-none">
                       <FieldLabel htmlFor={`${id}-search`} className="sr-only">
@@ -396,8 +506,8 @@ function DataTable({
                     </Field>
                   ) : null}
 
-                  {filterableColumns.length ? (
-                    <Popover>
+                    {filterableColumns.length ? (
+                      <Popover>
                       <PopoverTrigger asChild>
                         <Button
                           type="button"
@@ -416,11 +526,11 @@ function DataTable({
                         <PopoverHeader>
                           <PopoverTitle>Filter {title}</PopoverTitle>
                           <PopoverDescription>
-                            Select to filter
+                            Select one or more values
                           </PopoverDescription>
                         </PopoverHeader>
 
-                        <FieldGroup className="gap-4">
+                        <FieldGroup className="gap-3">
                           {filterableColumns.map((definition) => {
                             const tableColumn = table.getColumn(definition.key)
                             const selectedValues = (
@@ -428,39 +538,16 @@ function DataTable({
                             ) ?? []
 
                             return (
-                              <FieldSet key={definition.key} className="gap-2">
-                                <FieldLegend variant="label">
-                                  {definition.filter?.label ?? definition.header}
-                                </FieldLegend>
-                                <div data-slot="checkbox-group" className="flex flex-col gap-2">
-                                  {definition.filter?.options.map((option) => {
-                                    const optionValue = String(option.value)
-                                    const optionId = `${id}-${definition.key}-${optionValue}`
-
-                                    return (
-                                      <Field key={optionValue} orientation="horizontal">
-                                        <Checkbox
-                                          id={optionId}
-                                          checked={selectedValues.includes(optionValue)}
-                                          onCheckedChange={(checked) => {
-                                            const nextValues = checked
-                                              ? [...selectedValues, optionValue]
-                                              : selectedValues.filter(
-                                                (value) => value !== optionValue
-                                              )
-                                            tableColumn?.setFilterValue(
-                                              nextValues.length ? nextValues : undefined
-                                            )
-                                          }}
-                                        />
-                                        <FieldLabel htmlFor={optionId}>
-                                          {option.label}
-                                        </FieldLabel>
-                                      </Field>
-                                    )
-                                  })}
-                                </div>
-                              </FieldSet>
+                              <DataTableMultiSelect
+                                key={definition.key}
+                                id={`${id}-${definition.key}-filter`}
+                                label={definition.filter?.label ?? definition.header}
+                                options={definition.filter?.options ?? []}
+                                selectedValues={selectedValues}
+                                onChange={(nextValues) => tableColumn?.setFilterValue(
+                                  nextValues.length ? nextValues : undefined
+                                )}
+                              />
                             )
                           })}
                         </FieldGroup>
@@ -477,14 +564,15 @@ function DataTable({
                           </Button>
                         ) : null}
                       </PopoverContent>
-                    </Popover>
-                  ) : null}
+                      </Popover>
+                    ) : null}
                 </div>
+                ) : null}
               </div>
             </TableHead>
           </TableRow>
 
-          {table.getHeaderGroups().map((headerGroup) => (
+          {!isCollapsed && table.getHeaderGroups().map((headerGroup) => (
             <TableRow
               key={headerGroup.id}
               className={cn(
@@ -562,8 +650,8 @@ function DataTable({
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows.length ? (
+        <TableBody id={`${id}-body`}>
+          {!isCollapsed && (table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell, index) => {
@@ -593,7 +681,7 @@ function DataTable({
                 {emptyMessage}
               </TableCell>
             </TableRow>
-          )}
+          ))}
         </TableBody>
       </Table>
     </div>

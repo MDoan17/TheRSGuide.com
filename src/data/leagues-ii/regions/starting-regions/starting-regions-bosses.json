@@ -1,0 +1,27 @@
+{
+  "title": "Bosses",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "boss", "header": "Boss", "link": { "hrefKey": "url", "external": true } },
+    { "key": "location", "header": "Location", "link": { "hrefKey": "locationUrl", "external": true } },
+    { "key": "region", "header": "Region", "width": "md", "wrap": false }
+  ],
+  "rows": [
+    { "id": "zamorak", "boss": "Zamorak, Lord of Chaos", "location": "Elder God Wars Dungeon", "region": "Misthalin", "url": "https://runescape.wiki/w/Zamorak,_Lord_of_Chaos", "locationUrl": "https://runescape.wiki/w/Elder_God_Wars_Dungeon" },
+    { "id": "arch-glacor", "boss": "Arch-Glacor", "location": "Elder God Wars Dungeon", "region": "Misthalin", "url": "https://runescape.wiki/w/Arch-Glacor", "locationUrl": "https://runescape.wiki/w/Elder_God_Wars_Dungeon" },
+    { "id": "kerapac", "boss": "Kerapac, the Bound", "location": "Elder God Wars Dungeon", "region": "Misthalin", "url": "https://runescape.wiki/w/Kerapac,_the_bound", "locationUrl": "https://runescape.wiki/w/Elder_God_Wars_Dungeon" },
+    { "id": "tzkal-zuk", "boss": "TzKal-Zuk", "location": "Elder God Wars Dungeon", "region": "Misthalin", "url": "https://runescape.wiki/w/TzKal-Zuk", "locationUrl": "https://runescape.wiki/w/Elder_God_Wars_Dungeon" },
+    { "id": "croesus", "boss": "Croesus", "location": "Elder God Wars Dungeon", "region": "Misthalin", "url": "https://runescape.wiki/w/Croesus", "locationUrl": "https://runescape.wiki/w/Elder_God_Wars_Dungeon" },
+    { "id": "hermod", "boss": "Hermod, the Spirit of War", "location": "Rasial's Citadel", "region": "Misthalin", "url": "https://runescape.wiki/w/Hermod,_the_Spirit_of_War", "locationUrl": "https://runescape.wiki/w/Rasial's_Citadel" },
+    { "id": "rasial", "boss": "Rasial, The First Necromancer", "location": "Rasial's Citadel", "region": "Misthalin", "url": "https://runescape.wiki/w/Rasial,_the_First_Necromancer", "locationUrl": "https://runescape.wiki/w/Rasial's_Citadel" },
+    { "id": "vermyx", "boss": "Vermyx, Brood Mother", "location": "Sanctum of Rebirth", "region": "Misthalin", "url": "https://runescape.wiki/w/Vermyx,_Brood_Mother", "locationUrl": "https://runescape.wiki/w/Sanctum_of_Rebirth" },
+    { "id": "kezalam", "boss": "Kezalam, The Wanderer", "location": "Sanctum of Rebirth", "region": "Misthalin", "url": "https://runescape.wiki/w/Kezalam,_the_Wanderer", "locationUrl": "https://runescape.wiki/w/Sanctum_of_Rebirth" },
+    { "id": "nakatra", "boss": "Nakatra, Devourer Eternal", "location": "Sanctum of Rebirth", "region": "Misthalin", "url": "https://runescape.wiki/w/Nakatra,_Devourer_Eternal", "locationUrl": "https://runescape.wiki/w/Sanctum_of_Rebirth" },
+    { "id": "gate-of-elidinis", "boss": "The Gate of Elidinis", "location": "City of Um", "region": "Misthalin", "url": "https://runescape.wiki/w/The_Gate_of_Elidinis", "locationUrl": "https://runescape.wiki/w/City_of_Um" },
+    { "id": "zemouregal-vorkath", "boss": "Zemouregal & Vorkath", "location": "Ungael", "region": "Misthalin", "url": "https://runescape.wiki/w/Zemouregal_%26_Vorkath", "locationUrl": "https://runescape.wiki/w/Ungael" },
+    { "id": "silverquill", "boss": "Silverquill, the Dreadhog", "location": "Havenhythe", "region": "Havenhythe", "url": "https://runescape.wiki/w/Silverquill,_the_Dreadhog", "locationUrl": "https://runescape.wiki/w/Havenhythe" },
+    { "id": "ivar", "boss": "Ivar, King of Bones", "location": "Havenhythe", "region": "Havenhythe", "url": "https://runescape.wiki/w/Ivar,_King_of_Bones", "locationUrl": "https://runescape.wiki/w/Havenhythe" }
+  ]
+}

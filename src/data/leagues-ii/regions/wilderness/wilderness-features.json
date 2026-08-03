@@ -1,6 +1,7 @@
 {
   "title": "Features",
   "titleAs": "h2",
+  "collapsed": true,
   "rowId": "id",
   "columns": [
     {

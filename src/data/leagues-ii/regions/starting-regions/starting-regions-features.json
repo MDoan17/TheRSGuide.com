@@ -1,0 +1,26 @@
+{
+  "title": "Features",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "feature", "header": "Feature", "link": { "hrefKey": "url", "external": true } },
+    { "key": "region", "header": "Region", "width": "md", "wrap": false }
+  ],
+  "rows": [
+    { "id": "archaeology-guild", "feature": "Archaeology Guild", "region": "Misthalin", "url": "https://runescape.wiki/w/Archaeology_Guild" },
+    { "id": "fort-forinthry", "feature": "Fort Forinthry", "region": "Misthalin", "url": "https://runescape.wiki/w/Fort_Forinthry" },
+    { "id": "necromancy", "feature": "Necromancy", "region": "Misthalin", "url": "https://runescape.wiki/w/Necromancy" },
+    { "id": "tears-of-guthix", "feature": "Tears of Guthix", "region": "Misthalin", "url": "https://runescape.wiki/w/Tears_of_Guthix" },
+    { "id": "runespan", "feature": "Runespan", "region": "Misthalin", "url": "https://runescape.wiki/w/Runespan" },
+    { "id": "empty-throne-room", "feature": "The Empty Throne Room", "region": "Misthalin", "url": "https://runescape.wiki/w/The_Empty_Throne_Room" },
+    { "id": "dorgesh-kaan-agility", "feature": "Dorgesh-Kaan Agility Course", "region": "Misthalin", "url": "https://runescape.wiki/w/Dorgesh-Kaan_Agility_Course" },
+    { "id": "infernal-source", "feature": "Infernal Source Dig Site", "region": "Misthalin", "url": "https://runescape.wiki/w/Infernal_Source_Dig_Site" },
+    { "id": "senntisten-dig-site", "feature": "Senntisten Dig Site", "region": "Misthalin", "url": "https://runescape.wiki/w/Senntisten_Dig_Site" },
+    { "id": "havenhythe-bgh", "feature": "Havenhythe Big Game Hunter", "region": "Havenhythe", "url": "https://runescape.wiki/w/Havenhythe_Big_Game_Hunter" },
+    { "id": "shrine-of-inanna", "feature": "Shrine of Inanna", "region": "Havenhythe", "url": "https://runescape.wiki/w/Shrine_of_Inanna" },
+    { "id": "creeping-ivy", "feature": "Creeping Ivy", "region": "Havenhythe", "url": "https://runescape.wiki/w/Creeping_ivy" },
+    { "id": "wendlewick-fish-farm", "feature": "Wendlewick Fish Farm", "region": "Havenhythe", "url": "https://runescape.wiki/w/Wendlewick_fish_farm" },
+    { "id": "moonrise-dig-site", "feature": "Moonrise Dig Site", "region": "Havenhythe", "url": "https://runescape.wiki/w/Moonrise_Dig_Site" }
+  ]
+}

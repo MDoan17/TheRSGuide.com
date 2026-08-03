@@ -1,18 +1,19 @@
 {
   "title": "Ability Upgrades",
   "titleAs": "h3",
+  "collapsed": true,
   "rowId": "id",
   "columns": [
     {
-      "key": "source",
-      "header": "source",
-      "width": "sm",
-      "emphasis": true,
-      "wrap": false
+      "key": "item",
+      "header": "Ability",
+      "link": { "hrefKey": "url", "external": true },
+      "info": true
     },
     {
       "key": "tier",
       "header": "Tier",
+      "filter": true,
       "width": "sm",
       "emphasis": true,
       "wrap": false
@@ -20,13 +21,16 @@
     {
       "key": "style",
       "header": "Combat style",
+      "filter": true,
       "width": "md",
       "wrap": false
     },
     {
-      "key": "item",
-      "header": "Ability",
-      "link": { "hrefKey": "url", "external": true }
+      "key": "source",
+      "header": "Source",
+      "filter": true,
+      "width": "md",
+      "wrap": false
     }
   ],
   "rows": [
