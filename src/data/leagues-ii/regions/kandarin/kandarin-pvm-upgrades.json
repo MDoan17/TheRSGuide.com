@@ -13,14 +13,10 @@
     { "key": "source", "header": "Source", "filter": true, "width": "md", "wrap": false }
   ],
   "rows": [
-    { "id": "ascension-crossbow", "item": "Ascension Crossbow", "tier": "85", "style": "Range", "source": "Legiones", "url": "https://runescape.wiki/w/Ascension_crossbow" },
-    { "id": "off-hand-ascension-crossbow", "item": "Off-hand Ascension Crossbow", "tier": "85", "style": "Range", "source": "Legiones", "url": "https://runescape.wiki/w/Off-hand_Ascension_crossbow" },
-    { "id": "nightmare-gauntlets", "item": "Nightmare Gauntlets", "tier": "85", "style": "Range", "source": "Slayer", "url": "https://runescape.wiki/w/Nightmare_gauntlets" },
+    { "id": "ascension-crossbow", "item": "Ascension Crossbow", "tier": "90", "style": "Range", "source": "Legiones", "url": "https://runescape.wiki/w/Ascension_crossbow", "info": "Off-hand equivalent available."},
     { "id": "dark-bow", "item": "Dark Bow", "tier": "70", "style": "Range", "source": "Slayer", "url": "https://runescape.wiki/w/Dark_Bow", "info": "Also available in the Wilderness, Morytania, and Tirannwn." },
     { "id": "spear-of-annihilation", "item": "Spear of Annihilation", "tier": "90", "style": "Melee", "source": "Archaeology", "url": "https://runescape.wiki/w/Spear_of_Annihilation" },
-    { "id": "eternal-magic-shortbow", "item": "Eternal Magic Shortbow", "tier": "90", "style": "Range", "source": "Eternal Magic Trees", "url": "https://runescape.wiki/w/Eternal_magic_shortbow" },
-    { "id": "eternal-magic-shortbow-mk-5", "item": "Eternal Magic Shortbow Mk. 5", "tier": "90", "style": "Range", "source": "Eternal Magic Trees", "url": "https://runescape.wiki/w/Eternal_magic_shortbow_Mk._5" },
-    { "id": "eternal-magic-staff-meagre", "item": "Eternal Magic Staff (Meagre)", "tier": "90", "style": "Magic", "source": "Eternal Magic Trees", "url": "https://runescape.wiki/w/Eternal_magic_staff_(meagre)" },
-    { "id": "eternal-magic-staff-saturated", "item": "Eternal Magic Staff (Saturated)", "tier": "90", "style": "Magic", "source": "Eternal Magic Trees", "url": "https://runescape.wiki/w/Eternal_magic_staff_(saturated)" }
+    { "id": "eternal-magic-shortbow-mk-5", "item": "Eternal Magic Shortbow Mk. 5", "tier": "90", "style": "Range", "source": "Eternal Magic Trees", "url": "https://runescape.wiki/w/Eternal_magic_shortbow_Mk._5", "info": "Eternal Magic Logs are also available via the Transmutation relic. Requires 100 Fletching." },
+    { "id": "eternal-magic-staff-saturated", "item": "Eternal Magic Staff (Saturated)", "tier": "90", "style": "Magic", "source": "Eternal Magic Trees", "url": "https://runescape.wiki/w/Eternal_magic_staff_(saturated)", "info": "Eternal Magic Logs are also available via the Transmutation relic. Requires 104 Runecrafitng." }
   ]
 }

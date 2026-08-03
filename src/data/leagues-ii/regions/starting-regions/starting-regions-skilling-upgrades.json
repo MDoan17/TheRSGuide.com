@@ -15,9 +15,9 @@
   "rows": [
     { "id": "sanas-fyrtorch", "item": "Sana's fyrtorch", "tier": "80", "style": "Woodcutting", "source": "Croesus", "url": "https://runescape.wiki/w/Sana%27s_fyrtorch" },
     { "id": "taggas-corehammer", "item": "Tagga's corehammer", "tier": "80", "style": "Mining", "source": "Croesus", "url": "https://runescape.wiki/w/Tagga%27s_corehammer" },
-    { "id": "scripture-of-bik", "item": "Scripture of Bik", "tier": "God Book", "style": "Hybrid", "source": "Croesus", "url": "https://runescape.wiki/w/Scripture_of_Bik" },
+    { "id": "scripture-of-bik", "item": "Scripture of Bik", "tier": "N/A", "style": "Hybrid", "source": "Croesus", "url": "https://runescape.wiki/w/Scripture_of_Bik" },
     { "id": "memory-dowser", "item": "Memory Dowser", "tier": "80", "style": "Divination", "source": "Gate of Elidinis", "url": "https://runescape.wiki/w/Memory_dowser" },
     { "id": "runic-attuner", "item": "Runic attuner", "tier": "80", "style": "Runecrafting", "source": "Gate of Elidinis", "url": "https://runescape.wiki/w/Runic_attuner" },
-    { "id": "scripture-of-elidinis", "item": "Scripture of Elidinis", "tier": "God Book", "style": "Hybrid", "source": "Gate of Elidinis", "url": "https://runescape.wiki/w/Scripture_of_Elidinis" }
+    { "id": "scripture-of-elidinis", "item": "Scripture of Elidinis", "tier": "N/A", "style": "Hybrid", "source": "Gate of Elidinis", "url": "https://runescape.wiki/w/Scripture_of_Elidinis" }
   ]
 }

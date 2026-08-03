@@ -5,16 +5,16 @@
   "rowId": "id",
   "columns": [
     { "key": "item", "header": "Ability", "link": { "hrefKey": "url", "external": true }, "info": true },
-    { "key": "tier", "header": "Tier", "filter": true, "width": "sm", "emphasis": true, "wrap": false },
+    { "key": "level", "header": "Level", "filter": true, "width": "sm", "emphasis": true, "wrap": false },
     { "key": "style", "header": "Combat style", "filter": true, "width": "md", "wrap": false },
     { "key": "source", "header": "Source", "filter": true, "width": "md", "wrap": false }
   ],
   "rows": [
-    { "id": "divine-rage", "source": "Sanctum of Rebirth", "tier": "85", "style": "Prayer", "item": "Divine Rage", "url": "https://runescape.wiki/w/Divine_Rage_prayer_codex" },
-    { "id": "eclipsed-soul", "source": "Gate of Elidinis", "tier": "75", "style": "Prayer", "item": "Eclipsed Soul", "url": "https://runescape.wiki/w/Eclipsed_Soul_prayer_codex" },
-    { "id": "magma-tempest", "source": "TzKal-Zuk", "tier": "85", "style": "Magic", "item": "Magma Tempest", "url": "https://runescape.wiki/w/Magma_Tempest_ability_codex" },
-    { "id": "chaos-roar", "source": "TzKal-Zuk", "tier": "92", "style": "Melee", "item": "Chaos Roar", "url": "https://runescape.wiki/w/Chaos_Roar_ability_codex" },
-    { "id": "greater-concentrated-blast", "source": "Kerapac, the Bound", "tier": "66", "style": "Magic", "item": "Greater Concentrated Blast", "url": "https://runescape.wiki/w/Greater_Concentrated_blast_ability_codex" },
-    { "id": "invoke-lord-of-bones", "source": "Zemouregal & Vorkath", "tier": "78", "style": "Necromancy", "item": "Invoke Lord of Bones", "url": "https://runescape.wiki/w/Invoke_Lord_of_Bones_incantation_codex" }
+    { "id": "divine-rage", "source": "Sanctum of Rebirth", "level": "85", "style": "Prayer", "item": "Divine Rage", "url": "https://runescape.wiki/w/Divine_Rage_prayer_codex" },
+    { "id": "eclipsed-soul", "source": "Gate of Elidinis", "level": "75", "style": "Prayer", "item": "Eclipsed Soul", "url": "https://runescape.wiki/w/Eclipsed_Soul_prayer_codex" },
+    { "id": "magma-tempest", "source": "TzKal-Zuk", "level": "85", "style": "Magic", "item": "Magma Tempest", "url": "https://runescape.wiki/w/Magma_Tempest_ability_codex" },
+    { "id": "chaos-roar", "source": "TzKal-Zuk", "level": "92", "style": "Melee", "item": "Chaos Roar", "url": "https://runescape.wiki/w/Chaos_Roar_ability_codex" },
+    { "id": "greater-concentrated-blast", "source": "Kerapac, the Bound", "level": "66", "style": "Magic", "item": "Greater Concentrated Blast", "url": "https://runescape.wiki/w/Greater_Concentrated_blast_ability_codex" },
+    { "id": "invoke-lord-of-bones", "source": "Zemouregal & Vorkath", "level": "78", "style": "Necromancy", "item": "Invoke Lord of Bones", "url": "https://runescape.wiki/w/Invoke_Lord_of_Bones_incantation_codex" }
   ]
 }
