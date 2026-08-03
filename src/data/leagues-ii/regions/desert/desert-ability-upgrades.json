@@ -1,0 +1,24 @@
+{
+  "title": "Ability Upgrades",
+  "titleAs": "h3",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "label": "Search Desert ability upgrades", "placeholder": "Search Desert ability upgrades..." },
+  "emptyMessage": "No Desert ability upgrades match those filters.",
+  "columns": [
+    { "key": "item", "header": "Ability", "link": { "hrefKey": "url", "external": true }, "info": true },
+    { "key": "tier", "header": "Tier", "filter": true, "width": "sm", "emphasis": true, "wrap": false },
+    { "key": "style", "header": "Combat style", "filter": true, "width": "md", "wrap": false },
+    { "key": "source", "header": "Source", "filter": true, "width": "md", "wrap": false }
+  ],
+  "rows": [
+    { "id": "storm-shards", "item": "Storm Shards", "tier": "70", "style": "Constitution", "source": "Liberation of Mazcab", "url": "https://runescape.wiki/w/Mazcab_ability_codex" },
+    { "id": "shatter", "item": "Shatter", "tier": "70", "style": "Constitution", "source": "Liberation of Mazcab", "url": "https://runescape.wiki/w/Mazcab_ability_codex" },
+    { "id": "onslaught", "item": "Onslaught", "tier": "90", "style": "Constitution", "source": "Liberation of Mazcab", "url": "https://runescape.wiki/w/Mazcab_ability_codex" },
+    { "id": "corruption-shot", "item": "Corruption Shot", "tier": "70", "style": "Range", "source": "Liberation of Mazcab", "url": "https://runescape.wiki/w/Corruption_Shot" },
+    { "id": "corruption-blast", "item": "Corruption Blast", "tier": "70", "style": "Magic", "source": "Liberation of Mazcab", "url": "https://runescape.wiki/w/Mazcab_ability_codex" },
+    { "id": "reprisal", "item": "Reprisal", "tier": "85", "style": "Constitution", "source": "Telos", "url": "https://runescape.wiki/w/Reprisal_ability_codex" },
+    { "id": "devotion", "item": "Devotion", "tier": "1", "style": "Defence", "source": "Quests", "url": "https://runescape.wiki/w/Devotion_ability_codex" }
+  ]
+}

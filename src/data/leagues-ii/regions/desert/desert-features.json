@@ -1,0 +1,20 @@
+{
+  "title": "Features",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "feature", "header": "Feature", "link": { "hrefKey": "url", "external": true }, "hidden": true }
+  ],
+  "rows": [
+    { "id": "vault-of-hereditas", "feature": "Vault of Hereditas", "url": "https://runescape.wiki/w/Vault_of_Hereditas" },
+    { "id": "ancient-magicks", "feature": "Ancient Magicks", "url": "https://runescape.wiki/w/Ancient_Magicks" },
+    { "id": "hets-oasis", "feature": "Het's Oasis", "url": "https://runescape.wiki/w/Het%27s_Oasis" },
+    { "id": "kharid-et", "feature": "Kharid-et Dig Site", "url": "https://runescape.wiki/w/Kharid-et" },
+    { "id": "agility-pyramid", "feature": "Agility Pyramid", "url": "https://runescape.wiki/w/Agility_Pyramid" },
+    { "id": "dominion-tower", "feature": "The Dominion Tower", "url": "https://runescape.wiki/w/The_Dominion_Tower" },
+    { "id": "sophanem-slayer-dungeon", "feature": "Sophanem Slayer Dungeon", "url": "https://runescape.wiki/w/Sophanem_Slayer_Dungeon" },
+    { "id": "mage-training-arena", "feature": "Mage Training Arena", "url": "https://runescape.wiki/w/Mage_Training_Arena" },
+    { "id": "shifting-tombs", "feature": "Shifting Tombs", "url": "https://runescape.wiki/w/Shifting_Tombs" }
+  ]
+}
