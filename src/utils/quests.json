@@ -782,8 +782,7 @@
       "questPoints": 1,
       "requirements": {
         "quest": ["Our Man in the North"],
-        "skill": [],
-        "other": ["Achieve rank 9 overall Menaphos reputation"]
+        "skill": []
       }
     },
     {
@@ -1709,7 +1708,6 @@
           }
         ],
         "other": [
-          "Achieve rank 3 overall Menaphos reputation",
           "Bring Leela to Senliten's tomb",
           "Fully restore Senliten from the 'Missing My Mummy' quest",
           "Full completion of Missing My Mummy "
@@ -3963,8 +3961,7 @@
       "questPoints": 1,
       "requirements": {
         "quest": ["The Feud", "Do No Evil", "Crocodile Tears"],
-        "skill": [],
-        "other": ["Achieve rank 6 overall Menaphos reputation"]
+        "skill": []
       }
     },
     {
