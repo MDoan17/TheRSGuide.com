@@ -205,6 +205,15 @@
       "source": "Dungeoneering"
     },
     {
+      "id": "gravite-knife",
+      "tier": "55",
+      "style": "Range",
+      "item": "Gravite Knife",
+      "url": "https://runescape.wiki/w/Gravite_knife",
+      "source": "Dungeoneering",
+      "info": "Off-hand equivalent available."
+    },
+    {
       "id": "chaotic-crossbow",
       "tier": "80",
       "style": "Range",

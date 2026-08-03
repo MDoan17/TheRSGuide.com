@@ -65,9 +65,12 @@ describe("Anachronia JSON data tables", () => {
     expect(anachroniaSkilling.columns.map(({ key }) => key)).toEqual(
       upgradeColumns
     )
-    expect(anachroniaAbilities.columns.map(({ key }) => key)).toEqual(
-      upgradeColumns
-    )
+    expect(anachroniaAbilities.columns.map(({ key }) => key)).toEqual([
+      "item",
+      "level",
+      "style",
+      "source",
+    ])
     expect(anachroniaAbilities.columns[0].header).toBe("Ability")
     expect(anachroniaTeleports.columns.map(({ key }) => key)).toEqual([
       "relic",

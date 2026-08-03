@@ -24,7 +24,7 @@
     { "id": "dark-shard-of-leng", "item": "Dark Shard of Leng", "tier": "95", "style": "Melee", "source": "Arch-Glacor", "url": "https://runescape.wiki/w/Dark_Shard_of_Leng" },
     { "id": "dark-sliver-of-leng", "item": "Dark Sliver of Leng", "tier": "95", "style": "Melee", "source": "Arch-Glacor", "url": "https://runescape.wiki/w/Dark_Sliver_of_Leng", "info": "This is the off-hand equivalent to Dark Shard of Leng."},
     { "id": "leng-artefact", "item": "Leng artefact", "tier": "95", "style": "Upgrade Item", "source": "Arch-Glacor", "url": "https://runescape.wiki/w/Leng_artefact", "info": "Upgrades the Gloves of Passage, Kerapac's wrist wraps, and Nightmare gauntlets." },
-    { "id": "N/A-of-wen", "item": "Scripture of Wen", "tier": "N/A", "style": "Hybrid", "source": "Arch-Glacor", "url": "https://runescape.wiki/w/Scripture_of_Wen" },
+    { "id": "scripture-of-wen", "item": "Scripture of Wen", "tier": "N/A", "style": "Hybrid", "source": "Arch-Glacor", "url": "https://runescape.wiki/w/Scripture_of_Wen" },
     { "id": "fractured-staff-of-armadyl", "item": "Fractured Staff of Armadyl", "tier": "95", "style": "Magic", "source": "Kerapac, the Bound", "url": "https://runescape.wiki/w/Fractured_Staff_of_Armadyl" },
     { "id": "kerapacs-wrist-wraps", "item": "Kerapac's wrist wraps", "tier": "85", "style": "Magic", "source": "Kerapac, the Bound", "url": "https://runescape.wiki/w/Kerapac%27s_wrist_wraps" },
     { "id": "scripture-of-jas", "item": "Scripture of Jas", "tier": "N/A", "style": "Hybrid", "source": "Kerapac, the Bound", "url": "https://runescape.wiki/w/Scripture_of_Jas" },

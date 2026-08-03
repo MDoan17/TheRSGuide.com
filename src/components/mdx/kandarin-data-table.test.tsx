@@ -24,7 +24,7 @@ describe("Kandarin JSON data tables", () => {
       .map((config) => renderToStaticMarkup(<DataTable config={config} />))
       .join("")
 
-    expect(tables.map((table) => table.rows.length)).toEqual([9, 1, 14, 9, 48])
+    expect(tables.map((table) => table.rows.length)).toEqual([9, 1, 14, 5, 48])
     expect(tables.every((table) => table.collapsed)).toBe(true)
     expect(markup.match(/data-slot="data-table"/g)).toHaveLength(5)
     expect(markup.match(/<h2/g)).toHaveLength(4)
@@ -87,9 +87,10 @@ describe("Kandarin JSON data tables", () => {
       <DataTable config={{ ...kandarinTeleports, collapsed: false }} />
     )
 
-    expect(pvmMarkup).toContain("Off-hand Ascension Crossbow")
+    expect(pvmMarkup).toContain("Ascension Crossbow")
+    expect(pvmMarkup).not.toContain("Off-hand Ascension Crossbow")
     expect(pvmMarkup).toContain("Eternal Magic Staff (Saturated)")
-    expect(pvmMarkup.match(/aria-label="More information about/g)).toHaveLength(1)
+    expect(pvmMarkup.match(/aria-label="More information about/g)).toHaveLength(4)
     expect(teleportMarkup).toContain("AKQ - Piscatoris Hunter area")
     expect(teleportMarkup).toContain("Jade Vine Patch - Ardougne")
     expect(teleportMarkup).toContain("Camelot")

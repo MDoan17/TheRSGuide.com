@@ -77,7 +77,7 @@ describe("Starting Regions JSON data tables", () => {
     ])
     expect(startingRegionsAbilities.columns.map(({ key }) => key)).toEqual([
       "item",
-      "tier",
+      "level",
       "style",
       "source",
     ])
@@ -112,7 +112,7 @@ describe("Starting Regions JSON data tables", () => {
     expect(pvmMarkup).toContain("Dark Sliver of Leng")
     expect(pvmMarkup).toContain("Igneous Kal-Zuk")
     expect(pvmMarkup).toContain('href="https://runescape.wiki/w/Omni_guard"')
-    expect(pvmMarkup.match(/aria-label="More information about/g)).toHaveLength(2)
+    expect(pvmMarkup.match(/aria-label="More information about/g)).toHaveLength(6)
     expect(teleportMarkup).toContain("AIR DLR DJQ AJS - Fairy Queen&#x27;s Hideout")
     expect(teleportMarkup).toContain("The Nexus (Lumbridge Swamp)")
     expect(teleportMarkup.match(/aria-label="More information about/g)).toHaveLength(8)
