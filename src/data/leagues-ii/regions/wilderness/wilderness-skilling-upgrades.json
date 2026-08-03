@@ -1,0 +1,19 @@
+{
+  "title": "Skilling Upgrades",
+  "titleAs": "h3",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "item", "header": "Item", "link": { "hrefKey": "url", "external": true }, "info": true },
+    { "key": "tier", "header": "Tier", "filter": true, "width": "sm", "emphasis": true, "wrap": false },
+    { "key": "style", "header": "Skill", "filter": true, "width": "md", "wrap": false },
+    { "key": "source", "header": "Source", "filter": true, "width": "md", "wrap": false }
+  ],
+  "rows": [
+    { "id": "bonecrusher", "tier": "N/A", "item": "Bonecrusher", "style": "Prayer", "source": "Daemonheim", "url": "https://runescape.wiki/w/Bonecrusher", "info":"Unlocked for free as a Tier 4 relic passive." },
+    { "id": "charming-imp", "tier": "N/A", "item": "Charming Imp", "style": "Summoning", "source": "Daemonheim", "url": "https://runescape.wiki/w/Charming_Imp", "info":"Unlocked for free as a Tier 4 relic passive."},
+    { "id": "herbicide", "tier": "N/A", "item": "Herbicide", "style": "Herblore", "source": "Daemonheim", "url": "https://runescape.wiki/w/Herbicide", "info":"Unlocked for free as a Tier 4 relic passive." },
+    { "id": "gem-bag-upgraded", "tier": "N/A", "item": "Gem bag (upgraded)", "style": "Crafting", "source": "Daemonheim", "url": "https://runescape.wiki/w/Gem_bag_(upgraded)" },
+    { "id": "balaraks-sash-brush", "item": "Balarak's Sash Brush", "tier": "80", "style": "Archaeology", "source": "Daemonheim Dig Site", "url": "https://runescape.wiki/w/Balarak%27s_sash_brush" }
+  ]
+}
