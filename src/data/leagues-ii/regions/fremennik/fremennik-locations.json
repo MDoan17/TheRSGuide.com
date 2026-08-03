@@ -1,0 +1,16 @@
+{
+  "title": "Notable Locations",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "city", "header": "City", "link": { "hrefKey": "url", "external": true }, "hidden": true }
+  ],
+  "rows": [
+    { "id": "rellekka", "city": "Rellekka", "url": "https://runescape.wiki/w/Rellekka" },
+    { "id": "miscellania", "city": "Miscellania", "url": "https://runescape.wiki/w/Miscellania" },
+    { "id": "keldagrim", "city": "Keldagrim", "url": "https://runescape.wiki/w/Keldagrim" },
+    { "id": "waterbirth-island", "city": "Waterbirth Island", "url": "https://runescape.wiki/w/Waterbirth_Island" },
+    { "id": "lunar-isle", "city": "Lunar Isle", "url": "https://runescape.wiki/w/Lunar_Isle" }
+  ]
+}

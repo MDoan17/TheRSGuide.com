@@ -1,0 +1,21 @@
+{
+  "title": "PVM Upgrades",
+  "titleAs": "h3",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "label": "Search Fremennik PvM upgrades", "placeholder": "Search Fremennik upgrades..." },
+  "emptyMessage": "No Fremennik upgrades match those filters.",
+  "columns": [
+    { "key": "item", "header": "Item", "link": { "hrefKey": "url", "external": true }, "info": true },
+    { "key": "tier", "header": "Tier", "filter": true, "width": "sm", "emphasis": true, "wrap": false },
+    { "key": "style", "header": "Combat style", "filter": true, "width": "md", "wrap": false },
+    { "key": "source", "header": "Source", "filter": true, "width": "md", "wrap": false }
+  ],
+  "rows": [
+    { "id": "berserker-ring", "item": "Berserker Ring", "tier": "N/A", "style": "Hybrid", "source": "Dagannoth Kings", "url": "https://runescape.wiki/w/Berserker_Ring" },
+    { "id": "warrior-ring", "item": "Warrior Ring", "tier": "N/A", "style": "Melee", "source": "Dagannoth Kings", "url": "https://runescape.wiki/w/Warrior_Ring" },
+    { "id": "archers-ring", "item": "Archers' Ring", "tier": "N/A", "style": "Range", "source": "Dagannoth Kings", "url": "https://runescape.wiki/w/Archers%27_Ring" },
+    { "id": "seers-ring", "item": "Seers' Ring", "tier": "N/A", "style": "Magic", "source": "Dagannoth Kings", "url": "https://runescape.wiki/w/Seers%27_Ring" }
+  ]
+}

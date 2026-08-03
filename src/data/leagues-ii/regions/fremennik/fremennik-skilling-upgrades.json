@@ -1,0 +1,19 @@
+{
+  "title": "Skilling Upgrades",
+  "titleAs": "h3",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "label": "Search Fremennik skilling upgrades", "placeholder": "Search Fremennik skilling upgrades..." },
+  "emptyMessage": "No Fremennik skilling upgrades match those filters.",
+  "columns": [
+    { "key": "item", "header": "Item", "link": { "hrefKey": "url", "external": true }, "info": true },
+    { "key": "tier", "header": "Tier", "filter": true, "width": "sm", "emphasis": true, "wrap": false },
+    { "key": "style", "header": "Skill", "filter": true, "width": "md", "wrap": false },
+    { "key": "source", "header": "Source", "filter": true, "width": "md", "wrap": false }
+  ],
+  "rows": [
+    { "id": "dragon-hatchet", "item": "Dragon Hatchet", "tier": "60", "style": "Woodcutting", "source": "Dagannoth Kings", "url": "https://runescape.wiki/w/Dragon_hatchet" },
+    { "id": "dragon-pickaxe", "item": "Dragon Pickaxe", "tier": "60", "style": "Mining", "source": "Chaos Dwarves", "url": "https://runescape.wiki/w/Dragon_pickaxe" }
+  ]
+}
