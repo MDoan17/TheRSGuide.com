@@ -120,7 +120,7 @@ describe("Starting Regions JSON data tables", () => {
 
   it("uses DataTables in MDX and keeps teleport relics at the bottom", () => {
     const source = readFileSync(
-      resolve(process.cwd(), "content", "leagues", "map", "starting-regions.mdx"),
+      resolve(process.cwd(), "content", "leagues", "regions", "starting-regions.mdx"),
       "utf8"
     )
 

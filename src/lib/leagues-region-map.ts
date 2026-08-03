@@ -39,21 +39,21 @@ export type RegionMapBounds = {
 }
 
 export const leaguesRegionGuidePaths: Readonly<Record<string, string>> = {
-  'kharidian-desert': '/leagues/map/desert',
-  misthalin: '/leagues/map/starting-regions',
-  asgarnia: '/leagues/map/asgarnia',
-  morytania: '/leagues/map/morytania',
-  wilderness: '/leagues/map/wilderness',
-  karamja: '/leagues/map/karamja',
-  'fremennik-providence': '/leagues/map/fremennik',
-  kandarin: '/leagues/map/kandarin',
-  tirannwn: '/leagues/map/tirannwn',
-  anachronia: '/leagues/map/anachronia',
-  havenhythe: '/leagues/map/starting-regions',
+  'kharidian-desert': '/leagues/regions/desert',
+  misthalin: '/leagues/regions/starting-regions',
+  asgarnia: '/leagues/regions/asgarnia',
+  morytania: '/leagues/regions/morytania',
+  wilderness: '/leagues/regions/wilderness',
+  karamja: '/leagues/regions/karamja',
+  'fremennik-providence': '/leagues/regions/fremennik',
+  kandarin: '/leagues/regions/kandarin',
+  tirannwn: '/leagues/regions/tirannwn',
+  anachronia: '/leagues/regions/anachronia',
+  havenhythe: '/leagues/regions/starting-regions',
 }
 
 export const regionGuidePath = (displayRegionId: string) =>
-  leaguesRegionGuidePaths[displayRegionId] ?? '/leagues/map'
+  leaguesRegionGuidePaths[displayRegionId] ?? '/leagues/regions'
 
 export function getRegionMapBounds(
   width: number,

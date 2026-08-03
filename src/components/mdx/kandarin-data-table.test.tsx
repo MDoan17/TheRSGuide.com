@@ -98,7 +98,7 @@ describe("Kandarin JSON data tables", () => {
 
   it("uses DataTables in MDX and keeps teleport relics at the bottom", () => {
     const source = readFileSync(
-      resolve(process.cwd(), "content", "leagues", "map", "kandarin.mdx"),
+      resolve(process.cwd(), "content", "leagues", "regions", "kandarin.mdx"),
       "utf8"
     )
 

@@ -103,7 +103,7 @@ describe("Anachronia JSON data tables", () => {
 
   it("uses DataTables in MDX and keeps teleport relics at the bottom", () => {
     const source = readFileSync(
-      resolve(process.cwd(), "content", "leagues", "map", "anachronia.mdx"),
+      resolve(process.cwd(), "content", "leagues", "regions", "anachronia.mdx"),
       "utf8"
     )
 

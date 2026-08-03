@@ -88,7 +88,7 @@ describe("Fremennik JSON data tables", () => {
 
   it("uses DataTables in MDX and keeps teleport relics at the bottom", () => {
     const source = readFileSync(
-      resolve(process.cwd(), "content", "leagues", "map", "fremennik.mdx"),
+      resolve(process.cwd(), "content", "leagues", "regions", "fremennik.mdx"),
       "utf8"
     )
 

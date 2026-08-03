@@ -42,13 +42,13 @@ describe('guide content build manifest', () => {
     const { documents } = await buildGuideContent(process.cwd())
     const byRoute = new Map(documents.map((document) => [document.path, document]))
 
-    expect(byRoute.get('/leagues/map')).toMatchObject({
+    expect(byRoute.get('/leagues/regions')).toMatchObject({
       title: 'Map',
       navigationTitle: 'Regions',
       hasTableOfContents: false,
       showPageHeader: false,
     })
-    expect(byRoute.get('/leagues/map/anachronia')).toMatchObject({
+    expect(byRoute.get('/leagues/regions/anachronia')).toMatchObject({
       showPageHeader: true,
     })
   })

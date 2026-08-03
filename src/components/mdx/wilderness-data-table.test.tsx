@@ -119,7 +119,7 @@ describe("Wilderness JSON data tables", () => {
 
   it("uses DataTables in MDX instead of the three legacy lists", () => {
     const source = readFileSync(
-      resolve(process.cwd(), "content", "leagues", "map", "wilderness.mdx"),
+      resolve(process.cwd(), "content", "leagues", "regions", "wilderness.mdx"),
       "utf8"
     )
 
