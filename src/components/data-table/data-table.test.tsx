@@ -39,4 +39,18 @@ describe("DataTable collapsed configuration", () => {
     expect(markup).not.toContain('aria-controls="')
     expect(markup).toContain("Visible row")
   })
+
+  it("fails gracefully when the data does not match the table structure", () => {
+    const invalidConfig = {
+      title: "Broken table",
+      columns: [],
+      rows: "not-an-array",
+    } as unknown as DataTableConfig
+    const markup = renderToStaticMarkup(<DataTable config={invalidConfig} />)
+
+    expect(markup).toContain('role="alert"')
+    expect(markup).toContain('data-slot="data-table-error"')
+    expect(markup).toContain("This table is temporarily unavailable")
+    expect(markup).not.toContain('data-slot="data-table"')
+  })
 })
