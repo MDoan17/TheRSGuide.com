@@ -1,0 +1,15 @@
+{
+  "title": "Bosses",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "boss", "header": "Boss", "link": { "hrefKey": "url", "external": true } },
+    { "key": "location", "header": "Location" }
+  ],
+  "rows": [
+    { "id": "rex-matriarchs", "boss": "Rex Matriarchs", "location": "Rex Matriarch Lair", "url": "https://runescape.wiki/w/Rex_Matriarchs" },
+    { "id": "osseous", "boss": "Osseous", "location": "Rex Matriarch Lair", "url": "https://runescape.wiki/w/Osseous" },
+    { "id": "raksha", "boss": "Raksha", "location": "Raksha's Lair", "url": "https://runescape.wiki/w/Raksha" }
+  ]
+}

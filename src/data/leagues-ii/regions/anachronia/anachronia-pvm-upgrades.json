@@ -1,0 +1,31 @@
+{
+  "title": "PVM Upgrades",
+  "titleAs": "h3",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "label": "Search Anachronia PvM upgrades", "placeholder": "Search Anachronia upgrades..." },
+  "emptyMessage": "No Anachronia upgrades match those filters.",
+  "columns": [
+    { "key": "item", "header": "Item", "link": { "hrefKey": "url", "external": true }, "info": true },
+    { "key": "tier", "header": "Tier", "filter": true, "width": "sm", "emphasis": true, "wrap": false },
+    { "key": "style", "header": "Combat style", "filter": true, "width": "md", "wrap": false },
+    { "key": "source", "header": "Source", "filter": true, "width": "md", "wrap": false }
+  ],
+  "rows": [
+    { "id": "laniakeas-spear", "item": "Laniakea's Spear", "tier": "82", "style": "Melee", "source": "Rex Matriarchs", "url": "https://runescape.wiki/w/Laniakea%27s_spear" },
+    { "id": "reavers-ring", "item": "Reaver's Ring", "tier": "N/A", "style": "Hybrid", "source": "Rex Matriarchs", "url": "https://runescape.wiki/w/Reaver%27s_Ring" },
+    { "id": "champions-ring", "item": "Champion's Ring", "tier": "N/A", "style": "Melee", "source": "Rex Matriarchs", "url": "https://runescape.wiki/w/Champion%27s_Ring" },
+    { "id": "stalkers-ring", "item": "Stalker's Ring", "tier": "N/A", "style": "Range", "source": "Rex Matriarchs", "url": "https://runescape.wiki/w/Stalker%27s_Ring" },
+    { "id": "channellers-ring", "item": "Channeller's Ring", "tier": "N/A", "style": "Magic", "source": "Rex Matriarchs", "url": "https://runescape.wiki/w/Channeller%27s_Ring" },
+    { "id": "occultists-ring", "item": "Occultist's Ring", "tier": "N/A", "style": "Necromancy", "source": "Osseous", "url": "https://runescape.wiki/w/Occultist%27s_Ring" },
+    { "id": "fleeting-boots", "item": "Fleeting Boots", "tier": "80", "style": "Range", "source": "Raksha", "url": "https://runescape.wiki/w/Fleeting_Boots" },
+    { "id": "shadow-spike", "item": "Shadow Spike", "tier": "90", "style": "Upgrade Item", "source": "Raksha", "url": "https://runescape.wiki/w/Shadow_Spike", "info": "Upgrade item for Fleeting Boots, Laceration Boots, and Blast Diffusion Boots." },
+    { "id": "varanuss-mercy", "item": "Varanus's Mercy", "tier": "90", "style": "Melee", "source": "Asuran Arsenal", "url": "https://runescape.wiki/w/Varanus%27s_Mercy" },
+    { "id": "nodon-spike-harness", "item": "Nodon Spike Harness", "tier": "90", "style": "Melee", "source": "Asuran Arsenal", "url": "https://runescape.wiki/w/Nodon_spike_harness" },
+    { "id": "laceration-boots", "item": "Laceration Boots", "tier": "80", "style": "Melee", "source": "Slayer", "url": "https://runescape.wiki/w/Laceration_boots" },
+    { "id": "blast-diffusion-boots", "item": "Blast Diffusion Boots", "tier": "80", "style": "Magic", "source": "Slayer", "url": "https://runescape.wiki/w/Blast_diffusion_boots" },
+    { "id": "upgraded-bone-blowpipe", "item": "Upgraded Bone Blowpipe", "tier": "87", "style": "Range", "source": "Slayer", "url": "https://runescape.wiki/w/Upgraded_bone_blowpipe" },
+    { "id": "terrasaur-maul", "item": "Terrasaur Maul", "tier": "80", "style": "Melee", "source": "Slayer", "url": "https://runescape.wiki/w/Terrasaur_maul" }
+  ]
+}

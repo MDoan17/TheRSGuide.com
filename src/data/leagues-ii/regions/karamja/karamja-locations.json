@@ -1,0 +1,15 @@
+{
+  "title": "Notable Locations",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "city", "header": "City", "link": { "hrefKey": "url", "external": true }, "hidden": true }
+  ],
+  "rows": [
+    { "id": "brimhaven", "city": "Brimhaven", "url": "https://runescape.wiki/w/Brimhaven" },
+    { "id": "tai-bwo-wannai", "city": "Tai Bwo Wannai", "url": "https://runescape.wiki/w/Tai_Bwo_Wannai" },
+    { "id": "shilo-village", "city": "Shilo Village", "url": "https://runescape.wiki/w/Shilo_Village" },
+    { "id": "tzhaar-city", "city": "TzHaar City", "url": "https://runescape.wiki/w/TzHaar_City" }
+  ]
+}

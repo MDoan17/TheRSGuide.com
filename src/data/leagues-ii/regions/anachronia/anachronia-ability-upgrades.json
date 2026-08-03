@@ -1,0 +1,22 @@
+{
+  "title": "Ability Upgrades",
+  "titleAs": "h3",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "label": "Search Anachronia ability upgrades", "placeholder": "Search Anachronia ability upgrades..." },
+  "emptyMessage": "No Anachronia ability upgrades match those filters.",
+  "columns": [
+    { "key": "item", "header": "Ability", "link": { "hrefKey": "url", "external": true }, "info": true },
+    { "key": "tier", "header": "Tier", "filter": true, "width": "sm", "emphasis": true, "wrap": false },
+    { "key": "style", "header": "Combat style", "filter": true, "width": "md", "wrap": false },
+    { "key": "source", "header": "Source", "filter": true, "width": "md", "wrap": false }
+  ],
+  "rows": [
+    { "id": "greater-chain", "item": "Greater Chain", "tier": "51", "style": "Magic", "source": "Raksha", "url": "https://runescape.wiki/w/Greater_Chain_ability_codex" },
+    { "id": "greater-ricochet", "item": "Greater Ricochet", "tier": "67", "style": "Range", "source": "Raksha", "url": "https://runescape.wiki/w/Greater_Ricochet_ability_codex" },
+    { "id": "divert", "item": "Divert", "tier": "48", "style": "Defence", "source": "Raksha", "url": "https://runescape.wiki/w/Divert_ability_codex" },
+    { "id": "double-surge", "item": "Double Surge", "tier": "5", "style": "Agility", "source": "Anachronia Agility Course", "url": "https://runescape.wiki/w/Double_Surge_codex" },
+    { "id": "double-escape", "item": "Double Escape", "tier": "5", "style": "Agility", "source": "Anachronia Agility Course", "url": "https://runescape.wiki/w/Double_escape_codex" }
+  ]
+}
