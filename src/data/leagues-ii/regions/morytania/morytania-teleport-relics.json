@@ -1,0 +1,31 @@
+{
+  "title": "Teleport Relics",
+  "titleAs": "h2",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "placeholder": "Search Morytania teleport relics..." },
+  "columns": [
+    { "key": "relic", "header": "Relic", "filter": true, "width": "lg", "wrap": false },
+    { "key": "loc-type", "header": "Location Type" },
+    { "key": "loc", "header": "Location", "info": true }
+  ],
+  "rows": [
+    { "id": "natures-network-fairy-ring-alq", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "ALQ - Haunted Woods east of Canifis" },
+    { "id": "natures-network-fairy-ring-bkr", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "BKR - Mort Myre, south of Canifis" },
+    { "id": "natures-network-fairy-ring-cks", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "CKS - Canifis" },
+    { "id": "natures-network-fairy-ring-dip", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "DIP - Mos Le'Harmless" },
+    { "id": "natures-network-fairy-ring-dls", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "DLS - Myreque Hideout under The Hollows" },
+    { "id": "natures-network-farming-harmony-island", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Herb and Allotment - Harmony Island" },
+    { "id": "natures-network-farming-port-phasmatys", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Herb and Allotment - West of Port Phasmatys" },
+    { "id": "natures-network-farming-canifis", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Mushroom Patch - West Canifis" },
+    { "id": "assassins-insight-mazchna", "relic": "Assassin's Insight", "loc-type": "Slayer Master", "loc": "Mazchna" },
+    { "id": "assassins-insight-braindeath-island", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Braindeath Island", "info": "Requires the Rum Deal quest." },
+    { "id": "assassins-insight-slayer-tower", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Morytania Slayer Tower" },
+    { "id": "assassins-insight-mos-le-harmless-caves", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Mos Le'Harmless Caves", "info": "Requires the Cabin Fever quest." },
+    { "id": "assassins-insight-celestial-dragons", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Celestial Dragons", "info": "Located on Dragontooth Island and requires the One of a Kind quest." },
+    { "id": "voidwalker-games-necklace", "relic": "Voidwalker", "loc-type": "Games Necklace", "loc": "Burgh de Rott" },
+    { "id": "voidwalker-ring-of-slaying-slayer-tower", "relic": "Voidwalker", "loc-type": "Ring of Slaying", "loc": "Slayer Tower" },
+    { "id": "voidwalker-ring-of-slaying-tarns-lair", "relic": "Voidwalker", "loc-type": "Ring of Slaying", "loc": "Tarn's Lair" }
+  ]
+}
