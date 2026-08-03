@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../schemas/data-table.schema.json",
+  "title": "OSRS Boss Difficulty",
+  "titleAs": "h2",
+  "rowId": "difficulty",
+  "columns": [
+    { "key": "difficulty", "header": "Difficulty", "width": "sm", "emphasis": true },
+    { "key": "bosses", "header": "Bosses" }
+  ],
+  "rows": [
+    { "difficulty": "Novice", "bosses": "Brutus, Scurrius, Obor" },
+    { "difficulty": "Easy", "bosses": "Hespori, Skotizo, Sarachnis" },
+    { "difficulty": "Medium", "bosses": "Moons of Peril, Hueycoatl, Royal Titans" },
+    { "difficulty": "Advanced", "bosses": "Vorkath, Zulrah, Muspah" },
+    { "difficulty": "Expert", "bosses": "DT2 Bosses, Corrupted Gauntlet, Yama" },
+    { "difficulty": "Extreme", "bosses": "Raids, Phosanis, Doom deep delves" }
+  ]
+}
