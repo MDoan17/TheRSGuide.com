@@ -29,6 +29,21 @@ function LegacyLeaguesMapRedirect() {
   )
 }
 
+function LegacyLeaguesIIRedirect({ page }: { page: string }) {
+  const { hash, search } = useLocation()
+
+  return (
+    <Navigate
+      replace
+      to={{
+        hash,
+        pathname: `/leagues/${page}`,
+        search,
+      }}
+    />
+  )
+}
+
 function AppRoutes() {
   return (
     <Routes>
@@ -43,6 +58,14 @@ function AppRoutes() {
         }
       />
       <Route path="/leagues/map/*" element={<LegacyLeaguesMapRedirect />} />
+      <Route
+        path="/leagues/leagues-ii/picker"
+        element={<LegacyLeaguesIIRedirect page="picker" />}
+      />
+      <Route
+        path="/leagues/leagues-ii/skilling-solves"
+        element={<LegacyLeaguesIIRedirect page="skilling-solves" />}
+      />
       {guideCatalog.documents.map((doc) => (
         <Route key={doc.path} path={doc.path} element={<GuidePage doc={doc} />} />
       ))}

@@ -19,11 +19,13 @@ import {
   type BlessingSelections,
   type RegionSelection,
 } from '@/lib/picks-state'
+import { REQUIRED_RELIC_COUNT } from '../../../../shared/share-contract'
 
 export type ShareStatus = 'preparing' | 'creating' | 'ready' | 'error'
 
 type UseShareBuildOptions = {
   buildName: string
+  isSpeculativeRelics: boolean
   selectedBlessings: BlessingSelections
   selectedRegions: RegionSelection[]
   selectedRelics: Record<number, string>
@@ -34,6 +36,7 @@ const SHARE_OPEN_DELAY_MS = 1_000
 
 export function useShareBuild({
   buildName,
+  isSpeculativeRelics,
   selectedBlessings,
   selectedRegions,
   selectedRelics,
@@ -59,14 +62,18 @@ export function useShareBuild({
   useEffect(() => {
     let isActive = true
 
-    void loadPickImages(selectedRelics, selectedBlessings).then((images) => {
+    void loadPickImages(
+      selectedRelics,
+      selectedBlessings,
+      isSpeculativeRelics,
+    ).then((images) => {
       if (isActive) setPickImages(images)
     })
 
     return () => {
       isActive = false
     }
-  }, [selectedBlessings, selectedRelics])
+  }, [isSpeculativeRelics, selectedBlessings, selectedRelics])
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -78,10 +85,12 @@ export function useShareBuild({
         selectedRegions,
         selectedBlessings,
         pickImages,
+        isSpeculativeRelics,
       )
     }
   }, [
     buildName,
+    isSpeculativeRelics,
     mapData,
     pickImages,
     selectedBlessings,
@@ -116,6 +125,7 @@ export function useShareBuild({
     const loadedPickImages = await loadPickImages(
       selectedRelics,
       selectedBlessings,
+      isSpeculativeRelics,
     )
     await document.fonts.ready
     drawBuildCard(
@@ -126,9 +136,10 @@ export function useShareBuild({
       selectedRegions,
       selectedBlessings,
       loadedPickImages,
+      isSpeculativeRelics,
     )
     return canvasToWebP(canvas)
-  }, [buildName, mapData, selectedBlessings, selectedRegions, selectedRelics])
+  }, [buildName, isSpeculativeRelics, mapData, selectedBlessings, selectedRegions, selectedRelics])
 
   const createShareLink = useCallback(async () => {
     const share = await createShare(
@@ -137,12 +148,19 @@ export function useShareBuild({
         buildName,
         blessings: blessingSelectionsToArray(selectedBlessings),
         regions: selectedRegions.map((region) => region.id),
-        relics: Array.from({ length: 8 }, (_, index) => selectedRelics[index + 1] ?? ''),
+        relics: Array.from(
+          { length: REQUIRED_RELIC_COUNT },
+          (_, index) => selectedRelics[index + 1] ?? '',
+        ),
       },
       await createWebPImage(),
     )
-    return share.shareUrl
-  }, [buildName, createWebPImage, selectedBlessings, selectedRegions, selectedRelics])
+    if (!isSpeculativeRelics) return share.shareUrl
+
+    const shareUrl = new URL(share.shareUrl)
+    shareUrl.searchParams.set('relicMode', 'speculative')
+    return shareUrl.toString()
+  }, [buildName, createWebPImage, isSpeculativeRelics, selectedBlessings, selectedRegions, selectedRelics])
 
   useEffect(() => {
     if (!mapData || shareUrl) return

@@ -8,6 +8,7 @@ import type { BlessingSelections } from '@/lib/picks-state'
 
 type ShareBuildDialogProps = {
   buildName: string
+  isSpeculativeRelics: boolean
   onClose: () => void
   selectedBlessings: BlessingSelections
   selectedRegions: RegionSelection[]
@@ -16,6 +17,7 @@ type ShareBuildDialogProps = {
 
 export function ShareBuildDialog({
   buildName,
+  isSpeculativeRelics,
   onClose,
   selectedBlessings,
   selectedRegions,
@@ -34,6 +36,7 @@ export function ShareBuildDialog({
     shareUrl,
   } = useShareBuild({
     buildName,
+    isSpeculativeRelics,
     selectedBlessings,
     selectedRegions,
     selectedRelics,

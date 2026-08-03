@@ -13,7 +13,7 @@ export {
 
 export const SHARE_CODE_LENGTH = 10
 export const DEFAULT_BUILD_NAME = 'RuneScape Leagues 2: Equilibrium'
-export const REQUIRED_RELIC_COUNT = 8
+export const REQUIRED_RELIC_COUNT = 7
 export const GUARANTEED_SHARE_REGION_IDS = [
   'misthalin-havenhythe',
   'karamja',

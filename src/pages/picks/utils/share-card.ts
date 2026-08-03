@@ -9,7 +9,11 @@ import {
   type BlessingTier,
 } from '../../../../shared/blessings'
 import { LEAGUE_OPTIONS } from '../../../../shared/league-options'
-import { DEFAULT_BUILD_NAME } from '../../../../shared/share-contract'
+import {
+  DEFAULT_BUILD_NAME,
+  REQUIRED_RELIC_COUNT,
+} from '../../../../shared/share-contract'
+import { SPECULATIVE_RELIC_TIERS } from '../../../../shared/speculative-relic-options'
 
 const CARD_WIDTH = 1200
 const CARD_HEIGHT = 630
@@ -22,6 +26,11 @@ const BORDER = 'rgba(204, 154, 99, 0.25)'
 
 const RELIC_BY_ID = new Map(
   LEAGUE_OPTIONS.relicTiers.flatMap((tier) =>
+    tier.options.map((relic) => [relic.id, relic] as const),
+  ),
+)
+const SPECULATIVE_RELIC_BY_ID = new Map(
+  SPECULATIVE_RELIC_TIERS.flatMap((tier) =>
     tier.options.map((relic) => [relic.id, relic] as const),
   ),
 )
@@ -80,14 +89,19 @@ function loadImage(key: string, source: string) {
 export async function loadPickImages(
   selectedRelics: Record<number, string>,
   selectedBlessings: BlessingSelections,
+  isSpeculativeRelics = false,
 ): Promise<PickImageMap> {
   const requests: Array<Promise<readonly [string, HTMLImageElement] | null>> = []
+  const relicsById = isSpeculativeRelics
+    ? SPECULATIVE_RELIC_BY_ID
+    : RELIC_BY_ID
 
   for (const relicId of new Set(Object.values(selectedRelics))) {
-    const source = RELIC_BY_ID.get(relicId)?.icon
+    const source = relicsById.get(relicId)?.icon
     if (source) {
+      const cacheKey = `relic:${isSpeculativeRelics ? 'speculative' : 'confirmed'}:${relicId}`
       requests.push(
-        loadImage(relicId, source).then((image) =>
+        loadImage(cacheKey, source).then((image) =>
           image ? ([relicId, image] as const) : null,
         ),
       )
@@ -192,6 +206,7 @@ export function drawBuildCard(
   selectedRegions: RegionSelection[],
   selectedBlessings: BlessingSelections,
   pickImages: PickImageMap = {},
+  isSpeculativeRelics = false,
 ) {
   const resolvedBlessings = Object.fromEntries(
     BLESSING_TIERS.flatMap((tier) => {
@@ -208,6 +223,7 @@ export function drawBuildCard(
     selectedRegions,
     resolvedBlessings,
     pickImages,
+    isSpeculativeRelics,
   )
 }
 
@@ -219,6 +235,7 @@ export function drawBuildCardFromResolvedPicks(
   selectedRegions: RegionSelection[],
   selectedBlessings: ResolvedBlessingPicks,
   pickImages: PickImageMap = {},
+  isSpeculativeRelics = false,
 ) {
   const context = canvas.getContext('2d')
   if (!context) return
@@ -238,17 +255,25 @@ export function drawBuildCardFromResolvedPicks(
   context.fillStyle = BORDER
   context.fillRect(48, 122, CARD_WIDTH - 96, 1)
 
-  drawSectionHeading(context, 'Relic picks', 48, 156)
+  drawSectionHeading(
+    context,
+    isSpeculativeRelics ? 'Relic picks (speculative)' : 'Relic picks',
+    48,
+    156,
+  )
+  const relicsById = isSpeculativeRelics
+    ? SPECULATIVE_RELIC_BY_ID
+    : RELIC_BY_ID
   const relicGridX = 48
   const relicGridY = 172
   const relicCellWidth = 102
   const relicCellHeight = 86
   const relicCellGap = 14
-  for (let tier = 1; tier <= 8; tier += 1) {
+  for (let tier = 1; tier <= REQUIRED_RELIC_COUNT; tier += 1) {
     const column = (tier - 1) % 4
     const row = Math.floor((tier - 1) / 4)
     const relicId = selectedRelics[tier]
-    const relic = relicId ? RELIC_BY_ID.get(relicId) : undefined
+    const relic = relicId ? relicsById.get(relicId) : undefined
     drawChoiceTile(context, {
       fallback: relicId?.slice(-1).toUpperCase() ?? '—',
       height: relicCellHeight,
