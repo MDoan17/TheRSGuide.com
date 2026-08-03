@@ -7,6 +7,8 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import path from 'node:path'
 import { handlePlayerApi } from './server/player-api.mjs'
 import { handleFeedbackApi } from './server/feedback-api.mjs'
+import { handleSharesApi } from './server/shares-api.mjs'
+import { handleMediaProxy } from './server/media-proxy.mjs'
 import { guideContentPlugin } from './scripts/guide-content-plugin.mjs'
 
 const mdxPlugin = mdx({
@@ -36,6 +38,14 @@ const localApiPlugin = () => ({
         void handleFeedbackApi(req, res)
         return
       }
+      if (req.url?.startsWith('/api/shares')) {
+        void handleSharesApi(req, res)
+        return
+      }
+      if (req.url?.startsWith('/media-proxy/')) {
+        void handleMediaProxy(req, res)
+        return
+      }
       next()
     })
   },
@@ -52,12 +62,20 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      guideContentPlugin({ siteUrl: deploymentUrl, leaguesEnabled }),
       localApiPlugin(),
+      guideContentPlugin({ siteUrl: deploymentUrl, leaguesEnabled }),
       mdxWithoutRaw,
       react({ include: /\.(mdx|js|jsx|ts|tsx)$/ }),
       tailwindcss(),
     ],
     resolve: { alias: { '@': path.resolve(__dirname, './src') } },
+    server: {
+      proxy: {
+        '/api/shares': {
+          changeOrigin: true,
+          target: 'https://rs3leagues-share-worker.thejonesofjustice.workers.dev',
+        },
+      },
+    },
   }
 })

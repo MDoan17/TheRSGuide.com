@@ -3,6 +3,8 @@ import { createServer } from 'node:http'
 import { extname, join, resolve, sep } from 'node:path'
 import { handlePlayerApi } from './server/player-api.mjs'
 import { handleFeedbackApi } from './server/feedback-api.mjs'
+import { handleSharesApi } from './server/shares-api.mjs'
+import { handleMediaProxy } from './server/media-proxy.mjs'
 import {
   requestOrigin,
   rewritePageMetadataOrigin,
@@ -18,6 +20,8 @@ const mime = { '.css': 'text/css', '.html': 'text/html', '.ico': 'image/x-icon',
 createServer((req, res) => {
   if (req.url?.startsWith('/api/player/')) return void handlePlayerApi(req, res)
   if (req.url?.startsWith('/api/feedback')) return void handleFeedbackApi(req, res)
+  if (req.url?.startsWith('/api/shares')) return void handleSharesApi(req, res)
+  if (req.url?.startsWith('/media-proxy/')) return void handleMediaProxy(req, res)
   try {
     const requestPath = decodeURIComponent((req.url ?? '/').split('?')[0])
     const candidate = resolve(root, `.${requestPath}`)

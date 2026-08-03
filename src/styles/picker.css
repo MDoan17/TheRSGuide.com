@@ -1,0 +1,8 @@
+.blessing-tree-scroll,
+.relic-grid-scroll {
+  scrollbar-color: color-mix(in srgb, var(--primary) 55%, transparent) var(--card);
+  scrollbar-width: thin;
+}
+
+.blessing-tree-scroll::-webkit-scrollbar,
+.relic-grid-scroll::-webkit-scrollbar { height: 8px; }
