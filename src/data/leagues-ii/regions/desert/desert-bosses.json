@@ -1,0 +1,23 @@
+{
+  "title": "Bosses",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "boss", "header": "Boss", "link": { "hrefKey": "url", "external": true } },
+    { "key": "location", "header": "Location", "link": { "hrefKey": "locationUrl", "external": true } }
+  ],
+  "rows": [
+    { "id": "twin-furies", "boss": "Twin Furies", "location": "Heart of Gielinor", "url": "https://runescape.wiki/w/Twin_Furies", "locationUrl": "https://runescape.wiki/w/Heart_of_Gielinor" },
+    { "id": "gregorovic", "boss": "Gregorovic", "location": "Heart of Gielinor", "url": "https://runescape.wiki/w/Gregorovic", "locationUrl": "https://runescape.wiki/w/Heart_of_Gielinor" },
+    { "id": "vindicta", "boss": "Vindicta", "location": "Heart of Gielinor", "url": "https://runescape.wiki/w/Vindicta", "locationUrl": "https://runescape.wiki/w/Heart_of_Gielinor" },
+    { "id": "helwyr", "boss": "Helwyr", "location": "Heart of Gielinor", "url": "https://runescape.wiki/w/Helwyr", "locationUrl": "https://runescape.wiki/w/Heart_of_Gielinor" },
+    { "id": "telos", "boss": "Telos", "location": "Heart of Gielinor", "url": "https://runescape.wiki/w/Telos", "locationUrl": "https://runescape.wiki/w/Heart_of_Gielinor" },
+    { "id": "kalphite-queen", "boss": "Kalphite Queen", "location": "Kalphite Hive", "url": "https://runescape.wiki/w/Kalphite_Queen", "locationUrl": "https://runescape.wiki/w/Kalphite_Hive" },
+    { "id": "kalphite-king", "boss": "Kalphite King", "location": "Exiled Kalphite Hive", "url": "https://runescape.wiki/w/Kalphite_King", "locationUrl": "https://runescape.wiki/w/Exiled_Kalphite_Hive" },
+    { "id": "amascut", "boss": "Amascut, the Devourer", "location": "Golden Palace", "url": "https://runescape.wiki/w/Amascut,_the_Devourer" },
+    { "id": "the-magister", "boss": "The Magister", "location": "Sophanem Slayer Dungeon", "url": "https://runescape.wiki/w/Magister", "locationUrl": "https://runescape.wiki/w/Sophanem_Slayer_Dungeon" },
+    { "id": "beastmaster-durzag", "boss": "Beastmaster Durzag", "location": "Liberation of Mazcab", "url": "https://runescape.wiki/w/Beastmaster_Durzag", "locationUrl": "https://runescape.wiki/w/Liberation_of_Mazcab" },
+    { "id": "yakamaru", "boss": "Yakamaru", "location": "Liberation of Mazcab", "url": "https://runescape.wiki/w/Yakamaru", "locationUrl": "https://runescape.wiki/w/Liberation_of_Mazcab" }
+  ]
+}

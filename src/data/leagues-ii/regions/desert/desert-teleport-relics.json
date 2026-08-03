@@ -1,0 +1,36 @@
+{
+  "title": "Teleport Relics",
+  "titleAs": "h2",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "placeholder": "Search Desert teleport relics..." },
+  "columns": [
+    { "key": "relic", "header": "Relic", "filter": true, "width": "lg", "wrap": false },
+    { "key": "loc-type", "header": "Location Type" },
+    { "key": "loc", "header": "Location", "info": true }
+  ],
+  "rows": [
+    { "id": "natures-network-fairy-ring-biq", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "BIQ - Near Kalphite Hive" },
+    { "id": "natures-network-fairy-ring-ckq", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "CKQ - Menaphos Imperial District" },
+    { "id": "natures-network-fairy-ring-dlq", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "DLQ - North of Nardah" },
+    { "id": "natures-network-farming-garden-of-kharid", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Herb and Allotment - Garden of Kharid" },
+    { "id": "natures-network-farming-al-kharid", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Cactus Patch - Al Kharid" },
+    { "id": "natures-network-farming-hets-oasis", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Cactus Patch - Het's Oasis" },
+    { "id": "natures-network-farming-menaphos", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Cactus Patch - Menaphos" },
+    { "id": "assassins-insight-sumona", "relic": "Assassin's Insight", "loc-type": "Slayer Master", "loc": "Sumona", "info": "Requires the Smoking Kills quest." },
+    { "id": "assassins-insight-pollnivneach-slayer-dungeon", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Pollnivneach Slayer Dungeon" },
+    { "id": "assassins-insight-scabarite-cavern", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Scabarite Cavern" },
+    { "id": "assassins-insight-smoke-dungeon", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Smoke Dungeon" },
+    { "id": "assassins-insight-sophanem-slayer-dungeon", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Sophanem Slayer Dungeon", "info": "Requires the Icthlarin's Little Helper quest." },
+    { "id": "assassins-insight-sunken-pyramid", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Sunken Pyramid" },
+    { "id": "assassins-insight-camel-warriors", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Camel Warriors", "info": "Located east of Sophanem." },
+    { "id": "assassins-insight-desert-strykewyrms", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Desert Strykewyrms", "info": "Located east of Al Kharid near the Abbey of St. Elspeth Citharede." },
+    { "id": "assassins-insight-ripper-demons", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Ripper Demons", "info": "Located in the Ripper Demon cave at the Abbey of St. Elspeth Citharede." },
+    { "id": "voidwalker-amulet-of-glory", "relic": "Voidwalker", "loc-type": "Amulet of Glory", "loc": "Al Kharid" },
+    { "id": "voidwalker-ring-of-duelling", "relic": "Voidwalker", "loc-type": "Ring of Duelling", "loc": "Het's Oasis" },
+    { "id": "voidwalker-travellers-necklace", "relic": "Voidwalker", "loc-type": "Traveller's Necklace", "loc": "South of Desert Eagle's Eye" },
+    { "id": "voidwalker-ring-of-slaying", "relic": "Voidwalker", "loc-type": "Ring of Slaying", "loc": "Sumona in Pollnivneach" },
+    { "id": "voidwalker-enlightened-amulet", "relic": "Voidwalker", "loc-type": "Enlightened Amulet", "loc": "Bandit Camp" }
+  ]
+}
