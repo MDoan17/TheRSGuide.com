@@ -430,7 +430,7 @@
             "image": "https://media.thersguide.com/leagues-2/relics/unknown.png",
             "effects": [
                 "Grants a Devout yak pouch and the Ethereal storage scroll.",
-                "The Devout yak is a summoning familiar with 32 inventory slots. It can access the bank fron anywhere and change items to/from notes.",
+                "The Devout yak is a summoning familiar with 32 inventory slots. It can access the bank from anywhere and change items to/from notes.",
                 "The Ethereal storage scroll can be used to repeat the last unnote action, using the last noted item and amount. The scroll and pouch are never consumed and do not require summoning points.",
                 "Familiars which give you stat boosts also give 10 xp (before League XP multipliers) in the respective skill when gaining XP, up to every 6 seconds.",
                 "Summoning scrolls are no longer consumed when used.",
