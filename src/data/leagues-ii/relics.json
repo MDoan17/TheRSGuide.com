@@ -427,7 +427,7 @@
             "name": "Devout",
             "tagline": "A faithful companion to aid you in your adventures.",
             "tier": 0,
-            "image": "https://media.thersguide.com/leagues-2/relics/unknown.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/devout.png",
             "effects": [
                 "Grants a Devout yak pouch and the Ethereal storage scroll.",
                 "The Devout yak is a summoning familiar with 32 inventory slots. It can access the bank from anywhere and change items to/from notes.",
@@ -446,7 +446,7 @@
             "name": "Perkfection",
             "tagline": "Inventing a new path forward.",
             "tier": 0,
-            "image": "https://media.thersguide.com/leagues-2/relics/unknown.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/perkfection.png",
             "effects": [
                 "Grants the Inventor's Toolbox, which acts as an XP capacitor but can store 10x max charges and also charges 10x faster. It also have two gizmo slots which are applied in addition to any equipped perks. You must be using an augmented item for these perks to activate. These can be swapped out freely. Additionally the toolbox allows you to teleport to Inventor's workbenches that are available in your unlocked regions.",
                 "When disassembling items, your junk channce is reduced to 0%. (Toggleable)",
@@ -470,7 +470,7 @@
             "name": "Rejuvenated",
             "tagline": "Rewind to a previous relic tier.",
             "tier": 0,
-            "image": "https://media.thersguide.com/leagues-2/relics/unknown.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/rejuvenated.png",
             "effects": [
                 "Choose another relic from a previous tier."
             ],
