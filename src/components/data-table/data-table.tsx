@@ -19,6 +19,7 @@ import {
   Info,
   ListFilter,
 } from "lucide-react"
+import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -115,6 +116,60 @@ type ResolvedDataTableColumn = Omit<DataTableColumn, "filter" | "header"> & {
   header: string
   filter?: DataTableFilter & { options: readonly DataTableFilterOption[] }
 }
+
+const dataTableFilterOptionSchema = z.object({
+  label: z.string(),
+  value: z.union([z.string(), z.number(), z.boolean()]),
+})
+
+const dataTableColumnSchema = z.object({
+  key: z.string().min(1),
+  header: z.string().optional(),
+  hidden: z.boolean().optional(),
+  sortable: z.boolean().optional(),
+  filter: z.union([
+    z.boolean(),
+    z.object({
+      label: z.string().optional(),
+      options: z.array(dataTableFilterOptionSchema).optional(),
+    }),
+  ]).optional(),
+  link: z.object({
+    hrefKey: z.string().min(1),
+    external: z.boolean().optional(),
+  }).optional(),
+  info: z.union([
+    z.boolean(),
+    z.object({
+      contentKey: z.string().optional(),
+      label: z.string().optional(),
+    }),
+  ]).optional(),
+  align: z.string().optional(),
+  width: z.string().optional(),
+  emphasis: z.boolean().optional(),
+  wrap: z.boolean().optional(),
+})
+
+const dataTableConfigSchema = z.object({
+  title: z.string().min(1),
+  titleAs: z.string().optional(),
+  headingId: z.string().optional(),
+  collapsed: z.boolean().optional(),
+  sortable: z.boolean().optional(),
+  columns: z.array(dataTableColumnSchema).min(1),
+  rows: z.array(z.record(z.string(), z.unknown())),
+  caption: z.string().optional(),
+  emptyMessage: z.string().optional(),
+  rowId: z.string().optional(),
+  search: z.union([
+    z.boolean(),
+    z.object({
+      label: z.string().optional(),
+      placeholder: z.string().optional(),
+    }),
+  ]).optional(),
+})
 
 const headingTags = new Set<DataTableHeadingTag>([
   "h1",
@@ -303,7 +358,7 @@ function DataTableMultiSelect({
   )
 }
 
-function DataTable({
+function DataTableContent({
   config,
   className,
 }: DataTableProps) {
@@ -686,6 +741,27 @@ function DataTable({
       </Table>
     </div>
   )
+}
+
+function DataTable({ config, className }: DataTableProps) {
+  const result = dataTableConfigSchema.safeParse(config)
+
+  if (!result.success) {
+    return (
+      <div
+        role="alert"
+        data-slot="data-table-error"
+        className={cn(
+          "border border-destructive/40 bg-destructive/5 p-4 text-sm text-muted-foreground",
+          className
+        )}
+      >
+        This table is temporarily unavailable because its data is invalid.
+      </div>
+    )
+  }
+
+  return <DataTableContent config={config} className={className} />
 }
 
 export { DataTable }
