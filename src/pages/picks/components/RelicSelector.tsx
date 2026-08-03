@@ -1,6 +1,9 @@
 import { RotateCcw } from 'lucide-react'
 
+import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
 import { RELIC_TIERS } from '@/lib/picks-state'
+import { SPECULATIVE_RELIC_TIERS } from '../../../../shared/speculative-relic-options'
 import { PickProgressBar } from './PickProgressBar'
 import {
   TierOptionMatrix,
@@ -8,14 +11,24 @@ import {
 } from './TierOptionMatrix'
 
 type RelicSelectorProps = {
+  isSpeculative: boolean
   onChange: (relics: Record<number, string>) => void
+  onSpeculativeChange: (isSpeculative: boolean) => void
   selectedRelics: Record<number, string>
 }
 
 const RELIC_OPTION_ROWS = ['A', 'B', 'C'] as const
 
-export function RelicSelector({ onChange, selectedRelics }: RelicSelectorProps) {
+export function RelicSelector({
+  isSpeculative,
+  onChange,
+  onSpeculativeChange,
+  selectedRelics,
+}: RelicSelectorProps) {
   const selectedCount = Object.keys(selectedRelics).length
+  const displayedRelicTiers = isSpeculative
+    ? SPECULATIVE_RELIC_TIERS
+    : RELIC_TIERS
 
   const toggleRelic = (tier: number, relicName: string) => {
     const nextSelection = { ...selectedRelics }
@@ -27,14 +40,14 @@ export function RelicSelector({ onChange, selectedRelics }: RelicSelectorProps) 
     onChange(nextSelection)
   }
 
-  const matrixTiers = RELIC_TIERS.map((tier) => ({
+  const matrixTiers = displayedRelicTiers.map((tier) => ({
     isSelected: Boolean(selectedRelics[tier.tier]),
     tier: tier.tier,
   }))
   const matrixRows: TierOptionMatrixRow[] = RELIC_OPTION_ROWS.map(
     (optionLetter, optionIndex) => ({
       id: optionLetter,
-      cells: RELIC_TIERS.map((tier) => {
+      cells: displayedRelicTiers.map((tier) => {
         const option = tier.options[optionIndex]
         if (!option) return null
         const isSelected = selectedRelics[tier.tier] === option.id
@@ -56,27 +69,45 @@ export function RelicSelector({ onChange, selectedRelics }: RelicSelectorProps) 
   return (
     <section className="select-none">
       <div className="mb-1">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <h2 className="font-display text-2xl font-semibold text-foreground">
             1. Choose your relics
           </h2>
-          <button
-            aria-label="Reset relic picks"
-            className="flex size-10 shrink-0 items-center justify-center rounded-md border border-primary/50 text-primary transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:border-border disabled:text-muted-foreground disabled:hover:bg-transparent"
-            disabled={selectedCount === 0}
-            onClick={() => onChange({})}
-            title="Reset relic picks"
-            type="button"
-          >
-            <RotateCcw className="size-3.5" />
-          </button>
+          <div className="flex items-center gap-4">
+            <Label className="cursor-pointer" htmlFor="speculative-relics">
+              Speculative mode
+              <Switch
+                checked={isSpeculative}
+                id="speculative-relics"
+                onCheckedChange={(checked) => {
+                  onChange({})
+                  onSpeculativeChange(checked)
+                }}
+              />
+            </Label>
+            <button
+              aria-label="Reset relic picks"
+              className="flex size-10 shrink-0 items-center justify-center rounded-md border border-primary/50 text-primary transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:border-border disabled:text-muted-foreground disabled:hover:bg-transparent"
+              disabled={selectedCount === 0}
+              onClick={() => onChange({})}
+              title="Reset relic picks"
+              type="button"
+            >
+              <RotateCcw className="size-3.5" />
+            </button>
+          </div>
         </div>
         <PickProgressBar
           className="mt-3"
-          label={`${selectedCount} of 8 tiers selected`}
-          max={8}
+          label={`${selectedCount} of ${displayedRelicTiers.length} tiers selected`}
+          max={displayedRelicTiers.length}
           value={selectedCount}
         />
+        {isSpeculative && (
+          <p aria-live="polite" className="mt-3 text-xs leading-5 text-muted-foreground">
+            Best-guess placements from preview footage. Names, tiers, and slots may change; the confirmed Relics guide is unaffected.
+          </p>
+        )}
       </div>
 
       <TierOptionMatrix

@@ -35,7 +35,7 @@ export async function getSharedBuild(code: string) {
 function localizeShare<T extends { code: string; shareUrl: string }>(share: T): T {
   return {
     ...share,
-    shareUrl: `${window.location.origin}/leagues/leagues-ii/picker?share=${encodeURIComponent(share.code)}`,
+    shareUrl: `${window.location.origin}/leagues/picker?share=${encodeURIComponent(share.code)}`,
   }
 }
 

@@ -44,11 +44,12 @@ const relicSheetSchema = z.object({
 
 const staticLeagueOptions = staticLeagueOptionsSchema.parse(rawLeagueOptions)
 const relicSheet = relicSheetSchema.parse(relicData)
-const RELIC_TIER_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8] as const
+const RELIC_TIER_NUMBERS = [1, 2, 3, 4, 5, 6, 7] as const
 const OPTION_LETTERS = ['a', 'b', 'c'] as const
+const UNKNOWN_RELIC_ICON = 'https://media.thersguide.com/leagues-2/relics/unknown.png'
 
 const relicTiers = RELIC_TIER_NUMBERS.map((tier) => {
-  const optionCount = tier === 7 ? 2 : 3
+  const optionCount = tier === 6 ? 2 : 3
   const knownRelics = relicSheet.Relics.filter((relic) => relic.tier === tier)
     .slice(0, optionCount)
 
@@ -61,7 +62,7 @@ const relicTiers = RELIC_TIER_NUMBERS.map((tier) => {
         id: `${tier}${letter}`,
         label: relic?.name ?? `Tier ${tier} relic ${letter.toUpperCase()}`,
         description: relic?.tagline ?? 'This relic has not been revealed yet.',
-        icon: relic?.image,
+        icon: relic?.image ?? UNKNOWN_RELIC_ICON,
       })
     }),
   }

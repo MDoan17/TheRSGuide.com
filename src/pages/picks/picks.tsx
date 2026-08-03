@@ -23,6 +23,9 @@ import { useSharedBuildImport } from './hooks/useSharedBuildImport'
 export default function PicksPage() {
   const [initialPicksState] = useState(loadPicksState)
   const [buildName, setBuildName] = useState(initialPicksState.buildName)
+  const [isSpeculativeRelics, setIsSpeculativeRelics] = useState(
+    initialPicksState.isSpeculativeRelics,
+  )
   const [selectedBlessings, setSelectedBlessings] = useState<BlessingSelections>(
     initialPicksState.selectedBlessings,
   )
@@ -39,6 +42,7 @@ export default function PicksPage() {
 
   const importSharedBuild = useCallback((state: PicksState) => {
     setBuildName(state.buildName)
+    setIsSpeculativeRelics(state.isSpeculativeRelics)
     setSelectedBlessings(state.selectedBlessings)
     setSelectedRelics(state.selectedRelics)
     setSelectedRegionIds(state.selectedRegionIds)
@@ -68,17 +72,20 @@ export default function PicksPage() {
   useEffect(() => {
     savePicksState({
       buildName,
+      isSpeculativeRelics,
       selectedBlessings,
       selectedRegionIds,
       selectedRelics,
     })
-  }, [buildName, selectedBlessings, selectedRegionIds, selectedRelics])
+  }, [buildName, isSpeculativeRelics, selectedBlessings, selectedRegionIds, selectedRelics])
 
   return (
     <div className="leagues-picker">
       <div className="flex flex-col gap-12 py-4 sm:py-6">
         <RelicSelector
+          isSpeculative={isSpeculativeRelics}
           onChange={setSelectedRelics}
+          onSpeculativeChange={setIsSpeculativeRelics}
           selectedRelics={selectedRelics}
         />
 
@@ -108,6 +115,7 @@ export default function PicksPage() {
       {isShareDialogOpen && isShareReady && (
         <ShareBuildDialog
           buildName={buildName}
+          isSpeculativeRelics={isSpeculativeRelics}
           onClose={() => setIsShareDialogOpen(false)}
           selectedBlessings={selectedBlessings}
           selectedRegions={selectedRegions}
