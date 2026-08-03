@@ -19,6 +19,7 @@ const EfficiencyGuideTool = lazy(() => import('@/components/mdx/efficiency-guide
 const LeaguesRegionMap = lazy(() => import('@/components/mdx/leagues-region-map'))
 const RelicDisplay = lazy(() => import('@/components/mdx/relic-display').then((module) => ({ default: module.RelicDisplay })))
 const BlessingDisplay = lazy(() => import('@/components/mdx/blessing-display').then((module) => ({ default: module.BlessingDisplay })))
+const LeaguesPicker = lazy(() => import('@/pages/picks/picks'))
 const DataTable = lazy(() => import('@/components/data-table/data-table').then((module) => ({ default: module.DataTable })))
 
 export const mdxComponents = {
@@ -46,5 +47,6 @@ export const mdxComponents = {
   LeaguesRegionMap,
   RelicDisplay,
   BlessingDisplay,
+  LeaguesPicker,
   DataTable,
 }

@@ -1,0 +1,101 @@
+{
+  "regions": [
+    {
+      "id": "kharidian-desert",
+      "label": "Kharidian Desert",
+      "color": "#CCB538",
+      "regionIds": ["kharidian-desert"],
+      "voteEligible": true
+    },
+    {
+      "id": "misthalin-havenhythe",
+      "label": "Misthalin & Havenhythe",
+      "color": "#07459E",
+      "regionIds": ["misthalin", "havenhythe"],
+      "voteEligible": false
+    },
+    {
+      "id": "asgarnia",
+      "label": "Asgarnia",
+      "color": "#C73D3D",
+      "regionIds": ["asgarnia"],
+      "voteEligible": true
+    },
+    {
+      "id": "morytania",
+      "label": "Morytania",
+      "color": "#007038",
+      "regionIds": ["morytania"],
+      "voteEligible": true
+    },
+    {
+      "id": "wilderness",
+      "label": "Wilderness",
+      "color": "#292D2C",
+      "regionIds": ["wilderness"],
+      "voteEligible": true
+    },
+    {
+      "id": "karamja",
+      "label": "Karamja",
+      "color": "#288A00",
+      "regionIds": ["karamja"],
+      "voteEligible": false
+    },
+    {
+      "id": "fremennik-providence",
+      "label": "Fremennik Province",
+      "color": "#BF701D",
+      "regionIds": ["fremennik-providence"],
+      "voteEligible": true
+    },
+    {
+      "id": "kandarin",
+      "label": "Kandarin",
+      "color": "#6B459E",
+      "regionIds": ["kandarin"],
+      "voteEligible": true
+    },
+    {
+      "id": "tirannwn",
+      "label": "Tirannwn",
+      "color": "#2CCDC7",
+      "regionIds": ["tirannwn"],
+      "voteEligible": true
+    },
+    {
+      "id": "anachronia",
+      "label": "Anachronia",
+      "color": "#DF94D5",
+      "regionIds": ["anachronia"],
+      "voteEligible": true
+    }
+  ],
+  "blessings": [
+    {
+      "id": "a",
+      "label": "Blessing of Order",
+      "shortLabel": "O",
+      "path": "Order",
+      "color": "#2056B3",
+      "darkColor": "#101B2D"
+    },
+    {
+      "id": "b",
+      "label": "Blessing of Balance",
+      "shortLabel": "B",
+      "path": "Balance",
+      "color": "#23893A",
+      "darkColor": "#102218"
+    },
+    {
+      "id": "c",
+      "label": "Blessing of Chaos",
+      "shortLabel": "C",
+      "path": "Chaos",
+      "color": "#C73D3D",
+      "darkColor": "#2A1414"
+    }
+  ]
+}
+

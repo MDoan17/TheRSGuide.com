@@ -1,0 +1,151 @@
+import { RotateCcw } from 'lucide-react'
+
+import blessingData from '@/data/leagues-ii/blessings.json'
+import {
+  BLESSING_TIERS,
+  getBlessingForTier,
+  getResolvedBlessingCount,
+  type BlessingId,
+  type BlessingSelections,
+  type BlessingTier,
+  type SelectableBlessingTier,
+} from '@/lib/picks-state'
+import { LEAGUE_OPTIONS } from '../../../../shared/league-options'
+import { PickProgressBar } from './PickProgressBar'
+import {
+  TierOptionMatrix,
+  type TierOptionMatrixRow,
+} from './TierOptionMatrix'
+
+const BLESSING_PATHS = LEAGUE_OPTIONS.blessings
+const KNOWN_BLESSINGS = new Map(
+  blessingData.Blessings.map((blessing) => [
+    `${blessing.tier}:${blessing.path.toLowerCase()}`,
+    blessing,
+  ]),
+)
+
+type BlessingSelectorProps = {
+  onChange: (blessings: BlessingSelections) => void
+  selectedBlessings: BlessingSelections
+}
+
+function isGodTier(tier: BlessingTier): tier is 4 | 8 {
+  return tier === 4 || tier === 8
+}
+
+export function BlessingSelector({
+  onChange,
+  selectedBlessings,
+}: BlessingSelectorProps) {
+  const resolvedCount = getResolvedBlessingCount(selectedBlessings)
+  const selectedCount = Object.keys(selectedBlessings).length
+
+  function toggleBlessing(
+    tier: SelectableBlessingTier,
+    blessingId: BlessingId,
+  ) {
+    const nextSelections = { ...selectedBlessings }
+    if (nextSelections[tier] === blessingId) {
+      delete nextSelections[tier]
+    } else {
+      nextSelections[tier] = blessingId
+    }
+    onChange(nextSelections)
+  }
+
+  const matrixTiers = BLESSING_TIERS.map((tier) => ({
+    isSpecial: isGodTier(tier),
+    tier,
+  }))
+  const matrixRows: TierOptionMatrixRow[] = BLESSING_PATHS.map((path) => ({
+    id: path.id,
+    cells: BLESSING_TIERS.map((tier) => {
+      const godTier = isGodTier(tier)
+      const knownBlessing = KNOWN_BLESSINGS.get(
+        `${tier}:${path.path.toLowerCase()}`,
+      )
+      const resolvedBlessing = getBlessingForTier(selectedBlessings, tier)
+      const isSelected = resolvedBlessing === path.id
+      const backgroundColor = isSelected ? path.color : path.darkColor
+
+      if (godTier) {
+        const precedingTiers = tier === 4 ? 'Tiers 1–3' : 'Tiers 5–7'
+        const label = knownBlessing?.name ?? `${path.path} God Blessing`
+        return {
+          ariaLabel: `Tier ${tier}, ${label}${isSelected ? ', unlocked' : ''}`,
+          backgroundColor,
+          description: isSelected
+            ? (knownBlessing?.tagline ?? `Derived from ${precedingTiers}.`)
+            : `Choose all Blessings in ${precedingTiers} to reveal the derived God Tier.`,
+          fallback: path.shortLabel,
+          id: `${tier}-${path.id}`,
+          image: knownBlessing?.image,
+          isSelected,
+          label: `Tier ${tier} · ${label}`,
+          readOnly: true,
+          statusLabel: label,
+        }
+      }
+
+      const label = knownBlessing?.name ?? path.label
+      const description =
+        knownBlessing?.tagline ?? `${path.path} path blessing not yet revealed.`
+
+      return {
+        ariaLabel: `Tier ${tier}, ${label}: ${description}`,
+        backgroundColor,
+        description,
+        fallback: path.shortLabel,
+        id: `${tier}-${path.id}`,
+        image: knownBlessing?.image,
+        isSelected,
+        label: `Tier ${tier} · ${label}`,
+        onSelect: () =>
+          toggleBlessing(tier as SelectableBlessingTier, path.id as BlessingId),
+        statusLabel: label,
+      }
+    }),
+  }))
+
+  return (
+    <section className="select-none">
+      <div className="mb-1">
+        <div className="flex items-center justify-between gap-4">
+          <h2 className="font-display text-2xl font-semibold text-foreground">
+            2. Choose your blessings
+          </h2>
+          <button
+            aria-label="Reset blessing tree"
+            className="flex size-10 shrink-0 items-center justify-center rounded-md border border-primary/50 text-primary transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:border-border disabled:text-muted-foreground disabled:hover:bg-transparent"
+            disabled={selectedCount === 0}
+            onClick={() => onChange({})}
+            title="Reset blessing tree"
+            type="button"
+          >
+            <RotateCcw className="size-3.5" />
+          </button>
+        </div>
+        <PickProgressBar
+          className="mt-3"
+          label={`${resolvedCount} of 8 blessing tiers resolved`}
+          max={8}
+          value={resolvedCount}
+        />
+      </div>
+
+      <TierOptionMatrix
+        ariaLabel="Blessing options by tier"
+        className="blessing-tree-scroll"
+        rows={matrixRows}
+        tiers={matrixTiers}
+        variant="blessing"
+      />
+
+      <p className="border-x border-b bg-card/50 px-4 py-3 text-xs leading-5 text-muted-foreground">
+        God Tier rule: 2+ Chaos → Chaos · 2+ Balance or one of each → Balance ·
+        2+ Order → Order
+      </p>
+    </section>
+  )
+}
