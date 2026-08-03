@@ -1,0 +1,21 @@
+{
+  "title": "Features",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "feature", "header": "Feature", "link": { "hrefKey": "url", "external": true }, "hidden": true }
+  ],
+  "rows": [
+    { "id": "invention-guild", "feature": "Invention Guild", "url": "https://runescape.wiki/w/Invention_Guild" },
+    { "id": "troll-invasion", "feature": "Troll Invasion", "url": "https://runescape.wiki/w/Troll_Invasion" },
+    { "id": "shattered-worlds", "feature": "Shattered Worlds", "url": "https://runescape.wiki/w/Shattered_Worlds" },
+    { "id": "artisans-workshop", "feature": "Artisans' Workshop", "url": "https://runescape.wiki/w/Artisan%27s_Workshop" },
+    { "id": "burial-smithing", "feature": "Burial Smithing", "url": "https://runescape.wiki/w/Burial_Smithing" },
+    { "id": "living-rock-caverns", "feature": "Living Rock Caverns", "url": "https://runescape.wiki/w/Living_Rock_Caverns" },
+    { "id": "burthorpe-agility-course", "feature": "Burthorpe Agility Course", "url": "https://runescape.wiki/w/Burthorpe_Agility_Course" },
+    { "id": "warriors-guild", "feature": "Warriors' Guild", "url": "https://runescape.wiki/w/Warrior%27s_Guild" },
+    { "id": "player-owned-ports", "feature": "Player-Owned Ports", "url": "https://runescape.wiki/w/Ports" },
+    { "id": "the-arc", "feature": "The Arc", "url": "https://runescape.wiki/w/The_Arc" }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "title": "Teleport Relics",
+  "titleAs": "h2",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "placeholder": "Search Asgarnia teleport relics..." },
+  "columns": [
+    { "key": "relic", "header": "Relic", "filter": true, "width": "lg", "wrap": false },
+    { "key": "loc-type", "header": "Location Type" },
+    { "key": "loc", "header": "Location", "info": true }
+  ],
+  "rows": [
+    { "id": "natures-network-spirit-tree-port-sarim", "relic": "Nature's Network", "loc-type": "Spirit Tree", "loc": "Port Sarim" },
+    { "id": "natures-network-fairy-ring-aiq", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "AIQ - Mudskipper Point" },
+    { "id": "natures-network-fairy-ring-blq", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "BLQ - Yu'biusk" },
+    { "id": "natures-network-farming-falador-farm", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Herb and Allotment - Falador Farm" },
+    { "id": "natures-network-farming-trollheim", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Herb and Allotment - Trollheim" },
+    { "id": "natures-network-farming-falador", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Tree Patch - Falador" },
+    { "id": "natures-network-farming-taverley", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Tree Patch - Taverley" },
+    { "id": "natures-network-farming-rimmington", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Bush Patch - Rimmington" },
+    { "id": "natures-network-farming-entrana", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Hop Patch - Entrana" },
+    { "id": "assassins-insight-turael", "relic": "Assassin's Insight", "loc-type": "Slayer Master", "loc": "Turael" },
+    { "id": "assassins-insight-asgarnian-ice-dungeon", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Asgarnian Ice Dungeon" },
+    { "id": "assassins-insight-burthorpe-slayer-cave", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Burthorpe Slayer Cave" },
+    { "id": "assassins-insight-god-wars-dungeon", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "God Wars Dungeon", "info": "Requires partial completion of Troll Stronghold and either 60 Strength or 60 Agility." },
+    { "id": "assassins-insight-grotworm-lair", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Grotworm Lair" },
+    { "id": "assassins-insight-taverley-dungeon", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Taverley Dungeon" },
+    { "id": "voidwalker-games-necklace-troll-invasion", "relic": "Voidwalker", "loc-type": "Games Necklace", "loc": "Troll Invasion" },
+    { "id": "voidwalker-games-necklace-gamers-grotto", "relic": "Voidwalker", "loc-type": "Games Necklace", "loc": "Gamer's Grotto" },
+    { "id": "voidwalker-games-necklace-agoroth", "relic": "Voidwalker", "loc-type": "Games Necklace", "loc": "Agoroth" },
+    { "id": "voidwalker-ring-of-duelling", "relic": "Voidwalker", "loc-type": "Ring of Duelling", "loc": "Fist of Guthix" },
+    { "id": "voidwalker-skills-necklace-mining-guild", "relic": "Voidwalker", "loc-type": "Skills Necklace", "loc": "Mining Guild" },
+    { "id": "voidwalker-skills-necklace-crafting-guild", "relic": "Voidwalker", "loc-type": "Skills Necklace", "loc": "Crafting Guild" },
+    { "id": "voidwalker-skills-necklace-invention-guild", "relic": "Voidwalker", "loc-type": "Skills Necklace", "loc": "Invention Guild" },
+    { "id": "voidwalker-combat-bracelet", "relic": "Voidwalker", "loc-type": "Combat Bracelet", "loc": "Warriors' Guild" },
+    { "id": "voidwalker-ring-of-respawn-falador", "relic": "Voidwalker", "loc-type": "Ring of Respawn", "loc": "Falador Castle" },
+    { "id": "voidwalker-ring-of-respawn-burthorpe", "relic": "Voidwalker", "loc-type": "Ring of Respawn", "loc": "Burthorpe Bank" }
+  ]
+}
