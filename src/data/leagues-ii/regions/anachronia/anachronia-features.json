@@ -1,0 +1,20 @@
+{
+  "title": "Features",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "feature", "header": "Feature", "link": { "hrefKey": "url", "external": true }, "hidden": true }
+  ],
+  "rows": [
+    { "id": "big-game-hunter", "feature": "Anachronia Big Game Hunter", "url": "https://runescape.wiki/w/Anachronia_Big_Game_Hunter" },
+    { "id": "agility-course", "feature": "Anachronia Agility Course", "url": "https://runescape.wiki/w/Anachronia_Agility_Course" },
+    { "id": "asuran-arsenal", "feature": "Asuran Arsenal", "url": "https://runescape.wiki/w/Asuran_Arsenal" },
+    { "id": "accidental-fletching-and-firemaking", "feature": "'Accidental' Fletching and Firemaking", "url": "https://runescape.wiki/w/%27Accidental%27_Fletching_and_Firemaking" },
+    { "id": "dream-of-iaia", "feature": "Dream of Iaia", "url": "https://runescape.wiki/w/Dream_of_Iaia" },
+    { "id": "herby-werby", "feature": "Herby Werby", "url": "https://runescape.wiki/w/Herby_Werby" },
+    { "id": "time-altar", "feature": "Time Altar", "url": "https://runescape.wiki/w/Time_Altar" },
+    { "id": "anachronia-dinosaur-farm", "feature": "Anachronia Dinosaur Farm", "url": "https://runescape.wiki/w/Anachronia_Dinosaur_Farm" },
+    { "id": "orthen-dig-site", "feature": "Orthen Dig Site", "url": "https://runescape.wiki/w/Orthen_Dig_Site" }
+  ]
+}

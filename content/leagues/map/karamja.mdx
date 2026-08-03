@@ -2,115 +2,20 @@
 title: Karmaja
 ---
 
-## Notable locations
+import karamjaLocations from '../../../src/data/leagues-ii/regions/karamja/karamja-locations.json';
+import karamjaBosses from '../../../src/data/leagues-ii/regions/karamja/karamja-bosses.json';
+import karamjaFeatures from '../../../src/data/leagues-ii/regions/karamja/karamja-features.json';
+import karamjaPvmUpgrades from '../../../src/data/leagues-ii/regions/karamja/karamja-pvm-upgrades.json';
+import karamjaTeleportRelics from '../../../src/data/leagues-ii/regions/karamja/karamja-teleport-relics.json';
 
-- [Brimhaven](https://runescape.wiki/w/Brimhaven)
-- [Tai Bwo Wannai](https://runescape.wiki/w/Tai_Bwo_Wannai)
-- [Shilo Village](https://runescape.wiki/w/Shilo_Village)
-- [Tzhaar City](https://runescape.wiki/w/TzHaar_City)
+<DataTable config={karamjaLocations} />
 
-## Bosses
+<DataTable config={karamjaBosses} />
 
-- [TzTok-Jad](https://runescape.wiki/w/TzTok-Jad)
-- [Har'aken](https://runescape.wiki/w/Har-Aken)
-- [Abomination](https://runescape.wiki/w/Abomination)
-
-## Features
-
-- [Brimhaven Dungeon](https://runescape.wiki/w/Brimhaven_Dungeon)
-- [Fight Caves](https://runescape.wiki/w/TzHaar_Fight_Cave)
-- [Fight Kiln](https://runescape.wiki/w/Fight_Kiln) 
-
-### Teleport Relics
-<details>
-  <summary> Nature's Network (9) </summary>
-  
-  [Spirit Trees](https://runescape.wiki/w/Spirit_tree)
-  - Brimhaven
-  <br/>
-  [Fairy Rings](https://runescape.wiki/w/Fairy_ring)
-  - BJR &mdash; Other realms: Realm of the Fisher King 
-  - BLP &mdash; Dungeons: TzHaar area
-  - CJS &mdash; Karamja: Kharazi Jungle
-  - CKR &mdash; Karamja: South of Tai Bwo Wannai
-  - DKP &mdash; Karamja: South of Musa Point
-  <br/>
-  [Farming Patches](https://runescape.wiki/w/Farming#Farming_patches)
-  - Fruit Tree Patches &mdash; Brimhaven
-  - Misc Patches &mdash; Herblore Habitat
-  - Misc Patches &mdash; Tai Bwo Wannai (Calquat Patch)
-  <br/>
-</details>
-
-<details>
-  <summary> Assassin's Insight (5) </summary>
-
-  <u>__Slayer Masters__</u>
-  - [Duradel](https://runescape.wiki/w/Duradel) (requires the quest Shilo Village quest)
-  <br/>
-  <u>__Slayer Dungeons__</u>
-  - [Brimhaven Dungeon](https://runescape.wiki/w/Brimhaven_Dungeon)
-  - [Gemstone cavern](https://runescape.wiki/w/Gemstone_cavern) (requires Shilo Village quest)
-  - [Jadinko Lair](https://runescape.wiki/w/Jadinko_Lair)
-  - [TzHaar City](https://runescape.wiki/w/TzHaar_City)
-  <br/>
-</details>
-
-<details>
-  <summary> Voidwalker (3) </summary>
-
-  [Amulet of Glory](https://runescape.wiki/w/Amulet_of_glory#Teleports)
-  - Karamja
-  <br/>
-  [Delver's Anklet](https://runescape.wiki/w/Delver%27s_anklet#Teleports)
-  - Brimhaven Dungeon
-  <br/>
-  [Ferocious Ring](https://runescape.wiki/w/Ferocious_ring#Teleports)
-  - Kuradel
-  <br/>
-</details>
+<DataTable config={karamjaFeatures} />
 
 ## Notable Drops
 
-### PVM Upgrades
+<DataTable config={karamjaPvmUpgrades} />
 
-#### Fight Caves
-
-<div className="table-scroll">
-  <table>
-    <thead>
-      <tr><th style={{width: '20%'}}>Tier</th><th>Item</th></tr>
-    </thead>
-    <tbody>
-	
-      <tr>
-        <td><strong>Cape</strong><br />Melee</td>
-        <td>[Fire Cape](https://runescape.wiki/w/Fire_cape)</td>
-      </tr>
-
-    </tbody>
-  </table>
-</div>
-
-#### Fight Kiln
-
-<div className="table-scroll">
-  <table>
-    <thead>
-      <tr><th style={{width: '20%'}}>Tier</th><th>Item</th></tr>
-    </thead>
-    <tbody>
-
-      <tr>
-        <td><strong>Cape</strong><br />Hybrid</td>
-        <td><ul style={{paddingLeft: '0px'}}>
-		<li>[TokHaar Kal-Ket](https://runescape.wiki/w/TokHaar-Kal-Ket)</li>
-		<li>[TokHaar Kal-Xil](https://runescape.wiki/w/TokHaar-Kal-Xil)</li>
-		<li>[TokHaar Kal-Mej](https://runescape.wiki/w/TokHaar-Kal-Mej)</li>
-		<li>[TokHaar Kal-Mor](https://runescape.wiki/w/TokHaar-Kal-Mor)</li>
-		</ul></td>
-      </tr>
-
-    </tbody>
-  </table>
-</div>
+<DataTable config={karamjaTeleportRelics} />

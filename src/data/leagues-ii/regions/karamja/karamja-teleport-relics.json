@@ -1,0 +1,32 @@
+{
+  "title": "Teleport Relics",
+  "titleAs": "h2",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "placeholder": "Search Karamja teleport relics..." },
+  "columns": [
+    { "key": "relic", "header": "Relic", "filter": true, "width": "lg", "wrap": false },
+    { "key": "loc-type", "header": "Location Type" },
+    { "key": "loc", "header": "Location", "info": true }
+  ],
+  "rows": [
+    { "id": "natures-network-spirit-tree-brimhaven", "relic": "Nature's Network", "loc-type": "Spirit Tree", "loc": "Brimhaven" },
+    { "id": "natures-network-fairy-ring-bjr", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "BJR - Realm of the Fisher King" },
+    { "id": "natures-network-fairy-ring-blp", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "BLP - TzHaar area" },
+    { "id": "natures-network-fairy-ring-cjs", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "CJS - Kharazi Jungle" },
+    { "id": "natures-network-fairy-ring-ckr", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "CKR - South of Tai Bwo Wannai" },
+    { "id": "natures-network-fairy-ring-dkp", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "DKP - South of Musa Point" },
+    { "id": "natures-network-farming-brimhaven", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Fruit Tree Patch - Brimhaven" },
+    { "id": "natures-network-farming-herblore-habitat", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Miscellaneous Patches - Herblore Habitat" },
+    { "id": "natures-network-farming-tai-bwo-wannai", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Calquat Patch - Tai Bwo Wannai" },
+    { "id": "assassins-insight-duradel", "relic": "Assassin's Insight", "loc-type": "Slayer Master", "loc": "Duradel", "info": "Requires the Shilo Village quest." },
+    { "id": "assassins-insight-brimhaven-dungeon", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Brimhaven Dungeon" },
+    { "id": "assassins-insight-gemstone-cavern", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Gemstone cavern", "info": "Requires the Shilo Village quest." },
+    { "id": "assassins-insight-jadinko-lair", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Jadinko Lair" },
+    { "id": "assassins-insight-tzhaar-city", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "TzHaar City" },
+    { "id": "voidwalker-amulet-of-glory", "relic": "Voidwalker", "loc-type": "Amulet of Glory", "loc": "Karamja" },
+    { "id": "voidwalker-delvers-anklet", "relic": "Voidwalker", "loc-type": "Delver's Anklet", "loc": "Brimhaven Dungeon" },
+    { "id": "voidwalker-ferocious-ring", "relic": "Voidwalker", "loc-type": "Ferocious Ring", "loc": "Kuradel" }
+  ]
+}

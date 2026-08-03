@@ -1,0 +1,12 @@
+{
+  "title": "Notable Locations",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "city", "header": "City", "link": { "hrefKey": "url", "external": true }, "hidden": true }
+  ],
+  "rows": [
+    { "id": "anachronia-base-camp", "city": "Anachronia Base Camp", "url": "https://runescape.wiki/w/Anachronia_Base_Camp" }
+  ]
+}

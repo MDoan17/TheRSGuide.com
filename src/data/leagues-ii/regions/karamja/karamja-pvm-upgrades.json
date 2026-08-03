@@ -1,0 +1,22 @@
+{
+  "title": "PVM Upgrades",
+  "titleAs": "h3",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "label": "Search Karamja PvM upgrades", "placeholder": "Search Karamja upgrades..." },
+  "emptyMessage": "No Karamja upgrades match those filters.",
+  "columns": [
+    { "key": "item", "header": "Item", "link": { "hrefKey": "url", "external": true }, "info": true },
+    { "key": "tier", "header": "Tier", "filter": true, "width": "sm", "emphasis": true, "wrap": false },
+    { "key": "style", "header": "Combat style", "filter": true, "width": "md", "wrap": false },
+    { "key": "source", "header": "Source", "filter": true, "width": "md", "wrap": false }
+  ],
+  "rows": [
+    { "id": "fire-cape", "item": "Fire Cape", "tier": "N/A", "style": "Melee", "source": "Fight Caves", "url": "https://runescape.wiki/w/Fire_cape" },
+    { "id": "tokhaar-kal-ket", "item": "TokHaar-Kal-Ket", "tier": "N/A", "style": "Hybrid", "source": "Fight Kiln", "url": "https://runescape.wiki/w/TokHaar-Kal-Ket" },
+    { "id": "tokhaar-kal-xil", "item": "TokHaar-Kal-Xil", "tier": "N/A", "style": "Hybrid", "source": "Fight Kiln", "url": "https://runescape.wiki/w/TokHaar-Kal-Xil" },
+    { "id": "tokhaar-kal-mej", "item": "TokHaar-Kal-Mej", "tier": "N/A", "style": "Hybrid", "source": "Fight Kiln", "url": "https://runescape.wiki/w/TokHaar-Kal-Mej" },
+    { "id": "tokhaar-kal-mor", "item": "TokHaar-Kal-Mor", "tier": "N/A", "style": "Hybrid", "source": "Fight Kiln", "url": "https://runescape.wiki/w/TokHaar-Kal-Mor" }
+  ]
+}

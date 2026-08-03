@@ -1,0 +1,25 @@
+{
+  "title": "Teleport Relics",
+  "titleAs": "h2",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "placeholder": "Search Anachronia teleport relics..." },
+  "columns": [
+    { "key": "relic", "header": "Relic", "filter": true, "width": "lg", "wrap": false },
+    { "key": "loc-type", "header": "Location Type" },
+    { "key": "loc", "header": "Location", "info": true }
+  ],
+  "rows": [
+    { "id": "natures-network-farming-anachronia", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Cactus Patch - Anachronia" },
+    { "id": "assassins-insight-laniakea", "relic": "Assassin's Insight", "loc-type": "Slayer Master", "loc": "Laniakea", "info": "Located at Anachronia Base Camp." },
+    { "id": "assassins-insight-brutish-dinosaurs", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Brutish Dinosaurs", "info": "Located in northern Anachronia." },
+    { "id": "assassins-insight-devils-snare", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Devil's Snare", "info": "Located in south-eastern Anachronia." },
+    { "id": "assassins-insight-feral-dinosaurs", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Feral Dinosaurs", "info": "Located in northern Anachronia." },
+    { "id": "assassins-insight-lampenfloras", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Lampenfloras", "info": "Located in south-eastern Anachronia." },
+    { "id": "assassins-insight-liverworts", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Liverworts", "info": "Located in north-eastern Anachronia." },
+    { "id": "assassins-insight-luminous-snagglers", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Luminous Snagglers", "info": "Located in western Anachronia." },
+    { "id": "assassins-insight-ripper-dinosaurs", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Ripper Dinosaurs", "info": "Located in south-eastern Anachronia." },
+    { "id": "assassins-insight-venomous-dinosaurs", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Venomous Dinosaurs", "info": "Located in north-western Anachronia." }
+  ]
+}
