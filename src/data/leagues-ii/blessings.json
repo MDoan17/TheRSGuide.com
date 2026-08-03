@@ -242,6 +242,10 @@
                 {
                     "title": "+1 Blessing Reset",
                     "description": "Gain 1 Blessing progression reset."
+                },
+                {
+                    "title": "Select Boss Rotations",
+                    "description": "Unlock the ability to select which rotation for Araxxor, Rise of the Six, and Vorago you would like to fight."
                 }
             ]
         },
