@@ -41,7 +41,7 @@
     { "id": "dracolich-armour", "item": "Dracolich armour", "tier": "90", "style": "Range", "source": "Zemouregal & Vorkath", "url": "https://runescape.wiki/w/Dracolich_armour" },
     { "id": "elite-dracolich-armour", "item": "Elite Dracolich armour", "tier": "92", "style": "Range", "source": "Zemouregal & Vorkath", "url": "https://runescape.wiki/w/Elite_Dracolich_armour" },
     { "id": "roar-of-awakening", "item": "Roar of Awakening", "tier": "95", "style": "Magic", "source": "Sanctum of Rebirth", "url": "https://runescape.wiki/w/Roar_of_Awakening" },
-    { "id": "ode-to-deceit", "item": "Ode to Deceit", "tier": "95", "style": "Magic", "source": "Sanctum of Rebirth", "url": "https://runescape.wiki/w/Ode_to_Deceit", "info": "This is the off-hand equivalent Ode to Deceit."},
+    { "id": "ode-to-deceit", "item": "Ode to Deceit", "tier": "95", "style": "Magic", "source": "Sanctum of Rebirth", "url": "https://runescape.wiki/w/Ode_to_Deceit", "info": "This is the off-hand equivalent to Roar of Awakening."},
     { "id": "scripture-of-amascut", "item": "Scripture of Amascut", "tier": "N/A", "style": "Hybrid", "source": "Sanctum of Rebirth", "url": "https://runescape.wiki/w/Scripture_of_Amascut" },
     { "id": "shard-of-genesis-essence", "item": "Shard of Genesis Essence", "tier": "100", "style": "Upgrade Item", "source": "Sanctum of Rebirth", "url": "https://runescape.wiki/w/Shard_of_Genesis_Essence", "info": "Upgrades tier 95 legendary weapons." },
     { "id": "omni-guard", "item": "Omni guard", "tier": "95", "style": "Necromancy", "source": "Rasial, The First Necromancer", "url": "https://runescape.wiki/w/Omni_guard" },

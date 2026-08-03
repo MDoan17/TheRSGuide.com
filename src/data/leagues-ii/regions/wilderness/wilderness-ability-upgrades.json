@@ -34,30 +34,7 @@
     }
   ],
   "rows": [
-    {
-      "source": "ED3",
-      "id": "greater-barge",
-      "level": "65",
-      "style": "Melee",
-      "item": "Greater Barge",
-      "url": "https://runescape.wiki/w/Greater_Barge_ability_codex"
-    },
-    {
-      "source": "ED3",
-      "id": "greater-flurry",
-      "level": "45",
-      "style": "Utility",
-      "item": "Greater Flurry",
-      "url": "https://runescape.wiki/w/Greater_Flurry_ability_codex"
-    },
-    {
-      "source": "ED3",
-      "id": "greater-fury",
-      "level": "21",
-      "style": "Melee",
-      "item": "Greater Fury",
-      "url": "https://runescape.wiki/w/Greater_Fury_ability_codex"
-    },
+
     {
       "source": "Slayer",
       "id": "greater-sonic-wave",
@@ -65,6 +42,31 @@
       "style": "Magic",
       "item": "Greater Sonic Wave",
       "url": "https://runescape.wiki/w/Greater_Sonic_Wave_ability_codex"
+    },
+    {
+      "source": "Dragonkin Laboratory",
+      "id": "greater-barge",
+      "level": "65",
+      "style": "Melee",
+      "item": "Greater Barge",
+      "url": "https://runescape.wiki/w/Greater_Barge_ability_codex"
+    },
+    {
+      "source": "Dragonkin Laboratory",
+      "id": "greater-flurry",
+      "level": "45",
+      "style": "Utility",
+      "item": "Greater Flurry",
+      "url": "https://runescape.wiki/w/Greater_Flurry_ability_codex"
+    },
+    {
+      "source": "Dragonkin Laboratory",
+      "id": "greater-fury",
+      "level": "21",
+      "style": "Melee",
+      "item": "Greater Fury",
+      "url": "https://runescape.wiki/w/Greater_Fury_ability_codex"
     }
+
   ]
 }

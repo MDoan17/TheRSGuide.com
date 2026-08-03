@@ -14,7 +14,6 @@
   ],
   "rows": [
     { "id": "dragon-mattock", "item": "Dragon Mattock", "tier": "70", "style": "Archaeology", "source": "Big Game Hunter", "url": "https://runescape.wiki/w/Dragon_Mattock", "info": "Also available from Tetracompasses." },
-    { "id": "skekas-hypnowand", "item": "Skeka's Hypnowand", "tier": "80", "style": "Hunter", "source": "Big Game Hunter", "url": "https://runescape.wiki/w/Skeka%27s_hypnowand" },
-    { "id": "balaraks-sash-brush", "item": "Balarak's Sash Brush", "tier": "80", "style": "Archaeology", "source": "Big Game Hunter", "url": "https://runescape.wiki/w/Balarak%27s_sash_brush" }
+    { "id": "skekas-hypnowand", "item": "Skeka's Hypnowand", "tier": "80", "style": "Hunter", "source": "Big Game Hunter", "url": "https://runescape.wiki/w/Skeka%27s_hypnowand" }
   ]
 }
