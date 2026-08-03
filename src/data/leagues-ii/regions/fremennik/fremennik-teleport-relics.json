@@ -1,0 +1,30 @@
+{
+  "title": "Teleport Relics",
+  "titleAs": "h2",
+  "collapsed": true,
+  "sortable": true,
+  "rowId": "id",
+  "search": { "placeholder": "Search Fremennik teleport relics..." },
+  "columns": [
+    { "key": "relic", "header": "Relic", "filter": true, "width": "lg", "wrap": false },
+    { "key": "loc-type", "header": "Location Type" },
+    { "key": "loc", "header": "Location", "info": true }
+  ],
+  "rows": [
+    { "id": "natures-network-spirit-tree-etceteria", "relic": "Nature's Network", "loc-type": "Spirit Tree", "loc": "Etceteria" },
+    { "id": "natures-network-fairy-ring-ajr", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "AJR - Slayer cave south-east of Rellekka" },
+    { "id": "natures-network-fairy-ring-cip", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "CIP - Miscellania" },
+    { "id": "natures-network-fairy-ring-dkq", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "DKQ - Glacor Cave" },
+    { "id": "natures-network-fairy-ring-dks", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "DKS - Snowy Hunter area" },
+    { "id": "natures-network-fairy-ring-ajs", "relic": "Nature's Network", "loc-type": "Fairy Ring", "loc": "AJS - Penguins near Miscellania" },
+    { "id": "natures-network-farming-etceteria", "relic": "Nature's Network", "loc-type": "Farming Patch", "loc": "Bush Patch - Etceteria" },
+    { "id": "assassins-insight-fremennik-slayer-dungeon", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Fremennik Slayer Dungeon" },
+    { "id": "assassins-insight-glacor-cave", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Glacor Cave", "info": "Requires the Ritual of the Mahjarrat quest." },
+    { "id": "assassins-insight-waterbirth-island", "relic": "Assassin's Insight", "loc-type": "Slayer Dungeon", "loc": "Waterbirth Island" },
+    { "id": "assassins-insight-acheron-mammoths", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Acheron Mammoths" },
+    { "id": "assassins-insight-ice-strykewyrms", "relic": "Assassin's Insight", "loc-type": "Slayer Monster", "loc": "Ice Strykewyrms", "info": "Requires The Tale of the Muspah quest." },
+    { "id": "voidwalker-ring-of-wealth", "relic": "Voidwalker", "loc-type": "Ring of Wealth", "loc": "Miscellania" },
+    { "id": "voidwalker-delvers-anklet", "relic": "Voidwalker", "loc-type": "Delver's Anklet", "loc": "Fremennik Dungeon" },
+    { "id": "voidwalker-ring-of-slaying", "relic": "Voidwalker", "loc-type": "Ring of Slaying", "loc": "Fremennik Dungeon" }
+  ]
+}

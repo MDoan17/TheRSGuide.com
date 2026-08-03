@@ -1,0 +1,15 @@
+{
+  "title": "Features",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "feature", "header": "Feature", "link": { "hrefKey": "url", "external": true }, "hidden": true }
+  ],
+  "rows": [
+    { "id": "managing-miscellania", "feature": "Managing Miscellania", "url": "https://runescape.wiki/w/Managing_Miscellania" },
+    { "id": "fremennik-slayer-dungeon", "feature": "Fremennik Slayer Dungeon", "url": "https://runescape.wiki/w/Fremennik_Slayer_Dungeon" },
+    { "id": "lunar-spells", "feature": "Lunar Spells", "url": "https://runescape.wiki/w/Lunar_Spells" },
+    { "id": "penguin-agility-course", "feature": "Penguin Agility Course", "url": "https://runescape.wiki/w/Penguin_Agility_Course" }
+  ]
+}
