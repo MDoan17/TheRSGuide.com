@@ -1,0 +1,13 @@
+{
+  "title": "Bosses",
+  "titleAs": "h2",
+  "collapsed": true,
+  "rowId": "id",
+  "columns": [
+    { "key": "boss", "header": "Boss", "link": { "hrefKey": "url", "external": true } },
+    { "key": "location", "header": "Location", "link": { "hrefKey": "locationUrl", "external": true } }
+  ],
+  "rows": [
+    { "id": "legiones", "boss": "Legiones", "location": "Monastery of Ascension", "url": "https://runescape.wiki/w/Legiones", "locationUrl": "https://runescape.wiki/w/Monastery_of_Ascension" }
+  ]
+}
