@@ -369,7 +369,7 @@
             "name": "Animal Wrangler",
             "tagline": "Wrangle the wild and tame the untamable.",
             "tier": 0,
-            "image": "https://media.thersguide.com/leagues-2/relics/animal-wrangler-temp.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/animal-wrangler.png",
             "effects": [
                 "Bank fish automatiically when fishing and hunter loot when hunting. (Toggleable)",
                 "When capturing hunter creatures or fishing, there is a 2% chance to receive a random farm animal, sent to your bank.",
@@ -411,7 +411,7 @@
             "name": "Icyenic Faith",
             "tagline": "Gain the strength and protection of the Icyene.",
             "tier": 0,
-            "image": "https://media.thersguide.com/leagues-2/relics/icyenic-faith-temp.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/icyenic-faith.png",
             "effects": [
                 "Grants you the Tome of the Icyene.",
                 "When worn: The Tome provide +50 Prayer bonus, Gain 0.2% critical strike chance and 0.2% base ability damage per 1 prayer bonus you have.",
