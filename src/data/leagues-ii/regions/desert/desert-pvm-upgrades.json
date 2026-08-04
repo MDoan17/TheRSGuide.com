@@ -47,6 +47,7 @@
     { "id": "nightmare-gauntlets", "item": "Nightmare Gauntlets", "tier": "85", "style": "Range", "source": "The Magister", "url": "https://runescape.wiki/w/Nightmare_gauntlets" },
     { "id": "khopesh-of-the-kharidian", "item": "Khopesh of the Kharidian", "tier": "82", "style": "Melee", "source": "The Magister", "url": "https://runescape.wiki/w/Khopesh_of_the_Kharidian", "info": "Off-hand equivalent available." },
     { "id": "khopesh-of-tumeken", "item": "Khopesh of Tumeken", "tier": "92", "style": "Melee", "source": "The Magister", "url": "https://runescape.wiki/w/Khopesh_of_Tumeken" },
-    { "id": "khopesh-of-elidinis", "item": "Khopesh of Elidinis", "tier": "92", "style": "Melee", "source": "The Magister", "url": "https://runescape.wiki/w/Khopesh_of_Elidinis" }
+    { "id": "khopesh-of-elidinis", "item": "Khopesh of Elidinis", "tier": "92", "style": "Melee", "source": "The Magister", "url": "https://runescape.wiki/w/Khopesh_of_Elidinis", "info": "Off-hand equivalent of the Khopesh of Tumeken."},
+    { "id": "warpriest-of-tuska-armour", "item": "Warpriest of Tuska Armour", "tier": "75", "style": "Hybrid", "source": "Slayer", "url": "https://runescape.wiki/w/Warpriest_of_Tuska_armour", "info": "Also available in Kandarin."}
   ]
 }

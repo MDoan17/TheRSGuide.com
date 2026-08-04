@@ -18,6 +18,7 @@
     { "id": "dark-bow", "item": "Dark Bow", "tier": "70", "style": "Range", "source": "Slayer", "url": "https://runescape.wiki/w/Dark_Bow", "info": "Also available in the Wilderness, Morytania, and Tirannwn." },
     { "id": "spear-of-annihilation", "item": "Spear of Annihilation", "tier": "90", "style": "Melee", "source": "Archaeology", "url": "https://runescape.wiki/w/Spear_of_Annihilation" },
     { "id": "eternal-magic-shortbow-mk-5", "item": "Eternal Magic Shortbow Mk. 5", "tier": "90", "style": "Range", "source": "Eternal Magic Trees", "url": "https://runescape.wiki/w/Eternal_magic_shortbow_Mk._5", "info": "Eternal Magic Logs are also available via the Transmutation relic. Requires 100 Fletching." },
-    { "id": "eternal-magic-staff-saturated", "item": "Eternal Magic Staff (Saturated)", "tier": "90", "style": "Magic", "source": "Eternal Magic Trees", "url": "https://runescape.wiki/w/Eternal_magic_staff_(saturated)", "info": "Eternal Magic Logs are also available via the Transmutation relic. Requires 104 Runecrafitng." }
+    { "id": "eternal-magic-staff-saturated", "item": "Eternal Magic Staff (Saturated)", "tier": "90", "style": "Magic", "source": "Eternal Magic Trees", "url": "https://runescape.wiki/w/Eternal_magic_staff_(saturated)", "info": "Eternal Magic Logs are also available via the Transmutation relic. Requires 104 Runecrafitng." },
+    { "id": "warpriest-of-tuska-armour", "item": "Warpriest of Tuska Armour", "tier": "75", "style": "Hybrid", "source": "Slayer", "url": "https://runescape.wiki/w/Warpriest_of_Tuska_armour", "info": "Also available in the Desert."}
   ]
 }
