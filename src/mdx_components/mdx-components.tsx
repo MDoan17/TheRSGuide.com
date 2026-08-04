@@ -18,6 +18,7 @@ const RecurringActivitiesTool = lazy(() => import('@/components/mdx/recurring-ac
 const EfficiencyGuideTool = lazy(() => import('@/components/mdx/efficiency-guide-tool').then((module) => ({ default: module.EfficiencyGuideTool })))
 const LeaguesRegionMap = lazy(() => import('@/components/mdx/leagues-region-map'))
 const RelicDisplay = lazy(() => import('@/components/mdx/relic-display').then((module) => ({ default: module.RelicDisplay })))
+const SkillingSolver = lazy(() => import('@/components/mdx/skilling-solver').then((module) => ({ default: module.SkillingSolver })))
 const BlessingDisplay = lazy(() => import('@/components/mdx/blessing-display').then((module) => ({ default: module.BlessingDisplay })))
 const LeaguesPicker = lazy(() => import('@/pages/picks/picks'))
 const DataTable = lazy(() => import('@/components/data-table/data-table').then((module) => ({ default: module.DataTable })))
@@ -46,6 +47,7 @@ export const mdxComponents = {
   EfficiencyGuideTool,
   LeaguesRegionMap,
   RelicDisplay,
+  SkillingSolver,
   BlessingDisplay,
   LeaguesPicker,
   DataTable,
