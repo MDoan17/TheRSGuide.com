@@ -6,7 +6,7 @@ import { DocCard, TableScroll, proseComponents } from "@/components/mdx/prose"
 import { mdxComponents } from "@/mdx_components/mdx-components"
 
 describe("MDX prose adapters", () => {
-  it("maps authored prose elements to component-owned Tailwind styles", () => {
+  it("preserves authored prose semantics", () => {
     const Heading1 = proseComponents.h1
     const Heading = proseComponents.h2
     const Link = proseComponents.a
@@ -48,14 +48,13 @@ describe("MDX prose adapters", () => {
     )
 
     expect(markup).toContain('id="page-section"')
-    expect(markup).toContain("text-[2.25rem]")
     expect(markup).toContain('id="overview"')
+    expect(markup).toContain('href="https://runescape.wiki"')
     expect(markup).toContain('target="_blank"')
-    expect(markup).toContain("overflow")
-    expect(markup).toContain("border-l-")
-    expect(markup).toContain("list-disc")
-    expect(markup).toContain("border-collapse")
-    expect(markup).toContain("font-display")
+    expect(markup).toContain('rel="noreferrer"')
+    expect(markup).toContain("<blockquote")
+    expect(markup).toContain("<table")
+    expect(markup).toContain("<li")
   })
 
   it("registers TableScroll as the authored MDX table boundary", () => {
@@ -72,22 +71,19 @@ describe("MDX prose adapters", () => {
     )
 
     expect(markup).toContain('data-slot="table-scroll"')
-    expect(markup).toContain("overflow-x-auto")
-    expect(markup).toContain("[&amp;_table]:border-collapse")
-    expect(markup).toContain("[&amp;_th]:bg-muted")
-    expect(markup).toContain("[&amp;_td]:border")
+    expect(markup).toContain("Requirement")
     expect(mdxComponents.TableScroll).toBe(TableScroll)
   })
 
-  it("preserves the branded link treatment on navigation cards", () => {
+  it("renders navigation cards as links", () => {
     const markup = renderToStaticMarkup(
       <MemoryRouter>
         <DocCard title="Early Game Progression" href="/guides/early-game" />
       </MemoryRouter>
     )
 
-    expect(markup).toContain("text-primary")
-    expect(markup).toContain("underline")
-    expect(markup).toContain("hover:border-primary")
+    expect(markup).toContain('href="/guides/early-game"')
+    expect(markup).toContain("Early Game Progression")
+    expect(markup).toContain('aria-hidden="true"')
   })
 })

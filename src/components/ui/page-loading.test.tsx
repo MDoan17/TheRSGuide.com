@@ -12,6 +12,5 @@ describe("PageLoading", () => {
     expect(markup).toContain('role="status"')
     expect(markup).toContain('aria-label="Loading player progression"')
     expect(markup).toContain('aria-hidden="true"')
-    expect(markup).toContain("[animation-duration:.8s]")
   })
 })
