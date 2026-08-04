@@ -2,7 +2,7 @@
     "Relics": [
         {
             "name": "Survivalist",
-            "tagline": "More resources. Better tools. Maximum efficiency from the very start.",
+            "tagline": "best-in-slot gathering tools and doubles gathered resources.",
             "tier": 1,
             "image": "https://media.thersguide.com/leagues-2/relics/survivalist.png",
             "effects": [
@@ -39,7 +39,7 @@
         },
         {
             "name": "Endless Harvest",
-            "tagline": "Spend less time banking and more time gathering.",
+            "tagline": "Banks gathered resources automatically and keeps gathering spots active.",
             "tier": 1,
             "image": "https://media.thersguide.com/leagues-2/relics/endless-harvest.png",
             "effects": [
@@ -77,7 +77,7 @@
         },
         {
             "name": "Golden Touch",
-            "tagline": "Transforms Agility and Thieving into your own personal goldmine.",
+            "tagline": "Removes Agility and Thieving failures and gives more coins and loot.",
             "tier": 1,
             "image": "https://media.thersguide.com/leagues-2/relics/golden-touch.png",
             "effects": [
@@ -115,7 +115,7 @@
         },
         {
             "name": "Crystal Grace",
-            "tagline": "Master the mystic arts.",
+            "tagline": "Unlocks every spell and gives essence for runecrafring",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/crystal-grace.png",
             "effects": [
@@ -148,7 +148,7 @@
         },
         {
             "name": "Superheated",
-            "tagline": "Burn through everything you touch.",
+            "tagline": "Automates firemaking and cooking, and speeds up Smithing.",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/superheated.png",
             "effects": [
@@ -183,7 +183,7 @@
         },
         {
             "name": "Divine Druid",
-            "tagline": "Become one with nature.",
+            "tagline": "Supplies herbs and charms and boosts harblore, Summoning, and Divination.",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/divine-druid.png",
             "effects": [
@@ -224,7 +224,7 @@
         },
         {
             "name": "Transmutation",
-            "tagline": "Rewrite the rules of resource gathering.",
+            "tagline": "Lets you upgrade or downgrade resources",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/transmutation.png",
             "effects": [
@@ -287,7 +287,7 @@
         },
         {
             "name": "Assassin's Insight",
-            "tagline": "Slay monsters with ease and efficiency.",
+            "tagline": "Adds Slayer teleports, task choices, and spawns more elites",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/assassins-insight.png",
             "effects": [
@@ -312,7 +312,7 @@
         },
         {
             "name": "Nature's Network",
-            "tagline": "Experience the world as fairies do.",
+            "tagline": "Adds fairy ring, spirit tree, and farming teleports with instant crop growth",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/natures-network.png",
             "effects": [
@@ -335,7 +335,7 @@
         },
         {
             "name": "Voidwalker",
-            "tagline": "Traverse the world and find items left to the void.",
+            "tagline": "Gives unlimited jewelry teleports and bonus loot from Void shards.",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/voidwalker.png",
             "effects": [
@@ -367,7 +367,7 @@
         },
         {
             "name": "Animal Wrangler",
-            "tagline": "Wrangle the wild and tame the untamable.",
+            "tagline": "Banks catches, boosts Hunter loot, and improves PoF.",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/animal-wrangler.png",
             "effects": [
@@ -409,7 +409,7 @@
         },
         {
             "name": "Icyenic Faith",
-            "tagline": "Gain the strength and protection of the Icyene.",
+            "tagline": "Boosts damage and prayers gain soul split passive",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/icyenic-faith.png",
             "effects": [
@@ -425,7 +425,7 @@
         },
         {
             "name": "Devout",
-            "tagline": "A faithful companion to aid you in your adventures.",
+            "tagline": "Adds a 32-slot yak with remote bank access and ability to note/un-note items",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/devout.png",
             "effects": [
@@ -444,7 +444,7 @@
         },
         {
             "name": "Perkfection",
-            "tagline": "Inventing a new path forward.",
+            "tagline": "Adds two passive perk slots, 10x  materials, and faster Invention machines",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/perkfection.png",
             "effects": [
@@ -468,7 +468,7 @@
         },
         {
             "name": "Rejuvenated",
-            "tagline": "Rewind to a previous relic tier.",
+            "tagline": "Lets you pick an extra relic from an earlier tier.",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/rejuvenated.png",
             "effects": [
