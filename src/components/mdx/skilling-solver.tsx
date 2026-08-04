@@ -1,12 +1,16 @@
 'use client'
 
-import { Check, RotateCcw } from 'lucide-react'
+import { RotateCcw } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
 import relicData from '@/data/leagues-ii/relics.json'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { cn } from '@/lib/utils'
+import {
+  TierOptionMatrix,
+  type TierOptionMatrixRow,
+} from '@/pages/picks/components/TierOptionMatrix'
 import { SPECULATIVE_RELIC_TIERS } from '../../../shared/speculative-relic-options'
 
 export type SkillGrade = 'S' | 'A' | 'B' | 'C'
@@ -23,9 +27,6 @@ type Relic = {
   tagline: string
   tier: number
 }
-
-type SpeculativeRelicOption =
-  (typeof SPECULATIVE_RELIC_TIERS)[number]['options'][number]
 
 export type SkillResult = {
   grade: SkillGrade | null
@@ -72,6 +73,8 @@ const GRADE_RANK: Record<SkillGrade, number> = {
   C: 1,
 }
 
+const RELIC_OPTION_ROWS = ['A', 'B', 'C'] as const
+
 const relics = relicData.Relics as Relic[]
 const relicByName = new Map(relics.map((relic) => [relic.name, relic]))
 
@@ -98,51 +101,6 @@ export function calculateSkillResults(selectedRelics: Relic[]) {
   })
 
   return results
-}
-
-function RelicOption({
-  isSelected,
-  onSelect,
-  option,
-}: {
-  isSelected: boolean
-  onSelect: () => void
-  option: SpeculativeRelicOption
-}) {
-  return (
-    <button
-      aria-label={`${isSelected ? 'Remove' : 'Select'} ${option.label}: ${option.description}`}
-      aria-pressed={isSelected}
-      className={cn(
-        'group relative flex min-h-32 flex-col items-center justify-start gap-2 border-r border-b border-border px-2 py-3 text-center transition-colors focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset',
-        isSelected
-          ? 'bg-primary text-primary-foreground'
-          : 'bg-card/30 text-muted-foreground hover:bg-accent hover:text-accent-foreground',
-      )}
-      onClick={onSelect}
-      title={option.description}
-      type="button"
-    >
-      {isSelected && (
-        <Check aria-hidden className="absolute top-2 right-2 size-3" />
-      )}
-      <img
-        alt=""
-        aria-hidden
-        className={cn(
-          'h-16 w-16 object-contain transition-[opacity,transform] duration-200 group-hover:scale-105',
-          isSelected ? 'opacity-100' : 'opacity-70 group-hover:opacity-100',
-        )}
-        draggable={false}
-        height={64}
-        src={option.icon}
-        width={64}
-      />
-      <span className="text-[10px] font-black leading-tight tracking-[0.08em] uppercase">
-        {option.label}
-      </span>
-    </button>
-  )
 }
 
 function SkillCell({
@@ -229,6 +187,30 @@ export function SkillingSolver() {
       return [...current.filter((id) => !idsInTier.has(id)), optionId]
     })
   }
+  const matrixTiers = SPECULATIVE_RELIC_TIERS.map(({ options, tier }) => ({
+    isSelected: options.some(({ id }) => selectedIdSet.has(id)),
+    tier,
+  }))
+  const matrixRows: TierOptionMatrixRow[] = RELIC_OPTION_ROWS.map(
+    (optionLetter, optionIndex) => ({
+      id: optionLetter,
+      cells: SPECULATIVE_RELIC_TIERS.map(({ options, tier }) => {
+        const option = options[optionIndex]
+        if (!option) return null
+
+        return {
+          ariaLabel: `Tier ${tier}, option ${optionLetter}, ${option.label}: ${option.description}`,
+          description: option.description,
+          fallback: optionLetter,
+          id: option.id,
+          image: option.icon,
+          isSelected: selectedIdSet.has(option.id),
+          label: option.label,
+          onSelect: () => toggleRelic(tier, option.id),
+        }
+      }),
+    }),
+  )
 
   return (
     <section className="not-prose my-8 overflow-hidden border-y border-border bg-card/10 sm:border-x">
@@ -266,32 +248,13 @@ export function SkillingSolver() {
           </span>
         </div>
 
-        {SPECULATIVE_RELIC_TIERS.map(({ options, tier }, tierIndex) => (
-            <div
-              className={cn(tierIndex < SPECULATIVE_RELIC_TIERS.length - 1 && 'mb-6')}
-              key={tier}
-            >
-              <div className="mb-2 flex items-baseline justify-between gap-4">
-                <h3 className="font-display text-lg font-semibold text-foreground">
-                  Tier {tier}
-                </h3>
-                <span className="text-xs text-muted-foreground">Choose one</span>
-              </div>
-              <div
-                className="grid border-t border-l border-border"
-                style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}
-              >
-                {options.map((option) => (
-                  <RelicOption
-                    isSelected={selectedIdSet.has(option.id)}
-                    key={option.id}
-                    onSelect={() => toggleRelic(tier, option.id)}
-                    option={option}
-                  />
-                ))}
-              </div>
-            </div>
-        ))}
+        <TierOptionMatrix
+          ariaLabel="Skilling solve relic options by tier"
+          className="relic-grid-scroll"
+          rows={matrixRows}
+          tiers={matrixTiers}
+          variant="relic"
+        />
       </div>
 
       <div aria-live="polite" className="border-t border-border bg-background/40 px-4 py-5 sm:px-6">

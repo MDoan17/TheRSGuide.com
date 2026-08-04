@@ -8,6 +8,7 @@ import {
   type Relic,
 } from '@/components/mdx/skilling-solver'
 import { mdxComponents } from '@/mdx_components/mdx-components'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 describe('SkillingSolver', () => {
   it('uses the best selected relic grade and only solves skills at A or S', () => {
@@ -40,7 +41,11 @@ describe('SkillingSolver', () => {
   })
 
   it('renders every skill with an empty initial state', () => {
-    const markup = renderToStaticMarkup(<SkillingSolver />)
+    const markup = renderToStaticMarkup(
+      <TooltipProvider>
+        <SkillingSolver />
+      </TooltipProvider>,
+    )
 
     expect(markup).toContain('0 of 29 skills solved')
     expect(markup).toContain('Choose your relics')
