@@ -39,8 +39,8 @@ Here's a real example from the repository:
 
 ## UnderConstruction Component
 
-Wrap unfinished MDX in `UnderConstruction` to keep it hidden from visitors while
-allowing them to reveal the work in progress:
+Wrap unfinished MDX in `UnderConstruction` to show a compact construction notice
+above the work in progress:
 
 ```mdx
 <UnderConstruction>
@@ -52,8 +52,13 @@ Continue writing the page normally inside the wrapper.
 </UnderConstruction>
 ```
 
-The wrapped content is not rendered until the visitor selects **Click to see the
-progress**.
+The wrapped content remains visible beneath the notice. For a page without any
+content yet, use a self-closing component to show only **Pages under
+construction**:
+
+```mdx
+<UnderConstruction />
+```
 
 ## Need More Components?
 

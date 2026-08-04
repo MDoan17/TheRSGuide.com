@@ -5,6 +5,7 @@ import { handlePlayerApi } from './server/player-api.mjs'
 import { handleFeedbackApi } from './server/feedback-api.mjs'
 import { handleSharesApi } from './server/shares-api.mjs'
 import { handleMediaProxy } from './server/media-proxy.mjs'
+import { handleHealth, isHealthRequest } from './server/health.mjs'
 import {
   requestOrigin,
   rewritePageMetadataOrigin,
@@ -18,6 +19,7 @@ const root = resolve(process.cwd(), 'dist')
 const mime = { '.css': 'text/css', '.html': 'text/html', '.ico': 'image/x-icon', '.jpeg': 'image/jpeg', '.jpg': 'image/jpeg', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp' }
 
 createServer((req, res) => {
+  if (isHealthRequest(req)) return void handleHealth(req, res)
   if (req.url?.startsWith('/api/player/')) return void handlePlayerApi(req, res)
   if (req.url?.startsWith('/api/feedback')) return void handleFeedbackApi(req, res)
   if (req.url?.startsWith('/api/shares')) return void handleSharesApi(req, res)
