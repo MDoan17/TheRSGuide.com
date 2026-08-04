@@ -153,8 +153,7 @@
 
 @layer base {
   * { border-color: var(--border); }
-  html { scroll-behavior: smooth; scrollbar-gutter: stable; }
-  html.home-page { scrollbar-gutter: auto; }
+  html { scroll-behavior: smooth; }
   body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-sans); }
   h1, h2, h3 { font-family: var(--font-display); }
   button, a { -webkit-tap-highlight-color: transparent; }

@@ -9,6 +9,7 @@ import { handlePlayerApi } from './server/player-api.mjs'
 import { handleFeedbackApi } from './server/feedback-api.mjs'
 import { handleSharesApi } from './server/shares-api.mjs'
 import { handleMediaProxy } from './server/media-proxy.mjs'
+import { handleHealth, isHealthRequest } from './server/health.mjs'
 import { guideContentPlugin } from './scripts/guide-content-plugin.mjs'
 
 const mdxPlugin = mdx({
@@ -30,6 +31,10 @@ const localApiPlugin = () => ({
   name: 'local-api',
   configureServer(server: { middlewares: { use: (handler: (req: import('node:http').IncomingMessage, res: import('node:http').ServerResponse, next: () => void) => void) => void } }) {
     server.middlewares.use((req, res, next) => {
+      if (isHealthRequest(req)) {
+        handleHealth(req, res)
+        return
+      }
       if (req.url?.startsWith('/api/player/')) {
         void handlePlayerApi(req, res)
         return

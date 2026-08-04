@@ -18,7 +18,7 @@ function sourceFiles(directory: string): string[] {
 }
 
 describe("global CSS boundaries", () => {
-  it("keeps named global class selectors limited to the theme and home document state", () => {
+  it("keeps named global class selectors limited to the theme", () => {
     const css = readFileSync(resolve(sourceDirectory, "index.css"), "utf8")
     const selectors = css
       .split(/\r?\n/)
@@ -28,7 +28,7 @@ describe("global CSS boundaries", () => {
         Array.from(selector.matchAll(/\.([A-Za-z_][\w-]*)/g), (match) => match[1])
       )
 
-    expect([...new Set(selectors)].sort()).toEqual(["dark", "home-page"])
+    expect([...new Set(selectors)].sort()).toEqual(["dark"])
   })
 })
 

@@ -478,6 +478,68 @@
             ],
             "skillSolves": [
             ]
+        },
+        {
+            "name": "Production Master",
+            "tagline": "Processes production items at once and supplies skilling conveniences through the Brooch of the Spirits.",
+            "tier": 0,
+            "image": "https://media.thersguide.com/leagues-2/relics/unknown.png",
+            "effects": [
+                "Grants the Brooch of the Spirits.",
+                "Various production activities have their items processed at once.",
+                "You never burn food accidentally.",
+                "When wearing your brooch, you can spawn Seren spirits, divine blessings, catalysts of alteration and manifested knowledge.",
+                "The Brooch of the Spirits supplies infinite exquisite urns.",
+                "While wearing your brooch, you will gain portable skilling station benefits, even when not using one.",
+                "Where applicable, masterwork items now take 1 action to complete.",
+                "Gain a +6 boost to Construction, Cooking, Crafting, Herblore, Fletching and Smithing."
+            ],
+            "notes": [
+            ],
+            "skillSolves": [
+            ]
+        },
+        {
+            "name": "Antiquarian",
+            "tagline": "Unlocks Archaeology relics and streamlines materials, artefacts, collections and excavation rewards.",
+            "tier": 0,
+            "image": "https://media.thersguide.com/leagues-2/relics/unknown.png",
+            "effects": [
+                "All Archaeology relics are available to use after completing the Archaeology tutorial.",
+                "Archaeology materials are automatically sent to the material storage, or to the bank if it's full.",
+                "The monolith provides 1,000 monolith energy.",
+                "The Archaeology journal acts as a free soil screener.",
+                "Fixate is available straight away, and no longer has a cap to casting.",
+                "Archaeology lore pages are 20% more common. This is in addition to the passive effect.",
+                "Receive 10x as many chronotes from handing in collections. This overwrites the passive 5x multiplier.",
+                "Restoring an artefact costs half as many materials.",
+                "Ancient caskets are received when completing an Archaeology collection.",
+                "Immediately reach 100% focus when you receive an artefact or lore page.",
+                "Divine geodes can be found while excavating and contain Archaeology materials."
+            ],
+            "notes": [
+            ],
+            "skillSolves": [
+            ]
+        },
+        {
+            "name": "Naragi Edict",
+            "tagline": "Grants a reusable Sliver of Edicts with healing, combat boosts, revival and pocket-slot bonuses.",
+            "tier": 0,
+            "image": "https://media.thersguide.com/leagues-2/relics/unknown.png",
+            "effects": [
+                "Grants you the Sliver of Edicts.",
+                "The sliver can be activated from the inventory for 16.8 seconds.",
+                "When activated, heals 10,000 lifepoints 4 times, once per 4.2 seconds.",
+                "When activated, boosts your combat stats to 255.",
+                "When activated, revives you if you die.",
+                "The sliver has a cooldown of 1.5 minutes before it can be activated again.",
+                "The sliver can be placed in your pocket slot and offers +300 armour, +14 melee/ranged/magic/necromancy damage bonus, +1,500 lifepoints bonus and +15 Prayer bonus."
+            ],
+            "notes": [
+            ],
+            "skillSolves": [
+            ]
         }
     ],
     "Passives": [

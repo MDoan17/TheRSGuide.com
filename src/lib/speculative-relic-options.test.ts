@@ -22,4 +22,15 @@ describe('speculative relic options', () => {
       }
     }
   })
+
+  it('keeps the current named speculative placements', () => {
+    const labelsForTier = (tier: number) =>
+      SPECULATIVE_RELIC_TIERS[tier - 1]?.options.map(({ label }) => label)
+
+    expect(labelsForTier(2)).toContain('Divine Druid')
+    expect(labelsForTier(4)).toContain('Antiquarian')
+    expect(labelsForTier(4)).not.toContain('Divine Druid')
+    expect(labelsForTier(5)).toContain('Production Master')
+    expect(labelsForTier(7)).toContain('Naragi')
+  })
 })
