@@ -55,8 +55,6 @@ function HomeLanding({
 }: HomeLandingProps) {
   useEffect(() => {
     window.scrollTo(0, 0)
-    document.documentElement.classList.add("home-page")
-    return () => document.documentElement.classList.remove("home-page")
   }, [])
 
   return (
