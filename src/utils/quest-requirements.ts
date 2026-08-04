@@ -49,30 +49,44 @@ export function findQuest(questName: string): QuestData | undefined {
 }
 
 /**
- * Build a tree structure for a quest showing its prerequisites
+ * Build a deduplicated forest of prerequisite trees for the given quests.
+ *
+ * Quest requirements form a graph rather than a tree — popular prerequisites
+ * like Missing, Presumed Death sit underneath several branches — so walking
+ * each branch independently lists those quests once per path they appear on.
+ * Instead we breadth-first search the graph, which places every quest exactly
+ * once, at the shallowest depth anything requires it from.
  */
-function buildQuestTree(questName: string, visited: Set<string>): QuestTreeNode {
-  const normalizedName = questName.toLowerCase();
-  const quest = questMap.get(normalizedName);
+function buildQuestForest(questNames: string[]): QuestTreeNode[] {
+  const placed = new Set<string>();
+  const roots: QuestTreeNode[] = [];
+  // Doubles as the BFS queue: it grows as we append children, and the cursor
+  // below walks it in breadth-first order.
+  const queue: QuestTreeNode[] = [];
 
-  const node: QuestTreeNode = {
-    name: questName,
-    children: [],
+  const place = (questName: string, parent: QuestTreeNode | null) => {
+    const normalizedName = questName.toLowerCase();
+    if (placed.has(normalizedName)) return;
+    placed.add(normalizedName);
+
+    const node: QuestTreeNode = { name: questName, children: [] };
+    if (parent) {
+      parent.children.push(node);
+    } else {
+      roots.push(node);
+    }
+    queue.push(node);
   };
 
-  // Avoid infinite loops for circular dependencies
-  if (visited.has(normalizedName)) {
-    return node;
-  }
-  visited.add(normalizedName);
+  questNames.forEach((questName) => place(questName, null));
 
-  if (quest && quest.requirements.quest.length > 0) {
-    node.children = quest.requirements.quest.map((reqQuest) =>
-      buildQuestTree(reqQuest, new Set(visited))
-    );
+  for (let cursor = 0; cursor < queue.length; cursor += 1) {
+    const node = queue[cursor];
+    const quest = questMap.get(node.name.toLowerCase());
+    quest?.requirements.quest.forEach((reqQuest) => place(reqQuest, node));
   }
 
-  return node;
+  return roots;
 }
 
 /**
@@ -137,7 +151,7 @@ export function resolveAllRequirements(
   });
 
   // Build quest trees for display
-  const questTree = questNames.map((name) => buildQuestTree(name, new Set()));
+  const questTree = buildQuestForest(questNames);
 
   // Convert skills map back to array with proper capitalization
   const skillsArray: QuestSkillReq[] = Array.from(allSkills.entries())

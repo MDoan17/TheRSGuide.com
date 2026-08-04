@@ -110,18 +110,73 @@ const QuestRequirementItem: React.FC<{ quest: string }> = ({ quest }) => {
   );
 };
 
-const QuestTreeItem: React.FC<{ node: QuestTreeNode; depth?: number }> = ({ node, depth = 0 }) => {
+// Depths 0-2 are shown up front; anything deeper unfolds on demand so long
+// quest lines don't bury the page in indentation.
+const DEFAULT_VISIBLE_DEPTH = 3;
+
+const countDescendants = (node: QuestTreeNode): number =>
+  node.children.reduce((total, child) => total + 1 + countDescendants(child), 0);
+
+/** How many quests sit below the depth shown by default. */
+const countCollapsed = (nodes: QuestTreeNode[], depth = 0): number =>
+  nodes.reduce(
+    (total, node) =>
+      total +
+      (depth >= DEFAULT_VISIBLE_DEPTH ? 1 : 0) +
+      countCollapsed(node.children, depth + 1),
+    0
+  );
+
+const QuestTreeItem: React.FC<{ node: QuestTreeNode; depth?: number; expandAll?: boolean }> = ({
+  node,
+  depth = 0,
+  expandAll = false,
+}) => {
+  const collapsible = node.children.length > 0 && depth >= DEFAULT_VISIBLE_DEPTH - 1;
+  const [expanded, setExpanded] = useState(!collapsible || expandAll);
+
+  const hiddenCount = useMemo(
+    () => (collapsible ? countDescendants(node) : 0),
+    [collapsible, node]
+  );
+
   return (
     <div>
       <div style={{ marginLeft: `${depth * 20}px` }}>
         <QuestRequirementItem quest={node.name} />
       </div>
-      {node.children.length > 0 && (
+      {expanded && node.children.length > 0 && (
         <div className="mt-1 space-y-1">
           {node.children.map((child, idx) => (
-            <QuestTreeItem key={`${child.name}-${idx}`} node={child} depth={depth + 1} />
+            <QuestTreeItem
+              key={`${child.name}-${idx}`}
+              node={child}
+              depth={depth + 1}
+              expandAll={expandAll}
+            />
           ))}
         </div>
+      )}
+      {collapsible && (
+        <button
+          type="button"
+          onClick={() => setExpanded((previous) => !previous)}
+          aria-expanded={expanded}
+          style={{ marginLeft: `${(depth + 1) * 20}px` }}
+          className="mt-1 flex items-center gap-1.5 px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+        >
+          <svg
+            className={`w-3 h-3 transition-transform ${expanded ? "rotate-90" : ""}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+          {expanded
+            ? `Hide ${node.name} requirements`
+            : `Show ${hiddenCount} more for ${node.name}`}
+        </button>
       )}
     </div>
   );
@@ -137,6 +192,7 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
   const { value: inputValue, changeValue, submit: submitPlayer, loading, status } =
     usePlayerLookup({ debounceMs: 1000 });
   const [selectedSkill, setSelectedSkill] = useState<{ skill: string; level: number } | null>(null);
+  const [expandAll, setExpandAll] = useState(false);
 
   // Look up quest data from JSON if questName is provided
   const questFromJson = useMemo(() => {
@@ -190,6 +246,7 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
   const hasSkills = resolved.skills.length > 0;
   const hasQuests = resolved.questTree.length > 0;
   const hasOther = resolved.other.length > 0;
+  const collapsedCount = useMemo(() => countCollapsed(resolved.questTree), [resolved.questTree]);
 
   // Only show the empty state if there's no quest name and no requirements at all
   if (!effectiveRequirements.name && !hasSkills && !hasQuests && !hasOther) {
@@ -313,13 +370,27 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
 
             {/* Quests Column */}
             <div className="flex-1">
-              <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                Quest Requirements {hasQuests && `(${resolved.quests.length})`}
+              <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center justify-between gap-2">
+                <span>Quest Requirements {hasQuests && `(${resolved.quests.length})`}</span>
+                {collapsedCount > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setExpandAll((previous) => !previous)}
+                    className="text-xs font-normal text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                  >
+                    {expandAll ? "Collapse" : `Expand all (${collapsedCount})`}
+                  </button>
+                )}
               </h4>
               {hasQuests ? (
                 <div className="space-y-1">
                   {resolved.questTree.map((tree, idx) => (
-                    <QuestTreeItem key={`${tree.name}-${idx}`} node={tree} />
+                    <QuestTreeItem
+                      // Remounting on toggle resets each branch to the new default
+                      key={`${tree.name}-${idx}-${expandAll}`}
+                      node={tree}
+                      expandAll={expandAll}
+                    />
                   ))}
                 </div>
               ) : (
