@@ -12,9 +12,14 @@ const LEGACY_RYBBIT_STORAGE_KEYS = [
 type AnonymousPageviewPayload = {
   site_id: string
   hostname: string
-  pathname: "/"
+  pathname: string
   querystring: ""
   type: "pageview"
+}
+
+type BrowserPrivacySignals = {
+  doNotTrack?: string | null
+  globalPrivacyControl?: boolean
 }
 
 declare global {
@@ -28,11 +33,24 @@ declare global {
 
 let lastNavigationKey: string | null = null
 
-function createAnonymousPageviewPayload(hostname: string): AnonymousPageviewPayload {
+function browserPrivacySignalEnabled(
+  source: BrowserPrivacySignals = typeof navigator === "undefined"
+    ? {}
+    : navigator,
+) {
+  return source.globalPrivacyControl === true
+    || source.doNotTrack === "1"
+    || source.doNotTrack?.toLowerCase() === "yes"
+}
+
+function createAnonymousPageviewPayload(
+  hostname: string,
+  pathname: string,
+): AnonymousPageviewPayload {
   return {
     site_id: RYBBIT_SITE_ID,
     hostname,
-    pathname: "/",
+    pathname,
     querystring: "",
     type: "pageview",
   }
@@ -49,8 +67,12 @@ function clearLegacyAnalyticsStorage() {
   }
 }
 
-function trackAnonymousPageview(navigationKey: string, enabled = true) {
-  if (!enabled) return
+function trackAnonymousPageview(
+  navigationKey: string,
+  pathname: string,
+  enabled = true,
+) {
+  if (!enabled || browserPrivacySignalEnabled()) return
 
   const hostname = window.location.hostname.toLowerCase()
   if (!TRACKED_HOSTNAMES.has(hostname)) return
@@ -62,7 +84,7 @@ function trackAnonymousPageview(navigationKey: string, enabled = true) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(createAnonymousPageviewPayload(hostname)),
+    body: JSON.stringify(createAnonymousPageviewPayload(hostname, pathname)),
     mode: "cors",
     credentials: "omit",
     keepalive: true,
@@ -73,6 +95,7 @@ function trackAnonymousPageview(navigationKey: string, enabled = true) {
 }
 
 export {
+  browserPrivacySignalEnabled,
   clearLegacyAnalyticsStorage,
   createAnonymousPageviewPayload,
   LEGACY_RYBBIT_STORAGE_KEYS,

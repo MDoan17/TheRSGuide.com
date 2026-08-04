@@ -54,9 +54,11 @@ function PrivacySettings({
                   Basic traffic counts
                 </FieldTitle>
                 <FieldDescription className="m-0 max-w-[38rem] text-[.76rem] leading-[1.5]">
-                  Helps us estimate daily visitors and sessions. The counting
-                  code resets every day, and no analytics ID is saved in your
-                  browser. We do not collect searches or anything you type.
+                  Helps us see which guides are used and estimate daily
+                  visitors and sessions. The counting code resets every day,
+                  and no analytics ID is saved in your browser. We do not
+                  collect searches or anything you type. Browser Do Not Track
+                  and Global Privacy Control signals always turn this off.
                 </FieldDescription>
               </FieldContent>
               <Switch
