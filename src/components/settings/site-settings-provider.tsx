@@ -57,8 +57,8 @@ function SiteSettingsProvider({ children }: PropsWithChildren) {
   }, [])
 
   useEffect(() => {
-    trackAnonymousPageview(location.key, analyticsEnabled)
-  }, [analyticsEnabled, location.key])
+    trackAnonymousPageview(location.key, location.pathname, analyticsEnabled)
+  }, [analyticsEnabled, location.key, location.pathname])
 
   const saveConsent = useCallback(
     (
