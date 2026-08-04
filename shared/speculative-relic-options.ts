@@ -34,7 +34,7 @@ const SPECULATIVE_LAYOUT: readonly (readonly SpeculativeSlot[])[] = [
   ],
   [
     { relicName: 'Crystal Grace' },
-    { label: 'Antiqui' },
+    { label: 'Antiquarian' },
     { relicName: 'Transmutation' },
   ],
   [
