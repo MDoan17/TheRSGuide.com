@@ -25,7 +25,7 @@ const SPECULATIVE_LAYOUT: readonly (readonly SpeculativeSlot[])[] = [
   [
     { relicName: 'Animal Wrangler' },
     { relicName: 'Superheated' },
-    { label: 'Unknown relic' },
+    { relicName: 'Divine Druid' },
   ],
   [
     { relicName: "Nature's Network" },
@@ -34,11 +34,11 @@ const SPECULATIVE_LAYOUT: readonly (readonly SpeculativeSlot[])[] = [
   ],
   [
     { relicName: 'Crystal Grace' },
-    { relicName: 'Divine Druid' },
+    { label: 'Antiqui' },
     { relicName: 'Transmutation' },
   ],
   [
-    { label: 'Unknown relic' },
+    { label: 'Production Master' },
     { label: 'Unknown relic' },
     { relicName: 'Devout' },
   ],
@@ -47,7 +47,7 @@ const SPECULATIVE_LAYOUT: readonly (readonly SpeculativeSlot[])[] = [
     { relicName: 'Perkfection' },
   ],
   [
-    { label: 'Unknown relic' },
+    { label: 'Naragi' },
     { label: 'Unknown relic' },
     { relicName: 'Icyenic Faith' },
   ],
