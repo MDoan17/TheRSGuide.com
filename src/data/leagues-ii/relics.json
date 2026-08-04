@@ -115,7 +115,7 @@
         },
         {
             "name": "Crystal Grace",
-            "tagline": "Unlocks every spell and gives essence for runecrafring",
+            "tagline": "Unlocks every spell and gives stackable essence for Runecrafting.",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/crystal-grace.png",
             "effects": [
@@ -183,7 +183,7 @@
         },
         {
             "name": "Divine Druid",
-            "tagline": "Supplies herbs and charms and boosts harblore, Summoning, and Divination.",
+            "tagline": "Supplies herbs and charms for easy Summoning training and faster potion making and Divination.",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/divine-druid.png",
             "effects": [
@@ -367,7 +367,7 @@
         },
         {
             "name": "Animal Wrangler",
-            "tagline": "Banks catches, boosts Hunter loot, and improves PoF.",
+            "tagline": "Banks catches, boosts Hunter loot, improves PoF, and enables baitless BGH.",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/animal-wrangler.png",
             "effects": [
@@ -409,7 +409,7 @@
         },
         {
             "name": "Icyenic Faith",
-            "tagline": "Boosts damage and prayers gain soul split passive",
+            "tagline": "Your Prayer bonus increases critical hit chance and damage, and prayers gain a Soul Split passive.",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/icyenic-faith.png",
             "effects": [
@@ -425,7 +425,7 @@
         },
         {
             "name": "Devout",
-            "tagline": "Adds a 32-slot yak with remote bank access and ability to note/un-note items",
+            "tagline": "Adds a 32-slot yak with remote bank access and the ability to note or un-note items, and increases all familiar damage.",
             "tier": 0,
             "image": "https://media.thersguide.com/leagues-2/relics/devout.png",
             "effects": [
