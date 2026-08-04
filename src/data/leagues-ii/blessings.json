@@ -2,7 +2,7 @@
     "Blessings": [
         {
             "name": "Adrenaline Junkie",
-            "tagline": "Increases your maximum adrenaline and adrenaline generation.",
+            "tagline": "Increase your maximum adrenaline and adrenaline generation by 50%.",
             "path": "Chaos",
             "tier": 1,
             "image": "https://media.thersguide.com/leagues-2/blessings/adrenaline-junkie.png",
@@ -16,7 +16,7 @@
         },
         {
             "name": "Big Boned",
-            "tagline": "Increases your maximum life points and damage dealt based on your maximum life points.",
+            "tagline": "Increase your maximum life points and do more damage based on your max health.",
             "path": "Balance",
             "tier": 1,
             "image": "https://media.thersguide.com/leagues-2/blessings/big-boned.png",
@@ -30,7 +30,7 @@
         },
         {
             "name": "Teragard's Aegis",
-            "tagline": "Increases your base ability damage and health regeneration based on your armour value.",
+            "tagline": "Converts your armour into ability damage and health regeneration, with greater bonuses from defenders and shields.",
             "path": "Order",
             "tier": 1,
             "image": "https://media.thersguide.com/leagues-2/blessings/teragards-aegis.png",
@@ -44,7 +44,7 @@
         },
         {
             "name": "Abyssal Cinders",
-            "tagline": "Zamorak's fury engulfs your enemies.",
+            "tagline": "Adds bonus damage to your basic abilities and a chance to trigger bonus damage.",
             "path": "Chaos",
             "tier": 2,
             "image": "https://media.thersguide.com/leagues-2/blessings/abyssal-cinders.png",
@@ -59,7 +59,7 @@
         },
         {
             "name": "Barkscales",
-            "tagline": "Guthix's hand protects you and poisons your enemies.",
+            "tagline": "Reduces incoming damage based on your armour and has a chance to apply an area-of-effect poison.",
             "path": "Balance",
             "tier": 2,
             "image": "https://media.thersguide.com/leagues-2/blessings/barkscales.png",
@@ -74,7 +74,7 @@
         },
         {
             "name": "Striking Light",
-            "tagline": "Saradomin's might courses through your basic attacks.",
+            "tagline": "Strengthens your basic attacks and adds a recurring ability that scales with your armour.",
             "path": "Order",
             "tier": 2,
             "image": "https://media.thersguide.com/leagues-2/blessings/striking-light.png",
@@ -89,7 +89,7 @@
         },
         {
             "name": "Avernic Rampage",
-            "tagline": "Chance for free casting of abilities and special attacks.",
+            "tagline": "A chance to make abilities and special attacks cost no adrenaline.",
             "path": "Chaos",
             "tier": 3,
             "image": "https://media.thersguide.com/leagues-2/blessings/avernic-rampage.png",
@@ -103,7 +103,7 @@
         },
         {
             "name": "Eternal Sustenance",
-            "tagline": "Food is no longer consumed when eaten.",
+            "tagline": "Eat food without consuming it or losing adrenaline.",
             "path": "Balance",
             "tier": 3,
             "image": "https://media.thersguide.com/leagues-2/blessings/eternal-sustenance.png",
@@ -117,7 +117,7 @@
         },
         {
             "name": "Steadfast Will",
-            "tagline": "Empowers the 'Bash', 'Preparation', 'Reflect', and 'Revenge' abilities.",
+            "tagline": "Greatly empowers Bash, Preparation, Reflect, and Revenge.",
             "path": "Order",
             "tier": 3,
             "image": "https://media.thersguide.com/leagues-2/blessings/steadfast-will.png",
@@ -134,7 +134,7 @@
         },
         {
             "name": "Demon's Mark",
-            "tagline": "Always hit your target's weak spot.",
+            "tagline": "Your accuracy is calculated using your target's weakness",
             "path": "Chaos",
             "tier": 4,
             "image": "https://media.thersguide.com/leagues-2/blessings/demons-mark.png",
@@ -147,7 +147,7 @@
         },
         {
             "name": "Splash Zone",
-            "tagline": "The bigger they are, the harder they fall.",
+            "tagline": "Deal bonus damage with AOE abilities depending on the targets size.",
             "path": "Balance",
             "tier": 4,
             "image": "https://media.thersguide.com/leagues-2/blessings/splash-zone.png",
@@ -161,7 +161,7 @@
         },
         {
             "name": "Sacred Fervor",
-            "tagline": "Ability and special attack cooldowns reduced.",
+            "tagline": "Reduces all combat ability and special attack cooldowns by 30%.",
             "path": "Order",
             "tier": 4,
             "image": "https://media.thersguide.com/leagues-2/blessings/sacred-fervor.png",
