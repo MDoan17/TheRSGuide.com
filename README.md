@@ -133,6 +133,9 @@ The following environment variables are used by production deployments:
 - `SITE_URL` sets the base URL used for absolute page and social metadata URLs.
   If it is not present, the site uses `COOLIFY_URL` and then the incoming request
   origin.
+- `VITE_DEPLOYMENT_ROLE=failover` shows a dismissible traffic notice at the top
+  of every page. Use `primary` (or leave it unset) on the primary deployment.
+  Changing this value requires rebuilding the application.
 - `VITE_HOMEPAGE_MODE=leagues` enables the Leagues content, adds it to the
   homepage, navbar, sidebar, routes, and search, and shows the countdown on the
   homepage. Leave it unset or use `normal` to keep all Leagues content hidden

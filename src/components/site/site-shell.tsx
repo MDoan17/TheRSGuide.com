@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from "react"
 import { useLocation } from "react-router"
 
+import { FailoverNotice } from "@/components/site/failover-notice"
 import { SiteHeader } from "@/components/site/site-header"
 import { guideCatalog } from "@/lib/content"
 
@@ -15,6 +16,7 @@ function SiteShell({ children }: PropsWithChildren) {
 
   return (
     <>
+      <FailoverNotice />
       {!isLandingPage && <SiteHeader showSettings={!hasGuideSidebar} />}
       {children}
     </>
