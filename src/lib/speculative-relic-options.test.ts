@@ -31,6 +31,20 @@ describe('speculative relic options', () => {
     expect(labelsForTier(4)).toContain('Antiquarian')
     expect(labelsForTier(4)).not.toContain('Divine Druid')
     expect(labelsForTier(5)).toContain('Production Master')
-    expect(labelsForTier(7)).toContain('Naragi')
+    expect(labelsForTier(7)).toContain('Naragi Edict')
+  })
+
+  it('uses the revealed icons for previously unknown relics', () => {
+    const optionByLabel = new Map(
+      SPECULATIVE_RELIC_TIERS.flatMap(({ options }) =>
+        options.map((option) => [option.label, option] as const),
+      ),
+    )
+
+    expect(optionByLabel.get('Antiquarian')?.icon).toContain('/antiquarian.png')
+    expect(optionByLabel.get('Production Master')?.icon).toContain(
+      '/production_master.png',
+    )
+    expect(optionByLabel.get('Naragi Edict')?.icon).toContain('/naragi_edict.png')
   })
 })
