@@ -2,7 +2,7 @@
     "Relics": [
         {
             "name": "Survivalist",
-            "tagline": "best-in-slot gathering tools and doubles gathered resources.",
+            "tagline": "Best-in-slot gathering tools and doubles gathered resources.",
             "tier": 1,
             "image": "https://media.thersguide.com/leagues-2/relics/survivalist.png",
             "effects": [
@@ -173,7 +173,7 @@
                 },
                 {
                     "skill": "smithing",
-                    "grade": "A"
+                    "grade": "S"
                 },
                 {
                     "skill": "cooking",
@@ -497,6 +497,30 @@
             "notes": [
             ],
             "skillSolves": [
+                {
+                    "skill": "construction",
+                    "grade": "A"
+                },
+                {
+                    "skill": "cooking",
+                    "grade": "S"
+                },
+                {
+                    "skill": "crafting",
+                    "grade": "S"
+                },
+                {
+                    "skill": "herblore",
+                    "grade": "A"
+                },
+                {
+                    "skill": "fletching",
+                    "grade": "S"
+                },
+                {
+                    "skill": "smithing",
+                    "grade": "B"
+                }
             ]
         },
         {
@@ -520,6 +544,10 @@
             "notes": [
             ],
             "skillSolves": [
+                {
+                    "skill": "archaeology",
+                    "grade": "A"
+                }
             ]
         },
         {
