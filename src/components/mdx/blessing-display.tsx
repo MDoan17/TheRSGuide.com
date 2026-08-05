@@ -128,5 +128,5 @@ function BlessingDisplay({ tier, tasks }: BlessingDisplayProps) {
   )
 }
 
-export { BlessingDisplay }
-export type { BlessingDisplayProps }
+export { BlessingDetailView, BlessingDisplay }
+export type { BlessingDisplayProps, BlessingItem }

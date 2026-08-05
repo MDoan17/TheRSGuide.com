@@ -1,5 +1,11 @@
 import { RotateCcw } from 'lucide-react'
+import { useState } from 'react'
 
+import {
+  BlessingDetailView,
+  type BlessingItem,
+} from '@/components/mdx/blessing-display'
+import { Drawer, DrawerContent } from '@/components/ui/drawer'
 import blessingData from '@/data/leagues-ii/blessings.json'
 import {
   BLESSING_TIERS,
@@ -38,6 +44,8 @@ export function BlessingSelector({
   onChange,
   selectedBlessings,
 }: BlessingSelectorProps) {
+  const [selectedBlessingDetails, setSelectedBlessingDetails] =
+    useState<BlessingItem | null>(null)
   const resolvedCount = getResolvedBlessingCount(selectedBlessings)
   const selectedCount = Object.keys(selectedBlessings).length
 
@@ -83,6 +91,9 @@ export function BlessingSelector({
           image: knownBlessing?.image,
           isSelected,
           label: `Tier ${tier} · ${label}`,
+          onViewDetails: knownBlessing
+            ? () => setSelectedBlessingDetails(knownBlessing)
+            : undefined,
           readOnly: true,
           statusLabel: label,
         }
@@ -101,6 +112,9 @@ export function BlessingSelector({
         image: knownBlessing?.image,
         isSelected,
         label: `Tier ${tier} · ${label}`,
+        onViewDetails: knownBlessing
+          ? () => setSelectedBlessingDetails(knownBlessing)
+          : undefined,
         onSelect: () =>
           toggleBlessing(tier as SelectableBlessingTier, path.id as BlessingId),
         statusLabel: label,
@@ -146,6 +160,20 @@ export function BlessingSelector({
         God Tier rule: 2+ Chaos → Chaos · 2+ Balance or one of each → Balance ·
         2+ Order → Order
       </p>
+
+      <Drawer
+        direction="right"
+        onOpenChange={(open) => {
+          if (!open) setSelectedBlessingDetails(null)
+        }}
+        open={Boolean(selectedBlessingDetails)}
+      >
+        <DrawerContent>
+          {selectedBlessingDetails && (
+            <BlessingDetailView blessing={selectedBlessingDetails} />
+          )}
+        </DrawerContent>
+      </Drawer>
     </section>
   )
 }
