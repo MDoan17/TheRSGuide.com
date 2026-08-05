@@ -35,7 +35,7 @@ const RelicDetailView: React.FC<{ relic: RelicItem }> = ({ relic }) => {
             <DrawerHeader className="min-h-54 max-h-[30vh] grow">
                 <DrawerTitle className="text-2xl text-center">{relic.name}</DrawerTitle>
                 <DrawerDescription className="text-center italic">{relic.tagline}</DrawerDescription>
-                <div className="flex items-center justify-center gap-4 min-h-0">
+                <div className="relics-image-container">
                     <img src={relic.image} alt={relic.name} className="w-32 min-w-0 min-h-14 max-h-full object-scale-down" />
                     {(relic.skillSolves.length > 0) && (
                         <div className="flex flex-wrap justify-center gap-2 max-h-32 basis-[fit-content]">
