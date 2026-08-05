@@ -63,9 +63,11 @@ function MatrixCell({
     ? { backgroundColor: cell.backgroundColor }
     : undefined
   const cellClassName = cn(
-    'group relative flex h-full w-full touch-manipulation select-none flex-col items-center justify-center px-2 py-3',
-    cell.onViewDetails ? 'gap-1' : 'gap-2',
-    isBlessing ? 'min-h-36 text-white' : 'min-h-36',
+    'group relative flex w-full touch-manipulation select-none flex-col items-center',
+    cell.onViewDetails
+      ? 'min-h-28 flex-1 justify-end gap-0.5 px-2 pt-2 pb-1'
+      : 'h-full min-h-36 justify-center gap-2 px-2 py-3',
+    isBlessing && 'text-white',
     isBlessing &&
       isInteractive &&
       'transition-[filter,outline-color] duration-150 hover:brightness-125',
@@ -225,7 +227,7 @@ function MatrixCell({
       {cell.onViewDetails && (
         <button
           aria-label={cell.detailsAriaLabel ?? `View details for ${cell.statusLabel ?? cell.label}`}
-          className="mx-2 mb-2 h-5 rounded-sm border border-white/35 bg-black/15 px-2 text-[9px] font-bold uppercase leading-none tracking-[0.12em] text-white/80 transition-colors hover:border-white/60 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary"
+          className="mx-2 mb-2 flex h-9 items-center justify-center rounded-md border border-primary/70 bg-card/80 px-3 text-[10px] font-bold uppercase leading-none tracking-[0.1em] text-card-foreground shadow-sm transition-colors hover:border-primary hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 focus-visible:ring-offset-transparent"
           onClick={(event) => {
             event.currentTarget.blur()
             cell.onViewDetails?.()

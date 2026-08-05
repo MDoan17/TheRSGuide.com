@@ -143,5 +143,5 @@ function RelicDisplay({ tier, points }: RelicDisplayProps) {
       );
 };
 
-export { RelicDisplay };
-export type { RelicDisplayProps };
+export { RelicDetailView, RelicDisplay };
+export type { RelicDisplayProps, RelicItem };
