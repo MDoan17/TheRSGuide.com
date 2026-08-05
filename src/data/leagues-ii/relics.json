@@ -483,7 +483,7 @@
             "name": "Production Master",
             "tagline": "Processes production items at once and supplies skilling conveniences through the Brooch of the Spirits.",
             "tier": 0,
-            "image": "https://media.thersguide.com/leagues-2/relics/unknown.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/production_master.png",
             "effects": [
                 "Grants the Brooch of the Spirits.",
                 "Various production activities have their items processed at once.",
@@ -503,7 +503,7 @@
             "name": "Antiquarian",
             "tagline": "Unlocks Archaeology relics and streamlines materials, artefacts, collections and excavation rewards.",
             "tier": 0,
-            "image": "https://media.thersguide.com/leagues-2/relics/unknown.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/antiquarian.png",
             "effects": [
                 "All Archaeology relics are available to use after completing the Archaeology tutorial.",
                 "Archaeology materials are automatically sent to the material storage, or to the bank if it's full.",
@@ -526,7 +526,7 @@
             "name": "Naragi Edict",
             "tagline": "Grants a reusable Sliver of Edicts with healing, combat boosts, revival and pocket-slot bonuses.",
             "tier": 0,
-            "image": "https://media.thersguide.com/leagues-2/relics/unknown.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/naragi_edict.png",
             "effects": [
                 "Grants you the Sliver of Edicts.",
                 "The sliver can be activated from the inventory for 16.8 seconds.",
