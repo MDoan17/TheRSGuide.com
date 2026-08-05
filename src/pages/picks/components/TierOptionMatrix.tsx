@@ -29,6 +29,7 @@ export type TierOptionMatrixCell = {
   onViewDetails?: () => void
   onSelect?: () => void
   readOnly?: boolean
+  relicState?: 'rejuvenated-available' | 'rejuvenated-selected'
   statusLabel?: string
 }
 
@@ -80,9 +81,11 @@ function MatrixCell({
     !isBlessing &&
       'transition-colors duration-150 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset',
     !isBlessing &&
+      !cell.relicState &&
       (cell.isSelected
         ? 'bg-primary text-primary-foreground'
         : 'bg-card/60 text-muted-foreground hover:bg-accent hover:text-accent-foreground active:bg-accent active:text-accent-foreground'),
+    !isBlessing && cell.relicState && 'bg-transparent text-current',
   )
   const contentOpacityClassName =
     isBlessing && !cell.isSelected
@@ -113,7 +116,7 @@ function MatrixCell({
             className={cn(
               'w-auto max-w-full object-contain transition-opacity',
               'h-20',
-              !cell.isSelected &&
+              !cell.isSelected && !cell.relicState &&
                 (isBlessing
                   ? 'opacity-40 group-hover:opacity-75'
                   : 'opacity-65 group-hover:opacity-100 group-active:opacity-100'),
@@ -143,6 +146,8 @@ function MatrixCell({
             : 'text-[9px] tracking-[0.1em]',
           isBlessing
             ? contentOpacityClassName
+            : cell.relicState
+              ? 'text-current/75'
             : cell.isSelected
               ? 'text-primary-foreground/70'
               : 'text-muted-foreground group-hover:text-accent-foreground/70 group-active:text-accent-foreground/70',
@@ -185,6 +190,14 @@ function MatrixCell({
       className={cn(
         'relative flex flex-col border-r border-b border-border',
         isSpecial && 'border-x-2 border-x-primary/70',
+        !isBlessing &&
+          !cell.relicState &&
+          cell.isSelected &&
+          'bg-primary',
+        cell.relicState === 'rejuvenated-available' &&
+          'relic-rejuvenated-available',
+        cell.relicState === 'rejuvenated-selected' &&
+          'relic-rejuvenated-selected',
         isBlessing &&
           cell.isSelected &&
           'z-10 outline-2 -outline-offset-2 outline-primary',
