@@ -36,7 +36,6 @@ const RelicDetailView: React.FC<{ relic: RelicItem }> = ({ relic }) => {
                 <DrawerTitle className="text-2xl text-center">{relic.name}</DrawerTitle>
                 <DrawerDescription className="text-center italic">{relic.tagline}</DrawerDescription>
                 <div className="relics-image-container">
-                    <img src={relic.image} alt={relic.name} className="w-32 min-w-0 min-h-14 max-h-full object-scale-down" />
                     {(relic.skillSolves.length > 0) && (
                         <div className="flex flex-wrap justify-center gap-2 max-h-32 basis-[fit-content]">
                             {relic.skillSolves.map((solve) => (
@@ -47,6 +46,7 @@ const RelicDetailView: React.FC<{ relic: RelicItem }> = ({ relic }) => {
                             ))}
                         </div>
                     )}
+                    <img src={relic.image} alt={relic.name} className="w-32 min-w-0 min-h-14 max-h-full object-scale-down" />
                 </div>
             </DrawerHeader>
             <div className="px-4 flex flex-col gap-4 max-h-[calc(100vh-13.5rem)]">

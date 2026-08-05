@@ -7,9 +7,10 @@
 
 .relics-image-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     align-items: center;
     justify-content: center;
+    margin: auto;
     gap: 1rem;
     min-height: 0;
 }
@@ -25,11 +26,10 @@
      }
 
      .relics-image-container {
-        margin-top: 1rem;
         flex-direction: column;
         align-items: center;
          
-        & > img {
+        & > :nth-child(2) {
             display: none;
         }
      }
