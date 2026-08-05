@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
+  readonly VITE_DEPLOYMENT_ROLE?: 'primary' | 'failover'
   readonly VITE_HOMEPAGE_MODE?: string
   readonly VITE_LEAGUES_START_DATE?: string
   readonly VITE_LEAGUES_END_DATE?: string
