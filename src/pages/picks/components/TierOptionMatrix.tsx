@@ -20,11 +20,13 @@ export type TierOptionMatrixCell = {
   ariaLabel: string
   backgroundColor?: string
   description: string
+  detailsAriaLabel?: string
   fallback: string
   id: string
   image?: string
   isSelected: boolean
   label: string
+  onViewDetails?: () => void
   onSelect?: () => void
   readOnly?: boolean
   statusLabel?: string
@@ -61,7 +63,8 @@ function MatrixCell({
     ? { backgroundColor: cell.backgroundColor }
     : undefined
   const cellClassName = cn(
-    'group relative flex h-full w-full touch-manipulation select-none flex-col items-center justify-center gap-2 px-2 py-3',
+    'group relative flex h-full w-full touch-manipulation select-none flex-col items-center justify-center px-2 py-3',
+    cell.onViewDetails ? 'gap-1' : 'gap-2',
     isBlessing ? 'min-h-36 text-white' : 'min-h-36',
     isBlessing &&
       isInteractive &&
@@ -72,9 +75,6 @@ function MatrixCell({
     isBlessing &&
       isInteractive &&
       'focus-visible:z-20 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary',
-    isBlessing &&
-      cell.isSelected &&
-      'z-10 outline-2 -outline-offset-2 outline-primary',
     !isBlessing &&
       'transition-colors duration-150 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset',
     !isBlessing &&
@@ -181,9 +181,13 @@ function MatrixCell({
   return (
     <div
       className={cn(
-        'border-r border-b border-border',
+        'relative flex flex-col border-r border-b border-border',
         isSpecial && 'border-x-2 border-x-primary/70',
+        isBlessing &&
+          cell.isSelected &&
+          'z-10 outline-2 -outline-offset-2 outline-primary',
       )}
+      style={cellStyle}
     >
       <Tooltip open={isTooltipOpen}>
         <TooltipTrigger
@@ -218,6 +222,19 @@ function MatrixCell({
           </div>
         </TooltipContent>
       </Tooltip>
+      {cell.onViewDetails && (
+        <button
+          aria-label={cell.detailsAriaLabel ?? `View details for ${cell.statusLabel ?? cell.label}`}
+          className="mx-2 mb-2 h-5 rounded-sm border border-white/35 bg-black/15 px-2 text-[9px] font-bold uppercase leading-none tracking-[0.12em] text-white/80 transition-colors hover:border-white/60 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary"
+          onClick={(event) => {
+            event.currentTarget.blur()
+            cell.onViewDetails?.()
+          }}
+          type="button"
+        >
+          Details
+        </button>
+      )}
     </div>
   )
 }

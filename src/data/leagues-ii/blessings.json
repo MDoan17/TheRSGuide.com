@@ -180,6 +180,7 @@
             "tagline": "Deal more damage at the cost of maximum life points and armour.",
             "path": "Chaos",
             "tier": 5,
+            "image": "https://media.thersguide.com/leagues-2/blessings/havoc_born.png",
             "effects": [
                 "Your damage is increased by 20%.",
                 "Your maximum life points are reduced by 25%.",
@@ -194,6 +195,7 @@
             "tagline": "Gain combat stats for each relic alignment you have chosen.",
             "path": "Balance",
             "tier": 5,
+            "image": "https://media.thersguide.com/leagues-2/blessings/true_equilibrium.png",
             "effects": [
                 "Gain 75 base ability damage for each relic alignment you have chosen.",
                 "Gain 50 armour for each relic alignment you have chosen.",
@@ -211,6 +213,7 @@
             "tagline": "Increase base ability damage in exchange for combat ultimates.",
             "path": "Order",
             "tier": 5,
+            "image": "https://media.thersguide.com/leagues-2/blessings/higher_power.png",
             "effects": [
                 "Your base ability damage is increased by 30%.",
                 "You lose access to the Berserk, Death's Swiftness, Living Death, and Sunshine abilities."
@@ -220,10 +223,11 @@
             ]
         },
         {
-            "name": "Unholy Ritual",
+            "name": "Unholy Critual",
             "tagline": "Convert excess critical strike chance into damage and unleash empowered Infernos of Zamorak.",
             "path": "Chaos",
             "tier": 6,
+            "image": "https://media.thersguide.com/leagues-2/blessings/unholy_critual.png",
             "effects": [
                 "Gain +15% critical strike chance.",
                 "Your critical strike chance is capped at 50%.",
@@ -241,6 +245,7 @@
             "tagline": "Extend damage-over-time abilities and trigger stronger Grasps of Guthix.",
             "path": "Balance",
             "tier": 6,
+            "image": "https://media.thersguide.com/leagues-2/blessings/tearing_thorns.png",
             "effects": [
                 "Damage-over-time abilities last 100% longer.",
                 "Every 5th hit of a damage-over-time ability triggers a Grasp of Guthix.",
@@ -256,6 +261,7 @@
             "tagline": "Basic attacks unleash multiple healing Lights of Saradomin that scale with prayer bonus.",
             "path": "Order",
             "tier": 6,
+            "image": "https://media.thersguide.com/leagues-2/blessings/lord_of_light.png",
             "effects": [
                 "Your basic attacks trigger 5 Lights of Saradomin at random tiles near your target, each damaging up to 8 targets within 1 tile. 14.4s cooldown.",
                 "Lights of Saradomin deal 2% increased damage for each point of prayer bonus you have.",
@@ -271,6 +277,7 @@
             "tagline": "Empower Inferno of Zamorak, Grasp of Guthix, and Light of Saradomin.",
             "path": "Chaos",
             "tier": 7,
+            "image": "https://media.thersguide.com/leagues-2/blessings/perfidious.png",
             "effects": [
                 "Empowers Inferno of Zamorak, Grasp of Guthix, and Light of Saradomin.",
                 "Inferno of Zamorak activation chance is increased by 5x.",
@@ -286,6 +293,7 @@
             "tagline": "Greatly strengthen poison and temporarily remove enemy poison immunity.",
             "path": "Balance",
             "tier": 7,
+            "image": "https://media.thersguide.com/leagues-2/blessings/envenomed.png",
             "effects": [
                 "Poison damage is increased by 50%, plus an additional 2% per Herblore level.",
                 "Damaging an enemy disables their poison immunity for 30s."
@@ -299,6 +307,7 @@
             "tagline": "Continuously generate adrenaline.",
             "path": "Order",
             "tier": 7,
+            "image": "https://media.thersguide.com/leagues-2/blessings/tempered_heart.png",
             "effects": [
                 "Generate 6% adrenaline every 1.2s."
             ],
@@ -311,6 +320,7 @@
             "tagline": "Equipped combat items count as additional pieces towards their set effects.",
             "path": "Chaos",
             "tier": 8,
+            "image": "https://media.thersguide.com/leagues-2/blessings/chaotic_insight.png",
             "effects": [
                 "Each combat equipment item counts as 2 additional pieces towards its set effect."
             ],
@@ -323,6 +333,7 @@
             "tagline": "Store augmented-equipment gizmos and double eligible combat perk ranks.",
             "path": "Balance",
             "tier": 8,
+            "image": "https://media.thersguide.com/leagues-2/blessings/power_archive.png",
             "effects": [
                 "Grants the Automaton Control Bot.",
                 "Stores up to 20 weapon or armour gizmos, granting their effects while wearing augmented equipment.",
@@ -337,6 +348,7 @@
             "tagline": "Treat your equipped weapons as tier 120.",
             "path": "Order",
             "tier": 8,
+            "image": "https://media.thersguide.com/leagues-2/blessings/genesis_essence.png",
             "effects": [
                 "Your equipped weapons are treated as tier 120."
             ],
