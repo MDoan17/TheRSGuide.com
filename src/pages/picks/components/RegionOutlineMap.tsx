@@ -29,14 +29,16 @@ type CanvasSize = {
 const GUARANTEED_REGION_ID_SET = new Set<string>(GUARANTEED_REGION_IDS)
 type RegionOutlineMapProps = {
   onSelectedRegionIdsChange: (regionIds: string[]) => void
-  onSelectionDetailsChange: (regions: RegionSelection[]) => void
+  onSelectionDetailsChange?: (regions: RegionSelection[]) => void
   selectedRegionIds: string[]
+  showHeader?: boolean
 }
 
 export function RegionOutlineMap({
   onSelectedRegionIdsChange,
   onSelectionDetailsChange,
   selectedRegionIds,
+  showHeader = true,
 }: RegionOutlineMapProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mapBoundsRef = useRef<DrawBounds | null>(null)
@@ -74,10 +76,16 @@ export function RegionOutlineMap({
   )
   const selectedRegions = useMemo(
     () =>
-      selectedRegionIds.map((regionId) => displayRegionById.get(regionId) ?? {
-        id: regionId,
-        name: regionId,
-        regionIds: [regionId],
+      selectedRegionIds.map((regionId) => {
+        const leagueRegion = LEAGUE_OPTIONS.regions.find(
+          (region) => region.id === regionId,
+        )
+        return displayRegionById.get(regionId) ?? {
+          color: leagueRegion?.color,
+          id: regionId,
+          name: leagueRegion?.label ?? regionId,
+          regionIds: leagueRegion?.regionIds ?? [regionId],
+        }
       }),
     [displayRegionById, selectedRegionIds],
   )
@@ -97,6 +105,8 @@ export function RegionOutlineMap({
   }, [displayRegionById, hoveredRegionId, selectedRegionIds])
 
   useEffect(() => {
+    if (!onSelectionDetailsChange) return
+
     onSelectionDetailsChange(
       selectedRegions.map(({ color, id, name }) => ({ color, id, name })),
     )
@@ -215,11 +225,13 @@ export function RegionOutlineMap({
 
   return (
     <section>
-      <RegionPickerHeader
-        canReset={selectedRegionIds.length !== GUARANTEED_REGION_IDS.length}
-        onReset={() => onSelectedRegionIdsChange([...GUARANTEED_REGION_IDS])}
-        selectedCount={optionalRegionCount}
-      />
+      {showHeader && (
+        <RegionPickerHeader
+          canReset={selectedRegionIds.length !== GUARANTEED_REGION_IDS.length}
+          onReset={() => onSelectedRegionIdsChange([...GUARANTEED_REGION_IDS])}
+          selectedCount={optionalRegionCount}
+        />
+      )}
       <div className="grid lg:grid-cols-[18rem_minmax(0,1fr)]">
         <SelectedRegionList regions={selectedRegions} />
 
