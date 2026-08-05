@@ -44,7 +44,7 @@
     { "id": "the-devourers-nexus", "item": "The Devourer's Nexus", "tier": "95", "style": "Necromancy", "source": "Amascut, the Devourer", "url": "https://runescape.wiki/w/Devourer%27s_nexus" },
     { "id": "shard-of-genesis-essence", "item": "Shard of Genesis Essence", "tier": "100", "style": "Upgrade Item", "source": "Amascut, the Devourer", "url": "https://runescape.wiki/w/Shard_of_Genesis_Essence", "info": "Used to Upgrade a Tier 95 Legendary weapon to a Tier 100 Legendary weapon." },
     { "id": "camel-staff", "item": "Camel Staff", "tier": "85", "style": "Magic", "source": "Slayer", "url": "https://runescape.wiki/w/Camel_staff" },
-    { "id": "nightmare-gauntlets", "item": "Nightmare Gauntlets", "tier": "85", "style": "Range", "source": "The Magister", "url": "https://runescape.wiki/w/Nightmare_gauntlets" },
+    { "id": "gloves-of-passage", "item": "Gloves of Passage", "tier": "85", "style": "Melee", "source": "The Magister", "url": "https://runescape.wiki/w/Gloves_of_passage" },
     { "id": "khopesh-of-the-kharidian", "item": "Khopesh of the Kharidian", "tier": "82", "style": "Melee", "source": "The Magister", "url": "https://runescape.wiki/w/Khopesh_of_the_Kharidian", "info": "Off-hand equivalent available." },
     { "id": "khopesh-of-tumeken", "item": "Khopesh of Tumeken", "tier": "92", "style": "Melee", "source": "The Magister", "url": "https://runescape.wiki/w/Khopesh_of_Tumeken" },
     { "id": "khopesh-of-elidinis", "item": "Khopesh of Elidinis", "tier": "92", "style": "Melee", "source": "The Magister", "url": "https://runescape.wiki/w/Khopesh_of_Elidinis", "info": "Off-hand equivalent of the Khopesh of Tumeken."},

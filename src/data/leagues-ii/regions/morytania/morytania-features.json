@@ -7,7 +7,7 @@
     { "key": "feature", "header": "Feature", "link": { "hrefKey": "url", "external": true }, "hidden": true }
   ],
   "rows": [
-    { "id": "ectofungus", "feature": "Ectofungus", "url": "https://runescape.wiki/w/Ectofungus" },
+    { "id": "ectofuntus", "feature": "Ectofuntus", "url": "https://runescape.wiki/w/Ectofuntus" },
     { "id": "slayer-tower", "feature": "Slayer Tower", "url": "https://runescape.wiki/w/Slayer_Tower" },
     { "id": "werewolf-skullball", "feature": "Werewolf Skullball", "url": "https://runescape.wiki/w/Werewolf_Skullball" },
     { "id": "werewolf-agility-course", "feature": "Werewolf Agility Course", "url": "https://runescape.wiki/w/Werewolf_Agility_Course" },
