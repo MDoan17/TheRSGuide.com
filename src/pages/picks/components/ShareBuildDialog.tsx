@@ -11,6 +11,7 @@ type ShareBuildDialogProps = {
   isSpeculativeRelics: boolean
   onClose: () => void
   selectedBlessings: BlessingSelections
+  selectedRejuvenatedRelic: string
   selectedRegions: RegionSelection[]
   selectedRelics: Record<number, string>
 }
@@ -20,6 +21,7 @@ export function ShareBuildDialog({
   isSpeculativeRelics,
   onClose,
   selectedBlessings,
+  selectedRejuvenatedRelic,
   selectedRegions,
   selectedRelics,
 }: ShareBuildDialogProps) {
@@ -38,6 +40,7 @@ export function ShareBuildDialog({
     buildName,
     isSpeculativeRelics,
     selectedBlessings,
+    selectedRejuvenatedRelic,
     selectedRegions,
     selectedRelics,
   })

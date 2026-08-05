@@ -8,6 +8,7 @@ import {
   RELIC_TIERS,
   isBlessingTreeComplete,
   getInitialRegionSelections,
+  getRejuvenatedRelicTier,
   loadPicksState,
   savePicksState,
   type BlessingSelections,
@@ -32,6 +33,9 @@ export default function PicksPage() {
   const [selectedRelics, setSelectedRelics] = useState<Record<number, string>>(
     initialPicksState.selectedRelics,
   )
+  const [selectedRejuvenatedRelic, setSelectedRejuvenatedRelic] = useState(
+    initialPicksState.selectedRejuvenatedRelic,
+  )
   const [selectedRegionIds, setSelectedRegionIds] = useState<string[]>(
     initialPicksState.selectedRegionIds,
   )
@@ -45,6 +49,7 @@ export default function PicksPage() {
     setIsSpeculativeRelics(state.isSpeculativeRelics)
     setSelectedBlessings(state.selectedBlessings)
     setSelectedRelics(state.selectedRelics)
+    setSelectedRejuvenatedRelic(state.selectedRejuvenatedRelic)
     setSelectedRegionIds(state.selectedRegionIds)
     setSelectedRegions(getInitialRegionSelections(state.selectedRegionIds))
     setIsShareDialogOpen(false)
@@ -53,19 +58,25 @@ export default function PicksPage() {
   useSharedBuildImport(importSharedBuild)
 
   const selectedRelicCount = Object.keys(selectedRelics).length
+  const hasRejuvenatedRelic = Boolean(
+    getRejuvenatedRelicTier(selectedRelics, isSpeculativeRelics),
+  )
   const selectedOptionalRegionCount = selectedRegionIds.filter(
     (regionId) => !GUARANTEED_REGION_IDS.includes(regionId),
   ).length
   const completedSharePicks =
     selectedRelicCount +
+    (selectedRejuvenatedRelic ? 1 : 0) +
     selectedOptionalRegionCount +
     Object.keys(selectedBlessings).length
   const requiredSharePicks =
     RELIC_TIERS.length +
+    (hasRejuvenatedRelic ? 1 : 0) +
     OPTIONAL_REGION_PICK_COUNT +
     BLESSING_SELECTION_COUNT
   const isShareReady =
     selectedRelicCount === RELIC_TIERS.length &&
+    (!hasRejuvenatedRelic || Boolean(selectedRejuvenatedRelic)) &&
     selectedOptionalRegionCount === OPTIONAL_REGION_PICK_COUNT &&
     isBlessingTreeComplete(selectedBlessings)
 
@@ -74,10 +85,11 @@ export default function PicksPage() {
       buildName,
       isSpeculativeRelics,
       selectedBlessings,
+      selectedRejuvenatedRelic,
       selectedRegionIds,
       selectedRelics,
     })
-  }, [buildName, isSpeculativeRelics, selectedBlessings, selectedRegionIds, selectedRelics])
+  }, [buildName, isSpeculativeRelics, selectedBlessings, selectedRegionIds, selectedRejuvenatedRelic, selectedRelics])
 
   return (
     <div className="leagues-picker">
@@ -85,7 +97,9 @@ export default function PicksPage() {
         <RelicSelector
           isSpeculative={isSpeculativeRelics}
           onChange={setSelectedRelics}
+          onRejuvenatedRelicChange={setSelectedRejuvenatedRelic}
           onSpeculativeChange={setIsSpeculativeRelics}
+          selectedRejuvenatedRelic={selectedRejuvenatedRelic}
           selectedRelics={selectedRelics}
         />
 
@@ -118,6 +132,7 @@ export default function PicksPage() {
           isSpeculativeRelics={isSpeculativeRelics}
           onClose={() => setIsShareDialogOpen(false)}
           selectedBlessings={selectedBlessings}
+          selectedRejuvenatedRelic={selectedRejuvenatedRelic}
           selectedRegions={selectedRegions}
           selectedRelics={selectedRelics}
         />
