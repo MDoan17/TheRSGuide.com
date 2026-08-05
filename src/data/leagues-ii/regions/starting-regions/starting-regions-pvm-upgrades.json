@@ -13,6 +13,10 @@
     { "key": "source", "header": "Source", "filter": true, "width": "md", "wrap": false }
   ],
   "rows": [
+    { "id": "deathdealer-robe-armour", "item": "Deathdealer Robe Armour", "tier": "90", "style": "Necromancy", "source": "City of Um", "url": "https://runescape.wiki/w/Deathdealer_robe_armour", "info": "This is available from Tier 70 -> Tier 90 and will require Hermodic Plates from Hermod & Player-owned Farm Wool from Kandarin or Golden Touch, Algarum Thread from the Wilderness OR Kandarin, and Subjugation equipment from Asgarnia."},
+    { "id": "deathwarden-robe-armour", "item": "Deathwarden Robe Armour", "tier": "90", "style": "Necromancy", "source": "City of Um", "url": "https://runescape.wiki/w/Deathwarden_robe_armour", "info": "This is available from Tier 10 -> Tier 90 and Tier 50+ will require Player-owned Farm Wool from Kandarin or Golden Touch, Algarum Thread from the Wilderness OR Kandarin, and Subjugation equipment from Asgarnia."},
+    { "id": "death-guard", "item": "Death Guard", "tier": "90", "style": "Necromancy", "source": "City of Um", "url": "https://runescape.wiki/w/death_guard", "info": "This is available from Tier 10 -> Tier 90 and will require bars from Bronze -> Bane"},
+    { "id": "skull-lantern", "item": "Skull Lantern", "tier": "90", "style": "Necromancy", "source": "City of Um", "url": "https://runescape.wiki/w/skull_lantern", "info": "This is available from Tier 10 -> Tier 90 and will require bars from Bronze -> Bane"},
     { "id": "bonecrusher-maul", "item": "Bonecrusher maul", "tier": "50", "style": "Melee", "source": "Ivar, King of Bones", "url": "https://runescape.wiki/w/Bonecrusher_maul" },
     { "id": "magic-skull-mask", "item": "Magic Skull Mask", "tier": "40", "style": "Magic", "source": "Ivar, King of Bones", "url": "https://runescape.wiki/w/Magic_skull_mask" },
     { "id": "dragon-claws", "item": "Dragon Claws", "tier": "60", "style": "Melee", "source": "Slayer", "url": "https://runescape.wiki/w/Dragon_claw" },
@@ -47,6 +51,7 @@
     { "id": "omni-guard", "item": "Omni guard", "tier": "95", "style": "Necromancy", "source": "Rasial, The First Necromancer", "url": "https://runescape.wiki/w/Omni_guard" },
     { "id": "soulbound-lantern", "item": "Soulbound lantern", "tier": "95", "style": "Necromancy", "source": "Rasial, The First Necromancer", "url": "https://runescape.wiki/w/Soulbound_lantern", "info": "This is the off-hand equivalent to Omni Guard."},
     { "id": "first-necromancers-equipment", "item": "First Necromancer's equipment", "tier": "95", "style": "Necromancy", "source": "Rasial, The First Necromancer", "url": "https://runescape.wiki/w/First_Necromancer%27s_equipment" },
-    { "id": "zorgoths-ring", "item": "Zorgoth's Ring", "tier": "N/A", "style": "Necromancy", "source": "Quests", "url": "https://runescape.wiki/w/Zorgoth's_Ring" }
+    { "id": "zorgoths-ring", "item": "Zorgoth's Ring", "tier": "N/A", "style": "Necromancy", "source": "Quests", "url": "https://runescape.wiki/w/Zorgoth's_Ring" },
+    { "id": "masterwork-melee-equipment", "item": "Masterwork Melee Equipment", "tier": "90", "style": "Melee", "source": "Smithing", "url": "https://runescape.wiki/w/Masterwork_melee_equipment#Armour","info":"This requires all of the main line bars from Bronze -> Elder Rune and requires 99 Smithing. Your region or relic picks will be important if you wish to acquire this." }
   ]
 }
