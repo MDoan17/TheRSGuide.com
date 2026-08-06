@@ -1,11 +1,7 @@
 import { RotateCcw } from 'lucide-react'
 import { useState } from 'react'
 
-import {
-  BlessingDetailView,
-  type BlessingItem,
-} from '@/components/mdx/blessing-display'
-import { Drawer, DrawerContent } from '@/components/ui/drawer'
+import type { BlessingItem } from '@/components/mdx/blessing-display'
 import blessingData from '@/data/leagues-ii/blessings.json'
 import {
   BLESSING_TIERS,
@@ -18,6 +14,7 @@ import {
 } from '@/lib/picks-state'
 import { LEAGUE_OPTIONS } from '../../../../shared/league-options'
 import { PickProgressBar } from './PickProgressBar'
+import { PickerBlessingDetailsDrawer } from './PickerBlessingDetailsDrawer'
 import {
   TierOptionMatrix,
   type TierOptionMatrixRow,
@@ -161,19 +158,12 @@ export function BlessingSelector({
         2+ Order → Order
       </p>
 
-      <Drawer
-        direction="right"
+      <PickerBlessingDetailsDrawer
+        blessing={selectedBlessingDetails}
         onOpenChange={(open) => {
           if (!open) setSelectedBlessingDetails(null)
         }}
-        open={Boolean(selectedBlessingDetails)}
-      >
-        <DrawerContent>
-          {selectedBlessingDetails && (
-            <BlessingDetailView blessing={selectedBlessingDetails} />
-          )}
-        </DrawerContent>
-      </Drawer>
+      />
     </section>
   )
 }
