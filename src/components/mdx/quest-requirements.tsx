@@ -1,11 +1,22 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useId, useMemo, useState } from "react";
 import { usePlayerData } from "@/components/player/player-data-context";
 import { usePlayerLookup } from "@/components/player/use-player-lookup";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { functionalStorageAllowed } from "@/lib/privacy-preferences";
 import { resolveAllRequirements, filterQuestTree, QuestTreeNode } from "@/utils/quest-requirements";
 import { SkillDrawer } from "./skill-drawer";
 import questsData from "@/data/quests.json";
+
+const ONLY_MISSING_STORAGE_KEY = "rs-guide-quest-requirements-only-missing";
+
+function loadOnlyMissing(): boolean {
+  if (typeof window === "undefined" || !functionalStorageAllowed()) return false;
+
+  return localStorage.getItem(ONLY_MISSING_STORAGE_KEY) === "true";
+}
 
 interface SkillRequirement {
   skill: string;
@@ -197,7 +208,20 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
   const { playerData, getSkillLevel, isQuestComplete } = usePlayerData();
   const [selectedSkill, setSelectedSkill] = useState<{ skill: string; level: number } | null>(null);
   const [expandAll, setExpandAll] = useState(false);
+  // Read after mount so the prerendered markup and the first client render agree
   const [showOnlyMissing, setShowOnlyMissing] = useState(false);
+  const onlyMissingId = useId();
+
+  useEffect(() => {
+    setShowOnlyMissing(loadOnlyMissing());
+  }, []);
+
+  const updateShowOnlyMissing = (next: boolean) => {
+    setShowOnlyMissing(next);
+    if (functionalStorageAllowed()) {
+      localStorage.setItem(ONLY_MISSING_STORAGE_KEY, String(next));
+    }
+  };
 
   // Look up quest data from JSON if questName is provided
   const questFromJson = useMemo(() => {
@@ -379,15 +403,17 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
 
             {/* Hide anything this player already has */}
             {canFilter && (
-              <label className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer select-none sm:ml-auto">
-                <input
-                  type="checkbox"
+              <Label
+                className="cursor-pointer text-muted-foreground sm:ml-auto"
+                htmlFor={onlyMissingId}
+              >
+                Only show what I'm missing
+                <Switch
                   checked={showOnlyMissing}
-                  onChange={(event) => setShowOnlyMissing(event.target.checked)}
-                  className="h-4 w-4 rounded border-border accent-primary cursor-pointer"
+                  id={onlyMissingId}
+                  onCheckedChange={updateShowOnlyMissing}
                 />
-                Only show requirements I don't meet
-              </label>
+              </Label>
             )}
           </div>
 
