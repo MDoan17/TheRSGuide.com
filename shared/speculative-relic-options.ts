@@ -39,7 +39,7 @@ const SPECULATIVE_LAYOUT: readonly (readonly SpeculativeSlot[])[] = [
   ],
   [
     { relicName: 'Production Master' },
-    { label: 'Unknown relic' },
+    { relicName: 'Clue Connoisseur' },
     { relicName: 'Devout' },
   ],
   [
@@ -48,7 +48,7 @@ const SPECULATIVE_LAYOUT: readonly (readonly SpeculativeSlot[])[] = [
   ],
   [
     { relicName: 'Naragi Edict' },
-    { label: 'Unknown relic' },
+    { relicName: 'Infernal Fire' },
     { relicName: 'Icyenic Faith' },
   ],
 ] as const

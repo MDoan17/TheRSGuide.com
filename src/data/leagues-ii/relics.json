@@ -568,6 +568,44 @@
             ],
             "skillSolves": [
             ]
+        },
+        {
+            "name": "Clue Connoisseur",
+            "tagline": "Streamlines Treasure Trails with clue storage, teleports, extra rewards and unlimited sealed clues.",
+            "tier": 0,
+            "image": "https://media.thersguide.com/leagues-2/relics/clue_connoisseur.png",
+            "effects": [
+                "Grants you Uri's briefcase, which can store sealed clue scrolls and caskets and allows you to teleport to any hidey-holes available in your unlocked areas.",
+                "Unlocks the Globetrotter's outfit.",
+                "Receive 3x Treasure Trail points from completing clues.",
+                "Receive an extra casket when completing clues.",
+                "When starting a new clue, it will have the minimum number of steps required to complete it.",
+                "When opening treasure caskets, you will receive the maximum number of loot drops.",
+                "All hidey-holes act as being full for the Globetrotter outfit effect.",
+                "You have 2x the chance of receiving a sealed clue scroll.",
+                "You can find an unlimited number of sealed clues."
+            ],
+            "notes": [
+            ],
+            "skillSolves": [
+            ]
+        },
+        {
+            "name": "Infernal Fire",
+            "tagline": "Grants an Avernic star that applies Death Mark with every combat style and provides pocket-slot bonuses.",
+            "tier": 0,
+            "image": "https://media.thersguide.com/leagues-2/relics/infernal_fire.png",
+            "effects": [
+                "Grants you an Avernic star.",
+                "While in your inventory or worn in your pocket slot, all combat styles trigger Death Mark 100% of the time.",
+                "Death Mark instantly kills a marked target once it reaches 20% of its lifepoints.",
+                "When an enemy is killed by Death Mark, you gain 5% adrenaline.",
+                "The Avernic star can be placed in your pocket slot and offers +18.7 melee, ranged, magic and necromancy damage bonus, and +15 Prayer bonus."
+            ],
+            "notes": [
+            ],
+            "skillSolves": [
+            ]
         }
     ],
     "Passives": [
