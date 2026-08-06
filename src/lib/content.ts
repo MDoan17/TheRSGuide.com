@@ -5,6 +5,7 @@ import {
   type GuideDocumentSource,
 } from '@/lib/guide-catalog'
 import { createGuideSearchIndex } from '@/lib/guide-search'
+import { preloadGuideDependencies } from '@/lib/guide-prefetch'
 import { isGuideSectionEnabled } from '@/lib/homepage-mode'
 
 type MdxModule = {
@@ -48,7 +49,12 @@ const guideLoaders = new Map(
 )
 
 export const preloadGuide = (path: string) => {
-  guideLoaders.get(path)?.().catch(() => {})
+  const loader = guideLoaders.get(path)
+  if (!loader) return Promise.resolve()
+  return Promise.all([
+    loader(),
+    preloadGuideDependencies(path),
+  ]).then(() => undefined)
 }
 
 export const guideCatalog = createGuideCatalog({

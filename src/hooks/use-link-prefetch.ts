@@ -1,28 +1,12 @@
 import { useEffect } from "react"
 
 import { preloadGuide } from "@/lib/content"
+import { guidePrefetchAllowed } from "@/lib/guide-prefetch"
 
 const IMMEDIATE_INTENT_EVENTS = ["focusin", "touchstart"] as const
 const HOVER_DWELL_MS = 60
-const SLOW_CONNECTION = /(^| )(slow-)?2g$/
 
-type NetworkInformation = {
-  effectiveType?: string
-  saveData?: boolean
-}
-
-const networkInformation = (): NetworkInformation | undefined =>
-  (navigator as Navigator & { connection?: NetworkInformation }).connection
-
-const prefetchAllowed = () => {
-  const connection = networkInformation()
-  if (!connection) return true
-  if (connection.saveData) return false
-  return !SLOW_CONNECTION.test(connection.effectiveType ?? "")
-}
-
-const guidePathFromEvent = (event: Event): string | null => {
-  const target = event.target
+const guidePathFromTarget = (target: EventTarget | null): string | null => {
   if (!(target instanceof Element)) return null
 
   const anchor = target.closest("a")
@@ -46,9 +30,19 @@ const guidePathFromEvent = (event: Event): string | null => {
     : url.pathname.replace(/\/+$/, "")
 }
 
+const guidePathFromEvent = (event: Event) => guidePathFromTarget(event.target)
+
+const shouldCancelDwell = (
+  pendingPath: string | null,
+  leavingPath: string | null,
+  enteringPath: string | null,
+) => pendingPath !== null
+  && leavingPath === pendingPath
+  && enteringPath !== pendingPath
+
 function useLinkPrefetch() {
   useEffect(() => {
-    if (!prefetchAllowed()) return
+    if (!guidePrefetchAllowed()) return
 
     const prefetched = new Set<string>()
     let pendingPath: string | null = null
@@ -57,7 +51,7 @@ function useLinkPrefetch() {
     const prefetch = (path: string) => {
       if (prefetched.has(path)) return
       prefetched.add(path)
-      preloadGuide(path)
+      void preloadGuide(path).catch(() => prefetched.delete(path))
     }
 
     const cancelDwell = () => {
@@ -86,13 +80,23 @@ function useLinkPrefetch() {
       if (path) prefetch(path)
     }
 
+    const handlePointerOut = (event: PointerEvent) => {
+      if (shouldCancelDwell(
+        pendingPath,
+        guidePathFromTarget(event.target),
+        guidePathFromTarget(event.relatedTarget),
+      )) cancelDwell()
+    }
+
     document.addEventListener("pointerover", handleHover, { passive: true })
+    document.addEventListener("pointerout", handlePointerOut, { passive: true })
     for (const type of IMMEDIATE_INTENT_EVENTS) {
       document.addEventListener(type, handleIntent, { passive: true })
     }
     return () => {
       cancelDwell()
       document.removeEventListener("pointerover", handleHover)
+      document.removeEventListener("pointerout", handlePointerOut)
       for (const type of IMMEDIATE_INTENT_EVENTS) {
         document.removeEventListener(type, handleIntent)
       }
@@ -100,4 +104,4 @@ function useLinkPrefetch() {
   }, [])
 }
 
-export { useLinkPrefetch }
+export { shouldCancelDwell, useLinkPrefetch }

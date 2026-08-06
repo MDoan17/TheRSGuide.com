@@ -10,7 +10,11 @@ import {
 } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { ArrowRight } from 'lucide-react'
-import { Spinner } from '@/components/ui/spinner'
+import { regionMapData } from '@/data/leagues/region-map-data'
+import {
+  guidePrefetchAllowed,
+  preloadDataTable,
+} from '@/lib/guide-prefetch'
 import {
   displayRegionId,
   displayRegions,
@@ -18,10 +22,8 @@ import {
   regionGuidePath,
   regionLabelLines,
   type RegionMapBounds,
-  type RegionMapData,
 } from '@/lib/leagues-region-map'
 
-const MAP_DATA_URL = '/data/leagues/rs3-region-map.json'
 const EMPTY_SIZE = { height: 1, width: 1 }
 
 function useElementSize(ref: RefObject<HTMLCanvasElement | null>) {
@@ -55,32 +57,12 @@ export default function LeaguesRegionMap() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const boundsRef = useRef<RegionMapBounds | null>(null)
   const size = useElementSize(canvasRef)
-  const [mapData, setMapData] = useState<RegionMapData | null>(null)
-  const [loadFailed, setLoadFailed] = useState(false)
   const [hoveredRegionId, setHoveredRegionId] = useState<string | null>(null)
 
-  useEffect(() => {
-    const controller = new AbortController()
-    fetch(MAP_DATA_URL, { signal: controller.signal })
-      .then((response) => {
-        if (!response.ok) throw new Error('Region map failed to load.')
-        return response.json() as Promise<RegionMapData>
-      })
-      .then((data) => {
-        setMapData(data)
-        setLoadFailed(false)
-      })
-      .catch((error: unknown) => {
-        if (error instanceof DOMException && error.name === 'AbortError') return
-        setLoadFailed(true)
-      })
-    return () => controller.abort()
-  }, [])
-
-  const regions = useMemo(() => mapData ? displayRegions(mapData) : [], [mapData])
+  const regions = useMemo(() => displayRegions(regionMapData), [])
   const regionById = useMemo(
-    () => new Map(mapData?.regions.map((region) => [region.id, region]) ?? []),
-    [mapData],
+    () => new Map(regionMapData.regions.map((region) => [region.id, region])),
+    [],
   )
   const displayedRegionById = useMemo(
     () => new Map(regions.map((region) => [region.id, region])),
@@ -97,7 +79,7 @@ export default function LeaguesRegionMap() {
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas || !mapData) return
+    if (!canvas) return
     const context = canvas.getContext('2d')
     if (!context) return
 
@@ -110,17 +92,17 @@ export default function LeaguesRegionMap() {
     const bounds = getRegionMapBounds(
       size.width,
       size.height,
-      mapData.columns,
-      mapData.rows,
+      regionMapData.columns,
+      regionMapData.rows,
     )
     boundsRef.current = bounds
-    const cellWidth = bounds.width / mapData.columns
-    const cellHeight = bounds.height / mapData.rows
+    const cellWidth = bounds.width / regionMapData.columns
+    const cellHeight = bounds.height / regionMapData.rows
     context.imageSmoothingEnabled = false
 
-    for (let row = 0; row < mapData.rows; row += 1) {
-      for (let column = 0; column < mapData.columns; column += 1) {
-        const sourceRegionId = mapData.pixels[row]?.[column]
+    for (let row = 0; row < regionMapData.rows; row += 1) {
+      for (let column = 0; column < regionMapData.columns; column += 1) {
+        const sourceRegionId = regionMapData.pixels[row]?.[column]
         if (!sourceRegionId) continue
         const region = regionById.get(sourceRegionId)
         context.fillStyle = highlightedSourceIds.has(sourceRegionId)
@@ -140,7 +122,7 @@ export default function LeaguesRegionMap() {
     context.textAlign = 'center'
     context.textBaseline = 'middle'
 
-    for (const region of mapData.regions) {
+    for (const region of regionMapData.regions) {
       if (!region.labelPosition) continue
       const x = bounds.x + (region.labelPosition.column + 0.5) * cellWidth
       const y = bounds.y + (region.labelPosition.row + 0.5) * cellHeight
@@ -164,12 +146,12 @@ export default function LeaguesRegionMap() {
         )
       })
     }
-  }, [highlightedSourceIds, mapData, regionById, size])
+  }, [highlightedSourceIds, regionById, size])
 
   const regionAtPoint = useCallback((clientX: number, clientY: number) => {
     const canvas = canvasRef.current
     const bounds = boundsRef.current
-    if (!canvas || !bounds || !mapData) return null
+    if (!canvas || !bounds) return null
     const rect = canvas.getBoundingClientRect()
     const x = clientX - rect.left
     const y = clientY - rect.top
@@ -180,10 +162,17 @@ export default function LeaguesRegionMap() {
       || y >= bounds.y + bounds.height
     ) return null
 
-    const column = Math.floor(((x - bounds.x) / bounds.width) * mapData.columns)
-    const row = Math.floor(((y - bounds.y) / bounds.height) * mapData.rows)
-    return displayRegionId(mapData, mapData.pixels[row]?.[column] ?? null)
-  }, [mapData])
+    const column = Math.floor(((x - bounds.x) / bounds.width) * regionMapData.columns)
+    const row = Math.floor(((y - bounds.y) / bounds.height) * regionMapData.rows)
+    return displayRegionId(
+      regionMapData,
+      regionMapData.pixels[row]?.[column] ?? null,
+    )
+  }, [])
+
+  const handleMapIntent = () => {
+    if (guidePrefetchAllowed()) void preloadDataTable().catch(() => {})
+  }
 
   const handlePointerMove = (event: PointerEvent<HTMLCanvasElement>) => {
     setHoveredRegionId(regionAtPoint(event.clientX, event.clientY))
@@ -201,27 +190,11 @@ export default function LeaguesRegionMap() {
           aria-hidden="true"
           className={hoveredRegionId ? 'block size-full cursor-pointer' : 'block size-full'}
           onClick={handleClick}
+          onPointerEnter={handleMapIntent}
           onPointerLeave={() => setHoveredRegionId(null)}
           onPointerMove={handlePointerMove}
           ref={canvasRef}
         />
-        {!mapData && !loadFailed && (
-          <div
-            className="absolute inset-0 grid place-content-center justify-items-center gap-[.65rem] bg-background text-[.78rem] font-bold text-primary"
-            role="status"
-          >
-            <Spinner className="size-5 [animation-duration:.8s]" />
-            Loading region map
-          </div>
-        )}
-        {loadFailed && (
-          <div
-            className="absolute inset-0 grid place-content-center justify-items-center gap-[.65rem] bg-background text-[.78rem] font-bold text-primary"
-            role="status"
-          >
-            The map could not be loaded. Use the region links below.
-          </div>
-        )}
       </div>
       <figcaption className="grid grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 bg-transparent pt-3 max-[521px]:grid-cols-1">
         {regions.map((region) => (
