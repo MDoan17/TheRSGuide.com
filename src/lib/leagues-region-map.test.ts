@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { regionMapData } from '@/data/leagues/region-map-data'
 import {
   displayRegionId,
   displayRegions,
@@ -50,5 +51,12 @@ describe('Leagues region map', () => {
       expect(path).toMatch(/^\/leagues\/regions\/[a-z0-9-]+$/)
     }
     expect(regionGuidePath('unknown')).toBe('/leagues/regions')
+  })
+
+  it('bundles valid production map data with the application', () => {
+    expect(regionMapData.columns).toBeGreaterThan(0)
+    expect(regionMapData.rows).toBeGreaterThan(0)
+    expect(regionMapData.pixels).toHaveLength(regionMapData.rows)
+    expect(regionMapData.regions.length).toBeGreaterThan(0)
   })
 })
