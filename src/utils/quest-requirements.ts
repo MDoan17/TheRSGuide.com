@@ -90,6 +90,25 @@ function buildQuestForest(questNames: string[]): QuestTreeNode[] {
 }
 
 /**
+ * Narrow a quest forest to the nodes matching `keep`.
+ *
+ * A dropped node's kept descendants are lifted into its place rather than
+ * discarded. Completing a quest implies completing its prerequisites, so in
+ * practice a dropped node has nothing left underneath it — but player data
+ * can disagree with the quest data, and dropping a quest someone still needs
+ * would be the worse failure.
+ */
+export function filterQuestTree(
+  nodes: QuestTreeNode[],
+  keep: (questName: string) => boolean
+): QuestTreeNode[] {
+  return nodes.flatMap((node) => {
+    const children = filterQuestTree(node.children, keep);
+    return keep(node.name) ? [{ name: node.name, children }] : children;
+  });
+}
+
+/**
  * Recursively resolve all requirements for a list of quests
  */
 export function resolveAllRequirements(

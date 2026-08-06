@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { findQuest, resolveAllRequirements, type QuestTreeNode } from './quest-requirements'
+import {
+  filterQuestTree,
+  findQuest,
+  resolveAllRequirements,
+  type QuestTreeNode,
+} from './quest-requirements'
 
 const flatten = (nodes: QuestTreeNode[]): string[] =>
   nodes.flatMap((node) => [node.name, ...flatten(node.children)])
@@ -62,5 +67,50 @@ describe('resolveAllRequirements quest tree', () => {
 
     expect(names.filter((name) => name === 'Stolen Hearts')).toHaveLength(1)
     expect(names).toContain('Not A Real Quest')
+  })
+})
+
+describe('filterQuestTree', () => {
+  const tree: QuestTreeNode[] = [
+    { name: 'a', children: [
+      { name: 'a1', children: [{ name: 'a1a', children: [] }] },
+      { name: 'a2', children: [] },
+    ] },
+    { name: 'b', children: [] },
+  ]
+
+  it('keeps matching nodes and drops the rest', () => {
+    const kept = filterQuestTree(tree, (name) => name !== 'b')
+
+    expect(flatten(kept)).toEqual(['a', 'a1', 'a1a', 'a2'])
+  })
+
+  it('lifts kept descendants into a dropped parent\'s place', () => {
+    const kept = filterQuestTree(tree, (name) => name !== 'a1')
+
+    expect(kept.map((node) => node.name)).toEqual(['a', 'b'])
+    expect(kept[0].children.map((node) => node.name)).toEqual(['a1a', 'a2'])
+  })
+
+  it('returns nothing when everything is filtered out', () => {
+    expect(filterQuestTree(tree, () => false)).toEqual([])
+  })
+
+  it('leaves the tree untouched when everything matches', () => {
+    expect(filterQuestTree(tree, () => true)).toEqual(tree)
+  })
+
+  it('drops completed quests from a real requirement tree', () => {
+    const { questTree } = sliskesEndgame()
+    const completed = new Set(['the death of chivalry', 'holy grail'])
+
+    const kept = filterQuestTree(questTree, (name) => !completed.has(name.toLowerCase()))
+    const names = flatten(kept)
+
+    expect(names).not.toContain('The Death of Chivalry')
+    expect(names).not.toContain('Holy Grail')
+    // Merlin's Crystal sat under Holy Grail and is still required
+    expect(names).toContain("Merlin's Crystal")
+    expect(names).toHaveLength(flatten(questTree).length - completed.size)
   })
 })

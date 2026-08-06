@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { usePlayerData } from "@/components/player/player-data-context";
 import { usePlayerLookup } from "@/components/player/use-player-lookup";
-import { resolveAllRequirements, QuestTreeNode } from "@/utils/quest-requirements";
+import { resolveAllRequirements, filterQuestTree, QuestTreeNode } from "@/utils/quest-requirements";
 import { SkillDrawer } from "./skill-drawer";
 import questsData from "@/data/quests.json";
 
@@ -117,6 +117,9 @@ const DEFAULT_VISIBLE_DEPTH = 3;
 const countDescendants = (node: QuestTreeNode): number =>
   node.children.reduce((total, child) => total + 1 + countDescendants(child), 0);
 
+const countQuests = (nodes: QuestTreeNode[]): number =>
+  nodes.reduce((total, node) => total + 1 + countDescendants(node), 0);
+
 /** How many quests sit below the depth shown by default. */
 const countCollapsed = (nodes: QuestTreeNode[], depth = 0): number =>
   nodes.reduce(
@@ -191,8 +194,10 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
 }) => {
   const { value: inputValue, changeValue, submit: submitPlayer, loading, status } =
     usePlayerLookup({ debounceMs: 1000 });
+  const { playerData, getSkillLevel, isQuestComplete } = usePlayerData();
   const [selectedSkill, setSelectedSkill] = useState<{ skill: string; level: number } | null>(null);
   const [expandAll, setExpandAll] = useState(false);
+  const [showOnlyMissing, setShowOnlyMissing] = useState(false);
 
   // Look up quest data from JSON if questName is provided
   const questFromJson = useMemo(() => {
@@ -243,13 +248,40 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
     );
   }, [effectiveRequirements]);
 
-  const hasSkills = resolved.skills.length > 0;
-  const hasQuests = resolved.questTree.length > 0;
-  const hasOther = resolved.other.length > 0;
-  const collapsedCount = useMemo(() => countCollapsed(resolved.questTree), [resolved.questTree]);
+  // Anything we cannot confirm as done stays in the "not met" list — a quest
+  // the hiscores don't report on is not evidence the player has finished it,
+  // and hiding a requirement someone still needs is the worse failure.
+  const visibleSkills = useMemo(
+    () =>
+      showOnlyMissing
+        ? resolved.skills.filter(({ skill, level }) => (getSkillLevel(skill) ?? 0) < level)
+        : resolved.skills,
+    [resolved.skills, showOnlyMissing, getSkillLevel]
+  );
+  const visibleQuestTree = useMemo(
+    () =>
+      showOnlyMissing
+        ? filterQuestTree(resolved.questTree, (quest) => isQuestComplete(quest) !== true)
+        : resolved.questTree,
+    [resolved.questTree, showOnlyMissing, isQuestComplete]
+  );
+  const visibleQuestCount = useMemo(() => countQuests(visibleQuestTree), [visibleQuestTree]);
 
-  // Only show the empty state if there's no quest name and no requirements at all
-  if (!effectiveRequirements.name && !hasSkills && !hasQuests && !hasOther) {
+  const hasSkills = visibleSkills.length > 0;
+  const hasQuests = visibleQuestTree.length > 0;
+  const hasOther = resolved.other.length > 0;
+  const collapsedCount = useMemo(() => countCollapsed(visibleQuestTree), [visibleQuestTree]);
+  // Nothing to filter by until a player is loaded
+  const canFilter = playerData !== null && (resolved.skills.length > 0 || resolved.quests.length > 0);
+
+  // Only show the empty state if there's no quest name and no requirements at
+  // all — an active filter emptying the columns is not the same thing.
+  if (
+    !effectiveRequirements.name &&
+    resolved.skills.length === 0 &&
+    resolved.questTree.length === 0 &&
+    !hasOther
+  ) {
     return (
       <div className="my-4 p-4 border border-border rounded-lg bg-muted/20">
         <p className="text-muted-foreground">No requirements for this content.</p>
@@ -344,6 +376,19 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
                 )}
               </div>
             )}
+
+            {/* Hide anything this player already has */}
+            {canFilter && (
+              <label className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer select-none sm:ml-auto">
+                <input
+                  type="checkbox"
+                  checked={showOnlyMissing}
+                  onChange={(event) => setShowOnlyMissing(event.target.checked)}
+                  className="h-4 w-4 rounded border-border accent-primary cursor-pointer"
+                />
+                Only show requirements I don't meet
+              </label>
+            )}
           </div>
 
           <div className="flex flex-col md:flex-row gap-6">
@@ -354,7 +399,7 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
               </h4>
               {hasSkills ? (
                 <div className="space-y-1">
-                  {resolved.skills.map((req, idx) => (
+                  {visibleSkills.map((req, idx) => (
                     <SkillRequirementItem
                       key={idx}
                       skill={req.skill}
@@ -364,14 +409,18 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-muted-foreground">No skill requirements</p>
+                <p className="text-sm text-muted-foreground">
+                  {showOnlyMissing && resolved.skills.length > 0
+                    ? "You meet every skill requirement"
+                    : "No skill requirements"}
+                </p>
               )}
             </div>
 
             {/* Quests Column */}
             <div className="flex-1">
               <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center justify-between gap-2">
-                <span>Quest Requirements {hasQuests && `(${resolved.quests.length})`}</span>
+                <span>Quest Requirements {hasQuests && `(${visibleQuestCount})`}</span>
                 {collapsedCount > 0 && (
                   <button
                     type="button"
@@ -384,17 +433,21 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
               </h4>
               {hasQuests ? (
                 <div className="space-y-1">
-                  {resolved.questTree.map((tree, idx) => (
+                  {visibleQuestTree.map((tree, idx) => (
                     <QuestTreeItem
                       // Remounting on toggle resets each branch to the new default
-                      key={`${tree.name}-${idx}-${expandAll}`}
+                      key={`${tree.name}-${idx}-${expandAll}-${showOnlyMissing}`}
                       node={tree}
                       expandAll={expandAll}
                     />
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-muted-foreground">No quest requirements</p>
+                <p className="text-sm text-muted-foreground">
+                  {showOnlyMissing && resolved.questTree.length > 0
+                    ? "You've completed every quest requirement"
+                    : "No quest requirements"}
+                </p>
               )}
             </div>
           </div>
