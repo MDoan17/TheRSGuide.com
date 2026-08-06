@@ -87,6 +87,14 @@ describe('quests.json integrity', () => {
     expect(unresolved).toEqual([])
   })
 
+  it('omits the other key rather than leaving it empty', () => {
+    const empty = questsData.Quests
+      .filter((quest) => Array.isArray(quest.requirements.other) && quest.requirements.other.length === 0)
+      .map((quest) => quest.name)
+
+    expect(empty).toEqual([])
+  })
+
   it('has no quest requiring itself', () => {
     const selfReferential = questsData.Quests
       .filter((quest) =>
