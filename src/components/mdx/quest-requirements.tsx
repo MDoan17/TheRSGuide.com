@@ -244,13 +244,15 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
       };
     }
 
-    // Use quest from JSON if found
+    // Use quest from JSON if found. The quest's own non-quest requirements
+    // count too — things like "Ability to enter Morytania" are only recorded
+    // there, so dropping them loses the requirement entirely.
     if (questFromJson) {
       return {
         name: questFromJson.name,
         skills: questFromJson.requirements?.skill || [],
         quests: questFromJson.requirements?.quest || [],
-        other: other,
+        other: [...(questFromJson.requirements?.other ?? []), ...other],
       };
     }
 

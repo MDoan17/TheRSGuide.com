@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import questsData from '@/data/quests.json'
 import {
   filterQuestTree,
   findQuest,
@@ -67,6 +68,33 @@ describe('resolveAllRequirements quest tree', () => {
 
     expect(names.filter((name) => name === 'Stolen Hearts')).toHaveLength(1)
     expect(names).toContain('Not A Real Quest')
+  })
+})
+
+describe('quests.json integrity', () => {
+  it('only lists real quests as quest requirements', () => {
+    // Entries like "Morytania" or "Kudos" describe access and progress, not
+    // quests. The hiscores never report them, so they could never be ticked
+    // off, never dropped out of the "not met" filter, and linked to a quick
+    // guide that does not exist. Those belong in `other`.
+    const known = new Set(questsData.Quests.map((quest) => quest.name.toLowerCase()))
+    const unresolved = questsData.Quests.flatMap((quest) =>
+      quest.requirements.quest
+        .filter((required) => !known.has(required.toLowerCase()))
+        .map((required) => `${quest.name} -> ${required}`)
+    )
+
+    expect(unresolved).toEqual([])
+  })
+
+  it('has no quest requiring itself', () => {
+    const selfReferential = questsData.Quests
+      .filter((quest) =>
+        quest.requirements.quest.some((r) => r.toLowerCase() === quest.name.toLowerCase())
+      )
+      .map((quest) => quest.name)
+
+    expect(selfReferential).toEqual([])
   })
 })
 

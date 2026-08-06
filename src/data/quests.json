@@ -195,7 +195,7 @@
       "members": true,
       "questPoints": 2,
       "requirements": {
-        "quest": ["Morytania"],
+        "quest": ["Priest in Peril"],
         "skill": [
           {
             "skill": "crafting",
@@ -2059,12 +2059,10 @@
           "Shield of Arrav",
           "The Knight's Sword",
           "Family Crest",
-          "What Lies Below",
-          "Kudos",
-          "Historian Minas",
-          "Varrock Museum"
+          "What Lies Below"
         ],
-        "skill": []
+        "skill": [],
+        "other": ["Enough Kudos to have spoken to Historian Minas in the Varrock Museum"]
       }
     },
     {
@@ -3077,7 +3075,6 @@
         "quest": [
           "Land of the Goblins",
           "A Fairy Tale I - Growing Pains",
-          "fairy ring network",
           "Desert Treasure"
         ],
         "skill": [
@@ -6227,9 +6224,10 @@
         "quest": [
           "Recruitment Drive",
           "Enter the Abyss (miniquest)",
-          "Morytania"
+          "Priest in Peril"
         ],
-        "skill": []
+        "skill": [],
+        "other": ["Ability to enter Morytania"]
       }
     },
     {

@@ -77,6 +77,24 @@ const SKILL_NAME_MAP: Record<string, string> = {
 
 export const RUNESCAPE_SKILLS = Object.freeze(Object.values(SKILL_NAME_MAP))
 
+/**
+ * Quests the hiscores report under a shorter title than our quest list uses.
+ * Ours keep the series prefix because "Fortunes" on its own says very little
+ * in a requirement list; RuneMetrics lists the part by itself. Without this
+ * the lookup misses and the quest can never be shown as complete.
+ */
+const QUEST_TITLE_MAP: Record<string, string> = {
+  'once upon a time in gielinor: finale': 'Finale',
+  'once upon a time in gielinor: flashback': 'Flashback',
+  'once upon a time in gielinor: foreshadowing': 'Foreshadowing',
+  'once upon a time in gielinor: fortunes': 'Fortunes',
+  'that old black magic: flesh and bone': 'Flesh and Bone',
+  'that old black magic: hermy and bass': 'Hermy and Bass',
+  'that old black magic: my one and only lute': 'My One and Only Lute',
+  'that old black magic: skelly by everlight': 'Skelly By Everlight',
+  'helping laniakea (miniquest)': 'Helping Laniakea',
+}
+
 export const normalizeUsername = (username: string) => username.trim()
 
 export const playerSkillLevel = (profile: PlayerProfile | null, skillName: string): number | null => {
@@ -92,9 +110,10 @@ export const playerQuestCompleted = (
   questName: string,
 ): boolean | null => {
   if (!profile?.quests) return null
+  const normalizedName = QUEST_TITLE_MAP[questName.toLowerCase()] ?? questName
   const quest = profile.quests.find((candidate) => {
     const name = candidate.title || candidate.name
-    return name?.toLowerCase() === questName.toLowerCase()
+    return name?.toLowerCase() === normalizedName.toLowerCase()
   })
   return quest ? quest.status === 'Completed' : null
 }
