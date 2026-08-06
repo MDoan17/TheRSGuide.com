@@ -142,7 +142,7 @@ function MatrixCell({
         className={cn(
           'flex items-center justify-center text-center font-black uppercase transition-opacity',
           isBlessing
-            ? 'min-h-5 px-1 text-[9px] leading-tight tracking-[0.04em]'
+            ? 'h-8 px-1 text-[9px] leading-[1.1] tracking-[0.04em] md:h-auto md:min-h-5 md:leading-tight'
             : 'h-8 text-[9px] leading-[1.1] tracking-[0.1em] md:h-auto md:min-h-5 md:leading-tight',
           isBlessing
             ? contentOpacityClassName
@@ -153,7 +153,7 @@ function MatrixCell({
               : 'text-muted-foreground group-hover:text-accent-foreground/70 group-active:text-accent-foreground/70',
         )}
       >
-        <span className={cn(!isBlessing && 'line-clamp-2')}>
+        <span className="line-clamp-2">
           {cell.statusLabel ?? cell.label}
         </span>
       </span>
