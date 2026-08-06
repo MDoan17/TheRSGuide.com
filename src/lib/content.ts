@@ -41,6 +41,16 @@ const documentSources: GuideDocumentSource[] = visibleGuideManifest.map((documen
   }
 })
 
+const guideLoaders = new Map(
+  visibleGuideManifest.map(
+    (document) => [document.path, modules[document.sourcePath]] as const
+  )
+)
+
+export const preloadGuide = (path: string) => {
+  guideLoaders.get(path)?.().catch(() => {})
+}
+
 export const guideCatalog = createGuideCatalog({
   documents: documentSources,
   metadata: guideMetadata,

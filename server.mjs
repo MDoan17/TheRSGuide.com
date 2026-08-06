@@ -18,6 +18,21 @@ import {
 const root = resolve(process.cwd(), 'dist')
 const mime = { '.css': 'text/css', '.html': 'text/html', '.ico': 'image/x-icon', '.jpeg': 'image/jpeg', '.jpg': 'image/jpeg', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp' }
 
+// Only content-hashed or effectively-immutable paths are cached. Everything
+// else stays uncacheable so runtime data (/data, /appconfig.json) can be
+// corrected without waiting out a TTL or purging the edge.
+const CONTENT_HASHED = 'public, max-age=31536000, immutable'
+const LONG_LIVED = 'public, max-age=604800, stale-while-revalidate=2592000'
+const DAILY = 'public, max-age=86400, stale-while-revalidate=604800'
+const UNCACHEABLE = 'no-cache'
+
+const cacheControl = (file) => {
+  if (file.includes(`${sep}assets${sep}`)) return CONTENT_HASHED
+  if (file.includes(`${sep}fonts${sep}`)) return LONG_LIVED
+  if (file.includes(`${sep}og${sep}`)) return DAILY
+  return UNCACHEABLE
+}
+
 createServer((req, res) => {
   if (isHealthRequest(req)) return void handleHealth(req, res)
   if (req.url?.startsWith('/api/player/')) return void handlePlayerApi(req, res)
@@ -38,15 +53,9 @@ createServer((req, res) => {
       ? join(candidate, 'index.html')
       : null
     const file = directFile ?? directoryIndex ?? join(root, 'index.html')
-    const immutableAsset = file.includes(`${sep}assets${sep}`)
-    const socialImage = file.includes(`${sep}og${sep}`)
     const headers = {
       'content-type': mime[extname(file)] ?? 'application/octet-stream',
-      'cache-control': immutableAsset
-        ? 'public, max-age=31536000, immutable'
-        : socialImage
-          ? 'public, max-age=86400, stale-while-revalidate=604800'
-          : 'no-cache',
+      'cache-control': cacheControl(file),
     }
 
     if (extname(file) === '.html') {
