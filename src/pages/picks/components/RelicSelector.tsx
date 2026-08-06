@@ -1,11 +1,7 @@
 import { useState } from 'react'
 import { RotateCcw } from 'lucide-react'
 
-import {
-  RelicDetailView,
-  type RelicItem,
-} from '@/components/mdx/relic-display'
-import { Drawer, DrawerContent } from '@/components/ui/drawer'
+import type { RelicItem } from '@/components/mdx/relic-display'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import relicData from '@/data/leagues-ii/relics.json'
@@ -16,6 +12,7 @@ import {
 } from '@/lib/picks-state'
 import { SPECULATIVE_RELIC_TIERS } from '../../../../shared/speculative-relic-options'
 import { PickProgressBar } from './PickProgressBar'
+import { PickerRelicDetailsDrawer } from './PickerRelicDetailsDrawer'
 import {
   TierOptionMatrix,
   type TierOptionMatrixRow,
@@ -36,6 +33,11 @@ const KNOWN_RELICS = new Map<string, RelicItem>(
   relicData.Relics.map((relic) => [relic.name, relic]),
 )
 
+type SelectedRelicDetails = {
+  relic: RelicItem
+  tier: number
+}
+
 export function RelicSelector({
   isSpeculative,
   onChange,
@@ -45,7 +47,7 @@ export function RelicSelector({
   selectedRelics,
 }: RelicSelectorProps) {
   const [selectedRelicDetails, setSelectedRelicDetails] =
-    useState<RelicItem | null>(null)
+    useState<SelectedRelicDetails | null>(null)
   const selectedCount = Object.keys(selectedRelics).length
   const displayedRelicTiers = isSpeculative
     ? SPECULATIVE_RELIC_TIERS
@@ -127,7 +129,7 @@ export function RelicSelector({
             : undefined,
           onSelect: () => toggleRelic(tier.tier, option.id),
           onViewDetails: knownRelic
-            ? () => setSelectedRelicDetails(knownRelic)
+            ? () => setSelectedRelicDetails({ relic: knownRelic, tier: tier.tier })
             : undefined,
           readOnly: isRejuvenatedMatch,
           relicState:
@@ -148,7 +150,7 @@ export function RelicSelector({
           <h2 className="font-display text-2xl font-semibold text-foreground">
             1. Choose your relics
           </h2>
-          <div className="flex items-center gap-4">
+          <div className="flex w-full items-center justify-between gap-4 sm:w-auto sm:justify-start">
             <Label className="cursor-pointer" htmlFor="speculative-relics">
               Speculative mode
               <Switch
@@ -205,19 +207,14 @@ export function RelicSelector({
         variant="relic"
       />
 
-      <Drawer
-        direction="right"
-        open={Boolean(selectedRelicDetails)}
+      <PickerRelicDetailsDrawer
+        isSpeculative={isSpeculative}
+        relic={selectedRelicDetails?.relic ?? null}
+        tier={selectedRelicDetails?.tier}
         onOpenChange={(open) => {
           if (!open) setSelectedRelicDetails(null)
         }}
-      >
-        <DrawerContent>
-          {selectedRelicDetails && (
-            <RelicDetailView relic={selectedRelicDetails} />
-          )}
-        </DrawerContent>
-      </Drawer>
+      />
     </section>
   )
 }
