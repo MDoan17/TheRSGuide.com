@@ -56,6 +56,16 @@ const localApiPlugin = () => ({
   },
 })
 
+const REACT_RUNTIME = /\/node_modules\/(react|react-dom|scheduler|@mdx-js)\//
+const GUIDE_PAGE = /\/content\/(.+)\/[^/]+\.mdx$/
+
+const manualChunks = (id: string) => {
+  const normalized = id.replace(/\\/g, '/')
+  if (REACT_RUNTIME.test(normalized)) return 'react'
+  const guidePage = normalized.match(GUIDE_PAGE)
+  return guidePage ? `content-${guidePage[1].replace(/\//g, '-')}` : undefined
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const deploymentUrl = (
@@ -74,6 +84,7 @@ export default defineConfig(({ mode }) => {
       tailwindcss(),
     ],
     resolve: { alias: { '@': path.resolve(__dirname, './src') } },
+    build: { rollupOptions: { output: { manualChunks } } },
     server: {
       proxy: {
         '/api/shares': {
