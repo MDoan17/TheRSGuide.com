@@ -12,14 +12,12 @@ import {
 import { cn } from '@/lib/utils'
 
 type PickerRelicDetailsDrawerProps = {
-  isSpeculative: boolean
   onOpenChange: (open: boolean) => void
   relic: RelicItem | null
   tier?: number
 }
 
 export function PickerRelicDetailsDrawer({
-  isSpeculative,
   onOpenChange,
   relic,
   tier,
@@ -54,7 +52,7 @@ export function PickerRelicDetailsDrawer({
                   />
                   <div className="min-w-0 space-y-2">
                     <p className="text-xs font-black uppercase tracking-[0.18em] text-primary sm:text-sm">
-                      {isSpeculative ? 'Likely ' : ''}tier {tier ?? relic.tier} relic
+                      Tier {tier ?? relic.tier} relic
                     </p>
                     <DrawerTitle className="font-display text-3xl font-semibold leading-none sm:text-4xl">
                       {relic.name}
