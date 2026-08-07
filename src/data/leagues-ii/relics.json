@@ -542,10 +542,19 @@
                 "Divine geodes can be found while excavating and contain Archaeology materials."
             ],
             "notes": [
+                "Unlocking all Archaeology relic powers includes Always Adze (logs are automatically burned for Firemaking XP while Woodcutting) and Bait and Switch (fish are automatically cooked when caught), matching Superheated's Firemaking and Cooking solves."
             ],
             "skillSolves": [
                 {
                     "skill": "archaeology",
+                    "grade": "A"
+                },
+                {
+                    "skill": "cooking",
+                    "grade": "A"
+                },
+                {
+                    "skill": "firemaking",
                     "grade": "A"
                 }
             ]
