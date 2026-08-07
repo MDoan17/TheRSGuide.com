@@ -88,11 +88,10 @@ function RelicDisplay({ tier, points }: RelicDisplayProps) {
             )}
 
             <PickerRelicDetailsDrawer
-                isSpeculative={false}
                 relic={selectedRelic ?? null}
                 tier={selectedRelic?.tier}
                 onOpenChange={(open) => {
-                if (!open) setSelectedRelic(null)
+                    if (!open) setSelectedRelic(null)
                 }}
             />
         </section>
