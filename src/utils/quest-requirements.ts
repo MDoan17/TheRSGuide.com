@@ -48,20 +48,9 @@ export function findQuest(questName: string): QuestData | undefined {
   return questMap.get(questName.toLowerCase());
 }
 
-/**
- * Build a deduplicated forest of prerequisite trees for the given quests.
- *
- * Quest requirements form a graph rather than a tree — popular prerequisites
- * like Missing, Presumed Death sit underneath several branches — so walking
- * each branch independently lists those quests once per path they appear on.
- * Instead we breadth-first search the graph, which places every quest exactly
- * once, at the shallowest depth anything requires it from.
- */
 function buildQuestForest(questNames: string[]): QuestTreeNode[] {
   const placed = new Set<string>();
   const roots: QuestTreeNode[] = [];
-  // Doubles as the BFS queue: it grows as we append children, and the cursor
-  // below walks it in breadth-first order.
   const queue: QuestTreeNode[] = [];
 
   const place = (questName: string, parent: QuestTreeNode | null) => {
@@ -89,22 +78,10 @@ function buildQuestForest(questNames: string[]): QuestTreeNode[] {
   return roots;
 }
 
-/**
- * Every quest in a forest, parents before the requirements they pull in.
- */
 export function flattenQuestTree(nodes: QuestTreeNode[]): string[] {
   return nodes.flatMap((node) => [node.name, ...flattenQuestTree(node.children)]);
 }
 
-/**
- * Narrow a quest forest to the nodes matching `keep`.
- *
- * A dropped node's kept descendants are lifted into its place rather than
- * discarded. Completing a quest implies completing its prerequisites, so in
- * practice a dropped node has nothing left underneath it — but player data
- * can disagree with the quest data, and dropping a quest someone still needs
- * would be the worse failure.
- */
 export function filterQuestTree(
   nodes: QuestTreeNode[],
   keep: (questName: string) => boolean
@@ -146,7 +123,6 @@ export function resolveAllRequirements(
 
     const quest = questMap.get(normalizedName);
     if (!quest) {
-      // Quest not found in our data; nothing further to collect from it
       return;
     }
 
@@ -171,9 +147,7 @@ export function resolveAllRequirements(
     resolveQuest(questName);
   });
 
-  // The forest already holds every quest exactly once, so the flat list is
-  // read back off it. Accumulating a second list during the walk above let
-  // the two drift, which is how the count came to disagree with the tree.
+  // Build quest trees for display
   const questTree = buildQuestForest(questNames);
   const allQuests = flattenQuestTree(questTree);
 

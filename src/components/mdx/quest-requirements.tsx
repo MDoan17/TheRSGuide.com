@@ -121,14 +121,11 @@ const QuestRequirementItem: React.FC<{ quest: string }> = ({ quest }) => {
   );
 };
 
-// Depths 0-2 are shown up front; anything deeper unfolds on demand so long
-// quest lines don't bury the page in indentation.
 const DEFAULT_VISIBLE_DEPTH = 3;
 
 const countQuests = (nodes: QuestTreeNode[]): number =>
   nodes.reduce((total, node) => total + 1 + countQuests(node.children), 0);
 
-/** How many quests sit below the depth shown by default. */
 const countCollapsed = (nodes: QuestTreeNode[], depth = 0): number =>
   depth >= DEFAULT_VISIBLE_DEPTH
     ? countQuests(nodes)
@@ -147,7 +144,6 @@ const QuestTreeItem: React.FC<{ node: QuestTreeNode; depth?: number; expandAll?:
       <div style={{ marginLeft: `${depth * 20}px` }}>
         <QuestRequirementItem quest={node.name} />
       </div>
-      {/* Sits above the branch it opens so the control stays next to its quest */}
       {collapsible && (
         <button
           type="button"
@@ -197,7 +193,6 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
   const { playerData, getSkillLevel, isQuestComplete } = usePlayerData();
   const [selectedSkill, setSelectedSkill] = useState<{ skill: string; level: number } | null>(null);
   const [expandAll, setExpandAll] = useState(false);
-  // Read after mount so the prerendered markup and the first client render agree
   const [showOnlyMissing, setShowOnlyMissing] = useState(false);
   const onlyMissingId = useId();
 
@@ -233,9 +228,7 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
       };
     }
 
-    // Use quest from JSON if found. The quest's own non-quest requirements
-    // count too — things like "Ability to enter Morytania" are only recorded
-    // there, so dropping them loses the requirement entirely.
+    // Use quest from JSON if found
     if (questFromJson) {
       return {
         name: questFromJson.name,
@@ -263,9 +256,6 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
     );
   }, [effectiveRequirements]);
 
-  // Anything we cannot confirm as done stays in the "not met" list — a quest
-  // the hiscores don't report on is not evidence the player has finished it,
-  // and hiding a requirement someone still needs is the worse failure.
   const visibleSkills = useMemo(
     () =>
       showOnlyMissing
@@ -286,12 +276,10 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
   const hasQuests = visibleQuestTree.length > 0;
   const hasOther = resolved.other.length > 0;
   const collapsedCount = useMemo(() => countCollapsed(visibleQuestTree), [visibleQuestTree]);
-  // Nothing to filter by until a player is loaded
   const canFilter =
     playerData !== null && (resolved.skills.length > 0 || resolved.questTree.length > 0);
 
-  // Only show the empty state if there's no quest name and no requirements at
-  // all — an active filter emptying the columns is not the same thing.
+  // Only show the empty state if there's no quest name and no requirements at all
   if (
     !effectiveRequirements.name &&
     resolved.skills.length === 0 &&
@@ -393,7 +381,6 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
               </div>
             )}
 
-            {/* Hide anything this player already has */}
             {canFilter && (
               <Label
                 className="cursor-pointer text-muted-foreground sm:ml-auto"
@@ -453,7 +440,6 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
                 <div className="space-y-1">
                   {visibleQuestTree.map((tree, idx) => (
                     <QuestTreeItem
-                      // Remounting on toggle resets each branch to the new default
                       key={`${tree.name}-${idx}-${expandAll}-${showOnlyMissing}`}
                       node={tree}
                       expandAll={expandAll}

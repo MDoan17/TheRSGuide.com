@@ -77,12 +77,6 @@ const SKILL_NAME_MAP: Record<string, string> = {
 
 export const RUNESCAPE_SKILLS = Object.freeze(Object.values(SKILL_NAME_MAP))
 
-/**
- * Quests the hiscores report under a shorter title than our quest list uses.
- * Ours keep the series prefix because "Fortunes" on its own says very little
- * in a requirement list; RuneMetrics lists the part by itself. Without this
- * the lookup misses and the quest can never be shown as complete.
- */
 const QUEST_TITLE_MAP: Record<string, string> = {
   'once upon a time in gielinor: finale': 'Finale',
   'once upon a time in gielinor: flashback': 'Flashback',

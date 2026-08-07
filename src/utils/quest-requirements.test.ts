@@ -39,9 +39,6 @@ describe('resolveAllRequirements quest tree', () => {
   })
 
   it('aggregates the skill requirements of every quest it lists', () => {
-    // Skills are gathered by a separate walk from the one that builds the
-    // tree. If the two ever stopped reaching the same quests, the card would
-    // show a quest whose skill requirements it had not counted.
     const resolved = sliskesEndgame()
     const highest = new Map(resolved.skills.map((s) => [s.skill.toLowerCase(), s.level]))
 
@@ -57,15 +54,11 @@ describe('resolveAllRequirements quest tree', () => {
   it('places each quest at the shallowest depth that requires it', () => {
     const { questTree } = sliskesEndgame()
 
-    // One of a Kind is a top-level requirement and names Missing, Presumed
-    // Death directly, so it belongs one level down rather than buried
-    // underneath a longer branch that also happens to reach it.
     expect(depthOf(questTree, 'One of a Kind')).toBe(0)
     expect(depthOf(questTree, 'Missing, Presumed Death')).toBe(1)
   })
 
   it('surfaces requirements shared between two top-level quests only once', () => {
-    // Kindred Spirits and One of a Kind both require Missing, Presumed Death.
     const names = flatten(resolveAllRequirements(['Kindred Spirits', 'One of a Kind']).questTree)
 
     expect(names.filter((name) => name === 'Missing, Presumed Death')).toHaveLength(1)
@@ -83,10 +76,6 @@ describe('resolveAllRequirements quest tree', () => {
 
 describe('quests.json integrity', () => {
   it('only lists real quests as quest requirements', () => {
-    // Entries like "Morytania" or "Kudos" describe access and progress, not
-    // quests. The hiscores never report them, so they could never be ticked
-    // off, never dropped out of the "not met" filter, and linked to a quick
-    // guide that does not exist. Those belong in `other`.
     const known = new Set(questsData.Quests.map((quest) => quest.name.toLowerCase()))
     const unresolved = questsData.Quests.flatMap((quest) =>
       quest.requirements.quest
@@ -155,7 +144,6 @@ describe('filterQuestTree', () => {
 
     expect(names).not.toContain('The Death of Chivalry')
     expect(names).not.toContain('Holy Grail')
-    // Merlin's Crystal sat under Holy Grail and is still required
     expect(names).toContain("Merlin's Crystal")
     expect(names).toHaveLength(flatten(questTree).length - completed.size)
   })
