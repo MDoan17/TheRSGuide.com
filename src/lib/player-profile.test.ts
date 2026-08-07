@@ -36,6 +36,22 @@ describe('player profile domain', () => {
     expect(playerQuestCompleted(profile, 'Missing Quest')).toBeNull()
   })
 
+  it('matches quests the hiscores report under a shorter title', () => {
+    const profile = normalizeRunemetricsProfile({
+      name: 'The RS Guy',
+      totalskill: '100',
+      skillvalues: [{ id: 0, level: 99, xp: 13_034_431, rank: 123 }],
+      quests: [
+        { title: 'Fortunes', status: 'COMPLETED' },
+        { title: 'Helping Laniakea', status: 'NOT_STARTED' },
+      ],
+    }, 'requested name')
+
+    expect(playerQuestCompleted(profile, 'Once Upon a Time in Gielinor: Fortunes')).toBe(true)
+    expect(playerQuestCompleted(profile, 'Helping Laniakea (miniquest)')).toBe(false)
+    expect(playerQuestCompleted(profile, 'Once Upon a Time in Gielinor: Finale')).toBeNull()
+  })
+
   it('falls back to summed levels when the upstream total is invalid', () => {
     const profile = normalizeRunemetricsProfile({
       totalskill: 'not-a-number',

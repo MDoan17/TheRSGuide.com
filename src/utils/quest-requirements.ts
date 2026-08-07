@@ -48,31 +48,48 @@ export function findQuest(questName: string): QuestData | undefined {
   return questMap.get(questName.toLowerCase());
 }
 
-/**
- * Build a tree structure for a quest showing its prerequisites
- */
-function buildQuestTree(questName: string, visited: Set<string>): QuestTreeNode {
-  const normalizedName = questName.toLowerCase();
-  const quest = questMap.get(normalizedName);
+function buildQuestForest(questNames: string[]): QuestTreeNode[] {
+  const placed = new Set<string>();
+  const roots: QuestTreeNode[] = [];
+  const queue: QuestTreeNode[] = [];
 
-  const node: QuestTreeNode = {
-    name: questName,
-    children: [],
+  const place = (questName: string, parent: QuestTreeNode | null) => {
+    const normalizedName = questName.toLowerCase();
+    if (placed.has(normalizedName)) return;
+    placed.add(normalizedName);
+
+    const node: QuestTreeNode = { name: questName, children: [] };
+    if (parent) {
+      parent.children.push(node);
+    } else {
+      roots.push(node);
+    }
+    queue.push(node);
   };
 
-  // Avoid infinite loops for circular dependencies
-  if (visited.has(normalizedName)) {
-    return node;
-  }
-  visited.add(normalizedName);
+  questNames.forEach((questName) => place(questName, null));
 
-  if (quest && quest.requirements.quest.length > 0) {
-    node.children = quest.requirements.quest.map((reqQuest) =>
-      buildQuestTree(reqQuest, new Set(visited))
-    );
+  for (let cursor = 0; cursor < queue.length; cursor += 1) {
+    const node = queue[cursor];
+    const quest = questMap.get(node.name.toLowerCase());
+    quest?.requirements.quest.forEach((reqQuest) => place(reqQuest, node));
   }
 
-  return node;
+  return roots;
+}
+
+export function flattenQuestTree(nodes: QuestTreeNode[]): string[] {
+  return nodes.flatMap((node) => [node.name, ...flattenQuestTree(node.children)]);
+}
+
+export function filterQuestTree(
+  nodes: QuestTreeNode[],
+  keep: (questName: string) => boolean
+): QuestTreeNode[] {
+  return nodes.flatMap((node) => {
+    const children = filterQuestTree(node.children, keep);
+    return keep(node.name) ? [{ name: node.name, children }] : children;
+  });
 }
 
 /**
@@ -85,7 +102,6 @@ export function resolveAllRequirements(
 ): ResolvedRequirements {
   const visitedQuests = new Set<string>();
   const allSkills = new Map<string, number>(); // skill -> highest level required
-  const allQuests: string[] = [];
   const allOther = new Set<string>();
 
   // Add initial skills
@@ -106,12 +122,7 @@ export function resolveAllRequirements(
     visitedQuests.add(normalizedName);
 
     const quest = questMap.get(normalizedName);
-
-    // Add this quest to the list
-    allQuests.push(questName);
-
     if (!quest) {
-      // Quest not found in our data, just add it as-is
       return;
     }
 
@@ -137,7 +148,8 @@ export function resolveAllRequirements(
   });
 
   // Build quest trees for display
-  const questTree = questNames.map((name) => buildQuestTree(name, new Set()));
+  const questTree = buildQuestForest(questNames);
+  const allQuests = flattenQuestTree(questTree);
 
   // Convert skills map back to array with proper capitalization
   const skillsArray: QuestSkillReq[] = Array.from(allSkills.entries())
@@ -153,29 +165,4 @@ export function resolveAllRequirements(
     questTree,
     other: Array.from(allOther),
   };
-}
-
-/**
- * Get just the recursive quest chain for a single quest
- */
-export function getQuestChain(questName: string): string[] {
-  const chain: string[] = [];
-  const visited = new Set<string>();
-
-  function resolve(name: string) {
-    const normalizedName = name.toLowerCase();
-    if (visited.has(normalizedName)) return;
-    visited.add(normalizedName);
-
-    const quest = questMap.get(normalizedName);
-    if (quest) {
-      // First resolve prerequisites
-      quest.requirements.quest.forEach((req) => resolve(req));
-    }
-    // Then add this quest
-    chain.push(name);
-  }
-
-  resolve(questName);
-  return chain;
 }

@@ -150,7 +150,7 @@
       "members": true,
       "questPoints": 2,
       "requirements": {
-        "quest": ["The Restless Ghost"],
+        "quest": ["The Restless Ghost", "Priest in Peril"],
         "skill": [
           {
             "skill": "agility",
@@ -160,8 +160,7 @@
             "skill": "cooking",
             "level": 20
           }
-        ],
-        "other": ["Ability to enter Morytania"]
+        ]
       }
     },
     {
@@ -195,7 +194,7 @@
       "members": true,
       "questPoints": 2,
       "requirements": {
-        "quest": ["Morytania"],
+        "quest": ["Priest in Peril"],
         "skill": [
           {
             "skill": "crafting",
@@ -205,8 +204,7 @@
             "skill": "agility",
             "level": 15
           }
-        ],
-        "other": ["Ability to enter Morytania"]
+        ]
       }
     },
     {
@@ -302,8 +300,7 @@
             "skill": "slayer",
             "level": 40
           }
-        ],
-        "other": ["Ability to enter Morytania"]
+        ]
       }
     },
     {
@@ -1041,7 +1038,11 @@
       "members": true,
       "questPoints": 1,
       "requirements": {
-        "quest": ["The Restless Ghost", "Ernest the Chicken"],
+        "quest": [
+          "The Restless Ghost",
+          "Ernest the Chicken",
+          "Priest in Peril"
+        ],
         "skill": [
           {
             "skill": "crafting",
@@ -1063,8 +1064,7 @@
             "skill": "woodcutting",
             "level": 35
           }
-        ],
-        "other": ["Ability to enter Morytania"]
+        ]
       }
     },
     {
@@ -1663,7 +1663,7 @@
       "members": true,
       "questPoints": 2,
       "requirements": {
-        "quest": ["The Restless Ghost"],
+        "quest": ["The Restless Ghost", "Priest in Peril"],
         "skill": [
           {
             "skill": "crafting",
@@ -1673,8 +1673,7 @@
             "skill": "thieving",
             "level": 25
           }
-        ],
-        "other": ["Ability to enter Morytania"]
+        ]
       }
     },
     {
@@ -1912,7 +1911,7 @@
       "members": true,
       "questPoints": 3,
       "requirements": {
-        "quest": ["The Dig Site", "Troll Stronghold"],
+        "quest": ["The Dig Site", "Troll Stronghold", "Priest in Peril"],
         "skill": [
           {
             "skill": "firemaking",
@@ -1930,8 +1929,7 @@
             "skill": "thieving",
             "level": 53
           }
-        ],
-        "other": ["Ability to enter Morytania"]
+        ]
       }
     },
     {
@@ -1993,7 +1991,11 @@
       "members": true,
       "questPoints": 1,
       "requirements": {
-        "quest": ["Recruitment Drive", "What's Mine is Yours"],
+        "quest": [
+          "Recruitment Drive",
+          "What's Mine is Yours",
+          "Priest in Peril"
+        ],
         "skill": [
           {
             "skill": "fletching",
@@ -2007,8 +2009,7 @@
             "skill": "smithing",
             "level": 65
           }
-        ],
-        "other": ["Ability to enter Morytania"]
+        ]
       }
     },
     {
@@ -2059,12 +2060,12 @@
           "Shield of Arrav",
           "The Knight's Sword",
           "Family Crest",
-          "What Lies Below",
-          "Kudos",
-          "Historian Minas",
-          "Varrock Museum"
+          "What Lies Below"
         ],
-        "skill": []
+        "skill": [],
+        "other": [
+          "Enough Kudos to have spoken to Historian Minas in the Varrock Museum"
+        ]
       }
     },
     {
@@ -2100,7 +2101,7 @@
       "members": true,
       "questPoints": 2,
       "requirements": {
-        "quest": ["Hazeel Cult", "Missing, Presumed Death"],
+        "quest": ["Hazeel Cult", "Missing, Presumed Death", "Priest in Peril"],
         "skill": [
           {
             "skill": "agility",
@@ -2110,8 +2111,7 @@
             "skill": "thieving",
             "level": 30
           }
-        ],
-        "other": ["Ability to enter Morytania"]
+        ]
       }
     },
     {
@@ -3077,8 +3077,8 @@
         "quest": [
           "Land of the Goblins",
           "A Fairy Tale I - Growing Pains",
-          "fairy ring network",
-          "Desert Treasure"
+          "Desert Treasure",
+          "A Fairy Tale II - Cure a Queen"
         ],
         "skill": [
           {
@@ -3087,7 +3087,7 @@
           }
         ],
         "other": [
-          "Access to the fairy ring network",
+          "Partial completion of A Fairy Tale II - Cure a Queen for fairy ring access",
           "Partial completion of Desert Treasure"
         ]
       }
@@ -3535,9 +3535,8 @@
       "members": true,
       "questPoints": 3,
       "requirements": {
-        "quest": ["The Restless Ghost"],
-        "skill": [],
-        "other": ["Ability to enter Morytania"]
+        "quest": ["The Restless Ghost", "Priest in Peril"],
+        "skill": []
       }
     },
     {
@@ -3737,8 +3736,7 @@
       "questPoints": 2,
       "requirements": {
         "quest": ["Priest in Peril", "The Restless Ghost"],
-        "skill": [],
-        "other": ["Ability to enter Morytania"]
+        "skill": []
       }
     },
     {
@@ -4057,7 +4055,8 @@
         "quest": [
           "Within the Light",
           "Catapult Construction",
-          "Making History"
+          "Making History",
+          "Priest in Peril"
         ],
         "skill": [
           {
@@ -4100,8 +4099,7 @@
             "skill": "woodcutting",
             "level": 75
           }
-        ],
-        "other": ["Ability to enter Morytania"]
+        ]
       }
     },
     {
@@ -4557,7 +4555,7 @@
       "members": true,
       "questPoints": 2,
       "requirements": {
-        "quest": [],
+        "quest": ["Priest in Peril"],
         "skill": [
           {
             "skill": "crafting",
@@ -4579,8 +4577,7 @@
             "skill": "slayer",
             "level": 42
           }
-        ],
-        "other": ["Ability to enter Morytania"]
+        ]
       }
     },
     {
@@ -4693,7 +4690,7 @@
       "members": true,
       "questPoints": 3,
       "requirements": {
-        "quest": [],
+        "quest": ["Priest in Peril"],
         "skill": [
           {
             "skill": "crafting",
@@ -4707,8 +4704,7 @@
             "skill": "herblore",
             "level": 15
           }
-        ],
-        "other": ["Ability to enter Morytania"]
+        ]
       }
     },
     {
@@ -5062,7 +5058,7 @@
       "members": true,
       "questPoints": 0,
       "requirements": {
-        "quest": [],
+        "quest": ["Priest in Peril", "Troll Stronghold"],
         "skill": [
           {
             "skill": "constitution",
@@ -5078,8 +5074,7 @@
           }
         ],
         "other": [
-          "Ability to enter Morytania",
-          "Access to the God Wars Dungeon"
+          "Partial completion of Troll Stronghold, plus 60 Strength or Agility to reach the God Wars Dungeon"
         ]
       }
     },
@@ -5232,7 +5227,8 @@
           "The Tale of the Muspah",
           "Missing My Mummy",
           "Defender of Varrock",
-          "Temple of Ikov"
+          "Temple of Ikov",
+          "Troll Stronghold"
         ],
         "skill": [
           {
@@ -5265,7 +5261,7 @@
           }
         ],
         "other": [
-          "Ability to access Trollheim",
+          "Partial completion of Troll Stronghold",
           "Fully restore Senliten from the 'Missing My Mummy' quest",
           "Full completion of Missing My Mummy "
         ]
@@ -6227,7 +6223,7 @@
         "quest": [
           "Recruitment Drive",
           "Enter the Abyss (miniquest)",
-          "Morytania"
+          "Priest in Peril"
         ],
         "skill": []
       }
