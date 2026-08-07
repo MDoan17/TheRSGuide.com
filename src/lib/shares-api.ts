@@ -15,8 +15,9 @@ async function getErrorMessage(response: Response) {
 
 export async function createShare(request: CreateShareRequest, image: Blob) {
   const body = new FormData()
+  const extension = image.type === 'image/png' ? 'png' : 'webp'
   body.append('build', JSON.stringify(request))
-  body.append('image', image, 'build.webp')
+  body.append('image', image, `build.${extension}`)
 
   const response = await fetch('/api/shares', {
     method: 'POST',

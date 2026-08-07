@@ -10,7 +10,7 @@ import {
 } from '../utils/share-card'
 import { createDiscordShareText, createTwitterShareUrl } from '../utils/share-actions'
 import {
-  canvasToWebP,
+  canvasToShareImage,
   copyText,
   getShareImageFilename,
 } from '../utils/share-browser'
@@ -115,7 +115,7 @@ export function useShareBuild({
     shareOpenTimeoutsRef.current.push(timeout)
   }, [])
 
-  const createWebPImage = useCallback(async () => {
+  const createShareImage = useCallback(async () => {
     const canvas = canvasRef.current
     if (!canvas) throw new Error('The share preview is still loading')
     const loadedPickImages = await loadPickImages(
@@ -136,7 +136,7 @@ export function useShareBuild({
       isSpeculativeRelics,
       selectedRejuvenatedRelic,
     )
-    return canvasToWebP(canvas)
+    return canvasToShareImage(canvas)
   }, [buildName, isSpeculativeRelics, selectedBlessings, selectedRegions, selectedRejuvenatedRelic, selectedRelics])
 
   const createShareLink = useCallback(async () => {
@@ -151,7 +151,7 @@ export function useShareBuild({
           (_, index) => selectedRelics[index + 1] ?? '',
         ),
       },
-      await createWebPImage(),
+      await createShareImage(),
     )
     if (!isSpeculativeRelics && !selectedRejuvenatedRelic) {
       return share.shareUrl
@@ -165,7 +165,7 @@ export function useShareBuild({
       shareUrl.searchParams.set('rejuvenatedRelic', selectedRejuvenatedRelic)
     }
     return shareUrl.toString()
-  }, [buildName, createWebPImage, isSpeculativeRelics, selectedBlessings, selectedRegions, selectedRejuvenatedRelic, selectedRelics])
+  }, [buildName, createShareImage, isSpeculativeRelics, selectedBlessings, selectedRegions, selectedRejuvenatedRelic, selectedRelics])
 
   useEffect(() => {
     if (shareUrl) return
@@ -195,19 +195,19 @@ export function useShareBuild({
 
   const downloadImage = useCallback(async () => {
     try {
-      const blob = await createWebPImage()
+      const blob = await createShareImage()
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
-      link.download = getShareImageFilename(buildName)
+      link.download = getShareImageFilename(buildName, blob.type)
       link.href = url
       document.body.appendChild(link)
       link.click()
       link.remove()
       window.setTimeout(() => URL.revokeObjectURL(url), 1_000)
     } catch (error) {
-      setShareError(error instanceof Error ? error.message : 'Unable to create WebP image')
+      setShareError(error instanceof Error ? error.message : 'Unable to create share image')
     }
-  }, [buildName, createWebPImage])
+  }, [buildName, createShareImage])
 
   const copyLink = useCallback(async () => {
     if (!shareUrl) return
