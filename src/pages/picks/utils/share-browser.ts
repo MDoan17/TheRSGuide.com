@@ -1,11 +1,16 @@
 const SHARE_WEBP_QUALITY = 0.9
+const SHARE_IMAGE_TYPES = new Set(['image/png', 'image/webp'])
 
-export function canvasToWebP(canvas: HTMLCanvasElement) {
+export function canvasToShareImage(canvas: HTMLCanvasElement) {
   return new Promise<Blob>((resolve, reject) => {
     canvas.toBlob(
       (blob) => {
-        if (!blob || blob.type !== 'image/webp') {
-          reject(new Error('This browser could not generate the WebP share image'))
+        if (!blob) {
+          reject(new Error('This browser could not generate the share image'))
+          return
+        }
+        if (!SHARE_IMAGE_TYPES.has(blob.type)) {
+          reject(new Error(`This browser generated an unsupported image type: ${blob.type || 'unknown'}`))
           return
         }
         resolve(blob)
@@ -16,13 +21,14 @@ export function canvasToWebP(canvas: HTMLCanvasElement) {
   })
 }
 
-export function getShareImageFilename(buildName: string) {
+export function getShareImageFilename(buildName: string, imageType = 'image/webp') {
   const filename = buildName
     .trim()
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '')
-  return `${filename || 'runescape-leagues-2-equilibrium'}.webp`
+  const extension = imageType === 'image/png' ? 'png' : 'webp'
+  return `${filename || 'runescape-leagues-2-equilibrium'}.${extension}`
 }
 
 export async function copyText(value: string) {
