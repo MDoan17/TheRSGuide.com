@@ -15,7 +15,6 @@ import { cn } from '@/lib/utils'
 import { RegionOutlineMap } from '@/pages/picks/components/RegionOutlineMap'
 import { RelicSelector } from '@/pages/picks/components/RelicSelector'
 import { LEAGUE_OPTIONS } from '../../../shared/league-options'
-import { SPECULATIVE_RELIC_TIERS } from '../../../shared/speculative-relic-options'
 
 export type SkillGrade = 'S' | 'A' | 'B' | 'C' | 'D' | 'F'
 
@@ -209,19 +208,16 @@ function useSkillCoverage() {
     picksState.selectedRejuvenatedRelic,
   ].filter(Boolean)
   const selectedRegionOptionIds = picksState.selectedRegionIds
-  const displayedRelicTiers = picksState.isSpeculativeRelics
-    ? SPECULATIVE_RELIC_TIERS
-    : RELIC_TIERS
   const selectedRelics = useMemo(
     () => {
       const selectedIdSet = new Set(selectedRelicIds)
-      return displayedRelicTiers
+      return RELIC_TIERS
         .flatMap(({ options }) => options)
         .filter(({ id }) => selectedIdSet.has(id))
         .map(({ label }) => relicByName.get(label))
         .filter((relic): relic is Relic => Boolean(relic))
     },
-    [displayedRelicTiers, selectedRelicIds],
+    [selectedRelicIds],
   )
   const selectedRegionGrades = useMemo(
     () => getRegionGradesForOptions(selectedRegionOptionIds),
@@ -239,7 +235,6 @@ function useSkillCoverage() {
   ).length
 
   return {
-    isSpeculativeRelics: picksState.isSpeculativeRelics,
     results,
     selectedOptionalRegionCount,
     selectedRejuvenatedRelic: picksState.selectedRejuvenatedRelic,
@@ -295,7 +290,6 @@ function SkillCoveragePanel({
 
 export function SkillingSolver() {
   const {
-    isSpeculativeRelics,
     results,
     selectedOptionalRegionCount,
     selectedRejuvenatedRelic,
@@ -308,13 +302,9 @@ export function SkillingSolver() {
     <section className="leagues-picker not-prose my-8 overflow-hidden border-y border-border bg-card/10 sm:border-x">
       <div className="px-4 py-5 sm:px-6">
         <RelicSelector
-          isSpeculative={isSpeculativeRelics}
           onChange={(selectedRelics) => updatePicksState({ selectedRelics })}
           onRejuvenatedRelicChange={(selectedRejuvenatedRelic) =>
             updatePicksState({ selectedRejuvenatedRelic })
-          }
-          onSpeculativeChange={(isSpeculativeRelics) =>
-            updatePicksState({ isSpeculativeRelics })
           }
           selectedRejuvenatedRelic={selectedRejuvenatedRelic}
           selectedRelics={selectedRelicsByTier}

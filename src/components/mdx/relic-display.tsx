@@ -11,6 +11,7 @@ interface RelicItem {
   name: string;
   tagline: string;
   tier: number;
+  slot: number;
   image: string;
   effects: string[];
   notes: string[];
@@ -46,7 +47,9 @@ const RelicCards: React.FC<{ relics: RelicItem[]; onViewRelic: (r: RelicItem) =>
 
 function RelicDisplay({ tier, points }: RelicDisplayProps) {
 
-    const relics = relicData.Relics.filter((relic) => relic.tier === tier) as RelicItem[]
+    const relics = relicData.Relics
+      .filter((relic) => relic.tier === tier)
+      .sort((left, right) => left.slot - right.slot) as RelicItem[]
     const passives = (relicData.Passives.find((entry) => entry.tier === tier)?.effects ?? []) as LeaguesPassive[]
 
     const [selectedRelic, setSelectedRelic] = useState<RelicItem | null>(null);

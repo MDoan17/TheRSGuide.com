@@ -25,7 +25,6 @@ export type ShareStatus = 'preparing' | 'creating' | 'ready' | 'error'
 
 type UseShareBuildOptions = {
   buildName: string
-  isSpeculativeRelics: boolean
   selectedBlessings: BlessingSelections
   selectedRejuvenatedRelic: string
   selectedRegions: RegionSelection[]
@@ -37,7 +36,6 @@ const SHARE_OPEN_DELAY_MS = 1_000
 
 export function useShareBuild({
   buildName,
-  isSpeculativeRelics,
   selectedBlessings,
   selectedRejuvenatedRelic,
   selectedRegions,
@@ -59,7 +57,6 @@ export function useShareBuild({
     void loadPickImages(
       selectedRelics,
       selectedBlessings,
-      isSpeculativeRelics,
       selectedRejuvenatedRelic,
     ).then((images) => {
       if (isActive) setPickImages(images)
@@ -68,7 +65,7 @@ export function useShareBuild({
     return () => {
       isActive = false
     }
-  }, [isSpeculativeRelics, selectedBlessings, selectedRejuvenatedRelic, selectedRelics])
+  }, [selectedBlessings, selectedRejuvenatedRelic, selectedRelics])
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -80,13 +77,11 @@ export function useShareBuild({
         selectedRegions,
         selectedBlessings,
         pickImages,
-        isSpeculativeRelics,
         selectedRejuvenatedRelic,
       )
     }
   }, [
     buildName,
-    isSpeculativeRelics,
     pickImages,
     selectedBlessings,
     selectedRegions,
@@ -121,7 +116,6 @@ export function useShareBuild({
     const loadedPickImages = await loadPickImages(
       selectedRelics,
       selectedBlessings,
-      isSpeculativeRelics,
       selectedRejuvenatedRelic,
     )
     await document.fonts.ready
@@ -133,11 +127,10 @@ export function useShareBuild({
       selectedRegions,
       selectedBlessings,
       loadedPickImages,
-      isSpeculativeRelics,
       selectedRejuvenatedRelic,
     )
     return canvasToShareImage(canvas)
-  }, [buildName, isSpeculativeRelics, selectedBlessings, selectedRegions, selectedRejuvenatedRelic, selectedRelics])
+  }, [buildName, selectedBlessings, selectedRegions, selectedRejuvenatedRelic, selectedRelics])
 
   const createShareLink = useCallback(async () => {
     const share = await createShare(
@@ -153,19 +146,16 @@ export function useShareBuild({
       },
       await createShareImage(),
     )
-    if (!isSpeculativeRelics && !selectedRejuvenatedRelic) {
+    if (!selectedRejuvenatedRelic) {
       return share.shareUrl
     }
 
     const shareUrl = new URL(share.shareUrl)
-    if (isSpeculativeRelics) {
-      shareUrl.searchParams.set('relicMode', 'speculative')
-    }
     if (selectedRejuvenatedRelic) {
       shareUrl.searchParams.set('rejuvenatedRelic', selectedRejuvenatedRelic)
     }
     return shareUrl.toString()
-  }, [buildName, createShareImage, isSpeculativeRelics, selectedBlessings, selectedRegions, selectedRejuvenatedRelic, selectedRelics])
+  }, [buildName, createShareImage, selectedBlessings, selectedRegions, selectedRejuvenatedRelic, selectedRelics])
 
   useEffect(() => {
     if (shareUrl) return

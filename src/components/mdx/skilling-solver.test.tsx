@@ -123,9 +123,10 @@ describe('SkillingSolver', () => {
     expect(markup).toContain('Click the map to add or remove a region')
     expect(markup).toContain('Reset region picks')
     expect(markup).toContain('Tier 7')
-    expect(markup).toContain('Tier 2 relic A')
+    expect(markup).toContain('Animal Wrangler')
+    expect(markup).toContain('Infernal Fire')
     expect(markup).toContain('Summoning')
-    expect(markup).toContain('Speculative mode')
+    expect(markup).not.toContain('Speculative mode')
   })
 
   it('loads region and relic choices saved by the picker', () => {
