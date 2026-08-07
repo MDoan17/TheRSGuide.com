@@ -31,6 +31,28 @@ describe('speculative relic options', () => {
     expect(labelsForTier(4)).toContain('Antiquarian')
     expect(labelsForTier(4)).not.toContain('Divine Druid')
     expect(labelsForTier(5)).toContain('Production Master')
-    expect(labelsForTier(7)).toContain('Naragi')
+    expect(labelsForTier(5)).toContain('Clue Connoisseur')
+    expect(labelsForTier(7)).toContain('Naragi Edict')
+    expect(labelsForTier(7)).toContain('Infernal Fire')
+  })
+
+  it('uses the expected icon for each named relic', () => {
+    const optionByLabel = new Map(
+      SPECULATIVE_RELIC_TIERS.flatMap(({ options }) =>
+        options.map((option) => [option.label, option] as const),
+      ),
+    )
+
+    expect(optionByLabel.get('Antiquarian')?.icon).toContain('/antiquarian.png')
+    expect(optionByLabel.get('Production Master')?.icon).toContain(
+      '/production_master.png',
+    )
+    expect(optionByLabel.get('Naragi Edict')?.icon).toContain('/naragi_edict.png')
+    expect(optionByLabel.get('Clue Connoisseur')?.icon).toContain(
+      '/clue_connoisseur.png',
+    )
+    expect(optionByLabel.get('Infernal Fire')?.icon).toContain(
+      '/infernal_fire.png',
+    )
   })
 })

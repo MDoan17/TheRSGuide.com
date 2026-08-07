@@ -13,6 +13,7 @@ export function useSharedBuildImport(onImport: (state: PicksState) => void) {
   const [searchParams, setSearchParams] = useSearchParams()
   const shareCode = searchParams.get('share')
   const isSpeculativeRelics = searchParams.get('relicMode') === 'speculative'
+  const selectedRejuvenatedRelic = searchParams.get('rejuvenatedRelic') ?? ''
 
   useEffect(() => {
     if (!shareCode) return
@@ -22,6 +23,7 @@ export function useSharedBuildImport(onImport: (state: PicksState) => void) {
       const nextSearchParams = new URLSearchParams(searchParams)
       nextSearchParams.delete('share')
       nextSearchParams.delete('relicMode')
+      nextSearchParams.delete('rejuvenatedRelic')
       setSearchParams(nextSearchParams, { replace: true })
     }
 
@@ -35,7 +37,13 @@ export function useSharedBuildImport(onImport: (state: PicksState) => void) {
     void getSharedBuild(parsedCode.data)
       .then((build) => {
         if (!isActive) return
-        onImport(createPicksStateFromSharedBuild(build, isSpeculativeRelics))
+        onImport(
+          createPicksStateFromSharedBuild(
+            build,
+            isSpeculativeRelics,
+            selectedRejuvenatedRelic,
+          ),
+        )
         clearShareCode()
         toast.success('Shared build loaded', {
           description: 'You can edit and rename it.',
@@ -50,7 +58,7 @@ export function useSharedBuildImport(onImport: (state: PicksState) => void) {
     return () => {
       isActive = false
     }
-  }, [isSpeculativeRelics, onImport, searchParams, setSearchParams, shareCode])
+  }, [isSpeculativeRelics, onImport, searchParams, selectedRejuvenatedRelic, setSearchParams, shareCode])
 }
 
 

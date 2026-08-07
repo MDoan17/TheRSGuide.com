@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import { regionMapData } from '@/data/leagues/region-map-data'
 import {
   type DisplayRegion,
   type DrawBounds,
@@ -42,18 +43,15 @@ export function RegionOutlineMap({
 }: RegionOutlineMapProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mapBoundsRef = useRef<DrawBounds | null>(null)
-  const [mapData, setMapData] = useState<RegionMapData | null>(null)
   const [canvasSize, setCanvasSize] = useState<CanvasSize>({
     height: 1,
     width: 1,
   })
   const [hoveredRegionId, setHoveredRegionId] = useState<string | null>(null)
 
-  const pickerMapData = useMemo<RegionMapData | null>(() => {
-    if (!mapData) return null
-
+  const pickerMapData = useMemo<RegionMapData>(() => {
     return {
-      ...mapData,
+      ...regionMapData,
       superRegions: LEAGUE_OPTIONS.regions
         .filter((region) => region.regionIds.length > 1)
         .map((region) => ({
@@ -62,9 +60,9 @@ export function RegionOutlineMap({
           regionIds: region.regionIds,
         })),
     }
-  }, [mapData])
+  }, [])
   const displayRegions = useMemo(
-    () => (pickerMapData ? getDisplayRegions(pickerMapData) : []),
+    () => getDisplayRegions(pickerMapData),
     [pickerMapData],
   )
   const displayRegionById = useMemo(
@@ -113,33 +111,6 @@ export function RegionOutlineMap({
   }, [onSelectionDetailsChange, selectedRegions])
 
   useEffect(() => {
-    let isMounted = true
-
-    fetch('/data/leagues/rs3-region-map.json')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Map data failed to load.')
-        }
-
-        return response.json() as Promise<RegionMapData>
-      })
-      .then((data) => {
-        if (isMounted) {
-          setMapData(data)
-        }
-      })
-      .catch(() => {
-        if (isMounted) {
-          setMapData(null)
-        }
-      })
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
-
-  useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) {
       return
@@ -159,7 +130,7 @@ export function RegionOutlineMap({
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas || !pickerMapData) {
+    if (!canvas) {
       return
     }
 
@@ -181,10 +152,6 @@ export function RegionOutlineMap({
 
   const getRegionIdFromPoint = useCallback(
     (clientX: number, clientY: number) => {
-      if (!pickerMapData) {
-        return null
-      }
-
       const canvas = canvasRef.current
       const bounds = mapBoundsRef.current
       if (!canvas || !bounds) {

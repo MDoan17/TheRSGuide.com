@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
+import { regionMapData } from '@/data/leagues/region-map-data'
 import { createShare } from '@/lib/shares-api'
-import type { RegionMapData } from '@/pages/map/utils/map'
 import {
   drawBuildCard,
   loadPickImages,
@@ -27,6 +27,7 @@ type UseShareBuildOptions = {
   buildName: string
   isSpeculativeRelics: boolean
   selectedBlessings: BlessingSelections
+  selectedRejuvenatedRelic: string
   selectedRegions: RegionSelection[]
   selectedRelics: Record<number, string>
 }
@@ -38,6 +39,7 @@ export function useShareBuild({
   buildName,
   isSpeculativeRelics,
   selectedBlessings,
+  selectedRejuvenatedRelic,
   selectedRegions,
   selectedRelics,
 }: UseShareBuildOptions) {
@@ -45,19 +47,11 @@ export function useShareBuild({
   const requestIdRef = useRef(crypto.randomUUID())
   const sharePromiseRef = useRef<Promise<string> | null>(null)
   const shareOpenTimeoutsRef = useRef<number[]>([])
-  const [mapData, setMapData] = useState<RegionMapData | null>(null)
   const [shareUrl, setShareUrl] = useState<string | null>(null)
   const [shareStatus, setShareStatus] = useState<ShareStatus>('preparing')
   const [shareError, setShareError] = useState<string | null>(null)
   const [shareAttempt, setShareAttempt] = useState(0)
   const [pickImages, setPickImages] = useState<PickImageMap>({})
-
-  useEffect(() => {
-    fetch('/data/leagues/rs3-region-map.json')
-      .then((response) => response.json() as Promise<RegionMapData>)
-      .then(setMapData)
-      .catch(() => setMapData(null))
-  }, [])
 
   useEffect(() => {
     let isActive = true
@@ -66,6 +60,7 @@ export function useShareBuild({
       selectedRelics,
       selectedBlessings,
       isSpeculativeRelics,
+      selectedRejuvenatedRelic,
     ).then((images) => {
       if (isActive) setPickImages(images)
     })
@@ -73,28 +68,29 @@ export function useShareBuild({
     return () => {
       isActive = false
     }
-  }, [isSpeculativeRelics, selectedBlessings, selectedRelics])
+  }, [isSpeculativeRelics, selectedBlessings, selectedRejuvenatedRelic, selectedRelics])
 
   useEffect(() => {
     if (canvasRef.current) {
       drawBuildCard(
         canvasRef.current,
         buildName,
-        mapData,
+        regionMapData,
         selectedRelics,
         selectedRegions,
         selectedBlessings,
         pickImages,
         isSpeculativeRelics,
+        selectedRejuvenatedRelic,
       )
     }
   }, [
     buildName,
     isSpeculativeRelics,
-    mapData,
     pickImages,
     selectedBlessings,
     selectedRegions,
+    selectedRejuvenatedRelic,
     selectedRelics,
   ])
 
@@ -121,25 +117,27 @@ export function useShareBuild({
 
   const createWebPImage = useCallback(async () => {
     const canvas = canvasRef.current
-    if (!canvas || !mapData) throw new Error('The share preview is still loading')
+    if (!canvas) throw new Error('The share preview is still loading')
     const loadedPickImages = await loadPickImages(
       selectedRelics,
       selectedBlessings,
       isSpeculativeRelics,
+      selectedRejuvenatedRelic,
     )
     await document.fonts.ready
     drawBuildCard(
       canvas,
       buildName,
-      mapData,
+      regionMapData,
       selectedRelics,
       selectedRegions,
       selectedBlessings,
       loadedPickImages,
       isSpeculativeRelics,
+      selectedRejuvenatedRelic,
     )
     return canvasToWebP(canvas)
-  }, [buildName, isSpeculativeRelics, mapData, selectedBlessings, selectedRegions, selectedRelics])
+  }, [buildName, isSpeculativeRelics, selectedBlessings, selectedRegions, selectedRejuvenatedRelic, selectedRelics])
 
   const createShareLink = useCallback(async () => {
     const share = await createShare(
@@ -155,15 +153,22 @@ export function useShareBuild({
       },
       await createWebPImage(),
     )
-    if (!isSpeculativeRelics) return share.shareUrl
+    if (!isSpeculativeRelics && !selectedRejuvenatedRelic) {
+      return share.shareUrl
+    }
 
     const shareUrl = new URL(share.shareUrl)
-    shareUrl.searchParams.set('relicMode', 'speculative')
+    if (isSpeculativeRelics) {
+      shareUrl.searchParams.set('relicMode', 'speculative')
+    }
+    if (selectedRejuvenatedRelic) {
+      shareUrl.searchParams.set('rejuvenatedRelic', selectedRejuvenatedRelic)
+    }
     return shareUrl.toString()
-  }, [buildName, createWebPImage, isSpeculativeRelics, selectedBlessings, selectedRegions, selectedRelics])
+  }, [buildName, createWebPImage, isSpeculativeRelics, selectedBlessings, selectedRegions, selectedRejuvenatedRelic, selectedRelics])
 
   useEffect(() => {
-    if (!mapData || shareUrl) return
+    if (shareUrl) return
 
     let isActive = true
     setShareError(null)
@@ -186,7 +191,7 @@ export function useShareBuild({
     return () => {
       isActive = false
     }
-  }, [createShareLink, mapData, shareAttempt, shareUrl])
+  }, [createShareLink, shareAttempt, shareUrl])
 
   const downloadImage = useCallback(async () => {
     try {
@@ -249,7 +254,7 @@ export function useShareBuild({
     canvasRef,
     copyLink,
     downloadImage,
-    isMapReady: Boolean(mapData),
+    isMapReady: true,
     retryShare,
     shareError,
     shareStatus,

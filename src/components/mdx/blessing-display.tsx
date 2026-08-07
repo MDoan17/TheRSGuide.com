@@ -13,7 +13,7 @@ type BlessingItem = {
   tagline: string
   path: string
   tier: number
-  image: string
+  image?: string
   effects: string[]
   notes: string[]
 }
@@ -29,7 +29,9 @@ const BlessingDetailView: React.FC<{ blessing: BlessingItem }> = ({ blessing }) 
             <DrawerHeader className="min-h-54 max-h-[30vh] grow items-center">
                 <DrawerTitle className="text-2xl text-center">{blessing.name}</DrawerTitle>
                 <DrawerDescription className="text-center italic">{blessing.path}</DrawerDescription>
-                <img src={blessing.image} alt={blessing.name} className="w-32 min-w-0 min-h-14 max-h-full object-scale-down" />
+                {blessing.image && (
+                    <img src={blessing.image} alt={blessing.name} className="w-32 min-w-0 min-h-14 max-h-full object-scale-down" />
+                )}
             </DrawerHeader>
             <div className="px-4 flex flex-col gap-4 max-h-[calc(100vh-13.5rem)]">
                 <ScrollArea style={{ maxHeight: '70vh', overflowY: 'auto', 'paddingBottom': '1rem' }}>
@@ -63,7 +65,9 @@ const BlessingCards: React.FC<{ blessings: BlessingItem[]; onViewBlessing: (r: B
         {blessings.map((blessing) => (
             <div key={blessing.name} className={`blessing-card ${blessing.path.toLowerCase()} bg-card/50 flex flex-col items-center p-4 border grow shrink basis-[30%] justify-between`}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
-                    <img src={blessing.image} alt={blessing.name} style={{ width: '128px' }} />
+                    {blessing.image && (
+                        <img src={blessing.image} alt={blessing.name} style={{ width: '128px' }} />
+                    )}
                     <span className="font-display text-xl mt-4 mb-2 text-center">{blessing.name}</span>
                     <p className="mb-2 text-center text-secondary-foreground">{blessing.tagline}</p>
                 </div>
@@ -124,5 +128,5 @@ function BlessingDisplay({ tier, tasks }: BlessingDisplayProps) {
   )
 }
 
-export { BlessingDisplay }
-export type { BlessingDisplayProps }
+export { BlessingDetailView, BlessingDisplay }
+export type { BlessingDisplayProps, BlessingItem }

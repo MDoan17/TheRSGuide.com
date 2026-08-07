@@ -1,10 +1,18 @@
+import { useState } from 'react'
 import { RotateCcw } from 'lucide-react'
 
+import type { RelicItem } from '@/components/mdx/relic-display'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { RELIC_TIERS } from '@/lib/picks-state'
+import relicData from '@/data/leagues-ii/relics.json'
+import {
+  RELIC_TIERS,
+  REJUVENATED_RELIC_NAME,
+  getRejuvenatedRelicTier,
+} from '@/lib/picks-state'
 import { SPECULATIVE_RELIC_TIERS } from '../../../../shared/speculative-relic-options'
 import { PickProgressBar } from './PickProgressBar'
+import { PickerRelicDetailsDrawer } from './PickerRelicDetailsDrawer'
 import {
   TierOptionMatrix,
   type TierOptionMatrixRow,
@@ -13,24 +21,64 @@ import {
 type RelicSelectorProps = {
   isSpeculative: boolean
   onChange: (relics: Record<number, string>) => void
+  onRejuvenatedRelicChange: (relicId: string) => void
   onSpeculativeChange: (isSpeculative: boolean) => void
+  selectedRejuvenatedRelic: string
   selectedRelics: Record<number, string>
 }
 
 const RELIC_OPTION_ROWS = ['A', 'B', 'C'] as const
 
+const KNOWN_RELICS = new Map<string, RelicItem>(
+  relicData.Relics.map((relic) => [relic.name, relic]),
+)
+
+type SelectedRelicDetails = {
+  relic: RelicItem
+  tier: number
+}
+
 export function RelicSelector({
   isSpeculative,
   onChange,
+  onRejuvenatedRelicChange,
   onSpeculativeChange,
+  selectedRejuvenatedRelic,
   selectedRelics,
 }: RelicSelectorProps) {
+  const [selectedRelicDetails, setSelectedRelicDetails] =
+    useState<SelectedRelicDetails | null>(null)
   const selectedCount = Object.keys(selectedRelics).length
   const displayedRelicTiers = isSpeculative
     ? SPECULATIVE_RELIC_TIERS
     : RELIC_TIERS
+  const rejuvenatedTier = getRejuvenatedRelicTier(
+    selectedRelics,
+    isSpeculative,
+  )
+  const isChoosingRejuvenatedRelic = Boolean(
+    rejuvenatedTier && !selectedRejuvenatedRelic,
+  )
 
   const toggleRelic = (tier: number, relicName: string) => {
+    const relic = displayedRelicTiers
+      .find((entry) => entry.tier === tier)
+      ?.options.find(({ id }) => id === relicName)
+    const isRejuvenated = relic?.label === REJUVENATED_RELIC_NAME
+    const isRejuvenatedMatch = selectedRejuvenatedRelic === relicName
+
+    if (
+      isChoosingRejuvenatedRelic &&
+      rejuvenatedTier &&
+      tier < rejuvenatedTier &&
+      selectedRelics[tier] !== relicName
+    ) {
+      onRejuvenatedRelicChange(relicName)
+      return
+    }
+
+    if (isRejuvenatedMatch) return
+
     const nextSelection = { ...selectedRelics }
     if (nextSelection[tier] === relicName) {
       delete nextSelection[tier]
@@ -38,6 +86,12 @@ export function RelicSelector({
       nextSelection[tier] = relicName
     }
     onChange(nextSelection)
+    if (
+      isRejuvenated ||
+      !getRejuvenatedRelicTier(nextSelection, isSpeculative)
+    ) {
+      onRejuvenatedRelicChange('')
+    }
   }
 
   const matrixTiers = displayedRelicTiers.map((tier) => ({
@@ -50,17 +104,40 @@ export function RelicSelector({
       cells: displayedRelicTiers.map((tier) => {
         const option = tier.options[optionIndex]
         if (!option) return null
-        const isSelected = selectedRelics[tier.tier] === option.id
+        const isMainSelection = selectedRelics[tier.tier] === option.id
+        const isRejuvenated =
+          option.label === REJUVENATED_RELIC_NAME && isMainSelection
+        const isRejuvenatedMatch = selectedRejuvenatedRelic === option.id
+        const isRejuvenatedCandidate = Boolean(
+          isChoosingRejuvenatedRelic &&
+          rejuvenatedTier &&
+          tier.tier < rejuvenatedTier &&
+          !isMainSelection,
+        )
+        const knownRelic = KNOWN_RELICS.get(option.label)
         return {
-          ariaLabel: `Tier ${tier.tier}, option ${optionLetter}, ${option.label}${option.description ? `: ${option.description}` : ''}`,
+          ariaLabel: `Tier ${tier.tier}, option ${optionLetter}, ${option.label}${isRejuvenatedCandidate ? ', available as the Rejuvenated pick' : ''}${isRejuvenatedMatch ? ', paired with Rejuvenated' : ''}${option.description ? `: ${option.description}` : ''}`,
           description:
             option.description ?? 'Relic description coming soon',
           fallback: optionLetter,
           id: option.id,
           image: option.icon,
-          isSelected,
+          isSelected: isMainSelection || isRejuvenatedMatch,
           label: option.label,
+          detailsAriaLabel: knownRelic
+            ? `View details for ${knownRelic.name}`
+            : undefined,
           onSelect: () => toggleRelic(tier.tier, option.id),
+          onViewDetails: knownRelic
+            ? () => setSelectedRelicDetails({ relic: knownRelic, tier: tier.tier })
+            : undefined,
+          readOnly: isRejuvenatedMatch,
+          relicState:
+            isRejuvenated || isRejuvenatedMatch
+              ? 'rejuvenated-selected' as const
+              : isRejuvenatedCandidate
+                ? 'rejuvenated-available' as const
+                : undefined,
         }
       }),
     }),
@@ -73,7 +150,7 @@ export function RelicSelector({
           <h2 className="font-display text-2xl font-semibold text-foreground">
             1. Choose your relics
           </h2>
-          <div className="flex items-center gap-4">
+          <div className="flex w-full items-center justify-between gap-4 sm:w-auto sm:justify-start">
             <Label className="cursor-pointer" htmlFor="speculative-relics">
               Speculative mode
               <Switch
@@ -81,6 +158,7 @@ export function RelicSelector({
                 id="speculative-relics"
                 onCheckedChange={(checked) => {
                   onChange({})
+                  onRejuvenatedRelicChange('')
                   onSpeculativeChange(checked)
                 }}
               />
@@ -89,7 +167,10 @@ export function RelicSelector({
               aria-label="Reset relic picks"
               className="flex size-10 shrink-0 items-center justify-center rounded-md border border-primary/50 text-primary transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:border-border disabled:text-muted-foreground disabled:hover:bg-transparent"
               disabled={selectedCount === 0}
-              onClick={() => onChange({})}
+              onClick={() => {
+                onChange({})
+                onRejuvenatedRelicChange('')
+              }}
               title="Reset relic picks"
               type="button"
             >
@@ -108,6 +189,14 @@ export function RelicSelector({
             Best-guess placements from preview footage. Names, tiers, and slots may change; the confirmed Relics guide is unaffected.
           </p>
         )}
+        {isChoosingRejuvenatedRelic && (
+          <p
+            aria-live="polite"
+            className="mt-3 text-sm font-semibold text-[var(--rejuvenated)]"
+          >
+            Choose one glowing relic from Tier 1–5 to pair with Rejuvenated.
+          </p>
+        )}
       </div>
 
       <TierOptionMatrix
@@ -116,6 +205,15 @@ export function RelicSelector({
         rows={matrixRows}
         tiers={matrixTiers}
         variant="relic"
+      />
+
+      <PickerRelicDetailsDrawer
+        isSpeculative={isSpeculative}
+        relic={selectedRelicDetails?.relic ?? null}
+        tier={selectedRelicDetails?.tier}
+        onOpenChange={(open) => {
+          if (!open) setSelectedRelicDetails(null)
+        }}
       />
     </section>
   )

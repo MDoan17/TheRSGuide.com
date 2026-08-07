@@ -2,7 +2,7 @@
     "Relics": [
         {
             "name": "Survivalist",
-            "tagline": "best-in-slot gathering tools and doubles gathered resources.",
+            "tagline": "Best-in-slot gathering tools and doubles gathered resources.",
             "tier": 1,
             "image": "https://media.thersguide.com/leagues-2/relics/survivalist.png",
             "effects": [
@@ -173,7 +173,7 @@
                 },
                 {
                     "skill": "smithing",
-                    "grade": "A"
+                    "grade": "S"
                 },
                 {
                     "skill": "cooking",
@@ -329,7 +329,7 @@
             "skillSolves": [
                 {
                     "skill": "farming",
-                    "grade": "A"
+                    "grade": "S"
                 }   
             ]
         },
@@ -399,7 +399,7 @@
                 },
                 {
                     "skill": "farming",
-                    "grade": "B"
+                    "grade": "A"
                 },
                 {
                     "skill": "summoning",
@@ -483,7 +483,7 @@
             "name": "Production Master",
             "tagline": "Processes production items at once and supplies skilling conveniences through the Brooch of the Spirits.",
             "tier": 0,
-            "image": "https://media.thersguide.com/leagues-2/relics/unknown.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/production_master.png",
             "effects": [
                 "Grants the Brooch of the Spirits.",
                 "Various production activities have their items processed at once.",
@@ -497,13 +497,37 @@
             "notes": [
             ],
             "skillSolves": [
+                {
+                    "skill": "construction",
+                    "grade": "A"
+                },
+                {
+                    "skill": "cooking",
+                    "grade": "S"
+                },
+                {
+                    "skill": "crafting",
+                    "grade": "S"
+                },
+                {
+                    "skill": "herblore",
+                    "grade": "A"
+                },
+                {
+                    "skill": "fletching",
+                    "grade": "S"
+                },
+                {
+                    "skill": "smithing",
+                    "grade": "B"
+                }
             ]
         },
         {
             "name": "Antiquarian",
             "tagline": "Unlocks Archaeology relics and streamlines materials, artefacts, collections and excavation rewards.",
             "tier": 0,
-            "image": "https://media.thersguide.com/leagues-2/relics/unknown.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/antiquarian.png",
             "effects": [
                 "All Archaeology relics are available to use after completing the Archaeology tutorial.",
                 "Archaeology materials are automatically sent to the material storage, or to the bank if it's full.",
@@ -520,13 +544,17 @@
             "notes": [
             ],
             "skillSolves": [
+                {
+                    "skill": "archaeology",
+                    "grade": "A"
+                }
             ]
         },
         {
             "name": "Naragi Edict",
             "tagline": "Grants a reusable Sliver of Edicts with healing, combat boosts, revival and pocket-slot bonuses.",
             "tier": 0,
-            "image": "https://media.thersguide.com/leagues-2/relics/unknown.png",
+            "image": "https://media.thersguide.com/leagues-2/relics/naragi_edict.png",
             "effects": [
                 "Grants you the Sliver of Edicts.",
                 "The sliver can be activated from the inventory for 16.8 seconds.",
@@ -535,6 +563,44 @@
                 "When activated, revives you if you die.",
                 "The sliver has a cooldown of 1.5 minutes before it can be activated again.",
                 "The sliver can be placed in your pocket slot and offers +300 armour, +14 melee/ranged/magic/necromancy damage bonus, +1,500 lifepoints bonus and +15 Prayer bonus."
+            ],
+            "notes": [
+            ],
+            "skillSolves": [
+            ]
+        },
+        {
+            "name": "Clue Connoisseur",
+            "tagline": "Streamlines Treasure Trails with clue storage, teleports, extra rewards and unlimited sealed clues.",
+            "tier": 0,
+            "image": "https://media.thersguide.com/leagues-2/relics/clue_connoisseur.png",
+            "effects": [
+                "Grants you Uri's briefcase, which can store sealed clue scrolls and caskets and allows you to teleport to any hidey-holes available in your unlocked areas.",
+                "Unlocks the Globetrotter's outfit.",
+                "Receive 3x Treasure Trail points from completing clues.",
+                "Receive an extra casket when completing clues.",
+                "When starting a new clue, it will have the minimum number of steps required to complete it.",
+                "When opening treasure caskets, you will receive the maximum number of loot drops.",
+                "All hidey-holes act as being full for the Globetrotter outfit effect.",
+                "You have 2x the chance of receiving a sealed clue scroll.",
+                "You can find an unlimited number of sealed clues."
+            ],
+            "notes": [
+            ],
+            "skillSolves": [
+            ]
+        },
+        {
+            "name": "Infernal Fire",
+            "tagline": "Grants an Avernic star that applies Death Mark with every combat style and provides pocket-slot bonuses.",
+            "tier": 0,
+            "image": "https://media.thersguide.com/leagues-2/relics/infernal_fire.png",
+            "effects": [
+                "Grants you an Avernic star.",
+                "While in your inventory or worn in your pocket slot, all combat styles trigger Death Mark 100% of the time.",
+                "Death Mark instantly kills a marked target once it reaches 20% of its lifepoints.",
+                "When an enemy is killed by Death Mark, you gain 5% adrenaline.",
+                "The Avernic star can be placed in your pocket slot and offers +18.7 melee, ranged, magic and necromancy damage bonus, and +15 Prayer bonus."
             ],
             "notes": [
             ],

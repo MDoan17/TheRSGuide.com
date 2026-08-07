@@ -20,6 +20,7 @@ const CARD_HEIGHT = 630
 const BACKGROUND = '#0a0908'
 const SURFACE = '#141210'
 const PRIMARY = '#cc9a63'
+const REJUVENATED = '#167c9c'
 const FOREGROUND = '#efe4d2'
 const MUTED = '#8b7c6b'
 const BORDER = 'rgba(204, 154, 99, 0.25)'
@@ -90,13 +91,17 @@ export async function loadPickImages(
   selectedRelics: Record<number, string>,
   selectedBlessings: BlessingSelections,
   isSpeculativeRelics = false,
+  selectedRejuvenatedRelic = '',
 ): Promise<PickImageMap> {
   const requests: Array<Promise<readonly [string, HTMLImageElement] | null>> = []
   const relicsById = isSpeculativeRelics
     ? SPECULATIVE_RELIC_BY_ID
     : RELIC_BY_ID
 
-  for (const relicId of new Set(Object.values(selectedRelics))) {
+  for (const relicId of new Set([
+    ...Object.values(selectedRelics),
+    selectedRejuvenatedRelic,
+  ])) {
     const source = relicsById.get(relicId)?.icon
     if (source) {
       const cacheKey = `relic:${isSpeculativeRelics ? 'speculative' : 'confirmed'}:${relicId}`
@@ -168,15 +173,17 @@ function drawChoiceTile(
     image?: HTMLImageElement
     label: string
     selected: boolean
+    selectionColor?: string
     width: number
     x: number
     y: number
   },
 ) {
-  const { accentBackground, fallback, height, image, label, selected, width, x, y } = options
-  context.fillStyle = selected ? (accentBackground ?? SURFACE) : SURFACE
+  const { accentBackground, fallback, height, image, label, selected, selectionColor, width, x, y } = options
+  const selectedColor = selectionColor ?? PRIMARY
+  context.fillStyle = selected ? (accentBackground ?? selectionColor ?? SURFACE) : SURFACE
   context.fillRect(x, y, width, height)
-  context.strokeStyle = selected ? PRIMARY : BORDER
+  context.strokeStyle = selected ? selectedColor : BORDER
   context.lineWidth = selected ? 2 : 1
   context.strokeRect(x, y, width, height)
 
@@ -184,7 +191,7 @@ function drawChoiceTile(
   if (image) {
     drawCenteredImage(context, image, x + width / 2, y + 5, width - 18, imageHeight)
   } else {
-    context.fillStyle = selected ? PRIMARY : MUTED
+    context.fillStyle = selected ? selectedColor : MUTED
     context.font = '700 24px "Nunito Variable", sans-serif'
     context.textAlign = 'center'
     context.textBaseline = 'middle'
@@ -207,6 +214,7 @@ export function drawBuildCard(
   selectedBlessings: BlessingSelections,
   pickImages: PickImageMap = {},
   isSpeculativeRelics = false,
+  selectedRejuvenatedRelic = '',
 ) {
   const resolvedBlessings = Object.fromEntries(
     BLESSING_TIERS.flatMap((tier) => {
@@ -224,6 +232,7 @@ export function drawBuildCard(
     resolvedBlessings,
     pickImages,
     isSpeculativeRelics,
+    selectedRejuvenatedRelic,
   )
 }
 
@@ -236,6 +245,7 @@ export function drawBuildCardFromResolvedPicks(
   selectedBlessings: ResolvedBlessingPicks,
   pickImages: PickImageMap = {},
   isSpeculativeRelics = false,
+  selectedRejuvenatedRelic = '',
 ) {
   const context = canvas.getContext('2d')
   if (!context) return
@@ -269,17 +279,27 @@ export function drawBuildCardFromResolvedPicks(
   const relicCellWidth = 102
   const relicCellHeight = 86
   const relicCellGap = 14
-  for (let tier = 1; tier <= REQUIRED_RELIC_COUNT; tier += 1) {
-    const column = (tier - 1) % 4
-    const row = Math.floor((tier - 1) / 4)
-    const relicId = selectedRelics[tier]
+  const displayedRelicCount = REQUIRED_RELIC_COUNT + (selectedRejuvenatedRelic ? 1 : 0)
+  for (let index = 0; index < displayedRelicCount; index += 1) {
+    const tier = index + 1
+    const column = index % 4
+    const row = Math.floor(index / 4)
+    const isRejuvenatedBonus = tier > REQUIRED_RELIC_COUNT
+    const relicId = isRejuvenatedBonus
+      ? selectedRejuvenatedRelic
+      : selectedRelics[tier]
     const relic = relicId ? relicsById.get(relicId) : undefined
+    const isRejuvenatedPair =
+      isRejuvenatedBonus || relic?.label === 'Rejuvenated'
     drawChoiceTile(context, {
       fallback: relicId?.slice(-1).toUpperCase() ?? '—',
       height: relicCellHeight,
       image: relicId ? pickImages[relicId] : undefined,
-      label: relic?.label ?? 'Not selected',
+      label: relic
+        ? `${isRejuvenatedBonus ? 'Bonus: ' : ''}${relic.label}`
+        : 'Not selected',
       selected: Boolean(relicId),
+      selectionColor: isRejuvenatedPair ? REJUVENATED : undefined,
       width: relicCellWidth,
       x: relicGridX + column * (relicCellWidth + relicCellGap),
       y: relicGridY + row * (relicCellHeight + relicCellGap),

@@ -34,12 +34,12 @@ const SPECULATIVE_LAYOUT: readonly (readonly SpeculativeSlot[])[] = [
   ],
   [
     { relicName: 'Crystal Grace' },
-    { label: 'Antiquarian' },
+    { relicName: 'Antiquarian' },
     { relicName: 'Transmutation' },
   ],
   [
-    { label: 'Production Master' },
-    { label: 'Unknown relic' },
+    { relicName: 'Production Master' },
+    { relicName: 'Clue Connoisseur' },
     { relicName: 'Devout' },
   ],
   [
@@ -47,8 +47,8 @@ const SPECULATIVE_LAYOUT: readonly (readonly SpeculativeSlot[])[] = [
     { relicName: 'Perkfection' },
   ],
   [
-    { label: 'Naragi' },
-    { label: 'Unknown relic' },
+    { relicName: 'Naragi Edict' },
+    { relicName: 'Infernal Fire' },
     { relicName: 'Icyenic Faith' },
   ],
 ] as const

@@ -20,13 +20,16 @@ export type TierOptionMatrixCell = {
   ariaLabel: string
   backgroundColor?: string
   description: string
+  detailsAriaLabel?: string
   fallback: string
   id: string
   image?: string
   isSelected: boolean
   label: string
+  onViewDetails?: () => void
   onSelect?: () => void
   readOnly?: boolean
+  relicState?: 'rejuvenated-available' | 'rejuvenated-selected'
   statusLabel?: string
 }
 
@@ -61,8 +64,11 @@ function MatrixCell({
     ? { backgroundColor: cell.backgroundColor }
     : undefined
   const cellClassName = cn(
-    'group relative flex h-full w-full touch-manipulation select-none flex-col items-center justify-center gap-2 px-2 py-3',
-    isBlessing ? 'min-h-36 text-white' : 'min-h-36',
+    'group relative flex w-full touch-manipulation select-none flex-col items-center',
+    cell.onViewDetails
+      ? 'min-h-28 flex-1 justify-end gap-0.5 px-2 pt-2 pb-1'
+      : 'h-full min-h-36 justify-center gap-2 px-2 py-3',
+    isBlessing && 'text-white',
     isBlessing &&
       isInteractive &&
       'transition-[filter,outline-color] duration-150 hover:brightness-125',
@@ -72,15 +78,14 @@ function MatrixCell({
     isBlessing &&
       isInteractive &&
       'focus-visible:z-20 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary',
-    isBlessing &&
-      cell.isSelected &&
-      'z-10 outline-2 -outline-offset-2 outline-primary',
     !isBlessing &&
       'transition-colors duration-150 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset',
     !isBlessing &&
+      !cell.relicState &&
       (cell.isSelected
         ? 'bg-primary text-primary-foreground'
         : 'bg-card/60 text-muted-foreground hover:bg-accent hover:text-accent-foreground active:bg-accent active:text-accent-foreground'),
+    !isBlessing && cell.relicState && 'bg-transparent text-current',
   )
   const contentOpacityClassName =
     isBlessing && !cell.isSelected
@@ -111,7 +116,7 @@ function MatrixCell({
             className={cn(
               'w-auto max-w-full object-contain transition-opacity',
               'h-20',
-              !cell.isSelected &&
+              !cell.isSelected && !cell.relicState &&
                 (isBlessing
                   ? 'opacity-40 group-hover:opacity-75'
                   : 'opacity-65 group-hover:opacity-100 group-active:opacity-100'),
@@ -135,18 +140,22 @@ function MatrixCell({
       </span>
       <span
         className={cn(
-          'flex min-h-5 items-center justify-center text-center font-black uppercase leading-tight transition-opacity',
+          'flex items-center justify-center text-center font-black uppercase transition-opacity',
           isBlessing
-            ? 'px-1 text-[9px] tracking-[0.04em]'
-            : 'text-[9px] tracking-[0.1em]',
+            ? 'h-8 px-1 text-[9px] leading-[1.1] tracking-[0.04em] md:h-auto md:min-h-5 md:leading-tight'
+            : 'h-8 text-[9px] leading-[1.1] tracking-[0.1em] md:h-auto md:min-h-5 md:leading-tight',
           isBlessing
             ? contentOpacityClassName
+            : cell.relicState
+              ? 'text-current/75'
             : cell.isSelected
               ? 'text-primary-foreground/70'
               : 'text-muted-foreground group-hover:text-accent-foreground/70 group-active:text-accent-foreground/70',
         )}
       >
-        {cell.statusLabel ?? cell.label}
+        <span className="line-clamp-2">
+          {cell.statusLabel ?? cell.label}
+        </span>
       </span>
     </>
   )
@@ -181,9 +190,21 @@ function MatrixCell({
   return (
     <div
       className={cn(
-        'border-r border-b border-border',
+        'relative flex flex-col border-r border-b border-border',
         isSpecial && 'border-x-2 border-x-primary/70',
+        !isBlessing &&
+          !cell.relicState &&
+          cell.isSelected &&
+          'bg-primary',
+        cell.relicState === 'rejuvenated-available' &&
+          'relic-rejuvenated-available',
+        cell.relicState === 'rejuvenated-selected' &&
+          'relic-rejuvenated-selected',
+        isBlessing &&
+          cell.isSelected &&
+          'z-10 outline-2 -outline-offset-2 outline-primary',
       )}
+      style={cellStyle}
     >
       <Tooltip open={isTooltipOpen}>
         <TooltipTrigger
@@ -218,6 +239,19 @@ function MatrixCell({
           </div>
         </TooltipContent>
       </Tooltip>
+      {cell.onViewDetails && (
+        <button
+          aria-label={cell.detailsAriaLabel ?? `View details for ${cell.statusLabel ?? cell.label}`}
+          className="mx-2 mb-2 flex h-9 items-center justify-center rounded-md border border-primary/70 bg-card/80 px-3 text-[10px] font-bold uppercase leading-none tracking-[0.1em] text-card-foreground shadow-sm transition-colors hover:border-primary hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 focus-visible:ring-offset-transparent"
+          onClick={(event) => {
+            event.currentTarget.blur()
+            cell.onViewDetails?.()
+          }}
+          type="button"
+        >
+          Details
+        </button>
+      )}
     </div>
   )
 }

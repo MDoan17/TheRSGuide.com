@@ -1,5 +1,7 @@
 import { RotateCcw } from 'lucide-react'
+import { useState } from 'react'
 
+import type { BlessingItem } from '@/components/mdx/blessing-display'
 import blessingData from '@/data/leagues-ii/blessings.json'
 import {
   BLESSING_TIERS,
@@ -12,6 +14,7 @@ import {
 } from '@/lib/picks-state'
 import { LEAGUE_OPTIONS } from '../../../../shared/league-options'
 import { PickProgressBar } from './PickProgressBar'
+import { PickerBlessingDetailsDrawer } from './PickerBlessingDetailsDrawer'
 import {
   TierOptionMatrix,
   type TierOptionMatrixRow,
@@ -38,6 +41,8 @@ export function BlessingSelector({
   onChange,
   selectedBlessings,
 }: BlessingSelectorProps) {
+  const [selectedBlessingDetails, setSelectedBlessingDetails] =
+    useState<BlessingItem | null>(null)
   const resolvedCount = getResolvedBlessingCount(selectedBlessings)
   const selectedCount = Object.keys(selectedBlessings).length
 
@@ -83,6 +88,9 @@ export function BlessingSelector({
           image: knownBlessing?.image,
           isSelected,
           label: `Tier ${tier} · ${label}`,
+          onViewDetails: knownBlessing
+            ? () => setSelectedBlessingDetails(knownBlessing)
+            : undefined,
           readOnly: true,
           statusLabel: label,
         }
@@ -101,6 +109,9 @@ export function BlessingSelector({
         image: knownBlessing?.image,
         isSelected,
         label: `Tier ${tier} · ${label}`,
+        onViewDetails: knownBlessing
+          ? () => setSelectedBlessingDetails(knownBlessing)
+          : undefined,
         onSelect: () =>
           toggleBlessing(tier as SelectableBlessingTier, path.id as BlessingId),
         statusLabel: label,
@@ -146,6 +157,13 @@ export function BlessingSelector({
         God Tier rule: 2+ Chaos → Chaos · 2+ Balance or one of each → Balance ·
         2+ Order → Order
       </p>
+
+      <PickerBlessingDetailsDrawer
+        blessing={selectedBlessingDetails}
+        onOpenChange={(open) => {
+          if (!open) setSelectedBlessingDetails(null)
+        }}
+      />
     </section>
   )
 }
