@@ -78,9 +78,14 @@ export function RelicSelector({
       return
     }
 
-    if (isRejuvenatedMatch) return
-
     const nextSelection = { ...selectedRelics }
+    if (isRejuvenatedMatch && rejuvenatedTier !== undefined) {
+      delete nextSelection[rejuvenatedTier]
+      onChange(nextSelection)
+      onRejuvenatedRelicChange('')
+      return;
+    }
+
     if (nextSelection[tier] === relicName) {
       delete nextSelection[tier]
     } else {
@@ -132,7 +137,7 @@ export function RelicSelector({
           onViewDetails: knownRelic
             ? () => setSelectedRelicDetails({ relic: knownRelic, tier: tier.tier })
             : undefined,
-          readOnly: isRejuvenatedMatch,
+          readOnly: false,
           relicState:
             isRejuvenated || isRejuvenatedMatch
               ? 'rejuvenated-selected' as const
