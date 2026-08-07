@@ -125,21 +125,14 @@ const QuestRequirementItem: React.FC<{ quest: string }> = ({ quest }) => {
 // quest lines don't bury the page in indentation.
 const DEFAULT_VISIBLE_DEPTH = 3;
 
-const countDescendants = (node: QuestTreeNode): number =>
-  node.children.reduce((total, child) => total + 1 + countDescendants(child), 0);
-
 const countQuests = (nodes: QuestTreeNode[]): number =>
-  nodes.reduce((total, node) => total + 1 + countDescendants(node), 0);
+  nodes.reduce((total, node) => total + 1 + countQuests(node.children), 0);
 
 /** How many quests sit below the depth shown by default. */
 const countCollapsed = (nodes: QuestTreeNode[], depth = 0): number =>
-  nodes.reduce(
-    (total, node) =>
-      total +
-      (depth >= DEFAULT_VISIBLE_DEPTH ? 1 : 0) +
-      countCollapsed(node.children, depth + 1),
-    0
-  );
+  depth >= DEFAULT_VISIBLE_DEPTH
+    ? countQuests(nodes)
+    : nodes.reduce((total, node) => total + countCollapsed(node.children, depth + 1), 0);
 
 const QuestTreeItem: React.FC<{ node: QuestTreeNode; depth?: number; expandAll?: boolean }> = ({
   node,
@@ -149,28 +142,12 @@ const QuestTreeItem: React.FC<{ node: QuestTreeNode; depth?: number; expandAll?:
   const collapsible = node.children.length > 0 && depth >= DEFAULT_VISIBLE_DEPTH - 1;
   const [expanded, setExpanded] = useState(!collapsible || expandAll);
 
-  const hiddenCount = useMemo(
-    () => (collapsible ? countDescendants(node) : 0),
-    [collapsible, node]
-  );
-
   return (
     <div>
       <div style={{ marginLeft: `${depth * 20}px` }}>
         <QuestRequirementItem quest={node.name} />
       </div>
-      {expanded && node.children.length > 0 && (
-        <div className="mt-1 space-y-1">
-          {node.children.map((child, idx) => (
-            <QuestTreeItem
-              key={`${child.name}-${idx}`}
-              node={child}
-              depth={depth + 1}
-              expandAll={expandAll}
-            />
-          ))}
-        </div>
-      )}
+      {/* Sits above the branch it opens so the control stays next to its quest */}
       {collapsible && (
         <button
           type="button"
@@ -189,8 +166,20 @@ const QuestTreeItem: React.FC<{ node: QuestTreeNode; depth?: number; expandAll?:
           </svg>
           {expanded
             ? `Hide ${node.name} requirements`
-            : `Show ${hiddenCount} more for ${node.name}`}
+            : `Show ${countQuests(node.children)} more for ${node.name}`}
         </button>
+      )}
+      {expanded && node.children.length > 0 && (
+        <div className="mt-1 space-y-1">
+          {node.children.map((child, idx) => (
+            <QuestTreeItem
+              key={`${child.name}-${idx}`}
+              node={child}
+              depth={depth + 1}
+              expandAll={expandAll}
+            />
+          ))}
+        </div>
       )}
     </div>
   );
@@ -298,7 +287,8 @@ export const QuestRequirements: React.FC<QuestRequirementsProps> = ({
   const hasOther = resolved.other.length > 0;
   const collapsedCount = useMemo(() => countCollapsed(visibleQuestTree), [visibleQuestTree]);
   // Nothing to filter by until a player is loaded
-  const canFilter = playerData !== null && (resolved.skills.length > 0 || resolved.quests.length > 0);
+  const canFilter =
+    playerData !== null && (resolved.skills.length > 0 || resolved.questTree.length > 0);
 
   // Only show the empty state if there's no quest name and no requirements at
   // all — an active filter emptying the columns is not the same thing.

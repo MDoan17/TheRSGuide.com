@@ -38,10 +38,20 @@ describe('resolveAllRequirements quest tree', () => {
     expect(names.filter((name) => name === 'Stolen Hearts')).toHaveLength(1)
   })
 
-  it('keeps the tree and the header count in agreement', () => {
+  it('aggregates the skill requirements of every quest it lists', () => {
+    // Skills are gathered by a separate walk from the one that builds the
+    // tree. If the two ever stopped reaching the same quests, the card would
+    // show a quest whose skill requirements it had not counted.
     const resolved = sliskesEndgame()
+    const highest = new Map(resolved.skills.map((s) => [s.skill.toLowerCase(), s.level]))
 
-    expect(flatten(resolved.questTree)).toHaveLength(resolved.quests.length)
+    const uncounted = resolved.quests.flatMap((name) =>
+      (findQuest(name)?.requirements.skill ?? [])
+        .filter(({ skill, level }) => (highest.get(skill.toLowerCase()) ?? 0) < level)
+        .map(({ skill, level }) => `${name} needs ${level} ${skill}`)
+    )
+
+    expect(uncounted).toEqual([])
   })
 
   it('places each quest at the shallowest depth that requires it', () => {

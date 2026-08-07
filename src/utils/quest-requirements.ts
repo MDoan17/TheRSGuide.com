@@ -90,6 +90,13 @@ function buildQuestForest(questNames: string[]): QuestTreeNode[] {
 }
 
 /**
+ * Every quest in a forest, parents before the requirements they pull in.
+ */
+export function flattenQuestTree(nodes: QuestTreeNode[]): string[] {
+  return nodes.flatMap((node) => [node.name, ...flattenQuestTree(node.children)]);
+}
+
+/**
  * Narrow a quest forest to the nodes matching `keep`.
  *
  * A dropped node's kept descendants are lifted into its place rather than
@@ -118,7 +125,6 @@ export function resolveAllRequirements(
 ): ResolvedRequirements {
   const visitedQuests = new Set<string>();
   const allSkills = new Map<string, number>(); // skill -> highest level required
-  const allQuests: string[] = [];
   const allOther = new Set<string>();
 
   // Add initial skills
@@ -139,12 +145,8 @@ export function resolveAllRequirements(
     visitedQuests.add(normalizedName);
 
     const quest = questMap.get(normalizedName);
-
-    // Add this quest to the list
-    allQuests.push(questName);
-
     if (!quest) {
-      // Quest not found in our data, just add it as-is
+      // Quest not found in our data; nothing further to collect from it
       return;
     }
 
@@ -169,8 +171,11 @@ export function resolveAllRequirements(
     resolveQuest(questName);
   });
 
-  // Build quest trees for display
+  // The forest already holds every quest exactly once, so the flat list is
+  // read back off it. Accumulating a second list during the walk above let
+  // the two drift, which is how the count came to disagree with the tree.
   const questTree = buildQuestForest(questNames);
+  const allQuests = flattenQuestTree(questTree);
 
   // Convert skills map back to array with proper capitalization
   const skillsArray: QuestSkillReq[] = Array.from(allSkills.entries())
@@ -186,29 +191,4 @@ export function resolveAllRequirements(
     questTree,
     other: Array.from(allOther),
   };
-}
-
-/**
- * Get just the recursive quest chain for a single quest
- */
-export function getQuestChain(questName: string): string[] {
-  const chain: string[] = [];
-  const visited = new Set<string>();
-
-  function resolve(name: string) {
-    const normalizedName = name.toLowerCase();
-    if (visited.has(normalizedName)) return;
-    visited.add(normalizedName);
-
-    const quest = questMap.get(normalizedName);
-    if (quest) {
-      // First resolve prerequisites
-      quest.requirements.quest.forEach((req) => resolve(req));
-    }
-    // Then add this quest
-    chain.push(name);
-  }
-
-  resolve(questName);
-  return chain;
 }
