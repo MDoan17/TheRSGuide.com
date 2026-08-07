@@ -1,8 +1,9 @@
 import { renderToStaticMarkup } from 'react-dom/server'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import relicData from '@/data/leagues-ii/relics.json'
 import regionSkillGradeData from '@/data/leagues-ii/region-skill-grades.json'
+import { PICKS_STORAGE_KEY } from '@/lib/picks-state'
 import {
   calculateSkillResults,
   SkillingSolver,
@@ -17,6 +18,10 @@ const getRegions = (regionIds: string[]) =>
   regionGrades.filter(({ id }) => regionIds.includes(id))
 
 describe('SkillingSolver', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
   it('uses the best selected relic grade and only solves skills at A or S', () => {
     const selectedRelics = relicData.Relics.filter(({ name }) =>
       ['Divine Druid', 'Golden Touch'].includes(name),
@@ -106,16 +111,81 @@ describe('SkillingSolver', () => {
     )
 
     expect(markup).toContain('6 of 29 skills solved')
-    expect(markup).toContain('Choose regions and relics')
+    expect(markup).toContain('Skill coverage')
+    expect(markup).not.toContain('Route coverage')
+    expect(markup).not.toContain('Reset all')
+    expect(markup).not.toContain('Overall skill coverage')
+    expect(markup.indexOf('Skill coverage')).toBeGreaterThan(
+      markup.indexOf('Relic options by tier'),
+    )
     expect(markup).toContain('Misthalin &amp; Havenhythe')
     expect(markup).toContain('Region outline picker map')
     expect(markup).toContain('Click the map to add or remove a region')
-    expect(markup).toContain('0 of 3')
+    expect(markup).toContain('Reset region picks')
     expect(markup).toContain('Tier 7')
+    expect(markup).toContain('Tier 2 relic A')
+    expect(markup).toContain('Summoning')
+    expect(markup).toContain('Speculative mode')
+  })
+
+  it('loads region and relic choices saved by the picker', () => {
+    const storedState = JSON.stringify({
+      buildName: 'Shared route',
+      isSpeculativeRelics: true,
+      selectedBlessings: { 1: 'a' },
+      selectedRegionIds: [
+        'misthalin-havenhythe',
+        'karamja',
+        'asgarnia',
+      ],
+      selectedRelics: { 1: '1b' },
+    })
+    vi.stubGlobal('window', {
+      location: { href: 'http://localhost/leagues/skilling-solves' },
+      localStorage: {
+        getItem: (key: string) =>
+          key === PICKS_STORAGE_KEY ? storedState : null,
+      },
+    })
+
+    const markup = renderToStaticMarkup(
+      <TooltipProvider>
+        <SkillingSolver />
+      </TooltipProvider>,
+    )
+
+    expect(markup).toContain('Asgarnia')
     expect(markup).toContain('Clue Connoisseur')
     expect(markup).toContain('Infernal Fire')
-    expect(markup).toContain('Summoning')
-    expect(markup).toContain('Divine Druid')
+    expect(markup).toContain('10 of 29 skills solved')
+    expect(markup).toMatch(/aria-label="Tier 1, option B, Golden Touch:[^"]+" aria-pressed="true"/)
+  })
+
+  it('includes the Rejuvenated bonus relic in skill coverage', () => {
+    const storedState = JSON.stringify({
+      buildName: 'Rejuvenated route',
+      isSpeculativeRelics: true,
+      selectedBlessings: {},
+      selectedRejuvenatedRelic: '2c',
+      selectedRegionIds: ['misthalin-havenhythe', 'karamja'],
+      selectedRelics: { 6: '6a' },
+    })
+    vi.stubGlobal('window', {
+      location: { href: 'http://localhost/leagues/skilling-solves' },
+      localStorage: {
+        getItem: (key: string) =>
+          key === PICKS_STORAGE_KEY ? storedState : null,
+      },
+    })
+
+    const markup = renderToStaticMarkup(
+      <TooltipProvider>
+        <SkillingSolver />
+      </TooltipProvider>,
+    )
+
+    expect(markup).toContain('paired with Rejuvenated')
+    expect(markup).toContain('8 of 29 skills solved')
   })
 
   it('is registered for use in MDX pages', () => {

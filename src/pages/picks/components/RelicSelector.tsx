@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { RotateCcw } from 'lucide-react'
+import '@/styles/picker.css'
 
 import type { RelicItem } from '@/components/mdx/relic-display'
 import { Label } from '@/components/ui/label'
@@ -189,14 +190,6 @@ export function RelicSelector({
             Best-guess placements from preview footage. Names, tiers, and slots may change; the confirmed Relics guide is unaffected.
           </p>
         )}
-        {isChoosingRejuvenatedRelic && (
-          <p
-            aria-live="polite"
-            className="mt-3 text-sm font-semibold text-[var(--rejuvenated)]"
-          >
-            Choose one glowing relic from Tier 1–5 to pair with Rejuvenated.
-          </p>
-        )}
       </div>
 
       <TierOptionMatrix
@@ -206,6 +199,14 @@ export function RelicSelector({
         tiers={matrixTiers}
         variant="relic"
       />
+
+      <div aria-live="polite" className="mt-3 min-h-10 sm:min-h-5">
+        {isChoosingRejuvenatedRelic && (
+          <p className="text-sm font-semibold text-[var(--rejuvenated)]">
+            Choose one glowing relic from Tier 1–5 to pair with Rejuvenated.
+          </p>
+        )}
+      </div>
 
       <PickerRelicDetailsDrawer
         isSpeculative={isSpeculative}

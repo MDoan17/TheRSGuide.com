@@ -1,22 +1,19 @@
 'use client'
 
 import { RotateCcw } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 import relicData from '@/data/leagues-ii/relics.json'
 import regionSkillGradeData from '@/data/leagues-ii/region-skill-grades.json'
-import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
+import { usePersistedPicksState } from '@/hooks/use-persisted-picks-state'
 import {
   GUARANTEED_REGION_IDS,
-  OPTIONAL_REGION_PICK_COUNT,
+  RELIC_TIERS,
 } from '@/lib/picks-state'
 import { cn } from '@/lib/utils'
 import { RegionOutlineMap } from '@/pages/picks/components/RegionOutlineMap'
-import {
-  TierOptionMatrix,
-  type TierOptionMatrixRow,
-} from '@/pages/picks/components/TierOptionMatrix'
+import { RelicSelector } from '@/pages/picks/components/RelicSelector'
 import { LEAGUE_OPTIONS } from '../../../shared/league-options'
 import { SPECULATIVE_RELIC_TIERS } from '../../../shared/speculative-relic-options'
 
@@ -88,19 +85,9 @@ const GRADE_RANK: Record<SkillGrade, number> = {
   F: 1,
 }
 
-const RELIC_OPTION_ROWS = ['A', 'B', 'C'] as const
 const GUARANTEED_REGION_OPTION_ID_SET = new Set<string>(
   GUARANTEED_REGION_IDS,
 )
-const GRADE_LEGEND: Array<{ grade: SkillGrade; label: string }> = [
-  { grade: 'S', label: 'Exceptional' },
-  { grade: 'A', label: 'Solved' },
-  { grade: 'B', label: 'Strong' },
-  { grade: 'C', label: 'Workable' },
-  { grade: 'D', label: 'Limited' },
-  { grade: 'F', label: 'No practical method' },
-]
-
 const relics = relicData.Relics as Relic[]
 const relicByName = new Map(relics.map((relic) => [relic.name, relic]))
 const regionGrades = regionSkillGradeData.regions as RegionSkillGrades[]
@@ -208,29 +195,33 @@ function SkillCell({
           </span>
         </div>
         <p className="mt-1 truncate text-[11px] text-muted-foreground">
-          {result.sourceName ?? 'No route selected'}
+          {result.sourceName ?? 'No relic option'}
         </p>
       </div>
     </div>
   )
 }
 
-export function SkillingSolver() {
-  const [selectedRelicIds, setSelectedRelicIds] = useState<string[]>([])
-  const [selectedRegionOptionIds, setSelectedRegionOptionIds] = useState<
-    string[]
-  >([...GUARANTEED_REGION_IDS])
-  const selectedIdSet = useMemo(
-    () => new Set(selectedRelicIds),
-    [selectedRelicIds],
-  )
+function useSkillCoverage() {
+  const { picksState, updatePicksState } = usePersistedPicksState()
+  const selectedRelicIds = [
+    ...Object.values(picksState.selectedRelics),
+    picksState.selectedRejuvenatedRelic,
+  ].filter(Boolean)
+  const selectedRegionOptionIds = picksState.selectedRegionIds
+  const displayedRelicTiers = picksState.isSpeculativeRelics
+    ? SPECULATIVE_RELIC_TIERS
+    : RELIC_TIERS
   const selectedRelics = useMemo(
-    () =>
-      SPECULATIVE_RELIC_TIERS.flatMap(({ options }) => options)
+    () => {
+      const selectedIdSet = new Set(selectedRelicIds)
+      return displayedRelicTiers
+        .flatMap(({ options }) => options)
         .filter(({ id }) => selectedIdSet.has(id))
         .map(({ label }) => relicByName.get(label))
-        .filter((relic): relic is Relic => Boolean(relic)),
-    [selectedIdSet],
+        .filter((relic): relic is Relic => Boolean(relic))
+    },
+    [displayedRelicTiers, selectedRelicIds],
   )
   const selectedRegionGrades = useMemo(
     () => getRegionGradesForOptions(selectedRegionOptionIds),
@@ -246,179 +237,126 @@ export function SkillingSolver() {
   const selectedOptionalRegionCount = selectedRegionOptionIds.filter(
     (regionId) => !GUARANTEED_REGION_OPTION_ID_SET.has(regionId),
   ).length
-  const toggleRelic = (tier: number, optionId: string) => {
-    setSelectedRelicIds((current) => {
-      if (current.includes(optionId)) {
-        return current.filter((id) => id !== optionId)
-      }
 
-      const idsInTier = new Set(
-        SPECULATIVE_RELIC_TIERS.find((entry) => entry.tier === tier)?.options.map(
-          ({ id }) => id,
-        ),
-      )
-      return [...current.filter((id) => !idsInTier.has(id)), optionId]
-    })
+  return {
+    isSpeculativeRelics: picksState.isSpeculativeRelics,
+    results,
+    selectedOptionalRegionCount,
+    selectedRejuvenatedRelic: picksState.selectedRejuvenatedRelic,
+    selectedRegionOptionIds,
+    selectedRelicsByTier: picksState.selectedRelics,
+    solvedCount,
+    updatePicksState,
   }
-  const matrixTiers = SPECULATIVE_RELIC_TIERS.map(({ options, tier }) => ({
-    isSelected: options.some(({ id }) => selectedIdSet.has(id)),
-    tier,
-  }))
-  const matrixRows: TierOptionMatrixRow[] = RELIC_OPTION_ROWS.map(
-    (optionLetter, optionIndex) => ({
-      id: optionLetter,
-      cells: SPECULATIVE_RELIC_TIERS.map(({ options, tier }) => {
-        const option = options[optionIndex]
-        if (!option) return null
+}
 
-        return {
-          ariaLabel: `Tier ${tier}, option ${optionLetter}, ${option.label}: ${option.description}`,
-          description: option.description,
-          fallback: optionLetter,
-          id: option.id,
-          image: option.icon,
-          isSelected: selectedIdSet.has(option.id),
-          label: option.label,
-          onSelect: () => toggleRelic(tier, option.id),
-        }
-      }),
-    }),
-  )
+function SkillCoveragePanel({
+  results,
+  solvedCount,
+}: {
+  results: Map<string, SkillResult>
+  solvedCount: number
+}) {
+  const percentage = Math.round((solvedCount / SKILLS.length) * 100)
 
   return (
-    <section className="not-prose my-8 overflow-hidden border-y border-border bg-card/10 sm:border-x">
-      <div className="flex flex-col gap-4 border-b border-border px-4 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-6">
+    <div
+      aria-live="polite"
+      className="border-t border-border bg-background/40 px-4 py-5 sm:px-6"
+    >
+      <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="text-[10px] font-black tracking-[0.2em] text-primary uppercase">
-            Route coverage
+          <p className="text-[10px] font-black tracking-[0.2em] text-muted-foreground uppercase">
+            Skill coverage
           </p>
-          <h2 className="mt-1 font-display text-2xl font-semibold text-foreground">
-            Choose regions and relics
-          </h2>
-          <p className="mt-1 max-w-xl text-sm leading-6 text-muted-foreground">
-            Your best grade from any selected region or relic determines each
-            skill's coverage.
-          </p>
+          <h3 className="mt-1 font-display text-xl font-semibold text-foreground">
+            {solvedCount} of {SKILLS.length} skills solved
+          </h3>
         </div>
-        <Button
-          disabled={
-            selectedRelicIds.length === 0 && selectedOptionalRegionCount === 0
-          }
-          onClick={() => {
-            setSelectedRelicIds([])
-            setSelectedRegionOptionIds([...GUARANTEED_REGION_IDS])
-          }}
-          size="sm"
-          type="button"
-          variant="outline"
-        >
-          <RotateCcw aria-hidden />
-          Reset all
-        </Button>
+        <span className="text-sm font-semibold text-primary">
+          {percentage}%
+        </span>
       </div>
+      <Progress className="mt-3" max={SKILLS.length} value={solvedCount} />
 
+      <div className="mt-5 grid border-t border-l border-border sm:grid-cols-2 lg:grid-cols-3">
+        {SKILLS.map(([skill, label]) => (
+          <SkillCell
+            key={skill}
+            label={label}
+            result={results.get(skill)!}
+            skill={skill}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export function SkillingSolver() {
+  const {
+    isSpeculativeRelics,
+    results,
+    selectedOptionalRegionCount,
+    selectedRejuvenatedRelic,
+    selectedRegionOptionIds,
+    selectedRelicsByTier,
+    solvedCount,
+    updatePicksState,
+  } = useSkillCoverage()
+  return (
+    <section className="leagues-picker not-prose my-8 overflow-hidden border-y border-border bg-card/10 sm:border-x">
       <div className="px-4 py-5 sm:px-6">
-        <div className="flex items-end justify-between gap-4">
+        <RelicSelector
+          isSpeculative={isSpeculativeRelics}
+          onChange={(selectedRelics) => updatePicksState({ selectedRelics })}
+          onRejuvenatedRelicChange={(selectedRejuvenatedRelic) =>
+            updatePicksState({ selectedRejuvenatedRelic })
+          }
+          onSpeculativeChange={(isSpeculativeRelics) =>
+            updatePicksState({ isSpeculativeRelics })
+          }
+          selectedRejuvenatedRelic={selectedRejuvenatedRelic}
+          selectedRelics={selectedRelicsByTier}
+        />
+
+        <div className="mt-7 flex items-end justify-between gap-4 border-t border-border pt-5">
           <div>
             <p className="text-[10px] font-black tracking-[0.18em] text-muted-foreground uppercase">
               Regions
             </p>
             <h3 className="mt-1 font-display text-lg font-semibold text-foreground">
-              Choose up to three optional regions
+              2. Choose up to three optional regions
             </h3>
           </div>
-          <span className="shrink-0 text-xs font-semibold text-primary">
-            {selectedOptionalRegionCount} of {OPTIONAL_REGION_PICK_COUNT}
-          </span>
+          <button
+            aria-label="Reset region picks"
+            className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-primary/50 text-primary transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:border-border disabled:text-muted-foreground disabled:hover:bg-transparent"
+            disabled={selectedOptionalRegionCount === 0}
+            onClick={() =>
+              updatePicksState({
+                selectedRegionIds: [...GUARANTEED_REGION_IDS],
+              })
+            }
+            title="Reset region picks"
+            type="button"
+          >
+            <RotateCcw aria-hidden className="size-3.5" />
+          </button>
         </div>
         <div className="mt-3">
           <RegionOutlineMap
-            onSelectedRegionIdsChange={setSelectedRegionOptionIds}
+            onSelectedRegionIdsChange={(selectedRegionIds) =>
+              updatePicksState({ selectedRegionIds })
+            }
             selectedRegionIds={selectedRegionOptionIds}
             showHeader={false}
           />
         </div>
 
-        <div className="mt-7 border-t border-border pt-5">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <p className="text-[10px] font-black tracking-[0.18em] text-muted-foreground uppercase">
-                Relics
-              </p>
-              <h3 className="mt-1 font-display text-lg font-semibold text-foreground">
-                Choose one relic per tier
-              </h3>
-              <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                Placements are speculative until every relic tier is confirmed.
-              </p>
-            </div>
-            <span className="shrink-0 text-xs font-semibold text-primary">
-              {selectedRelicIds.length} of {SPECULATIVE_RELIC_TIERS.length}
-            </span>
-          </div>
-
-          <TierOptionMatrix
-            ariaLabel="Skilling solve relic options by tier"
-            className="relic-grid-scroll"
-            rows={matrixRows}
-            tiers={matrixTiers}
-            variant="relic"
-          />
-        </div>
       </div>
 
-      <div aria-live="polite" className="border-t border-border bg-background/40 px-4 py-5 sm:px-6">
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <p className="text-[10px] font-black tracking-[0.2em] text-muted-foreground uppercase">
-              Skill coverage
-            </p>
-            <h3 className="mt-1 font-display text-xl font-semibold text-foreground">
-              {solvedCount} of {SKILLS.length} skills solved
-            </h3>
-          </div>
-          <span className="text-sm font-semibold text-primary">
-            {Math.round((solvedCount / SKILLS.length) * 100)}%
-          </span>
-        </div>
-        <Progress className="mt-3" max={SKILLS.length} value={solvedCount} />
-
-        <p className="mt-4 text-xs leading-5 text-muted-foreground">
-          Grades compare the best repeatable training method available from your
-          route, including the resources needed to sustain it.
-        </p>
-        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 border-y border-border py-3">
-          {GRADE_LEGEND.map(({ grade, label }) => (
-            <span
-              className="flex items-center gap-1.5 text-[10px] text-muted-foreground"
-              key={grade}
-            >
-              <span
-                className={cn(
-                  'flex size-5 items-center justify-center rounded-full border text-[9px] font-black',
-                  grade === 'S' || grade === 'A'
-                    ? 'border-primary bg-primary text-primary-foreground'
-                    : 'border-border bg-muted text-muted-foreground',
-                )}
-              >
-                {grade}
-              </span>
-              {label}
-            </span>
-          ))}
-        </div>
-
-        <div className="mt-5 grid border-t border-l border-border sm:grid-cols-2 lg:grid-cols-3">
-          {SKILLS.map(([skill, label]) => (
-            <SkillCell
-              key={skill}
-              label={label}
-              result={results.get(skill)!}
-              skill={skill}
-            />
-          ))}
-        </div>
-      </div>
+      <SkillCoveragePanel results={results} solvedCount={solvedCount} />
     </section>
   )
 }

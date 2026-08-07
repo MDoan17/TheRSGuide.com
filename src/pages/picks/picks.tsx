@@ -1,17 +1,15 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import '@/styles/picker.css'
 
+import { usePersistedPicksState } from '@/hooks/use-persisted-picks-state'
 import {
   BLESSING_SELECTION_COUNT,
   GUARANTEED_REGION_IDS,
   OPTIONAL_REGION_PICK_COUNT,
   RELIC_TIERS,
+  getRejuvenatedRelicTier,
   isBlessingTreeComplete,
   getInitialRegionSelections,
-  getRejuvenatedRelicTier,
-  loadPicksState,
-  savePicksState,
-  type BlessingSelections,
   type PicksState,
 } from '@/lib/picks-state'
 import { BlessingSelector } from './components/BlessingSelector'
@@ -22,38 +20,26 @@ import { ShareSection } from './components/ShareSection'
 import { useSharedBuildImport } from './hooks/useSharedBuildImport'
 
 export default function PicksPage() {
-  const [initialPicksState] = useState(loadPicksState)
-  const [buildName, setBuildName] = useState(initialPicksState.buildName)
-  const [isSpeculativeRelics, setIsSpeculativeRelics] = useState(
-    initialPicksState.isSpeculativeRelics,
-  )
-  const [selectedBlessings, setSelectedBlessings] = useState<BlessingSelections>(
-    initialPicksState.selectedBlessings,
-  )
-  const [selectedRelics, setSelectedRelics] = useState<Record<number, string>>(
-    initialPicksState.selectedRelics,
-  )
-  const [selectedRejuvenatedRelic, setSelectedRejuvenatedRelic] = useState(
-    initialPicksState.selectedRejuvenatedRelic,
-  )
-  const [selectedRegionIds, setSelectedRegionIds] = useState<string[]>(
-    initialPicksState.selectedRegionIds,
-  )
+  const { picksState, replacePicksState, updatePicksState } =
+    usePersistedPicksState()
+  const {
+    buildName,
+    isSpeculativeRelics,
+    selectedBlessings,
+    selectedRejuvenatedRelic,
+    selectedRegionIds,
+    selectedRelics,
+  } = picksState
   const [selectedRegions, setSelectedRegions] = useState<RegionSelection[]>(() =>
-    getInitialRegionSelections(initialPicksState.selectedRegionIds),
+    getInitialRegionSelections(picksState.selectedRegionIds),
   )
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false)
 
   const importSharedBuild = useCallback((state: PicksState) => {
-    setBuildName(state.buildName)
-    setIsSpeculativeRelics(state.isSpeculativeRelics)
-    setSelectedBlessings(state.selectedBlessings)
-    setSelectedRelics(state.selectedRelics)
-    setSelectedRejuvenatedRelic(state.selectedRejuvenatedRelic)
-    setSelectedRegionIds(state.selectedRegionIds)
+    replacePicksState(state)
     setSelectedRegions(getInitialRegionSelections(state.selectedRegionIds))
     setIsShareDialogOpen(false)
-  }, [])
+  }, [replacePicksState])
 
   useSharedBuildImport(importSharedBuild)
 
@@ -80,37 +66,40 @@ export default function PicksPage() {
     selectedOptionalRegionCount === OPTIONAL_REGION_PICK_COUNT &&
     isBlessingTreeComplete(selectedBlessings)
 
-  useEffect(() => {
-    savePicksState({
-      buildName,
-      isSpeculativeRelics,
-      selectedBlessings,
-      selectedRejuvenatedRelic,
-      selectedRegionIds,
-      selectedRelics,
-    })
-  }, [buildName, isSpeculativeRelics, selectedBlessings, selectedRegionIds, selectedRejuvenatedRelic, selectedRelics])
-
   return (
     <div className="leagues-picker">
       <div className="flex flex-col gap-12 py-4 sm:py-6">
         <RelicSelector
           isSpeculative={isSpeculativeRelics}
-          onChange={setSelectedRelics}
-          onRejuvenatedRelicChange={setSelectedRejuvenatedRelic}
-          onSpeculativeChange={setIsSpeculativeRelics}
+          onChange={(nextSelectedRelics) =>
+            updatePicksState({ selectedRelics: nextSelectedRelics })
+          }
+          onRejuvenatedRelicChange={(nextSelectedRejuvenatedRelic) =>
+            updatePicksState({
+              selectedRejuvenatedRelic: nextSelectedRejuvenatedRelic,
+            })
+          }
+          onSpeculativeChange={(nextIsSpeculativeRelics) =>
+            updatePicksState({
+              isSpeculativeRelics: nextIsSpeculativeRelics,
+            })
+          }
           selectedRejuvenatedRelic={selectedRejuvenatedRelic}
           selectedRelics={selectedRelics}
         />
 
         <BlessingSelector
-          onChange={setSelectedBlessings}
+          onChange={(nextSelectedBlessings) =>
+            updatePicksState({ selectedBlessings: nextSelectedBlessings })
+          }
           selectedBlessings={selectedBlessings}
         />
 
         <div className="w-full">
           <RegionOutlineMap
-            onSelectedRegionIdsChange={setSelectedRegionIds}
+            onSelectedRegionIdsChange={(nextSelectedRegionIds) =>
+              updatePicksState({ selectedRegionIds: nextSelectedRegionIds })
+            }
             onSelectionDetailsChange={setSelectedRegions}
             selectedRegionIds={selectedRegionIds}
           />
@@ -120,7 +109,9 @@ export default function PicksPage() {
           buildName={buildName}
           completedPicks={completedSharePicks}
           isReady={isShareReady}
-          onBuildNameChange={setBuildName}
+          onBuildNameChange={(nextBuildName) =>
+            updatePicksState({ buildName: nextBuildName })
+          }
           onShare={() => setIsShareDialogOpen(true)}
           requiredPicks={requiredSharePicks}
         />
