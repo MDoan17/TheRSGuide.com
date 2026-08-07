@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react'
 import { LeaguesPassiveList, type LeaguesPassive } from '@/components/mdx/leagues-passive-list'
- import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from '@/components/ui/drawer'
- import { ScrollArea } from '@/components/ui/scroll-area'
+import { PickerBlessingDetailsDrawer } from '@/pages/picks/components/PickerBlessingDetailsDrawer'
 
 import blessingData from '@/data/leagues-ii/blessings.json'
 import '@/styles/blessings.css'
@@ -21,42 +20,6 @@ type BlessingItem = {
 type BlessingDisplayProps = {
   tier: number
   tasks?: number
-}
-
-const BlessingDetailView: React.FC<{ blessing: BlessingItem }> = ({ blessing }) => {
-    return (
-        <div className="flex flex-col">
-            <DrawerHeader className="min-h-54 max-h-[30vh] grow items-center">
-                <DrawerTitle className="text-2xl text-center">{blessing.name}</DrawerTitle>
-                <DrawerDescription className="text-center italic">{blessing.path}</DrawerDescription>
-                {blessing.image && (
-                    <img src={blessing.image} alt={blessing.name} className="w-32 min-w-0 min-h-14 max-h-full object-scale-down" />
-                )}
-            </DrawerHeader>
-            <div className="px-4 flex flex-col gap-4 max-h-[calc(100vh-13.5rem)]">
-                <ScrollArea style={{ maxHeight: '70vh', overflowY: 'auto', 'paddingBottom': '1rem' }}>
-                    <div>
-                        <p className="w-full border-b text-secondary-foreground font-semibold">Effects</p>
-                        <ul className="list-disc pl-5 py-2">
-                            {blessing.effects.map((effect, effectIndex) => (
-                                <li key={effectIndex} className="list-item">{effect}</li>
-                            ))}
-                        </ul>
-                    </div>
-                    {blessing.notes.length > 0 && (
-                        <div>
-                            <p className="w-full border-b text-secondary-foreground font-semibold">Notes</p>
-                            <ul className="list-disc pl-5 py-2">
-                                {blessing.notes.map((note, noteIndex) => (
-                                    <li key={noteIndex}>{note}</li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
-                </ScrollArea>
-            </div>
-        </div>
-    );
 }
 
 const BlessingCards: React.FC<{ blessings: BlessingItem[]; onViewBlessing: (r: BlessingItem) => void }> = ({ blessings, onViewBlessing }) => {
@@ -116,17 +79,16 @@ function BlessingDisplay({ tier, tasks }: BlessingDisplayProps) {
             ) : (
                 <BlessingCards blessings={blessings} onViewBlessing={(b) => setSelectedBlessing(b)} />
             )}
-
-            <Drawer direction="right" open={Boolean(selectedBlessing)} onOpenChange={(open) => { if (!open) setSelectedBlessing(null) }}>
-                <DrawerContent>
-                    {selectedBlessing && (
-                        <BlessingDetailView blessing={selectedBlessing} />
-                    )}
-                </DrawerContent>
-            </Drawer>
+            
+            <PickerBlessingDetailsDrawer
+                blessing={selectedBlessing ?? null}
+                onOpenChange={(open) => {
+                    if (!open) setSelectedBlessing(null)
+                }}
+            />
         </section>
   )
 }
 
-export { BlessingDetailView, BlessingDisplay }
+export { BlessingDisplay }
 export type { BlessingDisplayProps, BlessingItem }

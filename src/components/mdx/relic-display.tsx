@@ -3,11 +3,9 @@
 import React, { useState } from 'react';
 import relicData from '@/data/leagues-ii/relics.json';
 import { LeaguesPassiveList, type LeaguesPassive } from '@/components/mdx/leagues-passive-list'
+import { PickerRelicDetailsDrawer } from '@/pages/picks/components/PickerRelicDetailsDrawer'
 
 import '@/styles/relics.css';
-
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from '@/components/ui/drawer';
 
 interface RelicItem {
   name: string;
@@ -28,52 +26,6 @@ interface RelicDisplayProps {
 interface SkillSolves {
     skill: string;
     grade: string;
-}
-
-const RelicDetailView: React.FC<{ relic: RelicItem }> = ({ relic }) => {
-    return (
-        <div className="flex flex-col">
-            <DrawerHeader className="min-h-54 max-h-[30vh] grow">
-                <DrawerTitle className="text-2xl text-center">{relic.name}</DrawerTitle>
-                <DrawerDescription className="text-center italic">{relic.tagline}</DrawerDescription>
-                <div className="relics-image-container">
-                    {(relic.skillSolves.length > 0) && (
-                        <div className="flex flex-wrap justify-center gap-2 max-h-32 basis-[fit-content]">
-                            {relic.skillSolves.map((solve) => (
-                                <div key={`${relic.name}-${solve.skill}`} className="flex flex-col items-center self-center gap-2 bg-secondary py-1 px-2">
-                                    <img src={`/skills/${solve.skill}.png`} alt={solve.skill} className="w-6 h-6 object-contain" />
-                                    <span className="font-bold">{solve.grade}</span>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                    <img src={relic.image} alt={relic.name} className="w-32 min-w-0 min-h-14 max-h-full object-scale-down" />
-                </div>
-            </DrawerHeader>
-            <div className="px-4 flex flex-col gap-4 max-h-[calc(100vh-13.5rem)]">
-                <ScrollArea style={{ maxHeight: '70vh', overflowY: 'auto', 'paddingBottom': '1rem' }}>
-                    <div>
-                        <p className="w-full border-b text-secondary-foreground font-semibold">Effects</p>
-                        <ul className="list-disc pl-5 py-2">
-                            {relic.effects.map((effect, effectIndex) => (
-                                <li key={effectIndex} className="list-item">{effect}</li>
-                            ))}
-                        </ul>
-                    </div>
-                    {relic.notes.length > 0 && (
-                        <div>
-                            <p className="w-full border-b text-secondary-foreground font-semibold">Notes</p>
-                            <ul className="list-disc pl-5 py-2">
-                                {relic.notes.map((note, noteIndex) => (
-                                    <li key={noteIndex}>{note}</li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
-                </ScrollArea>
-            </div>
-        </div>
-    );
 }
 
 const RelicCards: React.FC<{ relics: RelicItem[]; onViewRelic: (r: RelicItem) => void }> = ({ relics, onViewRelic }) => {
@@ -135,16 +87,17 @@ function RelicDisplay({ tier, points }: RelicDisplayProps) {
                 <RelicCards relics={relics} onViewRelic={(r) => setSelectedRelic(r)} />
             )}
 
-            <Drawer direction="right" open={Boolean(selectedRelic)} onOpenChange={(open) => { if (!open) setSelectedRelic(null) }}>
-                <DrawerContent>
-                    {selectedRelic && (
-                        <RelicDetailView relic={selectedRelic} />
-                    )}
-                </DrawerContent>
-            </Drawer>
+            <PickerRelicDetailsDrawer
+                isSpeculative={false}
+                relic={selectedRelic ?? null}
+                tier={selectedRelic?.tier}
+                onOpenChange={(open) => {
+                if (!open) setSelectedRelic(null)
+                }}
+            />
         </section>
       );
 };
 
-export { RelicDetailView, RelicDisplay };
+export { RelicDisplay };
 export type { RelicDisplayProps, RelicItem };
