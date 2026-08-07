@@ -12,7 +12,6 @@ import {
 export function useSharedBuildImport(onImport: (state: PicksState) => void) {
   const [searchParams, setSearchParams] = useSearchParams()
   const shareCode = searchParams.get('share')
-  const isSpeculativeRelics = searchParams.get('relicMode') === 'speculative'
   const selectedRejuvenatedRelic = searchParams.get('rejuvenatedRelic') ?? ''
 
   useEffect(() => {
@@ -40,7 +39,6 @@ export function useSharedBuildImport(onImport: (state: PicksState) => void) {
         onImport(
           createPicksStateFromSharedBuild(
             build,
-            isSpeculativeRelics,
             selectedRejuvenatedRelic,
           ),
         )
@@ -58,7 +56,7 @@ export function useSharedBuildImport(onImport: (state: PicksState) => void) {
     return () => {
       isActive = false
     }
-  }, [isSpeculativeRelics, onImport, searchParams, selectedRejuvenatedRelic, setSearchParams, shareCode])
+  }, [onImport, searchParams, selectedRejuvenatedRelic, setSearchParams, shareCode])
 }
 
 

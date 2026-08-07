@@ -37,6 +37,7 @@ const relicSheetSchema = z.object({
       name: z.string().min(1),
       tagline: z.string().min(1),
       tier: z.number().int().min(0),
+      slot: z.number().int().min(1).max(3),
       image: z.string().url(),
     }),
   ),
@@ -51,6 +52,7 @@ const UNKNOWN_RELIC_ICON = 'https://media.thersguide.com/leagues-2/relics/unknow
 const relicTiers = RELIC_TIER_NUMBERS.map((tier) => {
   const optionCount = tier === 6 ? 2 : 3
   const knownRelics = relicSheet.Relics.filter((relic) => relic.tier === tier)
+    .sort((left, right) => left.slot - right.slot)
     .slice(0, optionCount)
 
   return {

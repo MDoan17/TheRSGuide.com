@@ -13,7 +13,6 @@ import {
   LEAGUE_OPTIONS,
   normalizeLeagueRegionIds,
 } from '../../shared/league-options'
-import { SPECULATIVE_RELIC_TIERS } from '../../shared/speculative-relic-options'
 
 export {
   OPTIONAL_REGION_PICK_COUNT,
@@ -50,11 +49,19 @@ export const REJUVENATED_RELIC_NAME = 'Rejuvenated'
 const VALID_RELIC_NAMES = new Set(
   RELIC_TIERS.flatMap(({ options }) => options.map((option) => option.id)),
 )
-const VALID_SPECULATIVE_RELIC_NAMES = new Set(
-  SPECULATIVE_RELIC_TIERS.flatMap(({ options }) =>
-    options.map((option) => option.id),
-  ),
-)
+const LEGACY_CONFIRMED_RELIC_ID_ALIASES: Readonly<Record<string, string>> = {
+  '1a': '1c',
+  '1b': '1a',
+  '1c': '1b',
+}
+const LEGACY_SPECULATIVE_RELIC_ID_ALIASES: Readonly<Record<string, string>> = {
+  '4b': '4c',
+  '4c': '4b',
+  '5a': '5b',
+  '5b': '5a',
+  '7a': '7b',
+  '7b': '7a',
+}
 
 function getOptionalRegionIds(regionIds: unknown[]) {
   return normalizeLeagueRegionIds(
@@ -66,7 +73,6 @@ function getOptionalRegionIds(regionIds: unknown[]) {
 
 export type PicksState = {
   buildName: string
-  isSpeculativeRelics: boolean
   selectedBlessings: BlessingSelections
   selectedRejuvenatedRelic: string
   selectedRegionIds: string[]
@@ -79,16 +85,10 @@ export type RegionSelection = {
   name: string
 }
 
-function getRelicTiers(isSpeculativeRelics: boolean) {
-  return isSpeculativeRelics ? SPECULATIVE_RELIC_TIERS : RELIC_TIERS
-}
-
 export function getRejuvenatedRelicTier(
   selectedRelics: Record<number, string>,
-  isSpeculativeRelics: boolean,
 ) {
-  const relicTiers = getRelicTiers(isSpeculativeRelics)
-  return relicTiers.find(({ options, tier }) =>
+  return RELIC_TIERS.find(({ options, tier }) =>
     options.some(
       ({ id, label }) =>
         id === selectedRelics[tier] && label === REJUVENATED_RELIC_NAME,
@@ -98,15 +98,11 @@ export function getRejuvenatedRelicTier(
 
 export function getRejuvenatedRelicOptions(
   selectedRelics: Record<number, string>,
-  isSpeculativeRelics: boolean,
 ) {
-  const rejuvenatedTier = getRejuvenatedRelicTier(
-    selectedRelics,
-    isSpeculativeRelics,
-  )
+  const rejuvenatedTier = getRejuvenatedRelicTier(selectedRelics)
   if (!rejuvenatedTier) return []
 
-  return getRelicTiers(isSpeculativeRelics)
+  return RELIC_TIERS
     .filter(({ tier }) => tier < rejuvenatedTier)
     .flatMap(({ options, tier }) =>
       options.map((option) => ({ ...option, tier })),
@@ -116,16 +112,14 @@ export function getRejuvenatedRelicOptions(
 export function normalizeRejuvenatedRelic(
   relicId: unknown,
   selectedRelics: Record<number, string>,
-  isSpeculativeRelics: boolean,
 ) {
   if (typeof relicId !== 'string' || Object.values(selectedRelics).includes(relicId)) {
     return ''
   }
 
-  return getRejuvenatedRelicOptions(
-    selectedRelics,
-    isSpeculativeRelics,
-  ).some(({ id }) => id === relicId)
+  return getRejuvenatedRelicOptions(selectedRelics).some(
+    ({ id }) => id === relicId,
+  )
     ? relicId
     : ''
 }
@@ -133,7 +127,6 @@ export function normalizeRejuvenatedRelic(
 export function loadPicksState(): PicksState {
   const fallback: PicksState = {
     buildName: '',
-    isSpeculativeRelics: false,
     selectedBlessings: {},
     selectedRejuvenatedRelic: '',
     selectedRegionIds: [...GUARANTEED_REGION_IDS],
@@ -145,10 +138,6 @@ export function loadPicksState(): PicksState {
     if (!storedValue) return fallback
 
     const parsed = JSON.parse(storedValue) as Record<string, unknown>
-    const isSpeculativeRelics = parsed.isSpeculativeRelics === true
-    const validRelicNames = isSpeculativeRelics
-      ? VALID_SPECULATIVE_RELIC_NAMES
-      : VALID_RELIC_NAMES
     const selectedRelics: Record<number, string> = {}
 
     if (
@@ -156,17 +145,27 @@ export function loadPicksState(): PicksState {
       typeof parsed.selectedRelics === 'object' &&
       !Array.isArray(parsed.selectedRelics)
     ) {
+      const legacyRelicIdAliases =
+        parsed.isSpeculativeRelics === false
+          ? LEGACY_CONFIRMED_RELIC_ID_ALIASES
+          : parsed.isSpeculativeRelics === true
+            ? LEGACY_SPECULATIVE_RELIC_ID_ALIASES
+            : undefined
       Object.entries(parsed.selectedRelics).forEach(([tierValue, relicValue]) => {
         const tier = Number(tierValue)
+        const normalizedRelicValue =
+          typeof relicValue === 'string' && legacyRelicIdAliases
+            ? (legacyRelicIdAliases[relicValue] ?? relicValue)
+            : relicValue
         if (
           Number.isInteger(tier) &&
           tier >= 1 &&
           tier <= RELIC_TIERS.length &&
-          typeof relicValue === 'string' &&
-          validRelicNames.has(relicValue) &&
-          relicValue.startsWith(String(tier))
+          typeof normalizedRelicValue === 'string' &&
+          VALID_RELIC_NAMES.has(normalizedRelicValue) &&
+          normalizedRelicValue.startsWith(String(tier))
         ) {
-          selectedRelics[tier] = relicValue
+          selectedRelics[tier] = normalizedRelicValue
         }
       })
     }
@@ -197,12 +196,10 @@ export function loadPicksState(): PicksState {
     return {
       buildName:
         typeof parsed.buildName === 'string' ? parsed.buildName.slice(0, 60) : '',
-      isSpeculativeRelics,
       selectedBlessings,
       selectedRejuvenatedRelic: normalizeRejuvenatedRelic(
         parsed.selectedRejuvenatedRelic,
         selectedRelics,
-        isSpeculativeRelics,
       ),
       selectedRegionIds: [...GUARANTEED_REGION_IDS, ...optionalRegionIds],
       selectedRelics,
@@ -222,16 +219,12 @@ export function savePicksState(state: PicksState) {
 
 export function createPicksStateFromSharedBuild(
   build: SharedBuild,
-  isSpeculativeRelics = false,
   selectedRejuvenatedRelic: unknown = '',
 ): PicksState {
-  const validRelicNames = isSpeculativeRelics
-    ? VALID_SPECULATIVE_RELIC_NAMES
-    : VALID_RELIC_NAMES
   const selectedRelics: Record<number, string> = {}
   build.relics.forEach((relic, index) => {
     const tier = index + 1
-    if (validRelicNames.has(relic) && relic.startsWith(String(tier))) {
+    if (VALID_RELIC_NAMES.has(relic) && relic.startsWith(String(tier))) {
       selectedRelics[tier] = relic
     }
   })
@@ -240,12 +233,10 @@ export function createPicksStateFromSharedBuild(
 
   return {
     buildName: build.buildName.slice(0, 60),
-    isSpeculativeRelics,
     selectedBlessings: blessingSelectionsFromArray(build.blessings),
     selectedRejuvenatedRelic: normalizeRejuvenatedRelic(
       selectedRejuvenatedRelic,
       selectedRelics,
-      isSpeculativeRelics,
     ),
     selectedRegionIds: [...GUARANTEED_REGION_IDS, ...optionalRegionIds],
     selectedRelics,

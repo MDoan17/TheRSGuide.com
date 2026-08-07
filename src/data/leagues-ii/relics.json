@@ -4,6 +4,7 @@
             "name": "Survivalist",
             "tagline": "Best-in-slot gathering tools and doubles gathered resources.",
             "tier": 1,
+            "slot": 3,
             "image": "https://media.thersguide.com/leagues-2/relics/survivalist.png",
             "effects": [
                 "Grants the Survivalist's bag, which can store logs, fish and ores, as well as the Pickaxe of the faithful, Hatchet of devotion, and Harpoon of the pious which act as the highest tier tool for Mining, Woodcutting, and Fishing.",
@@ -41,6 +42,7 @@
             "name": "Endless Harvest",
             "tagline": "Banks gathered resources automatically and keeps gathering spots active.",
             "tier": 1,
+            "slot": 1,
             "image": "https://media.thersguide.com/leagues-2/relics/endless-harvest.png",
             "effects": [
                 "All resources gathered from Archaeology, Farming, Fishing, Mining, and Woodcutting are automatically sent to the bank or metal bank or archaeology storage.",
@@ -79,6 +81,7 @@
             "name": "Golden Touch",
             "tagline": "Removes Agility and Thieving failures and gives more coins and loot.",
             "tier": 1,
+            "slot": 2,
             "image": "https://media.thersguide.com/leagues-2/relics/golden-touch.png",
             "effects": [
                 "Grants the Goldenhawk Boots. Goldenhawk Boots grant agility XP periodically while running, skilling, or when using ultimate abilities.",
@@ -116,7 +119,8 @@
         {
             "name": "Crystal Grace",
             "tagline": "Unlocks every spell and gives stackable essence for Runecrafting.",
-            "tier": 0,
+            "tier": 4,
+            "slot": 1,
             "image": "https://media.thersguide.com/leagues-2/relics/crystal-grace.png",
             "effects": [
                 "Grants you Seren's crystal tiara, which acts as an Omni-tiara for entering all Runecrafting altars and offers teleports to Runecrafting altars in your unlocked regions. The tiara also acts as a demonhorn necklace when worn or in the inventory.",
@@ -149,7 +153,8 @@
         {
             "name": "Superheated",
             "tagline": "Automates firemaking and cooking, and speeds up Smithing.",
-            "tier": 0,
+            "tier": 2,
+            "slot": 2,
             "image": "https://media.thersguide.com/leagues-2/relics/superheated.png",
             "effects": [
                 "Burn logs automatically when Woodcutting, without required Firemaking level. (Toggleable)",
@@ -184,7 +189,8 @@
         {
             "name": "Divine Druid",
             "tagline": "Supplies herbs and charms for easy Summoning training and faster potion making and Divination.",
-            "tier": 0,
+            "tier": 2,
+            "slot": 3,
             "image": "https://media.thersguide.com/leagues-2/relics/divine-druid.png",
             "effects": [
                 "Grants Thera's summoning pouch, a pouch that stores grimy herbs and charms. Acts as infinite spirit shards and summoning pouches.",
@@ -225,7 +231,8 @@
         {
             "name": "Transmutation",
             "tagline": "Lets you upgrade or downgrade resources",
-            "tier": 0,
+            "tier": 4,
+            "slot": 2,
             "image": "https://media.thersguide.com/leagues-2/relics/transmutation.png",
             "effects": [
                 "Grants the Deities' transmuter.",
@@ -288,7 +295,8 @@
         {
             "name": "Assassin's Insight",
             "tagline": "Adds Slayer teleports, task choices, and spawns more elites",
-            "tier": 0,
+            "tier": 3,
+            "slot": 2,
             "image": "https://media.thersguide.com/leagues-2/relics/assassins-insight.png",
             "effects": [
                 "Grants the Skull of Slaying, which allows you to teleport to any slayer master and a range of slayer dungeons and monsters.",
@@ -313,7 +321,8 @@
         {
             "name": "Nature's Network",
             "tagline": "Adds fairy ring, spirit tree, and farming teleports with instant crop growth",
-            "tier": 0,
+            "tier": 3,
+            "slot": 1,
             "image": "https://media.thersguide.com/leagues-2/relics/natures-network.png",
             "effects": [
                 "Grants a Fairy mushroom, which allows you to teleport to any fairy ring, spirit tree, or farming patch.",
@@ -336,7 +345,8 @@
         {
             "name": "Voidwalker",
             "tagline": "Gives unlimited jewelry teleports and bonus loot from Void shards.",
-            "tier": 0,
+            "tier": 3,
+            "slot": 3,
             "image": "https://media.thersguide.com/leagues-2/relics/voidwalker.png",
             "effects": [
                 "Grants an Abyssal Conduit, a powerful item that provides unlimited teleports from the following jewelry pieces:",
@@ -368,7 +378,8 @@
         {
             "name": "Animal Wrangler",
             "tagline": "Banks catches, boosts Hunter loot, improves PoF, and enables baitless BGH.",
-            "tier": 0,
+            "tier": 2,
+            "slot": 1,
             "image": "https://media.thersguide.com/leagues-2/relics/animal-wrangler.png",
             "effects": [
                 "Bank fish automatiically when fishing and hunter loot when hunting. (Toggleable)",
@@ -410,7 +421,8 @@
         {
             "name": "Icyenic Faith",
             "tagline": "Your Prayer bonus increases critical hit chance and damage, and prayers gain a Soul Split passive.",
-            "tier": 0,
+            "tier": 7,
+            "slot": 3,
             "image": "https://media.thersguide.com/leagues-2/relics/icyenic-faith.png",
             "effects": [
                 "Grants you the Tome of the Icyene.",
@@ -426,7 +438,8 @@
         {
             "name": "Devout",
             "tagline": "Adds a 32-slot yak with remote bank access and the ability to note or un-note items, and increases all familiar damage.",
-            "tier": 0,
+            "tier": 5,
+            "slot": 3,
             "image": "https://media.thersguide.com/leagues-2/relics/devout.png",
             "effects": [
                 "Grants a Devout yak pouch and the Ethereal storage scroll.",
@@ -445,7 +458,8 @@
         {
             "name": "Perkfection",
             "tagline": "Adds two passive perk slots, 10x  materials, and faster Invention machines",
-            "tier": 0,
+            "tier": 6,
+            "slot": 2,
             "image": "https://media.thersguide.com/leagues-2/relics/perkfection.png",
             "effects": [
                 "Grants the Inventor's Toolbox, which acts as an XP capacitor but can store 10x max charges and also charges 10x faster. It also have two gizmo slots which are applied in addition to any equipped perks. You must be using an augmented item for these perks to activate. These can be swapped out freely. Additionally the toolbox allows you to teleport to Inventor's workbenches that are available in your unlocked regions.",
@@ -469,7 +483,8 @@
         {
             "name": "Rejuvenated",
             "tagline": "Lets you pick an extra relic from an earlier tier.",
-            "tier": 0,
+            "tier": 6,
+            "slot": 1,
             "image": "https://media.thersguide.com/leagues-2/relics/rejuvenated.png",
             "effects": [
                 "Choose another relic from a previous tier."
@@ -482,7 +497,8 @@
         {
             "name": "Production Master",
             "tagline": "Processes production items at once and supplies skilling conveniences through the Brooch of the Spirits.",
-            "tier": 0,
+            "tier": 5,
+            "slot": 2,
             "image": "https://media.thersguide.com/leagues-2/relics/production_master.png",
             "effects": [
                 "Grants the Brooch of the Spirits.",
@@ -526,7 +542,8 @@
         {
             "name": "Antiquarian",
             "tagline": "Unlocks Archaeology relics and streamlines materials, artefacts, collections and excavation rewards.",
-            "tier": 0,
+            "tier": 4,
+            "slot": 3,
             "image": "https://media.thersguide.com/leagues-2/relics/antiquarian.png",
             "effects": [
                 "All Archaeology relics are available to use after completing the Archaeology tutorial.",
@@ -562,7 +579,8 @@
         {
             "name": "Naragi Edict",
             "tagline": "Grants a reusable Sliver of Edicts with healing, combat boosts, revival and pocket-slot bonuses.",
-            "tier": 0,
+            "tier": 7,
+            "slot": 2,
             "image": "https://media.thersguide.com/leagues-2/relics/naragi_edict.png",
             "effects": [
                 "Grants you the Sliver of Edicts.",
@@ -581,7 +599,8 @@
         {
             "name": "Clue Connoisseur",
             "tagline": "Streamlines Treasure Trails with clue storage, teleports, extra rewards and unlimited sealed clues.",
-            "tier": 0,
+            "tier": 5,
+            "slot": 1,
             "image": "https://media.thersguide.com/leagues-2/relics/clue_connoisseur.png",
             "effects": [
                 "Grants you Uri's briefcase, which can store sealed clue scrolls and caskets and allows you to teleport to any hidey-holes available in your unlocked areas.",
@@ -602,7 +621,8 @@
         {
             "name": "Infernal Fire",
             "tagline": "Grants an Avernic star that applies Death Mark with every combat style and provides pocket-slot bonuses.",
-            "tier": 0,
+            "tier": 7,
+            "slot": 1,
             "image": "https://media.thersguide.com/leagues-2/relics/infernal_fire.png",
             "effects": [
                 "Grants you an Avernic star.",
