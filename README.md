@@ -153,3 +153,5 @@ VITE_LEAGUES_END_DATE=2026-09-10T12:00:00Z
 
 The end date above is only an example. Deployment configuration should use the
 actual event dates.
+
+<img width="492" height="780" alt="image" src="https://github.com/user-attachments/assets/1f3c41f4-39ff-418b-b81a-a5a3cebe301f" />
