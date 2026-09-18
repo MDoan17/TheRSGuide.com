@@ -3,38 +3,56 @@
     {
       "start": 1,
       "end": 30,
-      "desc": "Complete the Burthorpe agility course or the Gnome Stronghold agility course",
-      "link": ""
+      "desc": "Complete the Burthorpe agility course.",
+      "link": "https://runescape.wiki/w/Burthorpe_Agility_Course"
     },
     {
       "start": 30,
       "end": 35,
       "desc": "Complete the Anachronia Beginner agility Course",
-      "link": ""
+      "link": "https://runescape.wiki/w/Anachronia_Agility_Course#Beginner_sections"
     },
     {
       "start": 35,
       "end": 52,
       "desc": "Complete the Barbarian Outpost Agility Course",
-      "link": ""
+      "link": "https://runescape.wiki/w/Barbarian_Outpost_Agility_Course"
     },
     {
       "start": 52,
-      "end": 80,
-      "desc": "Complete the Wilderness Agility Course with the Demonic Skull - warning, the Demonic Skull will grant increase experience rates, however this will enable PvP. You can do the Wilderness agility course without the skull if you would like.",
-      "link": ""
+      "end": 60,
+      "desc": "Complete the Wilderness Agility Course. Make sure to toggle PvP Off.",
+      "link": "https://runescape.wiki/w/Wilderness_Agility_Course"
+    },
+    {
+      "start": 60,
+      "end": 65,
+      "desc": "Complete the Werewolf Agility Course.",
+      "link": "https://runescape.wiki/w/Werewolf_Agility_Course"
     },
     {
       "start": 65,
-      "end": 80,
-      "desc": "Het's Oasis Agility Course OR Manual Auto-cycles in the Empty Throne Room. Manual Auto-Cycles are extremely slow, but fully AFK.",
-      "link": ""
+      "end": 70,
+      "desc": "Complete the Het's Oasis Agility Course OR Manual Auto-cycles in the Empty Throne Room. Manual Auto-Cycles are extremely slow, but fully AFK.",
+      "link": "https://runescape.wiki/w/Het%27s_Oasis_Agility_Course"
+    },
+    {
+      "start": 70,
+      "end": 77,
+      "desc": "Complete the Advanced Anachronia Agility Course.",
+      "link": "https://runescape.wiki/w/Anachronia_Agility_Course#Advanced_sections"
+    },
+    {
+      "start": 77,
+      "end": 85,
+      "desc": "Complete the Hefin Agility Course.",
+      "link": "https://runescape.wiki/w/Hefin_Agility_Course"
     },
     {
       "start": 80,
       "end": 99,
-      "desc": "Island-wide Anachronia Agility Course - Completion of this course requires level 85 Agility for one section, there are several ways to temporarily boost your Agility level including Stamina Potion (+6), Summer Pie (+5), God banner Boost (+5), Abyssal Lurker (+4).",
-      "link": ""
+      "desc": "Complete the Full Anachronia Agility Course - Completion of this course requires level 85 Agility for one section, there are several ways to temporarily boost your Agility level including Stamina Potion (+6), Summer Pie (+5), God banner Boost (+5), and Abyssal Lurker (+4).",
+      "link": "https://runescape.wiki/w/Anachronia_Agility_Course"
     }
   ],
   "archaeology": [
@@ -649,38 +667,20 @@
     {
       "start": 1,
       "end": 120,
-      "desc": "Complete Elite Dungeons and Redeem Tokens for Exp at the Reward Shop. This is not recommended for speed training but will passively grant experience ",
-      "link": "https://runescape.wiki/w/Daemonheim_Rewards"
+      "desc": "Complete your highest available floor, in size Small, Medium, or Large depending on your floor times.\nThe general rule for selecting a floor size is as follows: If your Medium floors take less than twice as long as your Small floors, Mediums are better than Smalls. If your Large floors are less than twice as long as your your Medium floors, and less than four times as long as your Small floors, Larges are your best bet. In general, if you're a beginner, Small floors will be best, where an experienced player will likely get the best experience rates doing Large floors, especially after completing the Elite Daemonheim achievements for access to a second gatestone.",
+      "link": "https://runescape.wiki/w/Pay-to-play_Dungeoneering_training#Optimising_floors"
     },
     {
       "start": 1,
-      "end": 58,
-      "desc": "Small Complexity 1 floors 1-11, Small, Medium, or Large Complexity 6 floors 12-29 ",
-      "link": "https://runescape.wiki/w/Pay-to-play_Dungeoneering_training#Optimising_floors"
-    },
-    {
-      "start": 59,
-      "end": 70,
-      "desc": "Small Complexity 1 floors 1-17, Small Complexity 6 Floors 18-24, Large Complexity 6 Floors 25-35",
-      "link": "https://runescape.wiki/w/Pay-to-play_Dungeoneering_training#Optimising_floors"
-    },
-    {
-      "start": 71,
-      "end": 94,
-      "desc": "Small Complexity 1 floors 1-29, Large Complexity 6 Floors 30-47",
-      "link": "https://runescape.wiki/w/Pay-to-play_Dungeoneering_training#Optimising_floors"
+      "end": 120,
+      "desc": "Complete Elite Dungeons and Redeem Tokens for Exp at the Dungeoneering Reward Shop. This is not recommended for speed training but will passively grant experience.",
+      "link": "https://runescape.wiki/w/Daemonheim_Rewards"
     },
     {
       "start": 80,
       "end": 120,
       "desc": "Complete the Dragonkin V archaeology collection log (Archaeology level 77+) for Dungeoneering Token Boxes that can be exchanged for experience. This method is extremely slow but is a way to passively train Dungeoneering while training Archaeology.",
-      "link": ""
-    },
-    {
-      "start": 95,
-      "end": 120,
-      "desc": "Small Complexity 1 floors 1-35, Large Complexity 6 Floors 36-60",
-      "link": "https://runescape.wiki/w/Pay-to-play_Dungeoneering_training#Optimising_floors"
+      "link": "https://runescape.wiki/w/Daemonheim_Rewards"
     }
   ],
   "farming": [
@@ -899,8 +899,80 @@
     {
       "start": 1,
       "end": 120,
-      "desc": "Daily Challenges, Herby Werby DnD, Weekly Penguins, and Quest EXP Lamps",
+      "desc": "Herby Werby DnD, Agoroth DnD, Penguin Hide & Seek and Quest EXP Lamps. Some strong questlines for Herblore experience are The Branches of Darkmeyer, The Lord of Vampyrum, The River of Blood, The World Wakes, Extinction, and While Guthix Sleeps.",
       "link": "https://runescape.wiki/w/Quests/Experience_rewards#Herblore"
+    },
+    {
+      "start": 1,
+      "end": 19,
+      "desc": "Complete the Following Quests: Druidic Ritual, Jungle Potion, The Dig Site, and Violet is Blue.",
+      "link": ""
+    },
+    {
+      "start": 12,
+      "end": 26,
+      "desc": "Make Strength Potions. (Tarromin Potions and Limpwurt Roots).",
+      "link": "https://runescape.wiki/w/Strength_potion#(4)"
+    },
+    {
+      "start": 26,
+      "end": 38,
+      "desc": "Make Energy Potions. (Harralander Potions and Chocolate Dust)",
+      "link": "https://runescape.wiki/w/Energy_potion#(4)"
+    },
+    {
+      "start": 38,
+      "end": 55,
+      "desc": "Make Prayer Potions. (Ranarr Potions and Snape Grass)",
+      "link": "https://runescape.wiki/w/Prayer_potion#(4)"
+    },
+    {
+      "start": 55,
+      "end": 63,
+      "desc": "Make Super Strength Potions. (Kwuarm Potions and Limpwurt Roots)",
+      "link": "https://runescape.wiki/w/Super_strength#(4)"
+    },
+    {
+      "start": 63,
+      "end": 72,
+      "desc": "Make Super Restore Potions. (Snapdragon Potions and Red Spiders' Eggs)",
+      "link": "https://runescape.wiki/w/Super_restore#(4)"
+    },
+    {
+      "start": 72,
+      "end": 81,
+      "desc": "Make Super Ranging Potions. (Dwarf Weed Potions and Wine of Zamorak)",
+      "link": "https://runescape.wiki/w/Super_ranging_potion#(4)"
+    },
+    {
+      "start": 81,
+      "end": 88,
+      "desc": "Make Saradomin Brews. (Toadflax Potions and Crushed Nests)",
+      "link": "https://runescape.wiki/w/Saradomin_brew#(4)"
+    },
+    {
+      "start": 88,
+      "end": 99,
+      "desc": "Make Extreme Potions to use for Overloads at level 96. Extreme Attack, Strength, Defence, Magic, Ranged, and Necromancy.",
+      "link": "https://runescape.wiki/w/Overload#(4)"
+    },
+    {
+      "start": 96,
+      "end": 120,
+      "desc": "Make Overloads. (Extreme Set and Clean Torstol)",
+      "link": "https://runescape.wiki/w/Overload#(4)"
+    },
+    {
+      "start": 101,
+      "end": 107,
+      "desc": "Make Sticky Bombs. (Bomb Vials, Primal Extract, Beak Snot, Dinosaur Claws, and Cadantine)",
+      "link": "https://runescape.wiki/w/Sticky_bomb"
+    },
+    {
+      "start": 107,
+      "end": 120,
+      "desc": "Make Vulnerability Bombs. (Bomb Vials, Primal Extract, Soul Runes, Chaos Runes, Bottled Dinosaur Roar, Dwarf Weed)",
+      "link": "https://runescape.wiki/w/Vulnerability_bomb"
     }
   ],
   "hunter": [
