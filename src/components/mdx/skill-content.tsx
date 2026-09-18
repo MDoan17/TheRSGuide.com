@@ -138,7 +138,13 @@ export const SkillContent: React.FC<SkillContentProps> = ({
                   </a>
                 )}
               </div>
-              <p className="text-sm text-muted-foreground">{range.desc}</p>
+              <div className="space-y-2">
+                {range.desc.split(/\r?\n|\\n/).map((paragraph, paragraphIndex) => (
+                  <p key={paragraphIndex} className="text-sm text-muted-foreground">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             </div>
           );
         })}
